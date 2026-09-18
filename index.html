@@ -138,13 +138,26 @@ const data={
  intro:"Les ressources pratiques à retrouver rapidement.",
  groups:{
   "Réglementation":[
-   {name:"Encadrement & qualifications",fiche:true,sections:[
-    {title:"L’essentiel",text:"Dans un séjour de vacances, un accueil de loisirs ou un accueil de scoutisme, les fonctions d’animateur peuvent être exercées par trois catégories de personnes."},
-    {title:"🎓 1. Animateur qualifié",text:"Une personne titulaire d’un diplôme, titre ou certificat de qualification permettant d’exercer les fonctions d’animation en ACM peut exercer comme animateur. Exemple : le BAFA."},
-    {title:"📝 2. Animateur stagiaire",text:"Une personne qui prépare le BAFA ou un autre diplôme permettant d’exercer les fonctions d’animateur peut intégrer l’équipe dans le cadre d’un stage pratique ou d’une période de formation prévue dans son parcours. Elle est alors considérée comme stagiaire."},
-    {title:"👤 3. Personne non qualifiée",text:"Une personne qui ne possède pas de qualification permettant d’exercer comme animateur et qui n’est pas stagiaire peut également intégrer l’équipe. Son nombre est limité à 20 % maximum de la composition totale de l’équipe."},
-    {title:"⚠️ Une dérogation est-elle possible ?",text:"Une dérogation peut être demandée au directeur départemental de la DDCS(PP), notamment en cas de difficulté de recrutement. Lorsqu’elle est accordée, elle est limitée dans le temps et ne peut être accordée qu’une seule fois."},
-    {title:"📚 Texte de référence",text:"Arrêté du 9 février 2007, modifié notamment par l’arrêté du 1er octobre 2015, fixant les titres et diplômes permettant d’exercer les fonctions d’animation en séjours de vacances, accueils de loisirs et accueils de scoutisme."}
+   {name:"Encadrement & qualifications",fiche:false,items:[
+    {name:"🎓 Qui peut exercer comme animateur en ACM ?",fiche:true,sections:[
+     {title:"L’essentiel",text:"Dans un séjour de vacances, un accueil de loisirs ou un accueil de scoutisme, les fonctions d’animateur peuvent être exercées par trois catégories de personnes."},
+     {title:"🎓 1. Animateur qualifié",text:"Une personne titulaire d’un diplôme, titre ou certificat de qualification permettant d’exercer les fonctions d’animation en ACM peut exercer comme animateur. Exemple : le BAFA."},
+     {title:"📝 2. Animateur stagiaire",text:"Une personne qui prépare le BAFA ou un autre diplôme permettant d’exercer les fonctions d’animateur peut intégrer l’équipe dans le cadre d’un stage pratique ou d’une période de formation prévue dans son parcours. Elle est alors considérée comme stagiaire."},
+     {title:"👤 3. Personne non qualifiée",text:"Une personne qui ne possède pas de qualification permettant d’exercer comme animateur et qui n’est pas stagiaire peut également intégrer l’équipe. Son nombre est limité à 20 % maximum de la composition totale de l’équipe."},
+     {title:"⚠️ Une dérogation est-elle possible ?",text:"Une dérogation peut être demandée au directeur départemental de la DDCS(PP), notamment en cas de difficulté de recrutement. Lorsqu’elle est accordée, elle est limitée dans le temps et ne peut être accordée qu’une seule fois."},
+     {title:"📚 Texte de référence",text:"Arrêté du 9 février 2007, modifié notamment par l’arrêté du 1er octobre 2015, fixant les titres et diplômes permettant d’exercer les fonctions d’animation en séjours de vacances, accueils de loisirs et accueils de scoutisme."}
+    ]},
+    {name:"🎓 Qui peut exercer comme directeur en ACM ?",fiche:true,sections:[
+     {title:"L’essentiel",text:"Les fonctions de direction en séjour de vacances, accueil de loisirs ou accueil de scoutisme peuvent être exercées par plusieurs catégories de personnes."},
+     {title:"🎓 1. Directeur qualifié",text:"Une personne titulaire d’un diplôme, titre ou certificat de qualification permettant d’exercer les fonctions de direction en ACM peut exercer comme directeur. Exemple : le BAFD."},
+     {title:"📝 2. Directeur stagiaire",text:"Une personne qui prépare le BAFD ou un autre diplôme permettant d’exercer des fonctions de direction peut exercer dans le cadre de son stage pratique ou de sa période de formation."},
+     {title:"🏛️ 3. Certains agents de la fonction publique territoriale",text:"Des agents de la fonction publique territoriale peuvent également exercer des fonctions de direction dans le cadre de leur mission, sous réserve des dispositions prévues par leur statut. Cela concerne notamment certains cadres d’emplois de l’animation et d’autres fonctions territoriales prévues par les textes."},
+     {title:"⚠️ Une dérogation est-elle possible ?",text:"Une dérogation peut être demandée au directeur départemental de la DDCS(PP), notamment en cas de difficulté de recrutement. Lorsqu’elle est accordée, elle est limitée dans le temps et ne peut être accordée qu’une seule fois."},
+     {title:"📚 Texte de référence",text:"Arrêté du 9 février 2007, modifié notamment par l’arrêté du 1er octobre 2015, fixant les titres et diplômes permettant d’exercer les fonctions d’animation et de direction en séjours de vacances, accueils de loisirs et accueils de scoutisme."}
+    ]},
+    {name:"📊 Les taux d’encadrement",fiche:false},
+    {name:"📝 Le statut d’animateur stagiaire",fiche:false},
+    {name:"👶 L’encadrement des moins de 6 ans",fiche:false}
    ]},
    {name:"Transports & déplacements",fiche:false},
    {name:"Activités physiques & sportives",fiche:false},
@@ -195,8 +208,8 @@ function subcat(category,group){
  }
  document.getElementById('dtext').textContent=items.length ? `Sélectionne une fiche parmi les ${items.length} rubriques.` : 'Aucune fiche disponible.';
  list.innerHTML=items.map((item,i)=>{
-   if(typeof item==='object') return `<button onclick="regulatoryCard(data['${category.replace(/'/g,"\'")}'].groups['${group.replace(/'/g,"\'")}'][${i}])"><strong>${esc(item.name)}</strong><small>Ouvrir la rubrique →</small></button>`;
-   return `<button onclick="toast('La fiche « ${esc(item)} » sera développée avec son contenu.')"><strong>${esc(item)}</strong><small>Ouvrir la fiche →</small></button>`;
+   if(typeof item==='object' && item.fiche) return `<button onclick="regulatoryCard(data['${category.replace(/'/g,"\'")}'].groups['${group.replace(/'/g,"\'")}'][${i}])"><strong>${esc(item.name)}</strong><small>Ouvrir la fiche →</small></button>`;
+   return `<button onclick="toast('La fiche « ${esc(typeof item==='object'?item.name:item)} » sera développée avec son contenu.')"><strong>${esc(typeof item==='object'?item.name:item)}</strong><small>Ouvrir la fiche →</small></button>`;
  }).join('');
  show('detail');
 }

@@ -1,1 +1,1 @@
-Anim Compagnon V24 — 10 fiches Activités > Animation de courte durée.
+V25 — Anim Compagnon avec les 10 fiches Animation de courte durée.
