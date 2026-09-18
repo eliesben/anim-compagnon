@@ -20,6 +20,45 @@
 .bottom{position:fixed;z-index:50;left:0;right:0;bottom:0;background:rgba(255,255,255,.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid rgba(216,221,215,.8);padding-bottom:env(safe-area-inset-bottom)}.bottomin{max-width:560px;margin:auto;display:grid;grid-template-columns:repeat(5,1fr);padding:7px 7px 6px}.nav{border:0;background:none;color:#6a7076;padding:5px 2px 3px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;font-weight:850;min-width:0}.nav .navicon{width:42px;height:31px;border-radius:13px;display:grid;place-items:center;transition:.15s ease}.nav svg{width:24px;height:24px;stroke-width:1.9}.nav.active{color:var(--green)}.nav.active .navicon{background:#e5f2e7;transform:translateY(-2px)}
 .toast{display:none;position:fixed;z-index:100;left:50%;bottom:103px;transform:translateX(-50%);background:#1b2024;color:#fff;padding:11px 14px;border-radius:14px;font-weight:800;box-shadow:var(--shadow);max-width:calc(100vw - 40px);text-align:center}.hidden{display:none!important}.notice{background:#fff6df;border:1px solid #f0ddb1;border-radius:15px;padding:13px;margin:13px 0;font-size:13px;line-height:1.45;color:#695321}.markdown-source{white-space:normal}.source-note{font-size:12px;color:var(--muted);font-weight:700;margin-top:10px}
 @media(max-width:390px){.brand h1{font-size:21px}.brand p{font-size:12px}.logo{width:54px;height:54px}.profile{width:44px;height:44px}.hero{min-width:220px;height:265px}.tile{min-height:122px}.head h2{font-size:21px}}
+
+/* V29 — Générateur de fiches d'activités */
+.generator-toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 16px}
+.activity-form{display:flex;flex-direction:column;gap:14px}
+.form-section{background:#fff;border:1px solid var(--line);border-radius:20px;padding:18px}
+.form-section-title{font-size:18px;font-weight:900;margin-bottom:14px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-section label{display:block;font-weight:800;font-size:13px;color:var(--text)}
+.form-section input,.form-section select,.form-section textarea{margin-top:6px;width:100%;box-sizing:border-box;padding:12px 13px;border:1px solid var(--line);border-radius:12px;background:#fff;font:inherit;font-weight:500;color:var(--text)}
+.form-section textarea{min-height:82px;resize:vertical}
+.form-section input[type="checkbox"]{width:auto;margin:0}
+.checks{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.checks label{display:flex;align-items:center;gap:6px;background:#f4f6f1;padding:8px 10px;border-radius:999px;font-size:12px}
+.step-card{background:#faf9f5;border-radius:16px;padding:15px;margin-top:12px}
+.step-card h4{margin:0 0 10px;font-size:15px}
+.generator-actions{display:flex;gap:10px;flex-wrap:wrap;padding:4px 0 20px}
+.big-action{font-size:16px;padding:14px 18px}
+.activity-preview{background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px;margin:10px 0 30px}
+.preview-top{display:flex;justify-content:space-between;gap:15px;align-items:flex-start;border-bottom:2px solid var(--line);padding-bottom:15px;margin-bottom:15px}
+.preview-title{font-size:27px;font-weight:900;margin:0}
+.preview-meta{color:var(--muted);font-size:13px;line-height:1.6}
+.preview-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.preview-section{margin:18px 0}
+.preview-section h3{font-size:17px;margin:0 0 8px}
+.preview-section p,.preview-section li{line-height:1.55}
+.preview-section ul{margin:7px 0;padding-left:20px}
+.preview-empty{color:var(--muted);font-style:italic}
+.hidden{display:none!important}
+@media(max-width:700px){.form-grid{grid-template-columns:1fr}.preview-top{flex-direction:column}.preview-title{font-size:23px}}
+@media print{
+  body{background:#fff!important}
+  body *{visibility:hidden!important}
+  #activityPreview,#activityPreview *{visibility:visible!important}
+  #activityPreview{position:absolute!important;left:0!important;top:0!important;width:100%!important;margin:0!important;border:0!important;padding:10mm!important;box-sizing:border-box!important;border-radius:0!important}
+  .preview-actions{display:none!important}
+  .preview-title{font-size:25px!important}
+  .preview-section{break-inside:avoid}
+  @page{size:A4;margin:10mm}
+}
 </style></head>
 <body>
 <div class="app">
@@ -37,7 +76,175 @@
 
 <section id="search" class="view"><div class="content"><button class="back" onclick="show('home')">‹ Accueil</button><div class="head"><h2>Recherche</h2></div><label class="searchbox" style="width:100%"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="10.8" cy="10.8" r="6.7"/><path d="m16 16 5 5"/></svg><input id="sinput" placeholder="Que recherchez-vous ?" onkeydown="if(event.key==='Enter')runSearch()"></label><div class="list" id="sout" style="margin-top:14px"></div></div></section>
 
-<section id="generator" class="view"><div class="content"><button class="back" onclick="show('home')">‹ Accueil</button><div class="head"><h2>Générer une activité</h2></div><div class="help generator"><p class="hint">Décris ton groupe et tes contraintes. Le module actuel prépare la demande ; la connexion à une véritable IA pourra être ajoutée ensuite.</p><div class="gen-chips"><span class="gen-chip">Âge</span><span class="gen-chip">Nombre</span><span class="gen-chip">Durée</span><span class="gen-chip">Lieu</span><span class="gen-chip">Matériel</span><span class="gen-chip">Énergie</span><span class="gen-chip">Objectif</span></div><textarea id="activity" placeholder="Ex. : 14 enfants de 8 ans, dehors, 45 min, 3 ballons et 2 cordes…"></textarea><br><br><button class="primary" onclick="gen()">✨ Créer une idée</button><div id="genout"></div></div></div></section>
+
+<section id="generator" class="view">
+  <div class="content generator-page">
+    <button class="back" onclick="show('home')">‹ Accueil</button>
+    <div class="head">
+      <div>
+        <h2>Créer une fiche d’activité</h2>
+        <p class="subline">Remplis les champs, puis génère une fiche propre à imprimer, télécharger ou partager.</p>
+      </div>
+    </div>
+
+    <div class="generator-toolbar">
+      <button class="softbtn" onclick="resetActivityForm()">↺ Nouvelle fiche</button>
+      <button class="softbtn" onclick="loadActivityDraft()">↩ Reprendre le brouillon</button>
+    </div>
+
+    <div class="activity-form" id="activityForm">
+      <div class="form-section">
+        <div class="form-section-title">📋 1. Identification</div>
+        <div class="form-grid">
+          <label>Nom de l’activité<input id="f_name" placeholder="Ex. Le trésor des pirates"></label>
+          <label>Thème<input id="f_theme" placeholder="Ex. Pirates"></label>
+          <label>Type
+            <select id="f_type">
+              <option value="">Choisir</option><option>Activité manuelle</option><option>Jeu</option><option>Jeu sportif</option><option>Activité artistique</option><option>Expression</option><option>Activité scientifique</option><option>Autre</option>
+            </select>
+          </label>
+          <label>Âge<input id="f_age" placeholder="Ex. 7–11 ans"></label>
+          <label>Nombre d’enfants<input id="f_number" placeholder="Ex. 14"></label>
+          <label>Durée<input id="f_duration" placeholder="Ex. 45 min"></label>
+          <label>Lieu<input id="f_place" placeholder="Ex. Extérieur"></label>
+          <label>Date<input id="f_date" type="date"></label>
+          <label>Animateur(s)<input id="f_animators" placeholder="Ex. Élodie, Karim"></label>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title">🎯 2. Objectifs pédagogiques</div>
+        <label>Objectifs<textarea id="f_objectives" placeholder="Un objectif par ligne…"></textarea></label>
+        <div class="checks">
+          <label><input type="checkbox" name="capacity" value="Coopérer"> Coopérer</label>
+          <label><input type="checkbox" name="capacity" value="Autonomie"> Autonomie</label>
+          <label><input type="checkbox" name="capacity" value="Respecter les règles / consignes"> Règles / consignes</label>
+          <label><input type="checkbox" name="capacity" value="Créativité"> Créativité</label>
+          <label><input type="checkbox" name="capacity" value="Expression / communication"> Expression / communication</label>
+          <label><input type="checkbox" name="capacity" value="Motricité"> Motricité</label>
+          <label><input type="checkbox" name="capacity" value="Initiative"> Initiative</label>
+          <label><input type="checkbox" name="capacity" value="Expérimenter / découvrir"> Expérimenter / découvrir</label>
+          <label><input type="checkbox" name="capacity" value="Vivre-ensemble"> Vivre-ensemble</label>
+          <label><input type="checkbox" name="capacity" value="Autre"> Autre</label>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title">🧰 3. Matériel & préparation</div>
+        <div class="form-grid">
+          <label>Matériel nécessaire<textarea id="f_material" placeholder="Liste du matériel…"></textarea></label>
+          <label>Préparation à prévoir<textarea id="f_preparation" placeholder="Installation, matériel à préparer, espaces…"></textarea></label>
+          <label>Temps de préparation<input id="f_prep_time" placeholder="Ex. 15 min"></label>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title">▶️ 4. Déroulement</div>
+        <div class="step-card">
+          <h4>🟢 Accueil / introduction</h4>
+          <div class="form-grid">
+            <label>Durée<input id="f_s1_duration" placeholder="Ex. 5 min"></label>
+            <label>Ce que fait l’animateur<textarea id="f_s1_animator" placeholder="Accueil, présentation, mise en situation…"></textarea></label>
+            <label>Ce que font les enfants<textarea id="f_s1_children" placeholder="Ce que les enfants font / découvrent…"></textarea></label>
+          </div>
+        </div>
+        <div class="step-card">
+          <h4>🟡 Explication / consignes</h4>
+          <div class="form-grid">
+            <label>Durée<input id="f_s2_duration" placeholder="Ex. 5 min"></label>
+            <label>Consigne principale<textarea id="f_s2_instruction" placeholder="La consigne à donner aux enfants…"></textarea></label>
+            <label>Règles<textarea id="f_s2_rules" placeholder="Une règle par ligne…"></textarea></label>
+          </div>
+          <label>Comment vérifier la compréhension ?<textarea id="f_s2_check" placeholder="Reformulation, démonstration, exemple, questions…"></textarea></label>
+        </div>
+        <div class="step-card">
+          <h4>🔵 Déroulement de l’activité</h4>
+          <div class="form-grid">
+            <label>Durée<input id="f_s3_duration" placeholder="Ex. 25 min"></label>
+            <label>Étapes / déroulement<textarea id="f_s3_steps" placeholder="Décris les étapes dans l’ordre…"></textarea></label>
+            <label>Rôle de l’animateur<textarea id="f_s3_animator" placeholder="Observer, accompagner, encourager, adapter, intervenir…"></textarea></label>
+          </div>
+        </div>
+        <div class="step-card">
+          <h4>🟠 Fin / retour au calme</h4>
+          <div class="form-grid">
+            <label>Durée<input id="f_s4_duration" placeholder="Ex. 10 min"></label>
+            <label>Calme / transition<textarea id="f_s4_transition" placeholder="Comment terminer et enchaîner ?"></textarea></label>
+            <label>Questions de bilan<textarea id="f_s4_questions" placeholder="Qu’est-ce que tu as aimé ? Qu’est-ce qui a été difficile ?…"></textarea></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title">🔄 5. Variantes</div>
+        <div class="form-grid">
+          <label>Simplifier<textarea id="f_var_easy" placeholder="Pour rendre l’activité plus accessible…"></textarea></label>
+          <label>Rendre plus difficile<textarea id="f_var_hard" placeholder="Pour augmenter la difficulté…"></textarea></label>
+          <label>Grand groupe<textarea id="f_var_large" placeholder="Adaptation pour un groupe plus nombreux…"></textarea></label>
+          <label>Petit groupe<textarea id="f_var_small" placeholder="Adaptation pour un petit groupe…"></textarea></label>
+          <label>Sans matériel<textarea id="f_var_nomaterial" placeholder="Alternative avec peu ou pas de matériel…"></textarea></label>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title">♿ 6. Adaptations</div>
+        <div class="form-grid">
+          <label>Maternelle<textarea id="f_adapt_kindergarten" placeholder="Consignes, durée, matériel, accompagnement…"></textarea></label>
+          <label>Élémentaire<textarea id="f_adapt_elementary" placeholder="Consignes, autonomie, difficulté…"></textarea></label>
+          <label>Enfant à besoins particuliers<textarea id="f_adapt_needs" placeholder="Réduire les consignes, support visuel, binôme, rôle spécifique, pause…"></textarea></label>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title">⚠️ 7. Vigilance</div>
+        <div class="form-grid">
+          <label>Sécurité physique<textarea id="f_vig_physical" placeholder="Risques, espace, matériel, intensité…"></textarea></label>
+          <label>Sécurité affective<textarea id="f_vig_affective" placeholder="Climat, confiance, respect, mise en difficulté…"></textarea></label>
+          <label>Gestion du groupe<textarea id="f_vig_group" placeholder="Rythme, attentes, transitions, conflits…"></textarea></label>
+          <label>Matériel / environnement<textarea id="f_vig_environment" placeholder="Vérifications et points particuliers…"></textarea></label>
+          <label>Attention particulière<textarea id="f_vig_specific" placeholder="Points à surveiller pour ce groupe…"></textarea></label>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title">🧑‍🏫 8. Posture de l’animateur</div>
+        <label>Repères de posture<textarea id="f_posture" placeholder="Consignes courtes et adaptées, vérifier la compréhension, encourager sans faire à la place, valoriser les efforts, adapter sans perdre le cadre…"></textarea></label>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title">📊 9. Évaluation</div>
+        <div class="form-grid">
+          <label>Participation
+            <select id="f_eval_participation"><option value="">Choisir</option><option>Très bonne</option><option>Bonne</option><option>Moyenne</option><option>Faible</option></select>
+          </label>
+          <label>Objectifs atteints
+            <select id="f_eval_objectives"><option value="">Choisir</option><option>Oui</option><option>Partiellement</option><option>Non</option></select>
+          </label>
+          <label>Ce qui a fonctionné<textarea id="f_eval_worked"></textarea></label>
+          <label>Difficultés rencontrées<textarea id="f_eval_difficulties"></textarea></label>
+          <label>Ajustements à prévoir<textarea id="f_eval_adjustments"></textarea></label>
+          <label>Observations<textarea id="f_eval_observations"></textarea></label>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title">📝 10. Bilan de l’animateur</div>
+        <div class="form-grid">
+          <label>À retenir<textarea id="f_bilan_keep"></textarea></label>
+          <label>À modifier<textarea id="f_bilan_change"></textarea></label>
+          <label>À conserver pour une prochaine fois<textarea id="f_bilan_next"></textarea></label>
+        </div>
+      </div>
+
+      <div class="generator-actions">
+        <button class="primary big-action" onclick="generateActivitySheet()">✨ Générer ma fiche</button>
+        <button class="softbtn" onclick="saveActivityDraft()">💾 Enregistrer le brouillon</button>
+      </div>
+    </div>
+
+    <div id="activityPreview" class="activity-preview hidden"></div>
+  </div>
+</section>
 
 <section id="help" class="view"><div class="content"><div class="head"><h2>Help</h2></div><div class="help"><button class="emergency" onclick="emergency()">🆘 Je suis en urgence</button><h3 style="font-size:21px;margin:0 0 7px">Que se passe-t-il ?</h3><p style="color:var(--muted);margin:0 0 12px">Écris ta situation avec tes mots. Help peut te guider étape par étape et te demander un complément uniquement si nécessaire.</p><textarea id="hinput" placeholder="Ex. : Un enfant pleure depuis son arrivée et refuse de participer…"></textarea><div class="contexts"><button onclick="selectContext(this)">Périscolaire</button><button onclick="selectContext(this)">ALSH</button><button onclick="selectContext(this)">Colonie / séjour</button><button onclick="selectContext(this)">BAFA / formation</button><button onclick="selectContext(this)">Autre</button></div><button class="primary" onclick="help()">M’aider maintenant</button><div class="examples"><strong>Exemples</strong><button class="example" onclick="fill(this)">Un enfant quitte mon activité sans prévenir.</button><button class="example" onclick="fill(this)">Deux enfants se disputent pendant le jeu.</button><button class="example" onclick="fill(this)">Un enfant ne veut pas manger.</button><button class="example" onclick="fill(this)">Un enfant pleure depuis son arrivée.</button></div><div id="hout"></div></div></div></section>
 
@@ -86,4 +293,115 @@ function toast(t){const x=document.getElementById('toast');x.textContent=t;x.sty
 document.getElementById('catlist').innerHTML=Object.entries(data).map(([x,d])=>'<button class="itembtn" onclick="cat('+JSON.stringify(x)+')"><span><strong>'+esc(x)+'</strong><small>'+Object.keys(d.groups).length+' rubriques</small></span><span class="arrow">›</span></button>').join('');
 renderFavorites();
 if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
+
+function val(id){const e=document.getElementById(id);return e?e.value.trim():''}
+function esc2(t){return String(t||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')}
+function linesToHtml(t){
+  const x=esc2(t); if(!x) return '<p class="preview-empty">Non renseigné</p>';
+  return '<ul>'+x.split(/\n+/).filter(Boolean).map(v=>'<li>'+v+'</li>').join('')+'</ul>';
+}
+function textHtml(t){
+  const x=esc2(t); return x?'<p>'+x.replace(/\n/g,'<br>')+'</p>':'<p class="preview-empty">Non renseigné</p>';
+}
+function capacities(){
+  return [...document.querySelectorAll('input[name="capacity"]:checked')].map(x=>x.value);
+}
+function collectActivity(){
+  return {
+    name:val('f_name')||'Fiche d’activité',
+    theme:val('f_theme'),type:val('f_type'),age:val('f_age'),number:val('f_number'),duration:val('f_duration'),place:val('f_place'),date:val('f_date'),animators:val('f_animators'),
+    objectives:val('f_objectives'),capacities:capacities(),material:val('f_material'),preparation:val('f_preparation'),prepTime:val('f_prep_time'),
+    s1:{duration:val('f_s1_duration'),animator:val('f_s1_animator'),children:val('f_s1_children')},
+    s2:{duration:val('f_s2_duration'),instruction:val('f_s2_instruction'),rules:val('f_s2_rules'),check:val('f_s2_check')},
+    s3:{duration:val('f_s3_duration'),steps:val('f_s3_steps'),animator:val('f_s3_animator')},
+    s4:{duration:val('f_s4_duration'),transition:val('f_s4_transition'),questions:val('f_s4_questions')},
+    variants:{easy:val('f_var_easy'),hard:val('f_var_hard'),large:val('f_var_large'),small:val('f_var_small'),nomaterial:val('f_var_nomaterial')},
+    adaptations:{kindergarten:val('f_adapt_kindergarten'),elementary:val('f_adapt_elementary'),needs:val('f_adapt_needs')},
+    vigilance:{physical:val('f_vig_physical'),affective:val('f_vig_affective'),group:val('f_vig_group'),environment:val('f_vig_environment'),specific:val('f_vig_specific')},
+    posture:val('f_posture'),
+    evaluation:{participation:val('f_eval_participation'),objectives:val('f_eval_objectives'),worked:val('f_eval_worked'),difficulties:val('f_eval_difficulties'),adjustments:val('f_eval_adjustments'),observations:val('f_eval_observations')},
+    bilan:{keep:val('f_bilan_keep'),change:val('f_bilan_change'),next:val('f_bilan_next')}
+  };
+}
+function metaLine(a){
+  return [a.theme,a.type,a.age,a.number?(a.number+' enfant(s)'): '',a.duration,a.place].filter(Boolean).map(esc2).join(' · ')||'Fiche d’activité';
+}
+function sectionHtml(title,body){
+  return '<section class="preview-section"><h3>'+title+'</h3>'+body+'</section>';
+}
+function generateActivitySheet(){
+  const a=collectActivity();
+  const caps=a.capacities.length?'<p><strong>Capacités mobilisées :</strong> '+a.capacities.map(esc2).join(' · ')+'</p>':'';
+  let h='<div class="preview-actions"><button class="primary" onclick="printActivitySheet()">🖨️ Imprimer / PDF</button><button class="softbtn" onclick="downloadActivitySheet()">⬇️ Télécharger</button><button class="softbtn" onclick="shareActivitySheet()">↗ Partager</button><button class="softbtn" onclick="backToActivityForm()">✎ Modifier</button></div>';
+  h+='<div class="preview-top"><div><div class="preview-title">'+esc2(a.name)+'</div><div class="preview-meta">'+metaLine(a)+'</div></div><div class="preview-meta">'+(a.date?esc2(a.date.split('-').reverse().join('/')):'')+(a.animators?' · '+esc2(a.animators):'')+'</div></div>';
+  h+=sectionHtml('🎯 Objectifs pédagogiques',textHtml(a.objectives)+caps);
+  h+=sectionHtml('🧰 Matériel & préparation',textHtml(a.material)+textHtml(a.preparation)+(a.prepTime?'<p><strong>Temps de préparation :</strong> '+esc2(a.prepTime)+'</p>':''));
+  h+=sectionHtml('🟢 Accueil / introduction','<p><strong>Durée :</strong> '+esc2(a.s1.duration||'Non renseignée')+'</p>'+textHtml(a.s1.animator)+textHtml(a.s1.children));
+  h+=sectionHtml('🟡 Explication / consignes','<p><strong>Durée :</strong> '+esc2(a.s2.duration||'Non renseignée')+'</p><p><strong>Consigne principale</strong></p>'+textHtml(a.s2.instruction)+'<p><strong>Règles</strong></p>'+linesToHtml(a.s2.rules)+'<p><strong>Vérification de compréhension</strong></p>'+textHtml(a.s2.check));
+  h+=sectionHtml('🔵 Déroulement de l’activité','<p><strong>Durée :</strong> '+esc2(a.s3.duration||'Non renseignée')+'</p><p><strong>Étapes</strong></p>'+linesToHtml(a.s3.steps)+'<p><strong>Rôle de l’animateur</strong></p>'+textHtml(a.s3.animator));
+  h+=sectionHtml('🟠 Fin / retour au calme','<p><strong>Durée :</strong> '+esc2(a.s4.duration||'Non renseignée')+'</p>'+textHtml(a.s4.transition)+'<p><strong>Questions de bilan</strong></p>'+textHtml(a.s4.questions));
+  h+=sectionHtml('🔄 Variantes','<p><strong>Simplifier :</strong></p>'+textHtml(a.variants.easy)+'<p><strong>Rendre plus difficile :</strong></p>'+textHtml(a.variants.hard)+'<p><strong>Grand groupe :</strong></p>'+textHtml(a.variants.large)+'<p><strong>Petit groupe :</strong></p>'+textHtml(a.variants.small)+'<p><strong>Sans matériel :</strong></p>'+textHtml(a.variants.nomaterial));
+  h+=sectionHtml('♿ Adaptations','<p><strong>Maternelle :</strong></p>'+textHtml(a.adaptations.kindergarten)+'<p><strong>Élémentaire :</strong></p>'+textHtml(a.adaptations.elementary)+'<p><strong>Enfant à besoins particuliers :</strong></p>'+textHtml(a.adaptations.needs));
+  h+=sectionHtml('⚠️ Vigilance','<p><strong>Sécurité physique :</strong></p>'+textHtml(a.vigilance.physical)+'<p><strong>Sécurité affective :</strong></p>'+textHtml(a.vigilance.affective)+'<p><strong>Gestion du groupe :</strong></p>'+textHtml(a.vigilance.group)+'<p><strong>Matériel / environnement :</strong></p>'+textHtml(a.vigilance.environment)+'<p><strong>Attention particulière :</strong></p>'+textHtml(a.vigilance.specific));
+  h+=sectionHtml('🧑‍🏫 Posture de l’animateur',textHtml(a.posture));
+  h+=sectionHtml('📊 Évaluation','<p><strong>Participation :</strong> '+esc2(a.evaluation.participation||'Non renseignée')+' · <strong>Objectifs :</strong> '+esc2(a.evaluation.objectives||'Non renseigné')+'</p><p><strong>Ce qui a fonctionné :</strong></p>'+textHtml(a.evaluation.worked)+'<p><strong>Difficultés :</strong></p>'+textHtml(a.evaluation.difficulties)+'<p><strong>Ajustements :</strong></p>'+textHtml(a.evaluation.adjustments)+'<p><strong>Observations :</strong></p>'+textHtml(a.evaluation.observations));
+  h+=sectionHtml('📝 Bilan de l’animateur','<p><strong>À retenir :</strong></p>'+textHtml(a.bilan.keep)+'<p><strong>À modifier :</strong></p>'+textHtml(a.bilan.change)+'<p><strong>À conserver :</strong></p>'+textHtml(a.bilan.next));
+  const out=document.getElementById('activityPreview'); out.innerHTML=h; out.classList.remove('hidden'); document.getElementById('activityForm').classList.add('hidden'); window.scrollTo({top:0,behavior:'smooth'});
+  window.currentActivitySheet=a;
+}
+function backToActivityForm(){document.getElementById('activityPreview').classList.add('hidden');document.getElementById('activityForm').classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'})}
+function printActivitySheet(){window.print()}
+function activityPlainText(a){
+  const L=[];
+  const add=(t,v)=>{if(v){L.push(t);L.push(v);L.push('');}};
+  L.push((a.name||'Fiche d’activité').toUpperCase()); L.push(metaLine(a).replace(/<[^>]+>/g,'')); L.push('');
+  add('OBJECTIFS PÉDAGOGIQUES',a.objectives); if(a.capacities.length)add('CAPACITÉS MOBILISÉES',a.capacities.join(', '));
+  add('MATÉRIEL',a.material); add('PRÉPARATION',a.preparation); add('TEMPS DE PRÉPARATION',a.prepTime);
+  add('ACCUEIL / INTRODUCTION',a.s1.animator+'\n'+a.s1.children); add('EXPLICATION / CONSIGNES',a.s2.instruction+'\nRègles:\n'+a.s2.rules+'\nVérification:\n'+a.s2.check);
+  add('DÉROULEMENT',a.s3.steps+'\nRôle de l’animateur:\n'+a.s3.animator); add('FIN / RETOUR AU CALME',a.s4.transition+'\nQuestions:\n'+a.s4.questions);
+  add('VARIANTES','Simplifier: '+a.variants.easy+'\nPlus difficile: '+a.variants.hard+'\nGrand groupe: '+a.variants.large+'\nPetit groupe: '+a.variants.small+'\nSans matériel: '+a.variants.nomaterial);
+  add('ADAPTATIONS','Maternelle: '+a.adaptations.kindergarten+'\nÉlémentaire: '+a.adaptations.elementary+'\nBesoins particuliers: '+a.adaptations.needs);
+  add('VIGILANCE','Sécurité physique: '+a.vigilance.physical+'\nSécurité affective: '+a.vigilance.affective+'\nGestion du groupe: '+a.vigilance.group+'\nMatériel/environnement: '+a.vigilance.environment+'\nAttention particulière: '+a.vigilance.specific);
+  add('POSTURE DE L’ANIMATEUR',a.posture); add('ÉVALUATION','Participation: '+a.evaluation.participation+'\nObjectifs: '+a.evaluation.objectives+'\nCe qui a fonctionné: '+a.evaluation.worked+'\nDifficultés: '+a.evaluation.difficulties+'\nAjustements: '+a.evaluation.adjustments+'\nObservations: '+a.evaluation.observations);
+  add('BILAN DE L’ANIMATEUR','À retenir: '+a.bilan.keep+'\nÀ modifier: '+a.bilan.change+'\nÀ conserver: '+a.bilan.next);
+  return L.join('\n');
+}
+function downloadActivitySheet(){
+  const a=window.currentActivitySheet||collectActivity(), text=activityPlainText(a);
+  const blob=new Blob([text],{type:'text/plain;charset=utf-8'}), url=URL.createObjectURL(blob), link=document.createElement('a');
+  link.href=url; link.download=(a.name||'fiche-activite').replace(/[^a-z0-9À-ÿ]+/gi,'-').replace(/^-|-$/g,'').toLowerCase()+'.txt'; link.click(); URL.revokeObjectURL(url);
+}
+async function shareActivitySheet(){
+  const a=window.currentActivitySheet||collectActivity(), text=activityPlainText(a);
+  if(navigator.share){
+    try{
+      if(window.File && navigator.canShare){
+        const file=new File([text],(a.name||'fiche-activite')+'.txt',{type:'text/plain'});
+        if(navigator.canShare({files:[file]})){await navigator.share({title:a.name||'Fiche d’activité',text:'Ma fiche d’activité · Anim Compagnon',files:[file]});return;}
+      }
+      await navigator.share({title:a.name||'Fiche d’activité',text:text});
+    }catch(e){}
+  }else toast('Le partage n’est pas disponible sur cet appareil. Tu peux utiliser « Télécharger » ou « Imprimer / PDF ».');
+}
+function formData(){
+  const obj={};
+  document.querySelectorAll('#activityForm input:not([type="checkbox"]),#activityForm select,#activityForm textarea').forEach(e=>obj[e.id]=e.value);
+  obj.capacities=capacities(); return obj;
+}
+function saveActivityDraft(){
+  localStorage.setItem('animActivityDraft',JSON.stringify(formData())); toast('Brouillon enregistré sur cet appareil.');
+}
+function loadActivityDraft(){
+  const raw=localStorage.getItem('animActivityDraft'); if(!raw)return toast('Aucun brouillon enregistré.');
+  try{const obj=JSON.parse(raw);Object.entries(obj).forEach(([id,v])=>{const e=document.getElementById(id);if(e)e.value=v});
+    document.querySelectorAll('input[name="capacity"]').forEach(e=>e.checked=(obj.capacities||[]).includes(e.value));
+    toast('Brouillon repris.');
+  }catch(e){toast('Impossible de reprendre le brouillon.')}
+}
+function resetActivityForm(){
+  if(!confirm('Commencer une nouvelle fiche ? Les champs actuels seront vidés.'))return;
+  document.querySelectorAll('#activityForm input,#activityForm textarea,#activityForm select').forEach(e=>{if(e.type==='checkbox')e.checked=false;else e.value=''});
+  backToActivityForm(); toast('Nouvelle fiche prête.');
+}
+
 </script></body></html>
