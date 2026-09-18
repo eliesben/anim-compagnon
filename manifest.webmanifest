@@ -1,10 +1,1 @@
-{
-  "name": "Anim Compagnon",
-  "short_name": "Anim Compagnon",
-  "start_url": "./",
-  "display": "standalone",
-  "background_color": "#f6f7f3",
-  "theme_color": "#ffffff",
-  "lang": "fr-FR",
-  "icons": []
-}
+{"name":"Anim Compagnon","short_name":"Anim Compagnon","start_url":"./","display":"standalone","background_color":"#f7f8f5","theme_color":"#f7f8f5","lang":"fr-FR","icons":[]}
