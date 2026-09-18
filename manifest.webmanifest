@@ -3,7 +3,8 @@
   "short_name": "Anim Compagnon",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#F4F7FC",
-  "theme_color": "#1746B8",
-  "lang": "fr"
+  "background_color": "#f6f7f3",
+  "theme_color": "#ffffff",
+  "lang": "fr-FR",
+  "icons": []
 }
