@@ -1,125 +1,432 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#1746B8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Anim Compagnon</title>
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Anim Compagnon">
 <link rel="manifest" href="manifest.webmanifest">
+<title>Anim Compagnon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
-:root{--blue:#1746B8;--deep:#0D328A;--bg:#F4F7FC;--ink:#12306D;--muted:#6C7C9A;--line:#DCE5F3;--soft:#EAF0FC}
-*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Nunito,sans-serif;background:var(--bg);color:var(--ink)}
-body{padding-bottom:88px}.app{max-width:760px;margin:auto}
-header{color:#fff;background:linear-gradient(145deg,var(--blue),var(--deep));padding:28px 18px 26px;border-radius:0 0 30px 30px}
-.brand{font-size:28px;font-weight:900}.tag{opacity:.88;font-weight:600;margin-top:2px}
-.global-search{display:flex;align-items:center;gap:10px;background:#fff;border-radius:18px;margin-top:20px;padding:13px 15px;box-shadow:0 10px 28px #071f6026}
-.global-search input{border:0;outline:0;width:100%;font:700 15px Nunito;color:var(--ink)}
-main{padding:22px 17px}.view{display:none}.view.active{display:block}
-h1,h2,h3{font-weight:900}h2{font-size:23px;margin:0 0 14px}.section{margin-bottom:25px}
-.hero{background:var(--blue);color:#fff;border-radius:20px;padding:18px;margin-bottom:25px}.hero b{font-size:18px}.hero p{margin:5px 0 0;opacity:.9}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.card{border:1px solid var(--line);background:#fff;border-radius:18px;padding:16px;min-height:112px;box-shadow:0 6px 18px #173b8f0b;text-align:left;color:var(--ink);font-family:Nunito}.card .icon{font-size:25px;margin-bottom:7px}.card b{font-size:15px}.card p{margin:4px 0 0;color:var(--muted);font-size:13px;line-height:1.35}
-.list{display:grid;gap:10px}.row{display:flex;align-items:center;gap:12px;width:100%;border:1px solid var(--line);background:#fff;border-radius:16px;padding:15px;text-align:left;color:var(--ink);font-family:Nunito}.row .arrow{margin-left:auto;font-size:21px;color:#8491A9}
-.back{border:0;background:transparent;color:var(--blue);font:800 15px Nunito;padding:0 0 14px}
-.label{font-size:16px;font-weight:900;margin:18px 0 8px}
-textarea,select{width:100%;border:1px solid rgba(255,255,255,.3);border-radius:16px;background:rgba(255,255,255,.10);color:#fff;padding:14px 15px;font:600 15px/1.45 Nunito;outline:0}
-textarea{min-height:145px;resize:vertical}textarea::placeholder{color:rgba(255,255,255,.72)}select option{background:var(--deep);color:#fff}
-.btn{width:100%;border:0;border-radius:15px;padding:14px 16px;margin-top:14px;background:var(--blue);color:#fff;font:900 15px Nunito}.btn.light{background:var(--soft);color:var(--blue)}
-.help-panel{background:linear-gradient(145deg,var(--blue),var(--deep));color:#fff;border-radius:22px;padding:18px}
-.help-panel .label{color:#fff}.help-title{font-size:25px;font-weight:900;margin-bottom:4px}.help-sub{opacity:.88;margin-bottom:17px}
-.emergency{background:#fff4f4;color:#8d2929;border-radius:17px;padding:14px;margin-bottom:18px;border:1px solid #ffd8d8}.emergency p{margin:4px 0;font-size:13px}
-.examples-title{font-size:17px;font-weight:900;margin-top:19px}.examples-hint{font-size:13px;opacity:.75;margin:3px 0 9px}.examples{display:grid;gap:8px}.example{border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.10);color:#fff;border-radius:14px;padding:12px;text-align:left;font:700 14px/1.3 Nunito}
-.situations{margin-top:22px}.saved{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px}.saved-item{padding:12px 0;border-bottom:1px solid var(--line)}.saved-item:last-child{border-bottom:0}.saved-item b{display:block}.saved-item small{color:var(--muted)}
-.bottom{position:fixed;z-index:50;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);padding:8px 8px max(9px,env(safe-area-inset-bottom));box-shadow:0 -7px 22px #173b8f12}.nav{border:0;background:transparent;color:#7785A0;font:800 11px Nunito}.nav span{display:block;font-size:21px;line-height:22px}.nav.active{color:var(--blue)}
-@media(min-width:650px){header{padding:30px;border-radius:0 0 34px 34px}main{padding:30px}.grid{grid-template-columns:repeat(4,1fr)}}
+:root{
+  --bg:#f6f7f3;
+  --card:#ffffff;
+  --ink:#151827;
+  --muted:#686b73;
+  --green:#0d6334;
+  --green2:#2c8b55;
+  --green-soft:#e8f2df;
+  --line:#e2e4df;
+  --shadow:0 6px 20px rgba(20,30,25,.08);
+  --radius:22px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Nunito",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+button,input{font:inherit}
+button{cursor:pointer}
+.app{max-width:520px;margin:0 auto;min-height:100vh;padding-bottom:96px}
+header{padding:28px 20px 12px}
+.topline{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:13px;min-width:0}
+.logo{
+  width:68px;height:68px;border-radius:50%;background:#fff;
+  display:flex;align-items:center;justify-content:center;flex:none;
+  box-shadow:0 2px 10px rgba(0,0,0,.04);position:relative;overflow:hidden
+}
+.logo:before{content:"";position:absolute;width:30px;height:18px;background:#f2a65a;border-radius:50% 50% 45% 45%;bottom:19px}
+.logo:after{content:"";position:absolute;width:6px;height:22px;background:#4d8658;bottom:14px;left:31px;transform:rotate(-18deg);box-shadow:-15px -11px 0 -1px #4d8658,15px -11px 0 -1px #4d8658}
+.brand h1{font-size:25px;line-height:1.05;margin:0;font-weight:900;letter-spacing:-.4px}
+.brand p{font-size:15px;line-height:1.2;margin:6px 0 0;color:var(--muted);font-weight:600}
+.account{
+  width:52px;height:52px;border:2px solid var(--ink);border-radius:50%;
+  background:transparent;display:flex;align-items:center;justify-content:center;flex:none
+}
+.account svg{width:30px;height:30px}
+.searchrow{display:flex;gap:10px;margin-top:24px}
+.searchbox{
+  flex:1;height:70px;background:#fff;border:1.5px solid #bfc1bd;border-radius:15px;
+  display:flex;align-items:center;padding:0 18px;box-shadow:0 2px 5px rgba(0,0,0,.03)
+}
+.searchbox svg{width:31px;height:31px;flex:none;margin-right:13px}
+.searchbox input{border:0;outline:0;width:100%;font-size:20px;color:var(--ink);background:transparent}
+.searchbox input::placeholder{color:#777;opacity:1}
+.scan{
+  width:70px;border:0;border-radius:12px;background:#526078;color:white;
+  display:flex;align-items:center;justify-content:center
+}
+.scan svg{width:34px;height:34px}
+section{padding:20px}
+.sectionhead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.sectionhead h2{font-size:25px;line-height:1.05;margin:0;font-weight:900;letter-spacing:-.4px}
+.seeall{color:var(--green);font-size:16px;font-weight:800;background:none;border:0;padding:4px}
+.carousel{display:flex;gap:14px;overflow-x:auto;margin:0 -20px;padding:0 20px 7px;scrollbar-width:none}
+.carousel::-webkit-scrollbar{display:none}
+.feature{
+  min-width:245px;height:315px;border-radius:25px;overflow:hidden;position:relative;
+  color:#fff;box-shadow:0 3px 10px rgba(0,0,0,.12);border:3px solid rgba(120,125,115,.65);
+  background:linear-gradient(160deg,#a9c791,#547b4f)
+}
+.feature:nth-child(2){background:linear-gradient(160deg,#8aa56f,#35523c)}
+.feature:nth-child(3){background:linear-gradient(160deg,#f5b178,#c46f3c)}
+.feature .art{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:92px;opacity:.95}
+.feature .shade{position:absolute;inset:45% 0 0;background:linear-gradient(transparent,rgba(0,0,0,.72))}
+.feature .label{position:absolute;left:18px;right:12px;bottom:18px;font-size:25px;font-weight:900;line-height:1.05}
+.feature .sub{display:block;font-size:16px;font-weight:600;margin-top:7px}
+.promo{
+  background:#fff;border-radius:24px;padding:17px 16px 18px;box-shadow:var(--shadow);
+  display:grid;grid-template-columns:1.15fr .85fr;gap:8px;overflow:hidden;min-height:300px
+}
+.badge{display:inline-flex;align-items:center;background:var(--green-soft);color:var(--green);font-weight:900;font-size:14px;padding:7px 12px;border-radius:20px}
+.promo h3{font-size:29px;line-height:1.05;margin:14px 0 12px;font-weight:900}
+.promo p{font-size:17px;line-height:1.35;margin:0 0 18px;color:#30333a;font-weight:500}
+.cta{border:0;background:var(--green);color:white;border-radius:15px;padding:14px 18px;font-size:16px;font-weight:800}
+.backpack{position:relative;min-height:240px;display:flex;align-items:flex-end;justify-content:center}
+.bag{font-size:125px;filter:drop-shadow(0 8px 6px rgba(0,0,0,.15));transform:rotate(-3deg)}
+.note{position:absolute;background:#f3ead0;padding:12px 10px;font-weight:800;font-size:14px;transform:rotate(-8deg);bottom:18px;left:0;box-shadow:0 4px 10px rgba(0,0,0,.12)}
+.categories{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.cat{
+  min-height:142px;border:0;border-radius:18px;padding:18px 12px;text-align:center;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  box-shadow:0 1px 3px rgba(0,0,0,.03)
+}
+.cat .ico{font-size:38px;line-height:1;margin-bottom:9px}
+.cat strong{font-size:17px;line-height:1.05;font-weight:900}
+.cat span{font-size:13px;margin-top:6px;color:#4c4e55;font-weight:600}
+.c1{background:#dcefd8}.c2{background:#fae2d2}.c3{background:#d9eaf4}.c4{background:#f8edc9}
+.c5{background:#e3e0f5}.c6{background:#f9dfdf}.c7{background:#dcebdc}.c8{background:#e7eaeb}
+.info{padding-top:4px}
+.card{background:#fff;border-radius:20px;padding:20px;box-shadow:var(--shadow)}
+.card h3{font-size:22px;margin:0 0 8px;font-weight:900}
+.card p{margin:0;color:var(--muted);line-height:1.45}
+.view{display:none}
+.view.active{display:block}
+.list{display:flex;flex-direction:column;gap:10px}
+.list button{
+  width:100%;text-align:left;background:#fff;border:0;border-radius:16px;padding:17px;
+  box-shadow:0 2px 8px rgba(0,0,0,.06);font-weight:800;color:var(--ink)
+}
+.list small{display:block;color:var(--muted);font-weight:600;margin-top:3px}
+.back{border:0;background:none;color:var(--green);font-weight:900;padding:8px 0;font-size:16px}
+.helpbox{background:#fff;border-radius:22px;padding:20px;box-shadow:var(--shadow)}
+.emergency{
+  width:100%;border:0;background:#c43d3d;color:#fff;border-radius:16px;padding:18px;
+  font-size:18px;font-weight:900;margin-bottom:18px
+}
+.helpbox textarea{
+  width:100%;min-height:150px;border:1.5px solid #c8cac5;border-radius:16px;padding:15px;
+  resize:vertical;outline:none;font-size:17px;background:#fafbf9;color:var(--ink)
+}
+.contexts{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.contexts button{border:1px solid #d2d5cf;background:#f5f6f2;border-radius:20px;padding:8px 12px;font-weight:700}
+.contexts button.selected{background:var(--green-soft);border-color:#b8d0ae;color:var(--green)}
+.primary{width:100%;border:0;background:var(--green);color:white;border-radius:15px;padding:15px;font-weight:900;font-size:17px}
+.examples{display:flex;flex-direction:column;gap:8px;margin-top:15px}
+.example{background:#f2f4ef;border:0;border-radius:14px;padding:13px;text-align:left;font-weight:700}
+.result{margin-top:16px;background:#f2f7ed;border-left:5px solid var(--green);padding:16px;border-radius:12px;line-height:1.45}
+.bottom{
+  position:fixed;z-index:50;bottom:0;left:0;right:0;background:rgba(255,255,255,.96);
+  backdrop-filter:blur(14px);border-top:1px solid #ddd;display:flex;justify-content:center
+}
+.bottom-inner{width:100%;max-width:520px;display:grid;grid-template-columns:repeat(5,1fr);padding:8px 8px max(8px,env(safe-area-inset-bottom))}
+.nav{
+  border:0;background:none;color:#3f4147;padding:7px 2px 4px;display:flex;flex-direction:column;
+  align-items:center;gap:4px;font-size:12px;font-weight:700
+}
+.nav svg{width:29px;height:29px;stroke-width:1.9}
+.nav.active{color:var(--green)}
+.nav.active .navicon{background:var(--green-soft);border-radius:13px;padding:5px;width:48px;height:38px}
+.toast{position:fixed;left:50%;bottom:95px;transform:translateX(-50%);background:#161a20;color:#fff;padding:12px 16px;border-radius:13px;font-weight:700;display:none;z-index:100}
+@media(max-width:380px){
+  .feature{min-width:220px;height:285px}
+  .promo h3{font-size:25px}
+  .sectionhead h2{font-size:22px}
+}
 </style>
 </head>
 <body>
 <div class="app">
-<header>
-  <div class="brand">Anim Compagnon</div>
-  <div class="tag">Ton compagnon de terrain pour l’animation.</div>
-  <div class="global-search">⌕ <input placeholder="De quoi as-tu besoin aujourd’hui ?"></div>
-</header>
-<main>
-<section id="home" class="view active">
-  <div class="hero"><b>Ton compagnon de terrain</b><p>Trouve une idée, une ressource ou de l’aide en quelques secondes.</p></div>
-  <div class="section"><h2>⭐ À la une</h2><div class="card"><div class="icon">🆘</div><b>Une situation te pose problème ?</b><p>Décris-la dans Help et avance avec une réponse adaptée.</p></div></div>
-  <div class="section"><h2>⚡ Accès rapides</h2><div class="grid">
-    <button class="card" onclick="go('categories')"><div class="icon">🎲</div><b>Activités</b><p>Des idées pour ton groupe.</p></button>
-    <button class="card" onclick="go('generate')"><div class="icon">🤖</div><b>Générer</b><p>Créer une activité adaptée.</p></button>
-    <button class="card" onclick="go('help')"><div class="icon">🆘</div><b>Help</b><p>Analyser une situation.</p></button>
-    <button class="card" onclick="go('categories')"><div class="icon">🧰</div><b>Boîte à outils</b><p>Infos et ressources utiles.</p></button>
-  </div></div>
-  <div class="section"><h2>✨ Nouveautés</h2><div class="card"><b>La base Anim Compagnon</b><p>Elle sera enrichie progressivement avec des contenus pratiques.</p></div></div>
-</section>
 
-<section id="categories" class="view">
-<button class="back" onclick="go('home')">← Accueil</button><h2>Catégories</h2>
-<div class="global-search" style="margin:0 0 16px"><span>⌕</span><input placeholder="Que recherchez-vous ?"></div>
-<div class="list" id="catList"></div>
-</section>
+  <div id="home" class="view active">
+    <header>
+      <div class="topline">
+        <div class="brand">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+            <h1>Anim Compagnon</h1>
+            <p>Des idées aujourd’hui,<br>pour des enfants épanouis demain.</p>
+          </div>
+        </div>
+        <button class="account" onclick="showView('account')" aria-label="Compte">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c.9-3.3 3.2-5 7-5s6.1 1.7 7 5"/><circle cx="12" cy="12" r="10"/></svg>
+        </button>
+      </div>
+      <div class="searchrow">
+        <label class="searchbox">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="10.8" cy="10.8" r="6.7"/><path d="m16 16 5 5"/></svg>
+          <input id="globalSearch" placeholder="Que recherchez-vous ?" onkeydown="if(event.key==='Enter') globalSearch()">
+        </label>
+        <button class="scan" onclick="toast('Recherche visuelle bientôt disponible')" aria-label="Scanner">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"/><path d="M7 10h10v4H7z"/></svg>
+        </button>
+      </div>
+    </header>
 
-<section id="generate" class="view">
-<button class="back" onclick="go('home')">← Accueil</button><h2>Générer une activité</h2>
-<p style="color:var(--muted)">Décris les conditions de terrain. Le moteur IA pourra ensuite proposer une activité adaptée.</p>
-<div class="label">Âge</div><select><option>3 à 6 ans</option><option>7 à 11 ans</option><option>12 à 17 ans</option></select>
-<div class="label">Durée</div><select><option>Animation courte</option><option>30 à 45 min</option><option>1 h et plus</option></select>
-<div class="label">Matériel disponible</div><textarea placeholder="Ex. 4 plots, 3 ballons, 2 cordes…"></textarea>
-<div class="label">Objectif pédagogique</div><select><option>Coopération</option><option>Autonomie</option><option>Motricité fine</option><option>Libre</option></select>
-<button class="btn" onclick="alert('Le moteur IA sera connecté dans une prochaine étape.')">Créer mon activité</button>
-</section>
+    <section>
+      <div class="sectionhead">
+        <h2>À ne pas manquer aujourd’hui :</h2>
+        <button class="seeall" onclick="showView('categories')">Voir tout ›</button>
+      </div>
+      <div class="carousel">
+        <button class="feature" onclick="toast('Idées d’activités')"><div class="art">💡</div><div class="shade"></div><div class="label">Idées d’activités<span class="sub">Pour tous les âges</span></div></button>
+        <button class="feature" onclick="toast('Dossier du moment')"><div class="art">🌳</div><div class="shade"></div><div class="label"><span style="font-size:13px;letter-spacing:.4px">DOSSIER DU MOMENT</span><br>Vivre-ensemble<span class="sub">Des outils concrets au quotidien</span></div></button>
+        <button class="feature" onclick="toast('Gestion de groupe')"><div class="art">✓</div><div class="shade"></div><div class="label">Gestion de groupe<span class="sub">Conseils & astuces</span></div></button>
+      </div>
+    </section>
 
-<section id="help" class="view">
-<button class="back" onclick="go('home')">← Accueil</button>
-<div class="help-panel">
-  <div class="help-title">Help</div><div class="help-sub">Décris ce qui se passe. On regarde la situation ensemble.</div>
-  <div class="emergency"><b>🚨 Je suis en urgence</b><p>Accès rapide au parcours d’urgence.</p><button class="btn light" onclick="alert('Le parcours urgence sera relié aux ressources officielles.')">Accéder à l’urgence</button></div>
-  <div class="label">Que se passe-t-il ?</div>
-  <textarea id="helpInput" placeholder="Écris ta situation avec tes mots…"></textarea>
-  <div class="examples-title">Exemples de situations</div><div class="examples-hint">Tu peux cliquer sur un exemple.</div>
-  <div class="examples" id="examples"></div>
-  <div class="label">Dans quel cadre ? <span style="font-size:12px;font-weight:600;opacity:.7">(facultatif)</span></div>
-  <select id="context"><option>Je ne sais pas / Peu importe</option><option>Périscolaire</option><option>ALSH</option><option>Colonie / séjour</option><option>BAFA / formation</option><option>Autre</option></select>
-  <button class="btn" onclick="answer()">M’aider avec cette situation</button>
-  <button class="btn light" onclick="newSituation()">＋ Nouvelle situation</button>
+    <section class="info">
+      <div class="promo">
+        <div>
+          <span class="badge">NOUVEAU</span>
+          <h3>Votre compagnon<br>de terrain</h3>
+          <p>Des ressources, des idées, des solutions… toujours avec vous.</p>
+          <button class="cta" onclick="showView('help')">Explorer maintenant&nbsp; →</button>
+        </div>
+        <div class="backpack"><div class="bag">🎒</div><div class="note">Animer<br>c’est semer<br>aujourd’hui 🌱</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="sectionhead">
+        <h2>Parcourir les catégories</h2>
+        <button class="seeall" onclick="showView('categories')">Voir tout ›</button>
+      </div>
+      <div class="categories">
+        <button class="cat c1" onclick="openCategory('Activités')"><div class="ico">⛺</div><strong>Activités</strong><span>Par âge / thème</span></button>
+        <button class="cat c2" onclick="openCategory('Publics')"><div class="ico">👥</div><strong>Publics</strong><span>Mieux comprendre</span></button>
+        <button class="cat c3" onclick="openCategory('Rôle de l’animateur')"><div class="ico">🎓</div><strong>Rôle de<br>l’animateur</strong><span>Posture & outils</span></button>
+        <button class="cat c4" onclick="openCategory('Boîte à outils')"><div class="ico">🧰</div><strong>Boîte à outils</strong><span>Fiches pratiques</span></button>
+        <button class="cat c5" onclick="showView('help')"><div class="ico">🛟</div><strong>Help</strong><span>Situations du quotidien</span></button>
+        <button class="cat c6" onclick="showView('favorites')"><div class="ico">♥</div><strong>Mes favoris</strong><span>Vos contenus</span></button>
+        <button class="cat c7" onclick="openCategory('Ressources')"><div class="ico">📄</div><strong>Ressources</strong><span>Docs & liens utiles</span></button>
+        <button class="cat c8" onclick="toast('De nouvelles rubriques arrivent bientôt')"><div class="ico">•••</div><strong>Plus</strong><span>À venir…</span></button>
+      </div>
+    </section>
+  </div>
+
+  <div id="categories" class="view">
+    <section style="padding-top:30px">
+      <button class="back" onclick="showView('home')">‹ Accueil</button>
+      <div class="sectionhead"><h2>Catégories</h2></div>
+      <div class="list">
+        <button onclick="openCategory('Activités')">Activités<small>Grand jeu · courte durée · manuelles · sportifs extérieurs</small></button>
+        <button onclick="openCategory('Vie quotidienne')">Vie quotidienne<small>Lever · repas · hygiène · sieste · veillée · goûter…</small></button>
+        <button onclick="openCategory('Publics')">Publics<small>3–6 ans · 7–11 ans · 12–17 ans · handicap</small></button>
+        <button onclick="openCategory('Rôle de l’animateur')">Rôle de l’animateur<small>Fonctions · aptitudes · acteurs · posture</small></button>
+        <button onclick="openCategory('Boîte à outils')">Boîte à outils<small>Réglementation · enfance en danger · numéros utiles</small></button>
+        <button onclick="openCategory('Ressources')">Ressources<small>Fiches · modèles · BAFA · supports · documents à imprimer</small></button>
+      </div>
+    </section>
+  </div>
+
+  <div id="categoryDetail" class="view">
+    <section style="padding-top:30px">
+      <button class="back" onclick="showView('categories')">‹ Catégories</button>
+      <div class="sectionhead"><h2 id="categoryTitle">Catégorie</h2></div>
+      <div class="card"><h3 id="categoryIntro"></h3><p id="categoryText"></p></div>
+      <div class="list" id="categoryList" style="margin-top:14px"></div>
+    </section>
+  </div>
+
+  <div id="generator" class="view">
+    <section style="padding-top:30px">
+      <button class="back" onclick="showView('home')">‹ Accueil</button>
+      <div class="sectionhead"><h2>Générer une activité</h2></div>
+      <div class="helpbox">
+        <p style="margin-top:0;color:var(--muted)">Décris ta situation et ton matériel, puis construis une idée adaptée à ton groupe.</p>
+        <textarea id="activityPrompt" placeholder="Ex. : 14 enfants de 8 ans, dehors, 45 min, 3 ballons et 2 cordes, je veux quelque chose qui bouge…"></textarea>
+        <div style="height:12px"></div>
+        <button class="primary" onclick="generateActivity()">Créer une idée</button>
+        <div id="activityResult"></div>
+      </div>
+    </section>
+  </div>
+
+  <div id="help" class="view">
+    <section style="padding-top:30px">
+      <div class="sectionhead"><h2>Help</h2></div>
+      <div class="helpbox">
+        <button class="emergency" onclick="toast('Urgence : contacte immédiatement les secours ou le directeur selon la situation.')">Je suis en urgence</button>
+        <h3 style="font-size:22px;margin:0 0 7px">Que se passe-t-il ?</h3>
+        <p style="margin:0 0 12px;color:var(--muted)">Écris ta situation avec tes mots. Je t’aide à identifier les premières choses à faire.</p>
+        <textarea id="helpInput" placeholder="Ex. : Un enfant pleure depuis son arrivée et refuse de participer…"></textarea>
+        <div class="contexts">
+          <button onclick="toggleContext(this)">Périscolaire</button><button onclick="toggleContext(this)">ALSH</button><button onclick="toggleContext(this)">Colonie / séjour</button><button onclick="toggleContext(this)">BAFA / formation</button><button onclick="toggleContext(this)">Autre</button>
+        </div>
+        <button class="primary" onclick="analyseHelp()">M’aider maintenant</button>
+        <div class="examples">
+          <strong style="font-size:16px">Exemples</strong>
+          <button class="example" onclick="fillHelp(this)">Un enfant quitte mon activité sans prévenir.</button>
+          <button class="example" onclick="fillHelp(this)">Deux enfants se disputent pendant le jeu.</button>
+          <button class="example" onclick="fillHelp(this)">Un enfant ne veut pas manger.</button>
+          <button class="example" onclick="fillHelp(this)">Un enfant pleure depuis son arrivée.</button>
+        </div>
+        <div id="helpResult"></div>
+      </div>
+    </section>
+  </div>
+
+  <div id="favorites" class="view">
+    <section style="padding-top:30px">
+      <button class="back" onclick="showView('home')">‹ Accueil</button>
+      <div class="sectionhead"><h2>Mes favoris</h2></div>
+      <div class="card"><h3>Rien pour le moment</h3><p>Quand tu enregistreras une fiche ou une activité, elle apparaîtra ici.</p></div>
+    </section>
+  </div>
+
+  <div id="search" class="view">
+    <section style="padding-top:30px">
+      <button class="back" onclick="showView('home')">‹ Accueil</button>
+      <div class="sectionhead"><h2>Rechercher</h2></div>
+      <label class="searchbox" style="width:100%;margin-bottom:14px"><input id="searchInput" placeholder="Que recherchez-vous ?" onkeydown="if(event.key==='Enter') runSearch()"></label>
+      <div id="searchResults" class="list"></div>
+    </section>
+  </div>
+
+  <div id="account" class="view">
+    <section style="padding-top:30px">
+      <button class="back" onclick="showView('home')">‹ Accueil</button>
+      <div class="sectionhead"><h2>Compte</h2></div>
+      <div class="card"><h3>Anim Compagnon</h3><p>Le compte permettra plus tard de synchroniser tes favoris et tes situations entre tes appareils.</p></div>
+    </section>
+  </div>
+
 </div>
-<div class="situations"><h3>📁 Mes situations</h3><div id="saved" class="saved"><span style="color:var(--muted)">Aucune situation enregistrée.</span></div></div>
-</section>
-</main>
+
 <nav class="bottom">
-<button class="nav active" data-v="home" onclick="go('home')"><span>⌂</span>Accueil</button>
-<button class="nav" data-v="categories" onclick="go('categories')"><span>▦</span>Catégories</button>
-<button class="nav" data-v="generate" onclick="go('generate')"><span>✦</span>Générer</button>
-<button class="nav" data-v="help" onclick="go('help')"><span>?</span>Help</button>
+  <div class="bottom-inner">
+    <button class="nav active" data-view="home" onclick="showView('home')">
+      <span class="navicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg></span>Accueil
+    </button>
+    <button class="nav" data-view="categories" onclick="showView('categories')">
+      <span class="navicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="4" width="6" height="6"/><rect x="14" y="4" width="6" height="6"/><rect x="4" y="14" width="6" height="6"/><rect x="14" y="14" width="6" height="6"/></svg></span>Catégories
+    </button>
+    <button class="nav" data-view="generator" onclick="showView('generator')">
+      <span class="navicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3v18M3 12h18"/><path d="M7 7l10 10M17 7 7 17"/></svg></span>Générer
+    </button>
+    <button class="nav" data-view="help" onclick="showView('help')">
+      <span class="navicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 20h9"/><path d="M12 4h9"/><path d="M4 12h17"/><circle cx="5" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="5" cy="12" r="2"/></svg></span>Help
+    </button>
+    <button class="nav" data-view="account" onclick="showView('account')">
+      <span class="navicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="3"/><path d="M5 20c.9-3.3 3.2-5 7-5s6.1 1.7 7 5"/></svg></span>Compte
+    </button>
+  </div>
 </nav>
-</div>
+<div id="toast" class="toast"></div>
+
 <script>
-const cats=[
-['🎲','Activités','Grand jeu, courte durée, manuelles, jeux sportifs.'],
-['🍽️','Vie quotidienne','Lever, repas, hygiène, sieste, veillée, familles…'],
-['👥','Publics','3–6 ans, 7–11 ans, 12–17 ans, handicap.'],
-['🧑‍🏫','Rôle de l’animateur','Fonctions, aptitudes, acteurs, posture.'],
-['🧰','Boîte à outils','Réglementation, enfance en danger, numéros utiles.'],
-['📚','Ressources','Fiches pratiques, modèles, BAFA, supports et inspirations.']];
-const examples=[
-"Un enfant refuse de participer à mon activité",
-"Deux enfants se disputent depuis le début de l’après-midi",
-"Un enfant ne veut pas manger",
-"Un enfant pleure depuis son arrivée",
-"Un enfant quitte mon activité sans prévenir",
-"Un enfant n’est pas intéressé par le grand jeu proposé",
-"Un enfant se fait pipi dessus",
-"Un enfant me dit que ses parents le frappent"
-];
-function go(id){document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav').forEach(x=>x.classList.toggle('active',x.dataset.v===id));if(id==='help')renderExamples();scrollTo(0,0)}
-function renderExamples(){const a=[...examples].sort(()=>Math.random()-.5).slice(0,4);document.getElementById('examples').innerHTML=a.map(x=>`<button class="example">${x}</button>`).join('');document.querySelectorAll('.example').forEach(b=>b.onclick=()=>{helpInput.value=b.textContent;helpInput.focus()})}
-function answer(){if(!helpInput.value.trim()){helpInput.focus();return}alert('Le moteur Help analysera cette situation et pourra poser des questions complémentaires.')}
-function newSituation(){if(helpInput.value.trim()&&!confirm('Commencer une nouvelle situation ? La situation en cours ne sera pas enregistrée.'))return;helpInput.value='';context.selectedIndex=0;helpInput.focus()}
-document.getElementById('catList').innerHTML=cats.map(c=>`<button class="row"><span style="font-size:24px">${c[0]}</span><span><b>${c[1]}</b><small style="display:block;color:var(--muted);margin-top:2px">${c[2]}</small></span><span class="arrow">›</span></button>`).join('');
-renderExamples();
-if('serviceWorker'in navigator) addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+const categoryData = {
+ "Activités": {
+   intro:"Des idées prêtes à utiliser sur le terrain.",
+   text:"Filtre les activités par âge, durée, préparation, lieu, matériel, niveau d’énergie et objectif pédagogique.",
+   items:["Grand jeu","Animation de courte durée","Activités manuelles","Jeux sportifs extérieurs"]
+ },
+ "Vie quotidienne": {
+   intro:"Accompagner les temps de vie, pas seulement les remplir.",
+   text:"Des repères concrets pour le lever, les repas, l’hygiène, les temps calmes, la veillée et les échanges avec les familles.",
+   items:["Lever","Petit déjeuner","Repas","Hygiène","Sieste","Temps calme","Veillée","Téléphones portables","Communication avec les familles","Goûter"]
+ },
+ "Publics": {
+   intro:"Mieux comprendre pour mieux accompagner.",
+   text:"Des repères adaptés aux différentes tranches d’âge et aux situations de handicap, sans réduire un enfant à une catégorie.",
+   items:["3 à 6 ans","7 à 11 ans","12 à 17 ans","Publics en situation de handicap"]
+ },
+ "Rôle de l’animateur": {
+   intro:"Comprendre son rôle et construire une posture commune.",
+   text:"Fonctions, aptitudes, acteurs de l’ACM et situations professionnelles : l’essentiel pour agir avec cohérence.",
+   items:["Fonctions de l’animateur","Aptitudes de l’animateur","Les différents acteurs de l’ACM","Posture de l’animateur"]
+ },
+ "Boîte à outils": {
+   intro:"Les informations utiles quand tu en as besoin.",
+   text:"Un accès rapide à la réglementation, aux ressources concernant l’enfance en danger et aux numéros utiles.",
+   items:["Réglementation","Enfance en danger","Numéros utiles"]
+ },
+ "Ressources": {
+   intro:"Des supports à utiliser et à partager.",
+   text:"Fiches pratiques, documents et modèles, ressources BAFA, supports pédagogiques et documents à imprimer.",
+   items:["Fiches pratiques","Documents et modèles","Ressources BAFA","Supports pédagogiques","Documents à imprimer","Idées / inspirations","Ressources externes utiles"]
+ }
+};
+
+function showView(id){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav').forEach(n=>n.classList.toggle('active', n.dataset.view===id));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function openCategory(name){
+  const d=categoryData[name];
+  if(!d) return;
+  document.getElementById('categoryTitle').textContent=name;
+  document.getElementById('categoryIntro').textContent=d.intro;
+  document.getElementById('categoryText').textContent=d.text;
+  const list=document.getElementById('categoryList');
+  list.innerHTML=d.items.map(x=>`<button onclick="toast('La fiche « ${x.replace(/'/g,"\\'")} » sera développée dans la prochaine version.')">${x}<small>Ouvrir la fiche</small></button>`).join('');
+  showView('categoryDetail');
+}
+function toast(msg){
+  const t=document.getElementById('toast'); t.textContent=msg;t.style.display='block';
+  clearTimeout(window.__toast);window.__toast=setTimeout(()=>t.style.display='none',2400);
+}
+function globalSearch(){
+  const q=document.getElementById('globalSearch').value.trim();
+  if(!q){showView('search');return}
+  document.getElementById('searchInput').value=q;runSearch();
+}
+function runSearch(){
+  const q=document.getElementById('searchInput').value.trim().toLowerCase();
+  const out=document.getElementById('searchResults');
+  if(!q){out.innerHTML='<div class="card"><p>Écris un mot ou une situation pour lancer la recherche.</p></div>';return}
+  const rows=[];
+  Object.entries(categoryData).forEach(([cat,d])=>{
+    if(cat.toLowerCase().includes(q)||d.text.toLowerCase().includes(q)||d.items.some(x=>x.toLowerCase().includes(q))){
+      rows.push(`<button onclick="openCategory('${cat.replace(/'/g,"\\'")}')">${cat}<small>${d.intro}</small></button>`);
+    }
+  });
+  out.innerHTML=rows.length?rows.join(''):`<div class="card"><h3>Aucun résultat</h3><p>Essaie avec d’autres mots-clés ou décris directement ta situation dans Help.</p></div>`;
+  showView('search');
+}
+function toggleContext(btn){btn.classList.toggle('selected')}
+function fillHelp(btn){document.getElementById('helpInput').value=btn.textContent;window.scrollTo({top:0,behavior:'smooth'})}
+function analyseHelp(){
+  const input=document.getElementById('helpInput').value.trim();
+  const out=document.getElementById('helpResult');
+  if(!input){toast('Décris d’abord ta situation.');return}
+  const sensitive=/(frapp|coups|bleus|parents.*(frapp|viol)|eau.*gel|maltrait|abus|danger)/i.test(input);
+  const urgent=/(disparu|disparition|étouff|inconscient|grave|saignement important|danger immédiat)/i.test(input);
+  let level=urgent?'🔴 Relais immédiat':sensitive?'🟠 Situation à surveiller':'🟢 Situation courante';
+  let answer=urgent
+    ?"Priorité : sécurise les enfants et sollicite immédiatement le directeur ainsi que les secours compétents selon la situation."
+    :sensitive
+    ?"Prends les propos ou les signes au sérieux, reste calme, ne mène pas toi-même d’enquête et transmets rapidement la situation au directeur selon les procédures de ta structure."
+    :"Commence par sécuriser le cadre, écouter l’enfant sans le juger et chercher ce dont il a besoin maintenant. Adapte ensuite ta réponse au contexte et garde le directeur dans la boucle lorsque la situation le nécessite.";
+  out.innerHTML=`<div class="result"><strong>${level}</strong><br><br><strong>Que faire maintenant ?</strong><br>${answer}<br><br><strong>Pourquoi ?</strong><br>La première étape est de comprendre la situation sans précipiter l’interprétation.</div>`;
+}
+function generateActivity(){
+  const input=document.getElementById('activityPrompt').value.trim();
+  if(!input){toast('Décris ton groupe, le temps, le lieu ou le matériel.');return}
+  document.getElementById('activityResult').innerHTML=`<div class="result"><strong>Idée à construire</strong><br><br>À partir de « ${input.replace(/</g,'&lt;')} », le générateur pourra bientôt proposer une activité complète avec objectif, déroulé, matériel, préparation, variantes et points de vigilance.</div>`;
+}
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}))}
 </script>
-</body></html>
+</body>
+</html>
