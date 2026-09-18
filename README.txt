@@ -1,1 +1,1 @@
-Anim Compagnon — prototype PWA mobile-first. Le moteur IA réel reste à connecter.
+Anim Compagnon V24 — 10 fiches Activités > Animation de courte durée.

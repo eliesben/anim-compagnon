@@ -83,18 +83,118 @@ button,input,textarea{font:inherit}button{cursor:pointer}.app{max-width:520px;ma
 </div></nav><div id="toast" class="toast"></div>
 <script>
 const data={
-"Activités":["Grand jeu","Animation de courte durée","Activités manuelles","Jeux sportifs extérieurs"],
-"Vie quotidienne":["Lever","Petit déjeuner","Repas","Hygiène","Sieste","Temps calme","Veillée","Téléphones portables","Communication avec les familles","Goûter"],
-"Publics":["3 à 6 ans","7 à 11 ans","12 à 17 ans","Publics en situation de handicap"],
-"Rôle de l’animateur":["Fonctions de l’animateur","Aptitudes de l’animateur","Les différents acteurs de l’ACM","Posture de l’animateur"],
-"Boîte à outils":["Réglementation","Enfance en danger","Numéros utiles"],
-"Ressources":["Fiches pratiques","Documents et modèles","Ressources BAFA","Supports pédagogiques","Documents à imprimer","Idées / inspirations","Ressources externes utiles"]};
-function show(id){document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav').forEach(x=>x.classList.toggle('active',x.dataset.v===id));scrollTo(0,0)}
-function cat(name){document.getElementById('dtitle').textContent=name;document.getElementById('dintro').textContent='Des ressources utiles sur '+name.toLowerCase()+'.';document.getElementById('dtext').textContent='Explore les fiches et outils disponibles dans cette rubrique.';document.getElementById('dlist').innerHTML=data[name].map(x=>`<button onclick="toast('Fiche « ${x} » à développer')">${x}<small>Ouvrir la fiche</small></button>`).join('');show('detail')}
-document.getElementById('catlist').innerHTML=Object.keys(data).map(x=>`<button onclick="cat('${x.replace(/'/g,"\\'")}')">${x}<small>${data[x].length} rubriques</small></button>`).join('');
+"Activités":{
+ intro:"Des idées d’activités pensées pour le terrain.",
+ groups:{
+  "Grand jeu":["Jeux de piste","Jeux d’enquête","Jeux d’aventure"],
+  "Animation de courte durée":[
+{name:"Le chef d’orchestre",objectifs:["Développer l’observation et l’attention.","Favoriser la coopération.","Travailler la discrétion et l’imitation."],rules:"Les enfants s’assoient ou restent debout en cercle. Un enfant est désigné comme observateur et se met légèrement à l’écart ou ferme les yeux. L’animateur désigne discrètement un chef d’orchestre. Celui-ci réalise de petits mouvements (frapper dans les mains, toucher sa tête, lever les bras, taper du pied) que les autres imitent immédiatement. L’observateur revient et cherche qui dirige le groupe.",variantes:["L’animateur peut être le chef d’orchestre.","Utiliser uniquement des mouvements très discrets.","Avec les plus grands : changer régulièrement de mouvement sans se faire repérer."],vigilance:["Éviter les mouvements brusques ou dangereux.","Le chef d’orchestre doit rester identifiable pour les plus jeunes.","Valoriser l’observation plutôt que la réussite."]},
+{name:"Ni oui, ni non",objectifs:["Développer l’expression orale.","Travailler la concentration et la maîtrise de soi.","Apprendre à répondre autrement à une question."],rules:"Un enfant est questionné par un autre pendant une minute. Il doit répondre sans prononcer « oui » ni « non ». Exemple : « Tu aimes les frites ? » « J’adore ça ! » ; « Tu en as mangé hier ? » « Peut-être ! ». S’il prononce oui ou non, les rôles sont inversés.",variantes:["Interdire aussi « je sais pas ».","Choisir un thème : école, animaux, vacances.","Avec les plus jeunes : remplacer les mots interdits par deux gestes."],vigilance:["Ne pas mettre un enfant en difficulté devant le groupe.","Éviter les questions trop personnelles.","Faire tourner rapidement les rôles."]},
+{name:"Le mot interdit",objectifs:["Développer l’attention et la mémoire.","Enrichir le vocabulaire.","Travailler l’autocontrôle."],rules:"L’animateur choisit mentalement un mot courant, par exemple « bus ». Pendant quelques minutes, il pose des questions sans annoncer le mot interdit. Les enfants doivent converser sans le prononcer. Exemple : « Comment allons-nous à la piscine ? » « En véhicule », « en transport collectif », etc.",variantes:["Interdire deux mots.","Laisser un enfant choisir le mot interdit.","Interdire un geste plutôt qu’un mot."],vigilance:["Choisir un mot adapté à l’âge.","Éviter les mots indispensables à la conversation.","Ne pas transformer le jeu en piège permanent."]},
+{name:"1, 2, 3… Catégorie !",objectifs:["Développer la rapidité de réflexion.","Mobiliser les connaissances.","Travailler la mémoire et le vocabulaire."],rules:"L’animateur annonce une catégorie (animaux, fruits, métiers, sports, couleurs). Chaque enfant donne à son tour rapidement un élément. Il est interdit de répéter une réponse. Le jeu continue jusqu’à ce qu’il n’y ait plus d’idée ou pendant environ 3 minutes.",variantes:["Donner 3 secondes pour répondre.","Imposer une catégorie et une lettre, par exemple des animaux en P.","Laisser les enfants choisir la catégorie."],vigilance:["Adapter les catégories à l’âge.","Laisser davantage de temps aux plus jeunes.","Ne pas éliminer un enfant ; changer simplement de catégorie."]},
+{name:"Le téléphone sans fil",objectifs:["Développer l’écoute.","Travailler la mémoire auditive.","Favoriser l’attention au message transmis."],rules:"Les enfants se placent en ligne ou en cercle. L’animateur chuchote une courte phrase au premier enfant. Le message est transmis de proche en proche. Le dernier dit à voix haute ce qu’il a entendu, puis le groupe compare avec la phrase de départ.",variantes:["Augmenter progressivement la longueur des phrases.","Commencer par un mot puis une courte phrase.","Créer une histoire : chaque enfant ajoute une phrase."],vigilance:["Parler doucement mais de façon audible.","Éviter les phrases humiliantes ou visant un enfant.","Ne pas reprocher les déformations : elles font partie du jeu."]},
+{name:"Le miroir",objectifs:["Développer la concentration.","Travailler la coordination et l’imitation.","Favoriser la relation à l’autre."],rules:"Deux enfants se placent face à face. Le premier est le modèle et réalise des mouvements lents ; le second les reproduit comme dans un miroir. Au bout d’une minute, les rôles sont inversés.",variantes:["Jouer sans parler.","Accélérer progressivement les mouvements.","Faire le miroir à trois."],vigilance:["Privilégier des mouvements lents et contrôlés.","Prévoir une distance suffisante entre les enfants.","Éviter tout contact physique imposé."]},
+{name:"À quoi je pense ?",objectifs:["Développer le raisonnement.","Apprendre à formuler des questions.","Travailler la catégorisation."],rules:"Un enfant pense à un animal, un objet, un personnage ou un aliment. Les autres doivent deviner en posant des questions auxquelles on peut répondre par oui ou non. Le premier qui trouve prend la place du joueur suivant.",variantes:["Limiter à 10 questions.","Imposer une catégorie.","Avec les plus jeunes : choisir uniquement des animaux ou objets connus."],vigilance:["Choisir une idée accessible au groupe.","Aider les plus jeunes à formuler leurs questions.","Éviter les choix trop personnels."]},
+{name:"Le chef dit…",objectifs:["Développer l’écoute et la réactivité.","Travailler la maîtrise de soi.","Apprendre à respecter une consigne précise."],rules:"L’animateur donne des consignes. Les enfants ne réalisent l’action que si la phrase commence par « Le chef dit ». Si la phrase ne commence pas ainsi, ils ne bougent pas.",variantes:["Faire devenir un enfant chef.","Accélérer progressivement les consignes.","Ajouter des consignes absurdes ou amusantes."],vigilance:["Éviter les longues phases d’élimination.","Privilégier la réintégration après une erreur.","Adapter les consignes aux capacités motrices."]},
+{name:"Le compte à rebours",objectifs:["Développer la coopération.","Travailler l’écoute du groupe.","Développer l’attention et l’inhibition."],rules:"Le groupe doit compter de 1 à 10 sans décider à l’avance qui parle. Chaque enfant prononce un nombre lorsqu’il pense que c’est son tour. Si deux enfants parlent en même temps, le groupe recommence. L’objectif est d’atteindre 10 ensemble sans se couper.",variantes:["Aller jusqu’à 15 ou 20.","Compter à rebours.","Remplacer certains nombres par un geste ou un mot.","Avec les plus grands : aller jusqu’à 30."],vigilance:["Ne pas transformer le jeu en compétition.","Laisser le groupe trouver sa propre stratégie.","Commencer avec un objectif accessible."]},
+{name:"Le détective des détails",objectifs:["Développer l’observation.","Travailler la mémoire visuelle.","Porter attention à son environnement."],rules:"Les enfants observent leur environnement pendant 20 secondes. L’animateur pose ensuite des questions, par exemple : combien de personnes portent du bleu ? Quelle est la couleur de la porte ? Combien y a-t-il de fenêtres ? Les enfants répondent sans vérifier.",variantes:["Faire devenir un enfant détective.","Réduire le temps d’observation à 10 secondes.","Demander de mémoriser 3 éléments précis.","Jouer à « Qui a changé ? » : un enfant modifie discrètement un détail de son apparence."],vigilance:["Ne pas demander d’informations pouvant mettre un enfant mal à l’aise.","Ne pas relever de caractéristiques physiques sensibles.","Adapter les questions à l’environnement réel."]}
+],
+  "Activités manuelles":["Création","Arts plastiques","Bricolage"],
+  "Jeux sportifs extérieurs":["Jeux de coopération","Jeux de ballon","Jeux de motricité"]
+ }},
+"Vie quotidienne":{
+ intro:"Des repères pour accompagner les différents temps de la journée.",
+ groups:{
+  "Lever":["Types de lever","Rôle de l’animateur","Animations possibles","Points de vigilance"],
+  "Petit déjeuner":["Types de petit déjeuner","Rôle de l’animateur","Animations possibles","Points de vigilance"],
+  "Repas":["Types de repas","Rôle de l’animateur","Animations possibles","Points de vigilance"],
+  "Hygiène":["Types de situations","Rôle de l’animateur","Animations possibles","Points de vigilance"],
+  "Sieste":["Types de sieste","Rôle de l’animateur","Animations possibles","Points de vigilance"],
+  "Temps calme":["Types de temps calme","Rôle de l’animateur","Animations possibles","Points de vigilance"],
+  "Veillée":["Types de veillée","Rôle de l’animateur","Animations possibles","Points de vigilance"],
+  "Téléphones portables":["Types de situations","Rôle de l’animateur","Animations possibles","Points de vigilance"],
+  "Communication avec les familles":["Types de situations","Rôle de l’animateur","Situations possibles","Points de vigilance"],
+  "Goûter":["Types de goûter","Rôle de l’animateur","Animations possibles","Points de vigilance"]
+ }},
+"Publics":{
+ intro:"Mieux connaître les publics pour adapter son accompagnement.",
+ groups:{
+  "3 à 6 ans":["Connaître le public","Besoins et particularités","Quels types d’activités ?","Points de vigilance"],
+  "7 à 11 ans":["Connaître le public","Besoins et particularités","Quels types d’activités ?","Points de vigilance"],
+  "12 à 17 ans":["Connaître le public","Besoins et particularités","Quels types d’activités ?","Points de vigilance"],
+  "Publics en situation de handicap":["Connaître le public","Besoins et particularités","Quels types d’activités ?","Points de vigilance"]
+ }},
+"Rôle de l’animateur":{
+ intro:"Comprendre ses fonctions, ses aptitudes, les acteurs et sa posture.",
+ groups:{
+  "Fonctions de l’animateur":["Assurer la sécurité physique et morale des mineurs","Participer à l’accueil, à la communication et aux relations entre les acteurs","Participer à la mise en œuvre du projet pédagogique","Encadrer et animer la vie quotidienne et les activités","Accompagner les mineurs dans la réalisation de leurs projets"],
+  "Aptitudes de l’animateur":["Transmettre et faire partager les valeurs de la République, notamment la laïcité","Situer son engagement dans le contexte social, culturel et éducatif","Construire une relation de qualité avec l’équipe pédagogique et les mineurs","Apporter, le cas échéant, une réponse adaptée aux situations rencontrées"],
+  "Les différents acteurs de l’ACM":["Organisateur","Directeur","Directeur adjoint","Économe","Assistant sanitaire","Animateur","Cuisine","Parents"],
+  "Posture de l’animateur":["Situations professionnelles","Communication","Gestion des conflits","Poser et faire respecter un cadre","Relation avec les enfants"]
+ }},
+"Boîte à outils":{
+ intro:"Les ressources pratiques à retrouver rapidement.",
+ groups:{
+  "Réglementation":["Repères réglementaires","Obligations et responsabilités","Documents de référence"],
+  "Enfance en danger":["Repérer une situation préoccupante","Que faire en cas de doute ?","Ressources officielles"],
+  "Numéros utiles":["Urgences","Protection de l’enfance","Contacts utiles"]
+ }},
+"Ressources":{
+ intro:"Des supports à consulter, préparer, imprimer ou partager.",
+ groups:{
+  "Fiches pratiques":["Fiches terrain","Fiches thématiques"],
+  "Documents et modèles":["Modèles de documents","Trames utiles"],
+  "Ressources BAFA":["Préparation BAFA","Supports de formation"],
+  "Supports pédagogiques":["Supports d’animation","Supports de sensibilisation"],
+  "Documents à imprimer":["Jeux à imprimer","Fiches à imprimer"],
+  "Idées / inspirations":["Idées d’activités","Thèmes et projets"],
+  "Ressources externes utiles":["Sites utiles","Ressources spécialisées"]
+ }}
+};
+
+function cat(name){
+ const d=data[name];
+ document.getElementById('dtitle').textContent=name;
+ document.getElementById('dintro').textContent=d.intro;
+ document.getElementById('dtext').textContent='Choisis une rubrique pour accéder aux fiches correspondantes.';
+ const list=document.getElementById('dlist');
+ list.innerHTML=Object.entries(d.groups).map(([group,items])=>{
+   const count=items.length;
+   return `<button onclick="subcat('${name.replace(/'/g,"\\'")}','${group.replace(/'/g,"\\'")}')">${group}<small>${count} fiche${count>1?'s':''}</small></button>`;
+ }).join('');
+ show('detail');
+}
+
+function esc(t){return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;')}
+function subcat(category,group){
+ const items=data[category].groups[group]||[];
+ document.getElementById('dtitle').textContent=group;
+ document.getElementById('dintro').textContent=category;
+ document.getElementById('dtext').textContent='Sélectionne une fiche pour consulter son contenu.';
+ document.getElementById('dlist').innerHTML=items.map((item,i)=>typeof item==='object'?`<button onclick="activityCard(${i})">${esc(item.name)}<small>Ouvrir la fiche</small></button>`:`<button onclick="toast('La fiche « ${esc(item)} » sera développée avec son contenu.')">${esc(item)}<small>Ouvrir la fiche</small></button>`).join('');
+ show('detail');
+}
+function activityCard(i){
+ const item=data['Activités'].groups['Animation de courte durée'][i];
+ document.getElementById('dtitle').textContent=item.name;
+ document.getElementById('dintro').textContent='Activités → Animation de courte durée';
+ document.getElementById('dtext').innerHTML=`<div class="result"><h3>🎯 Objectifs pédagogiques</h3><ul>${item.objectifs.map(x=>`<li>${esc(x)}</li>`).join('')}</ul><h3>📋 Règles et déroulement</h3><p>${esc(item.rules)}</p><h3>🔄 Variantes</h3><ul>${item.variantes.map(x=>`<li>${esc(x)}</li>`).join('')}</ul><h3>⚠️ Points de vigilance</h3><ul>${item.vigilance.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`;
+ document.getElementById('dlist').innerHTML=`<button onclick="subcat('Activités','Animation de courte durée')">← Retour aux activités</button>`;
+ show('detail');
+}
+
+document.getElementById('catlist').innerHTML=Object.entries(data).map(([x,d])=>`<button onclick="cat('${x.replace(/'/g,"\\'")}')">${x}<small>${Object.keys(d.groups).length} rubriques</small></button>`).join('');
 function toast(t){const x=document.getElementById('toast');x.textContent=t;x.style.display='block';clearTimeout(window.tt);window.tt=setTimeout(()=>x.style.display='none',2300)}
 function search(){let q=document.getElementById('gsearch').value.trim();document.getElementById('sinput').value=q;runSearch()}
-function runSearch(){let q=document.getElementById('sinput').value.trim().toLowerCase();let a=[];Object.entries(data).forEach(([c,items])=>{if(c.toLowerCase().includes(q)||items.some(x=>x.toLowerCase().includes(q)))a.push(`<button onclick="cat('${c.replace(/'/g,"\\'")}')">${c}<small>Résultat correspondant à ta recherche</small></button>`)});document.getElementById('sout').innerHTML=a.length?a.join(''):`<div class="card"><h3>Aucun résultat</h3><p>Essaie un autre mot-clé ou décris directement ta situation dans Help.</p></div>`;show('search')}
+function runSearch(){
+ let q=document.getElementById('sinput').value.trim().toLowerCase(),a=[];
+ Object.entries(data).forEach(([c,d])=>{
+   const matches=Object.entries(d.groups).filter(([g,items])=>g.toLowerCase().includes(q)||items.some(x=>(typeof x==='string'?x:x.name).toLowerCase().includes(q)));
+   if(c.toLowerCase().includes(q)||matches.length)a.push(`<button onclick="cat('${c.replace(/'/g,"\'")}')">${c}<small>${matches.length?matches.map(m=>m[0]).join(' · '):'Rubrique correspondante'}</small></button>`);
+ });
+ document.getElementById('sout').innerHTML=a.length?a.join(''):`<div class="card"><h3>Aucun résultat</h3><p>Essaie un autre mot-clé ou décris directement ta situation dans Help.</p></div>`;
+ show('search')
+}
 function fill(b){document.getElementById('hinput').value=b.textContent}
 function help(){let q=document.getElementById('hinput').value.trim();if(!q)return toast('Décris ta situation d’abord.');let sensitive=/(frapp|bleus|maltrait|abus|parents.*viol|eau.*gel)/i.test(q);document.getElementById('hout').innerHTML=`<div class="result"><strong>${sensitive?'🟠 Situation à surveiller':'🟢 Situation courante'}</strong><br><br><strong>Que faire maintenant ?</strong><br>${sensitive?'Reste calme, prends les propos ou les signes au sérieux, ne mène pas toi-même d’enquête et transmets rapidement la situation au directeur selon les procédures de ta structure.':'Commence par sécuriser le cadre, écouter l’enfant sans le juger et identifier ce dont il a besoin maintenant. Adapte ensuite ta réponse au contexte.'}</div>`}
 function gen(){let q=document.getElementById('activity').value.trim();if(!q)return toast('Décris ton groupe et tes contraintes.');document.getElementById('genout').innerHTML=`<div class="result"><strong>Générateur</strong><br><br>Ta demande est prête : « ${q.replace(/</g,'&lt;')} ».<br><br>La prochaine étape sera de connecter ce module à une véritable IA pour générer automatiquement une activité complète.</div>`}
