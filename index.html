@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1746B8">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Anim Compagnon</title>
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+:root{--blue:#1746B8;--deep:#0D328A;--bg:#F4F7FC;--ink:#12306D;--muted:#6C7C9A;--line:#DCE5F3;--soft:#EAF0FC}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Nunito,sans-serif;background:var(--bg);color:var(--ink)}
+body{padding-bottom:88px}.app{max-width:760px;margin:auto}
+header{color:#fff;background:linear-gradient(145deg,var(--blue),var(--deep));padding:28px 18px 26px;border-radius:0 0 30px 30px}
+.brand{font-size:28px;font-weight:900}.tag{opacity:.88;font-weight:600;margin-top:2px}
+.global-search{display:flex;align-items:center;gap:10px;background:#fff;border-radius:18px;margin-top:20px;padding:13px 15px;box-shadow:0 10px 28px #071f6026}
+.global-search input{border:0;outline:0;width:100%;font:700 15px Nunito;color:var(--ink)}
+main{padding:22px 17px}.view{display:none}.view.active{display:block}
+h1,h2,h3{font-weight:900}h2{font-size:23px;margin:0 0 14px}.section{margin-bottom:25px}
+.hero{background:var(--blue);color:#fff;border-radius:20px;padding:18px;margin-bottom:25px}.hero b{font-size:18px}.hero p{margin:5px 0 0;opacity:.9}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.card{border:1px solid var(--line);background:#fff;border-radius:18px;padding:16px;min-height:112px;box-shadow:0 6px 18px #173b8f0b;text-align:left;color:var(--ink);font-family:Nunito}.card .icon{font-size:25px;margin-bottom:7px}.card b{font-size:15px}.card p{margin:4px 0 0;color:var(--muted);font-size:13px;line-height:1.35}
+.list{display:grid;gap:10px}.row{display:flex;align-items:center;gap:12px;width:100%;border:1px solid var(--line);background:#fff;border-radius:16px;padding:15px;text-align:left;color:var(--ink);font-family:Nunito}.row .arrow{margin-left:auto;font-size:21px;color:#8491A9}
+.back{border:0;background:transparent;color:var(--blue);font:800 15px Nunito;padding:0 0 14px}
+.label{font-size:16px;font-weight:900;margin:18px 0 8px}
+textarea,select{width:100%;border:1px solid rgba(255,255,255,.3);border-radius:16px;background:rgba(255,255,255,.10);color:#fff;padding:14px 15px;font:600 15px/1.45 Nunito;outline:0}
+textarea{min-height:145px;resize:vertical}textarea::placeholder{color:rgba(255,255,255,.72)}select option{background:var(--deep);color:#fff}
+.btn{width:100%;border:0;border-radius:15px;padding:14px 16px;margin-top:14px;background:var(--blue);color:#fff;font:900 15px Nunito}.btn.light{background:var(--soft);color:var(--blue)}
+.help-panel{background:linear-gradient(145deg,var(--blue),var(--deep));color:#fff;border-radius:22px;padding:18px}
+.help-panel .label{color:#fff}.help-title{font-size:25px;font-weight:900;margin-bottom:4px}.help-sub{opacity:.88;margin-bottom:17px}
+.emergency{background:#fff4f4;color:#8d2929;border-radius:17px;padding:14px;margin-bottom:18px;border:1px solid #ffd8d8}.emergency p{margin:4px 0;font-size:13px}
+.examples-title{font-size:17px;font-weight:900;margin-top:19px}.examples-hint{font-size:13px;opacity:.75;margin:3px 0 9px}.examples{display:grid;gap:8px}.example{border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.10);color:#fff;border-radius:14px;padding:12px;text-align:left;font:700 14px/1.3 Nunito}
+.situations{margin-top:22px}.saved{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px}.saved-item{padding:12px 0;border-bottom:1px solid var(--line)}.saved-item:last-child{border-bottom:0}.saved-item b{display:block}.saved-item small{color:var(--muted)}
+.bottom{position:fixed;z-index:50;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);padding:8px 8px max(9px,env(safe-area-inset-bottom));box-shadow:0 -7px 22px #173b8f12}.nav{border:0;background:transparent;color:#7785A0;font:800 11px Nunito}.nav span{display:block;font-size:21px;line-height:22px}.nav.active{color:var(--blue)}
+@media(min-width:650px){header{padding:30px;border-radius:0 0 34px 34px}main{padding:30px}.grid{grid-template-columns:repeat(4,1fr)}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div class="brand">Anim Compagnon</div>
+  <div class="tag">Ton compagnon de terrain pour l’animation.</div>
+  <div class="global-search">⌕ <input placeholder="De quoi as-tu besoin aujourd’hui ?"></div>
+</header>
+<main>
+<section id="home" class="view active">
+  <div class="hero"><b>Ton compagnon de terrain</b><p>Trouve une idée, une ressource ou de l’aide en quelques secondes.</p></div>
+  <div class="section"><h2>⭐ À la une</h2><div class="card"><div class="icon">🆘</div><b>Une situation te pose problème ?</b><p>Décris-la dans Help et avance avec une réponse adaptée.</p></div></div>
+  <div class="section"><h2>⚡ Accès rapides</h2><div class="grid">
+    <button class="card" onclick="go('categories')"><div class="icon">🎲</div><b>Activités</b><p>Des idées pour ton groupe.</p></button>
+    <button class="card" onclick="go('generate')"><div class="icon">🤖</div><b>Générer</b><p>Créer une activité adaptée.</p></button>
+    <button class="card" onclick="go('help')"><div class="icon">🆘</div><b>Help</b><p>Analyser une situation.</p></button>
+    <button class="card" onclick="go('categories')"><div class="icon">🧰</div><b>Boîte à outils</b><p>Infos et ressources utiles.</p></button>
+  </div></div>
+  <div class="section"><h2>✨ Nouveautés</h2><div class="card"><b>La base Anim Compagnon</b><p>Elle sera enrichie progressivement avec des contenus pratiques.</p></div></div>
+</section>
+
+<section id="categories" class="view">
+<button class="back" onclick="go('home')">← Accueil</button><h2>Catégories</h2>
+<div class="global-search" style="margin:0 0 16px"><span>⌕</span><input placeholder="Que recherchez-vous ?"></div>
+<div class="list" id="catList"></div>
+</section>
+
+<section id="generate" class="view">
+<button class="back" onclick="go('home')">← Accueil</button><h2>Générer une activité</h2>
+<p style="color:var(--muted)">Décris les conditions de terrain. Le moteur IA pourra ensuite proposer une activité adaptée.</p>
+<div class="label">Âge</div><select><option>3 à 6 ans</option><option>7 à 11 ans</option><option>12 à 17 ans</option></select>
+<div class="label">Durée</div><select><option>Animation courte</option><option>30 à 45 min</option><option>1 h et plus</option></select>
+<div class="label">Matériel disponible</div><textarea placeholder="Ex. 4 plots, 3 ballons, 2 cordes…"></textarea>
+<div class="label">Objectif pédagogique</div><select><option>Coopération</option><option>Autonomie</option><option>Motricité fine</option><option>Libre</option></select>
+<button class="btn" onclick="alert('Le moteur IA sera connecté dans une prochaine étape.')">Créer mon activité</button>
+</section>
+
+<section id="help" class="view">
+<button class="back" onclick="go('home')">← Accueil</button>
+<div class="help-panel">
+  <div class="help-title">Help</div><div class="help-sub">Décris ce qui se passe. On regarde la situation ensemble.</div>
+  <div class="emergency"><b>🚨 Je suis en urgence</b><p>Accès rapide au parcours d’urgence.</p><button class="btn light" onclick="alert('Le parcours urgence sera relié aux ressources officielles.')">Accéder à l’urgence</button></div>
+  <div class="label">Que se passe-t-il ?</div>
+  <textarea id="helpInput" placeholder="Écris ta situation avec tes mots…"></textarea>
+  <div class="examples-title">Exemples de situations</div><div class="examples-hint">Tu peux cliquer sur un exemple.</div>
+  <div class="examples" id="examples"></div>
+  <div class="label">Dans quel cadre ? <span style="font-size:12px;font-weight:600;opacity:.7">(facultatif)</span></div>
+  <select id="context"><option>Je ne sais pas / Peu importe</option><option>Périscolaire</option><option>ALSH</option><option>Colonie / séjour</option><option>BAFA / formation</option><option>Autre</option></select>
+  <button class="btn" onclick="answer()">M’aider avec cette situation</button>
+  <button class="btn light" onclick="newSituation()">＋ Nouvelle situation</button>
+</div>
+<div class="situations"><h3>📁 Mes situations</h3><div id="saved" class="saved"><span style="color:var(--muted)">Aucune situation enregistrée.</span></div></div>
+</section>
+</main>
+<nav class="bottom">
+<button class="nav active" data-v="home" onclick="go('home')"><span>⌂</span>Accueil</button>
+<button class="nav" data-v="categories" onclick="go('categories')"><span>▦</span>Catégories</button>
+<button class="nav" data-v="generate" onclick="go('generate')"><span>✦</span>Générer</button>
+<button class="nav" data-v="help" onclick="go('help')"><span>?</span>Help</button>
+</nav>
+</div>
+<script>
+const cats=[
+['🎲','Activités','Grand jeu, courte durée, manuelles, jeux sportifs.'],
+['🍽️','Vie quotidienne','Lever, repas, hygiène, sieste, veillée, familles…'],
+['👥','Publics','3–6 ans, 7–11 ans, 12–17 ans, handicap.'],
+['🧑‍🏫','Rôle de l’animateur','Fonctions, aptitudes, acteurs, posture.'],
+['🧰','Boîte à outils','Réglementation, enfance en danger, numéros utiles.'],
+['📚','Ressources','Fiches pratiques, modèles, BAFA, supports et inspirations.']];
+const examples=[
+"Un enfant refuse de participer à mon activité",
+"Deux enfants se disputent depuis le début de l’après-midi",
+"Un enfant ne veut pas manger",
+"Un enfant pleure depuis son arrivée",
+"Un enfant quitte mon activité sans prévenir",
+"Un enfant n’est pas intéressé par le grand jeu proposé",
+"Un enfant se fait pipi dessus",
+"Un enfant me dit que ses parents le frappent"
+];
+function go(id){document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav').forEach(x=>x.classList.toggle('active',x.dataset.v===id));if(id==='help')renderExamples();scrollTo(0,0)}
+function renderExamples(){const a=[...examples].sort(()=>Math.random()-.5).slice(0,4);document.getElementById('examples').innerHTML=a.map(x=>`<button class="example">${x}</button>`).join('');document.querySelectorAll('.example').forEach(b=>b.onclick=()=>{helpInput.value=b.textContent;helpInput.focus()})}
+function answer(){if(!helpInput.value.trim()){helpInput.focus();return}alert('Le moteur Help analysera cette situation et pourra poser des questions complémentaires.')}
+function newSituation(){if(helpInput.value.trim()&&!confirm('Commencer une nouvelle situation ? La situation en cours ne sera pas enregistrée.'))return;helpInput.value='';context.selectedIndex=0;helpInput.focus()}
+document.getElementById('catList').innerHTML=cats.map(c=>`<button class="row"><span style="font-size:24px">${c[0]}</span><span><b>${c[1]}</b><small style="display:block;color:var(--muted);margin-top:2px">${c[2]}</small></span><span class="arrow">›</span></button>`).join('');
+renderExamples();
+if('serviceWorker'in navigator) addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+</script>
+</body></html>

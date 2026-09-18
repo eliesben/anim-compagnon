@@ -1,0 +1,1 @@
+Anim Compagnon — prototype PWA mobile-first. Le moteur IA réel reste à connecter.

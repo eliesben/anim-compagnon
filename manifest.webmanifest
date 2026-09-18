@@ -1,0 +1,9 @@
+{
+  "name": "Anim Compagnon",
+  "short_name": "Anim Compagnon",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#F4F7FC",
+  "theme_color": "#1746B8",
+  "lang": "fr"
+}
