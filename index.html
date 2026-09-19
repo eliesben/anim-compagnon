@@ -272,61 +272,27 @@ body::after{
 }
 
 
-/* V35 — Compte local */
-.account-content{padding-bottom:110px}
-.account-hero{
-  position:relative;
-  display:flex;
-  align-items:center;
-  gap:14px;
-  margin:4px 0 14px;
-  padding:18px;
-  border-radius:28px;
-  background:linear-gradient(135deg,rgba(255,255,255,.66),rgba(242,249,239,.38));
-  border:1px solid rgba(255,255,255,.78);
-  box-shadow:0 18px 44px rgba(43,78,54,.11);
-  backdrop-filter:blur(20px) saturate(125%);
-  -webkit-backdrop-filter:blur(20px) saturate(125%);
-}
-.account-avatar{
-  flex:0 0 62px;
-  width:62px;height:62px;
-  display:grid;place-items:center;
-  border-radius:22px;
-  background:linear-gradient(145deg,#90c86c,#4e9b61);
-  color:#fff;
-  font-size:27px;font-weight:900;
-  box-shadow:0 10px 22px rgba(56,131,75,.25);
-}
+/* V37 — Compte : connexion + profil */
+.account-login-screen{min-height:calc(100vh - 120px);display:grid;place-items:center;padding:22px 0 110px}
+.account-login-card{width:100%;max-width:430px;padding:28px 22px 24px;text-align:center;border-radius:30px;background:linear-gradient(145deg,rgba(255,255,255,.72),rgba(241,248,238,.42));border:1px solid rgba(255,255,255,.84);box-shadow:0 22px 55px rgba(38,73,48,.13);backdrop-filter:blur(22px) saturate(130%);-webkit-backdrop-filter:blur(22px) saturate(130%)}
+.account-login-icon{width:70px;height:70px;margin:0 auto 15px;display:grid;place-items:center;border-radius:24px;background:linear-gradient(145deg,#8cc86d,#549f66);box-shadow:0 14px 26px rgba(67,136,77,.20);font-size:31px}
+.account-login-card h2{margin:7px 0 8px;font-size:28px;line-height:1.05}
+.account-login-card p{max-width:340px;margin:0 auto 20px;color:#67756c;font-size:13px;line-height:1.5}
+.google-login-btn{width:100%;min-height:54px;display:flex;align-items:center;justify-content:center;gap:12px;border:1px solid rgba(48,61,52,.15);border-radius:17px;background:#fff;color:#252b27;font:inherit;font-size:14px;font-weight:850;box-shadow:0 10px 22px rgba(47,69,51,.10);cursor:pointer;transition:.18s ease}
+.google-login-btn:hover{transform:translateY(-1px);box-shadow:0 14px 28px rgba(47,69,51,.13)}
+.google-mark{width:27px;height:27px;display:grid;place-items:center;border-radius:50%;color:#4285f4;font-size:19px;font-weight:950;background:#fff}
+.login-later-btn{margin-top:11px;border:0;background:transparent;color:#5c6c61;font:inherit;font-size:12px;font-weight:800;cursor:pointer}
+.account-login-note{margin:17px auto 0;max-width:340px;color:#89948d;font-size:10px;line-height:1.4}
+.account-profile-screen{padding-bottom:110px}
+.account-content{padding-bottom:30px}
+.account-hero{position:relative;display:flex;align-items:center;gap:14px;margin:4px 0 14px;padding:18px;border-radius:28px;background:linear-gradient(135deg,rgba(255,255,255,.66),rgba(242,249,239,.38));border:1px solid rgba(255,255,255,.78);box-shadow:0 18px 44px rgba(43,78,54,.11);backdrop-filter:blur(20px) saturate(125%);-webkit-backdrop-filter:blur(20px) saturate(125%)}
+.account-avatar{flex:0 0 62px;width:62px;height:62px;display:grid;place-items:center;border-radius:22px;background:linear-gradient(145deg,#90c86c,#4e9b61);color:#fff;font-size:27px;font-weight:900;box-shadow:0 10px 22px rgba(56,131,75,.25)}
 .account-hero-copy{min-width:0}
-.account-eyebrow,.account-kicker{
-  display:block;
-  font-size:10px;
-  line-height:1;
-  font-weight:900;
-  letter-spacing:.13em;
-  text-transform:uppercase;
-  color:#66816c;
-}
+.account-eyebrow,.account-kicker{display:block;font-size:10px;line-height:1;font-weight:900;letter-spacing:.13em;text-transform:uppercase;color:#66816c}
 .account-hero h2{margin:5px 0 2px;font-size:25px;line-height:1.05}
 .account-hero p{margin:0;color:#617067;font-size:13px}
-.account-local-badge{
-  margin-left:auto;
-  align-self:flex-start;
-  border:1px solid rgba(86,143,93,.20);
-  background:rgba(255,255,255,.56);
-  color:#4d7d55;
-  border-radius:999px;
-  padding:7px 9px;
-  font-size:9px;
-  font-weight:900;
-  letter-spacing:.08em;
-}
-.account-section{
-  margin:0 0 14px;
-  padding:18px;
-  border-radius:25px;
-}
+.account-local-badge{margin-left:auto;align-self:flex-start;border:1px solid rgba(86,143,93,.20);background:rgba(255,255,255,.56);color:#4d7d55;border-radius:999px;padding:7px 9px;font-size:9px;font-weight:900;letter-spacing:.08em}
+.account-section{margin:0 0 14px;padding:18px;border-radius:25px}
 .account-section-head{margin-bottom:13px}
 .account-section-head h3{margin:4px 0 4px;font-size:19px}
 .account-section-head p{margin:0;color:#68766d;font-size:12px;line-height:1.4}
@@ -334,274 +300,33 @@ body::after{
 .account-field{display:block;margin-bottom:10px}
 .account-field:last-child{margin-bottom:0}
 .account-field>span{display:block;margin:0 0 6px;font-size:12px;font-weight:800;color:#536158}
-.account-field input{
-  width:100%;box-sizing:border-box;
-  min-height:48px;padding:12px 13px;
-  border-radius:15px;
-  border:1px solid rgba(79,100,84,.18);
-  background:rgba(255,255,255,.72);
-  color:#243128;
-  outline:none;
-  font:inherit;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.7);
-}
-.account-field input:focus{
-  border-color:rgba(63,133,74,.46);
-  box-shadow:0 0 0 4px rgba(93,165,103,.10);
-}
+.account-field input{width:100%;box-sizing:border-box;min-height:48px;padding:12px 13px;border-radius:15px;border:1px solid rgba(79,100,84,.18);background:rgba(255,255,255,.72);color:#243128;outline:none;font:inherit;box-shadow:inset 0 1px 0 rgba(255,255,255,.7)}
+.account-field input:focus{border-color:rgba(63,133,74,.46);box-shadow:0 0 0 4px rgba(93,165,103,.10)}
 .choice-title{font-size:12px;font-weight:850;color:#536158;margin:14px 0 7px}
-.choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
-.choice-card,.age-card,.experience-card,.segmented label{cursor:pointer}
-.choice-card input,.age-card input,.experience-card input,.segmented input{position:absolute;opacity:0;pointer-events:none}
-.choice-card span{
-  min-height:48px;
-  display:flex;align-items:center;justify-content:center;
-  padding:0 10px;
-  border-radius:15px;
-  border:1px solid rgba(77,101,83,.16);
-  background:rgba(255,255,255,.58);
-  font-size:13px;font-weight:850;
-  color:#334138;
-  transition:.18s ease;
-}
-.choice-card input:checked+span{
-  background:linear-gradient(135deg,rgba(144,200,108,.85),rgba(84,160,97,.84));
-  border-color:rgba(73,139,81,.42);
-  color:#fff;
-  box-shadow:0 8px 18px rgba(65,132,76,.18);
-}
-.segmented{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  padding:4px;
-  border-radius:16px;
-  background:rgba(224,233,224,.54);
-  border:1px solid rgba(255,255,255,.7);
-}
-.segmented span{
-  min-height:44px;
-  display:flex;align-items:center;justify-content:center;
-  padding:0 8px;
-  border-radius:12px;
-  font-size:12px;font-weight:800;
-  color:#56645a;
-  transition:.18s ease;
-}
-.segmented input:checked+span{
-  background:rgba(255,255,255,.88);
-  color:#32653b;
-  box-shadow:0 5px 13px rgba(45,82,53,.10);
-}
+.segmented{display:grid;grid-template-columns:1fr 1fr;padding:4px;border-radius:16px;background:rgba(224,233,224,.54);border:1px solid rgba(255,255,255,.7)}
+.segmented label{cursor:pointer}
+.segmented input{position:absolute;opacity:0;pointer-events:none}
+.segmented span{min-height:44px;display:flex;align-items:center;justify-content:center;padding:0 8px;border-radius:12px;font-size:12px;font-weight:800;color:#56645a;transition:.18s ease}
+.segmented input:checked+span{background:rgba(255,255,255,.88);color:#32653b;box-shadow:0 5px 13px rgba(45,82,53,.10)}
 .experience-list{display:grid;gap:9px}
-.experience-card{
-  position:relative;
-  display:flex;align-items:center;gap:11px;
-  padding:12px;
-  border-radius:17px;
-  border:1px solid rgba(77,101,83,.15);
-  background:rgba(255,255,255,.55);
-  transition:.18s ease;
-}
-.experience-card input:checked~span:not(.experience-icon),
-.experience-card:has(input:checked){
-  border-color:rgba(82,142,89,.30);
-  background:rgba(236,247,233,.82);
-}
-.experience-icon{
-  flex:0 0 38px;
-  width:38px;height:38px;
-  display:grid;place-items:center;
-  border-radius:13px;
-  background:rgba(255,255,255,.75);
-  font-size:20px;
-}
+.experience-card{position:relative;display:flex;align-items:center;gap:11px;padding:12px;border-radius:17px;border:1px solid rgba(77,101,83,.15);background:rgba(255,255,255,.55);transition:.18s ease}
+.experience-card input{position:absolute;opacity:0;pointer-events:none}
+.experience-card:has(input:checked){border-color:rgba(82,142,89,.30);background:rgba(236,247,233,.82)}
+.experience-icon{flex:0 0 38px;width:38px;height:38px;display:grid;place-items:center;border-radius:13px;background:rgba(255,255,255,.75);font-size:20px}
 .experience-card strong{display:block;font-size:13px}
 .experience-card small{display:block;margin-top:2px;color:#728078;font-size:11px;line-height:1.3}
 .age-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
-.age-card{
-  position:relative;
-  min-height:86px;
-  display:flex;flex-direction:column;justify-content:center;
-  align-items:flex-start;
-  gap:4px;
-  padding:13px;
-  border-radius:18px;
-  border:1px solid rgba(77,101,83,.15);
-  background:rgba(255,255,255,.55);
-  transition:.18s ease;
-}
-.age-card span{font-size:20px}
-.age-card strong{font-size:12px}
-.age-card input:checked~*{color:#2e6d3b}
-.age-card:has(input:checked){
-  background:rgba(232,247,227,.84);
-  border-color:rgba(80,146,88,.34);
-  box-shadow:0 8px 18px rgba(61,121,71,.09);
-}
+.age-card{position:relative;min-height:86px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:4px;padding:13px;border-radius:18px;border:1px solid rgba(77,101,83,.15);background:rgba(255,255,255,.55);transition:.18s ease;cursor:pointer}
+.age-card input{position:absolute;opacity:0;pointer-events:none}
+.age-card span{font-size:20px}.age-card strong{font-size:12px}
+.age-card:has(input:checked){background:rgba(232,247,227,.84);border-color:rgba(80,146,88,.34);box-shadow:0 8px 18px rgba(61,121,71,.09)}
 .account-tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.account-tool{
-  min-height:112px;
-  padding:14px;
-  display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;
-  gap:5px;text-align:left;
-  border-radius:18px;
-  border:1px solid rgba(77,101,83,.15);
-  background:rgba(255,255,255,.56);
-  color:#2d3a31;
-  cursor:pointer;
-  font:inherit;
-  transition:.18s ease;
-}
+.account-tool{min-height:112px;padding:14px;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:5px;text-align:left;border-radius:18px;border:1px solid rgba(77,101,83,.15);background:rgba(255,255,255,.56);color:#2d3a31;cursor:pointer;font:inherit;transition:.18s ease}
 .account-tool:hover{transform:translateY(-1px)}
-.account-tool span{font-size:22px}
-.account-tool strong{font-size:13px}
-.account-tool small{font-size:10px;color:#728078;line-height:1.3}
-.account-setting{
-  width:100%;
-  display:grid;
-  grid-template-columns:38px 1fr 16px;
-  align-items:center;
-  gap:10px;
-  padding:12px 2px;
-  border:0;
-  background:transparent;
-  color:#2e3b32;
-  text-align:left;
-  cursor:pointer;
-  font:inherit;
-}
-.account-setting + .account-setting{border-top:1px solid rgba(82,102,86,.10)}
-.setting-icon{
-  width:36px;height:36px;
-  display:grid;place-items:center;
-  border-radius:13px;
-  background:rgba(255,255,255,.58);
-}
-.account-setting strong{display:block;font-size:13px}
-.account-setting small{display:block;color:#718078;font-size:10px;margin-top:2px}
-.account-actions{display:grid;gap:9px;margin-top:4px}
-.account-actions .big-action{width:100%}
-.account-footnote{
-  margin:12px 4px 0;
-  text-align:center;
-  color:#6c7a71;
-  font-size:10px;
-}
-.account-mini-panel{
-  position:fixed;
-  inset:0;
-  z-index:80;
-  display:none;
-  align-items:flex-end;
-  justify-content:center;
-  background:rgba(24,40,29,.20);
-  backdrop-filter:blur(7px);
-  -webkit-backdrop-filter:blur(7px);
-  padding:12px;
-}
-.account-mini-panel.open{display:flex}
-.account-mini-panel .panel{
-  width:min(560px,100%);
-  max-height:78vh;
-  overflow:auto;
-  border-radius:28px;
-  padding:20px;
-  background:rgba(250,253,249,.92);
-  border:1px solid rgba(255,255,255,.9);
-  box-shadow:0 24px 60px rgba(28,55,35,.22);
-}
-.account-mini-panel h3{margin:0 0 5px;font-size:21px}
-.account-mini-panel p{margin:0 0 15px;color:#6b786f;font-size:12px}
-.account-mini-panel .panel-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-top:1px solid rgba(76,100,82,.10)}
-.account-mini-panel .close{margin-left:auto}
-@media(max-width:390px){
-  .account-grid.two{grid-template-columns:1fr}
-}
-
-
-/* V36 — Connexion Google + profil simplifié */
-.account-login-screen{
-  min-height:calc(100vh - 120px);
-  display:grid;
-  place-items:center;
-  padding:22px 0 110px;
-}
-.account-login-card{
-  width:100%;
-  max-width:430px;
-  padding:28px 22px 24px;
-  text-align:center;
-  border-radius:30px;
-  background:linear-gradient(145deg,rgba(255,255,255,.72),rgba(241,248,238,.42));
-  border:1px solid rgba(255,255,255,.84);
-  box-shadow:0 22px 55px rgba(38,73,48,.13);
-  backdrop-filter:blur(22px) saturate(130%);
-  -webkit-backdrop-filter:blur(22px) saturate(130%);
-}
-.account-login-icon{
-  width:70px;height:70px;
-  margin:0 auto 15px;
-  display:grid;place-items:center;
-  border-radius:24px;
-  background:linear-gradient(145deg,#8cc86d,#549f66);
-  box-shadow:0 14px 26px rgba(67,136,77,.20);
-  font-size:31px;
-}
-.account-login-card h2{margin:7px 0 8px;font-size:28px;line-height:1.05}
-.account-login-card p{
-  max-width:340px;
-  margin:0 auto 20px;
-  color:#67756c;
-  font-size:13px;
-  line-height:1.5;
-}
-.google-login-btn{
-  width:100%;
-  min-height:54px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:12px;
-  border:1px solid rgba(48,61,52,.15);
-  border-radius:17px;
-  background:#fff;
-  color:#252b27;
-  font:inherit;
-  font-size:14px;
-  font-weight:850;
-  box-shadow:0 10px 22px rgba(47,69,51,.10);
-  cursor:pointer;
-  transition:.18s ease;
-}
-.google-login-btn:hover{transform:translateY(-1px);box-shadow:0 14px 28px rgba(47,69,51,.13)}
-.google-mark{
-  width:27px;height:27px;
-  display:grid;place-items:center;
-  border-radius:50%;
-  color:#4285f4;
-  font-size:19px;
-  font-weight:950;
-  background:#fff;
-}
-.login-later-btn{
-  margin-top:11px;
-  border:0;
-  background:transparent;
-  color:#5c6c61;
-  font:inherit;
-  font-size:12px;
-  font-weight:800;
-  cursor:pointer;
-}
-.account-login-note{
-  margin:17px auto 0;
-  max-width:340px;
-  color:#89948d;
-  font-size:10px;
-  line-height:1.4;
-}
-.account-profile-screen{padding-bottom:110px}
-.account-login-screen[style*="display: none"]{display:none !important}
+.account-tool span{font-size:22px}.account-tool strong{font-size:13px}.account-tool small{font-size:10px;color:#728078;line-height:1.3}
+.account-actions{display:grid;gap:9px;margin-top:4px}.account-actions .big-action{width:100%}
+.account-footnote{margin:12px 4px 0;text-align:center;color:#6c7a71;font-size:10px}
+@media(max-width:390px){.account-grid.two{grid-template-columns:1fr}}
 
 </style></head>
 <body>
@@ -878,7 +603,6 @@ body::after{
 <section id="account" class="view">
   <div class="content account-content">
 
-    <!-- Écran de connexion -->
     <div id="accountLogin" class="account-login-screen">
       <div class="account-login-card">
         <div class="account-login-icon">👤</div>
@@ -891,17 +615,14 @@ body::after{
           <span>Continuer avec Google</span>
         </button>
 
-        <button class="login-later-btn" type="button" onclick="show('home')">
-          Plus tard
-        </button>
+        <button class="login-later-btn" type="button" onclick="show('home')">Plus tard</button>
 
         <div class="account-login-note">
-          La connexion Google sera reliée au compte réel lors de l’intégration de l’authentification.
+          Connexion Google préparée pour la prochaine intégration de l’authentification.
         </div>
       </div>
     </div>
 
-    <!-- Profil après connexion -->
     <div id="accountProfile" class="account-profile-screen" style="display:none">
       <div class="backrow">
         <button class="back" onclick="show('home')">‹ Accueil</button>
@@ -924,7 +645,6 @@ body::after{
             <h3>Mes informations</h3>
           </div>
         </div>
-
         <div class="account-grid two">
           <label class="account-field">
             <span>Nom</span>
@@ -1017,9 +737,7 @@ body::after{
     </div>
   </div>
 </section>
-
 </div>
-
 
 <div id="ficheOverlay" class="fiche-overlay" aria-hidden="true" onclick="if(event.target===this)closeFiche()">
   <article class="fiche-modal" role="dialog" aria-modal="true" aria-labelledby="ficheTitle">
@@ -1054,12 +772,12 @@ function markdown(src){
 }
 function itemLabel(x){return typeof x==='string'?x:(x.name||'Fiche')}
 function itemContent(x){if(typeof x==='string') return '<h2>'+esc(x)+'</h2><div class="notice">Cette rubrique est prévue dans l’architecture de l’application. Le contenu détaillé pourra être ajouté dans une prochaine passe.</div>'; return markdown(x.content||'')}
+
 function isAccountConnected(){return localStorage.getItem('animAccountConnected')==='1'}
 function getAccountProfile(){try{return JSON.parse(localStorage.getItem('animProfile')||'{}')}catch(e){return {}}}
-function saveAccountProfileData(profile){localStorage.setItem('animProfile',JSON.stringify(profile));if(profile.firstName)localStorage.setItem('animUserName',profile.firstName);else localStorage.removeItem('animUserName')}
-function getUserName(){const p=getAccountProfile();return (p.firstName||localStorage.getItem('animUserName')||'Animateur').trim()||'Animateur'}
 function getCheckedValues(rootId){const root=document.getElementById(rootId);return root?[...root.querySelectorAll('input[type="checkbox"]:checked')].map(x=>x.value):[]}
-
+function connectGoogleLocal(){localStorage.setItem('animAccountConnected','1');renderAccountState();toast('Compte connecté.')}
+function logoutLocalAccount(){localStorage.removeItem('animAccountConnected');renderAccountState();toast('Compte déconnecté.')}
 function renderAccountState(){
   const login=document.getElementById('accountLogin');
   const profile=document.getElementById('accountProfile');
@@ -1067,17 +785,6 @@ function renderAccountState(){
   if(login)login.style.display=connected?'none':'grid';
   if(profile)profile.style.display=connected?'block':'none';
   if(connected)fillAccountProfile();
-}
-function connectGoogleLocal(){
-  // Maquette locale : le futur OAuth Google remplacera cette bascule.
-  localStorage.setItem('animAccountConnected','1');
-  renderAccountState();
-  toast('Compte connecté.');
-}
-function logoutLocalAccount(){
-  localStorage.removeItem('animAccountConnected');
-  renderAccountState();
-  toast('Compte déconnecté.');
 }
 function fillAccountProfile(){
   const p=getAccountProfile();
@@ -1089,8 +796,8 @@ function fillAccountProfile(){
   document.querySelectorAll('input[name="accountExperience"]').forEach(x=>x.checked=x.value===(p.experience||''));
   document.querySelectorAll('#ageChoices input').forEach(x=>x.checked=(p.ageRanges||[]).includes(x.value));
   const name=[p.firstName||'',p.lastName||''].filter(Boolean).join(' ')||'Mon profil';
-  const dn=document.getElementById('accountDisplayName'); if(dn)dn.textContent=name;
-  const av=document.getElementById('accountAvatar'); if(av)av.textContent=(p.firstName||p.lastName||'A').trim().charAt(0).toUpperCase();
+  const dn=document.getElementById('accountDisplayName');if(dn)dn.textContent=name;
+  const av=document.getElementById('accountAvatar');if(av)av.textContent=(p.firstName||p.lastName||'A').trim().charAt(0).toUpperCase();
 }
 function saveAccountProfile(){
   const p={
@@ -1101,18 +808,21 @@ function saveAccountProfile(){
     experience:document.querySelector('input[name="accountExperience"]:checked')?.value||'',
     ageRanges:getCheckedValues('ageChoices')
   };
-  saveAccountProfileData(p);
-  renderAccountState();
+  localStorage.setItem('animProfile',JSON.stringify(p));
+  if(p.firstName)localStorage.setItem('animUserName',p.firstName);else localStorage.removeItem('animUserName');
+  fillAccountProfile();
   updateHomePersonalization();
   toast('Profil enregistré localement.');
 }
-function resetAccountProfile(){
-  if(!confirm('Réinitialiser les informations de ton profil sur cet appareil ?'))return;
-  localStorage.removeItem('animProfile');localStorage.removeItem('animUserName');
-  fillAccountProfile();updateHomePersonalization();toast('Profil réinitialisé.');
+function showActivitySheetGenerator(){
+  show('generator');
+  if(typeof openGeneratorMode==='function')openGeneratorMode('sheet');
 }
-function saveUserName(){saveAccountProfile()}
-function showActivitySheetGenerator(){const el=document.getElementById('activityGenerator');if(el){show('activityGenerator')}else{toast('Les fiches d’activités seront accessibles ici.')}}function renderHomeWidgets(){
+
+function getUserName(){return localStorage.getItem('animUserName')||'Animateur'}
+function updateHomePersonalization(){const n=getUserName();const h=document.getElementById('homeUserName');if(h)h.textContent=n;const a=document.getElementById('accountName');if(a&&document.activeElement!==a)a.value=localStorage.getItem('animUserName')||'';renderHomeWidgets()}
+function saveUserName(){const a=document.getElementById('accountName');const n=(a?.value||'').trim();if(n)localStorage.setItem('animUserName',n);else localStorage.removeItem('animUserName');updateHomePersonalization();toast(n?'Prénom enregistré.':'Prénom effacé.');show('home')}
+function renderHomeWidgets(){
  const fl=document.getElementById('homeFavorites'); if(fl){fl.innerHTML=''; const valid=favorites.map(key=>{const p=key.split('|');const item=data[p[0]]?.groups?.[p[1]]?.[Number(p[2])];return item?{key,item,category:p[0],group:p[1],index:Number(p[2])}:null}).filter(Boolean).slice(0,6); if(!valid.length){fl.innerHTML='<div class="home-empty">Ajoute une fiche avec ☆ pour la retrouver ici.</div>'}else valid.forEach(x=>{const b=document.createElement('button');b.className='home-mini-card';b.innerHTML='<strong>★ '+esc(itemLabel(x.item))+'</strong><small>'+esc(x.category)+' · '+esc(x.group)+'</small>';b.onclick=()=>openItem(x.category,x.group,x.index);fl.appendChild(b)})}
  const lv=document.getElementById('homeLastViewed'); if(lv){lv.innerHTML='';const key=localStorage.getItem('animLastViewed');if(!key){lv.innerHTML='<div class="home-empty">Tes dernières fiches consultées apparaîtront ici.</div>';return}const p=key.split('|');const item=data[p[0]]?.groups?.[p[1]]?.[Number(p[2])];if(!item){lv.innerHTML='<div class="home-empty">Tes dernières fiches consultées apparaîtront ici.</div>';return}const b=document.createElement('button');b.className='home-mini-card';b.innerHTML='<strong>'+esc(itemLabel(item))+'</strong><small>'+esc(p[0])+' · '+esc(p[1])+'</small>';b.onclick=()=>openItem(p[0],p[1],Number(p[2]));lv.appendChild(b)}
 }
