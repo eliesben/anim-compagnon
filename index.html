@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#f7f8f5"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default">
-<title>Anim Compagnon — Glassmorphism</title>
+<title>Anim Compagnon</title>
 <link rel="manifest" href="manifest.webmanifest"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -112,69 +112,6 @@ body::after {
 .categories-grid{margin-top:4px}
 .categories-grid .cat-tile{cursor:pointer}
 
-/* FINAL — Glassmorphism global des blocs */
-.categories-grid .cat-tile,
-.content .list button,
-.content .itembtn,
-.content .card,
-.content .detailcard,
-.content .help,
-.content .form-section,
-.content .activity-preview,
-.content .generator-choice,
-.content .generator-card {
-  background: rgba(255,255,255,.42) !important;
-  border: 1px solid rgba(255,255,255,.72) !important;
-  box-shadow: 0 12px 34px rgba(31,64,43,.09) !important;
-  backdrop-filter: blur(18px) saturate(118%) !important;
-  -webkit-backdrop-filter: blur(18px) saturate(118%) !important;
-}
-.categories-grid .cat-tile {
-  min-height: 132px;
-  position: relative;
-  overflow: hidden;
-}
-.categories-grid .cat-tile::after {
-  content:"";
-  position:absolute;
-  inset:0;
-  pointer-events:none;
-  background:linear-gradient(145deg,rgba(255,255,255,.24),rgba(255,255,255,0));
-}
-.categories-grid .cat-tile .ico {
-  font-size: 28px;
-  position:relative;
-  z-index:1;
-}
-.categories-grid .cat-tile strong,
-.categories-grid .cat-tile span {
-  position:relative;
-  z-index:1;
-}
-.categories-grid .cat-tile.a{background:rgba(225,241,223,.56)!important}
-.categories-grid .cat-tile.b{background:rgba(250,229,216,.56)!important}
-.categories-grid .cat-tile.c{background:rgba(223,238,246,.56)!important}
-.categories-grid .cat-tile.d{background:rgba(248,237,203,.56)!important}
-.categories-grid .cat-tile.e{background:rgba(233,228,247,.56)!important}
-.categories-grid .cat-tile.f{background:rgba(247,223,223,.56)!important}
-.categories-grid .cat-tile.g{background:rgba(227,238,228,.56)!important}
-.categories-grid .cat-tile.h{background:rgba(233,236,238,.56)!important}
-.list button:hover,.itembtn:hover,.card:hover,.form-section:hover {
-  border-color:rgba(255,255,255,.92)!important;
-}
-
-
-/* FINAL — Barre basse horizontale */
-.bottom {
-  background: rgba(245,249,245,.62) !important;
-  border-top: 1px solid rgba(255,255,255,.78) !important;
-  box-shadow: 0 -10px 34px rgba(31,64,43,.08) !important;
-  backdrop-filter: blur(26px) saturate(125%) !important;
-  -webkit-backdrop-filter: blur(26px) saturate(125%) !important;
-}
-.bottomin { grid-template-columns: repeat(5,1fr); }
-
-</style>
 /* V32 — Accueil glassmorphism + univers horizontaux */
 .header{padding:20px 18px 12px}
 .top{align-items:center}
@@ -208,7 +145,7 @@ body::after {
 .nav .navicon{background:rgba(255,255,255,.30);border:1px solid rgba(255,255,255,.42)}
 .nav.active .navicon{background:rgba(216,239,221,.78);border-color:rgba(8,116,67,.10)}
 @media(max-width:390px){.universe-tile{flex-basis:142px}.home-greeting strong{max-width:92px}}
-</head>
+</style></head>
 <body>
 <div class="app">
 <section id="home" class="view active">
