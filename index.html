@@ -754,6 +754,40 @@ h1,h2,h3,h4,h5,h6,
   background:rgba(233,246,229,.90);
 }
 
+
+/* V42 — Help : navigateur de ressources */
+.help-content{padding-bottom:115px}
+.help-guideline{display:flex;flex-direction:column;gap:4px;margin:-3px 0 14px;padding:14px 15px;border-radius:18px;background:rgba(239,247,236,.72);border:1px solid rgba(255,255,255,.78)}
+.help-guideline strong{font-size:13px;color:#315d38}.help-guideline span{font-size:11px;color:#6a776e;line-height:1.45}
+.help-self-search{margin-top:20px;padding:15px;border-radius:20px;background:rgba(255,255,255,.43);border:1px solid rgba(255,255,255,.74)}
+.help-self-search-title{display:flex;flex-direction:column;gap:3px;margin-bottom:9px}.help-self-search-title strong{font-size:14px}.help-self-search-title small{font-size:10px;color:#718078}
+.help-self-search input{width:100%;box-sizing:border-box;min-height:46px;border-radius:14px;border:1px solid rgba(79,101,84,.16);background:rgba(255,255,255,.78);padding:11px 12px;font:inherit;font-size:12px;outline:none}
+.help-self-search input:focus{border-color:#8bb79a;box-shadow:0 0 0 4px rgba(139,183,154,.16)}
+.help-self-search .softbtn{width:100%;margin-top:8px}
+.help-library-results{margin-top:10px;display:grid;gap:7px}
+.help-resource{width:100%;padding:12px 13px;display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid rgba(79,101,84,.12);border-radius:15px;background:rgba(255,255,255,.68);text-align:left;color:#2c3a31;font:inherit;cursor:pointer}
+.help-resource strong{display:block;font-size:12px}.help-resource small{display:block;margin-top:3px;color:#75827a;font-size:10px}.help-resource .arrow{font-size:18px;color:#6b8370}
+.help-resource-primary{border-color:rgba(75,129,82,.25);background:rgba(237,248,234,.78)}
+.help-no-result{padding:12px;border-radius:14px;background:rgba(255,255,255,.54);color:#748079;font-size:11px;line-height:1.4}
+.help-overlay{position:fixed;inset:0;z-index:120;display:none;align-items:flex-end;justify-content:center;padding:12px;background:rgba(21,34,25,.30);backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px)}
+.help-overlay.open{display:flex}
+.help-sheet{position:relative;width:min(560px,100%);max-height:86vh;overflow:auto;padding:22px 18px 20px;border-radius:28px;background:rgba(250,253,249,.96);border:1px solid rgba(255,255,255,.92);box-shadow:0 24px 70px rgba(28,55,35,.24)}
+.help-sheet-close{position:absolute;right:12px;top:10px;width:36px;height:36px;border:0;border-radius:50%;background:rgba(236,242,236,.9);font-size:23px;line-height:1;color:#53645a;cursor:pointer}
+.help-kicker{font-size:10px;font-weight:900;letter-spacing:.14em;color:#a04b4b}
+.help-sheet h2{margin:5px 0 17px;font-size:26px}
+.emergency-rule{display:grid;grid-template-columns:34px 1fr;gap:11px;padding:13px 0;border-top:1px solid rgba(80,99,84,.10)}
+.emergency-rule:first-of-type{border-top:0}.emergency-number{width:34px;height:34px;display:grid;place-items:center;border-radius:12px;background:#fde6e8;color:#a62e3b;font-weight:900}
+.emergency-rule strong{display:block;font-size:13px}.emergency-rule p{margin:3px 0 0;color:#67746b;font-size:11px;line-height:1.45}
+.emergency-actions{display:grid;gap:8px;margin-top:12px}.emergency-actions button{min-height:47px;border-radius:14px;border:1px solid rgba(78,100,83,.13);background:#fff;text-align:left;padding:10px 12px;font:inherit;font-size:12px;font-weight:800;color:#344238;cursor:pointer}
+.emergency-phones{margin-top:15px;padding-top:14px;border-top:1px solid rgba(80,99,84,.10)}.emergency-phones>strong{font-size:12px}
+.phone-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px}
+.phone-grid a{text-decoration:none;color:#fff;background:#315f3a;border-radius:13px;padding:10px 11px;font-weight:900;font-size:15px}
+.phone-grid small{display:block;margin-top:2px;font-size:9px;font-weight:600;opacity:.85}
+.help-result{margin-top:15px;padding:16px;border-radius:22px;background:rgba(255,255,255,.58);border:1px solid rgba(255,255,255,.76)}
+.help-result-title{font-size:19px;margin:4px 0 8px}.help-result-intro{margin:0 0 12px;color:#65736a;font-size:12px;line-height:1.5}
+.help-pistes{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 14px}.help-piste{padding:7px 9px;border-radius:999px;background:rgba(230,243,226,.84);border:1px solid rgba(88,143,90,.15);color:#4b7552;font-size:10px;font-weight:800}
+.help-resources{display:grid;gap:8px}.help-level-note{font-size:10px;color:#7a867f;line-height:1.4;margin-top:8px}
+
 </style></head>
 <body>
 
@@ -1049,7 +1083,112 @@ h1,h2,h3,h4,h5,h6,
   </div>
 </section>
 
-<section id="help" class="view"><div class="content"><div class="head"><h2>Help</h2></div><div class="help"><button class="emergency" onclick="emergency()">🆘 Je suis en urgence</button><h3 style="font-size:21px;margin:0 0 7px">Que se passe-t-il ?</h3><p style="color:var(--muted);margin:0 0 12px">Écris ta situation avec tes mots. Help peut te guider étape par étape et te demander un complément uniquement si nécessaire.</p><textarea id="hinput" placeholder="Ex. : Un enfant pleure depuis son arrivée et refuse de participer…"></textarea><div class="contexts"><button onclick="selectContext(this)">Périscolaire</button><button onclick="selectContext(this)">ALSH</button><button onclick="selectContext(this)">Colonie / séjour</button><button onclick="selectContext(this)">BAFA / formation</button><button onclick="selectContext(this)">Autre</button></div><button class="primary" onclick="help()">M’aider maintenant</button><div class="examples"><strong>Exemples</strong><button class="example" onclick="fill(this)">Un enfant quitte mon activité sans prévenir.</button><button class="example" onclick="fill(this)">Deux enfants se disputent pendant le jeu.</button><button class="example" onclick="fill(this)">Un enfant ne veut pas manger.</button><button class="example" onclick="fill(this)">Un enfant pleure depuis son arrivée.</button></div><div id="hout"></div></div></div></section>
+<section id="help" class="view">
+  <div class="content help-content">
+    <div class="head">
+      <div>
+        <h2>Help</h2>
+        <p class="subline">Décris ta situation. Help t’oriente vers les bonnes ressources.</p>
+      </div>
+    </div>
+
+    <div class="help">
+      <button class="emergency" onclick="openEmergency()">🆘 Je suis en urgence</button>
+
+      <div class="help-guideline">
+        <strong>Help ne donne pas une réponse à ta place.</strong>
+        <span>Il t’aide à identifier ce que tu rencontres et à retrouver les fiches qui peuvent t’aider à comprendre et agir.</span>
+      </div>
+
+      <h3 style="font-size:21px;margin:0 0 7px">Que se passe-t-il ?</h3>
+      <p style="color:var(--muted);margin:0 0 12px">Écris la situation avec tes mots, comme tu la raconterais à un collègue.</p>
+
+      <textarea id="hinput" placeholder="Ex. : Un enfant refuse de participer à mon activité et reste à l’écart…"></textarea>
+
+      <div class="contexts">
+        <button onclick="selectContext(this)">Périscolaire</button>
+        <button onclick="selectContext(this)">ALSH</button>
+        <button onclick="selectContext(this)">Colonie / séjour</button>
+        <button onclick="selectContext(this)">BAFA / formation</button>
+        <button onclick="selectContext(this)">Autre</button>
+      </div>
+
+      <button class="primary" onclick="help()">🔎 Trouver les ressources</button>
+
+      <div class="help-self-search">
+        <div class="help-self-search-title">
+          <strong>📚 Je cherche par moi-même</strong>
+          <small>Recherche dans les ressources d’Anim Compagnon</small>
+        </div>
+        <input id="helpLibrarySearch" type="search" placeholder="Ex. conflit, repas, réglementation, consignes, BAFA…">
+        <button class="softbtn" onclick="searchHelpLibrary()">Rechercher dans les fiches</button>
+        <div id="helpLibraryResults"></div>
+      </div>
+
+      <div class="examples">
+        <strong>Exemples</strong>
+        <button class="example" onclick="fill(this)">Un enfant refuse de participer à mon activité.</button>
+        <button class="example" onclick="fill(this)">Un enfant ne comprend pas mes consignes.</button>
+        <button class="example" onclick="fill(this)">Deux enfants se disputent pendant le jeu.</button>
+        <button class="example" onclick="fill(this)">Un enfant ne veut pas manger.</button>
+        <button class="example" onclick="fill(this)">Un enfant est très triste depuis son arrivée.</button>
+        <button class="example" onclick="fill(this)">Un enfant présente des traces de mains sur le cou qu’il cherche à cacher.</button>
+      </div>
+
+      <div id="hout"></div>
+    </div>
+  </div>
+
+  <div id="helpEmergencyPanel" class="help-overlay" aria-hidden="true">
+    <div class="help-sheet">
+      <button class="help-sheet-close" onclick="closeEmergency()" aria-label="Fermer">×</button>
+      <span class="help-kicker">URGENCE</span>
+      <h2>🆘 Je suis en urgence</h2>
+
+      <div class="emergency-rule">
+        <span class="emergency-number">1</span>
+        <div>
+          <strong>PRÉVIENS LA DIRECTION</strong>
+          <p>Ne reste pas seul face à une situation d’urgence. Préviens immédiatement le directeur ou la personne responsable de la structure.</p>
+        </div>
+      </div>
+
+      <div class="emergency-rule">
+        <span class="emergency-number">2</span>
+        <div>
+          <strong>PROTÈGE L’ENFANT ET LE GROUPE</strong>
+          <p>Mets les personnes en sécurité et applique les consignes de ta structure.</p>
+        </div>
+      </div>
+
+      <div class="emergency-rule">
+        <span class="emergency-number">3</span>
+        <div>
+          <strong>UTILISE LA BONNE RESSOURCE</strong>
+          <p>Selon la situation, ouvre la procédure ou le numéro utile correspondant.</p>
+        </div>
+      </div>
+
+      <div class="emergency-actions">
+        <button onclick="openHelpResource('Boîte à outils','Enfance en danger',0)">🚨 Enfant potentiellement en danger</button>
+        <button onclick="openHelpResource('Boîte à outils','Numéros utiles',0)">📞 Accident / santé / urgence</button>
+        <button onclick="searchHelpLibrary('réglementation')">⚖️ Consulter la réglementation</button>
+      </div>
+
+      <div class="emergency-phones">
+        <strong>Numéros d’urgence</strong>
+        <div class="phone-grid">
+          <a href="tel:112">112 <small>Urgence européenne</small></a>
+          <a href="tel:15">15 <small>SAMU</small></a>
+          <a href="tel:18">18 <small>Pompiers</small></a>
+          <a href="tel:17">17 <small>Police / gendarmerie</small></a>
+          <a href="tel:114">114 <small>Urgence sourds / malentendants</small></a>
+          <a href="tel:119">119 <small>Enfance en danger</small></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section id="favorites" class="view"><div class="content"><button class="back" onclick="show('home')">‹ Accueil</button><div class="head"><h2>Mes favoris</h2></div><div id="favlist" class="list"></div></div></section>
 <section id="account" class="view">
@@ -1248,6 +1387,134 @@ function objectiveChips(item){
 }
 function isActivityItem(category,group){
   return category==='Activités' && group!=='Chants';
+}
+
+
+const HELP_RULES=[
+  {
+    level:'red',
+    label:'🔴 Situation préoccupante',
+    test:t=>/(traces? de? mains?|marques? au cou|cou|étranglement|violence|frappe|coups?|brûlure|hématome|bleu|blessure inexpliquée|maltraitance|violence sexuelle|abus sexuel|attouchement|peur de rentrer|peur de la maison|demande de secret|danger immédiat|enfant en danger|disparu|disparition)/i.test(t),
+    intro:'Ce que tu décris peut relever d’une situation où l’enfant doit être protégé. Help ne permet pas d’établir les faits à lui seul : il t’oriente vers la procédure à consulter et le relais professionnel.',
+    pistes:['Protection de l’enfant','Transmission','Posture face à une révélation'],
+    resources:[['Boîte à outils','Enfance en danger',0,'🚨 Enfance en danger — procédure à consulter en priorité'],['Boîte à outils','Numéros utiles',0,'📞 Numéros utiles en ACM']]
+  },
+  {
+    level:'orange',
+    label:'🟠 À surveiller / à accompagner',
+    test:t=>/(conflit|dispute|se disputent|agressif|insulte|exclu|isolé|triste|pleure|pleurer|repas|ne veut pas manger|refuse de manger|colère|tension|parent|famille|problème durant un repas|repas difficile)/i.test(t),
+    intro:'La situation mérite un temps d’échange et d’accompagnement. Commence par sécuriser et apaiser, puis cherche la fiche qui correspond à ce que tu rencontres.',
+    pistes:['Échange avec l’enfant','Apaisement du groupe','Comprendre la situation'],
+    resources:[['Vie quotidienne','Repas',0,'🍽️ Vie quotidienne — Repas'],['Rôle de l’animateur','Posture de l’animateur',0,'🧑‍🏫 Posture de l’animateur']]
+  },
+  {
+    level:'green',
+    label:'🟢 Problématique pédagogique / courante',
+    test:t=>/(refuse de participer|refus de participer|ne participe pas|participe pas|ne comprend pas|comprend pas|consigne|s’ennuie|ennuie|décroche|n’est pas intéressé|pas intéressé|trop dans le jeu|excité pendant|imaginaire|activité ne prend pas|activité n’intéresse pas|groupe décroche|rythme|adapté à l’âge|âge)/i.test(t),
+    intro:'Cette situation peut relever de l’activité, de sa préparation ou de la posture de l’animateur. Help ne tranche pas : il te propose les fiches à consulter pour analyser ce qui peut bloquer.',
+    pistes:['Intérêt de l’activité','Sensibilisation / imaginaire','Consignes','Adaptation à l’âge','Posture de l’animateur','Rythme'],
+    resources:[['Rôle de l’animateur','Posture de l’animateur',0,'🧑‍🏫 Posture de l’animateur'],['Publics','3 à 6 ans',0,'👶 Comprendre les 3–6 ans'],['Publics','7 à 11 ans',0,'🧒 Comprendre les 7–11 ans'],['Ressources','Construire un grand jeu',0,'🧩 Construire un grand jeu — PSAADRAFRA']]
+  }
+];
+
+function selectContext(btn){
+  document.querySelectorAll('.contexts button').forEach(b=>b.classList.remove('selected'));
+  btn?.classList.add('selected');
+}
+function fill(btn){
+  const input=document.getElementById('hinput');
+  if(input){input.value=btn.textContent.trim();input.focus()}
+}
+function help(){
+  const input=document.getElementById('hinput');
+  const text=(input?.value||'').trim();
+  if(!text){toast('Décris d’abord ta situation.');return}
+  const rule=HELP_RULES.find(r=>r.test(text.toLowerCase()));
+  if(!rule){
+    renderHelpResult({
+      level:'green',
+      label:'🟢 À explorer',
+      intro:'Ta situation peut relever de plusieurs ressources. Help ne va pas décider à ta place : cherche les fiches qui correspondent le mieux à ce que tu observes.',
+      pistes:['Comprendre la situation','Posture de l’animateur','Adapter au public'],
+      resources:searchHelpResources(text).slice(0,5)
+    });
+    return;
+  }
+  renderHelpResult(rule);
+}
+function renderHelpResult(rule){
+  const result=document.getElementById('hout');if(!result)return;
+  const cls=rule.level==='red'?'red':rule.level==='orange'?'orange':'green';
+  const sourceList=(rule.resources||[]).map(resourceObject).filter(Boolean);
+  let h='<div class="help-result"><div class="level '+cls+'">'+esc(rule.label)+'</div>';
+  h+='<h3 class="help-result-title">📚 Ressources à consulter</h3>';
+  h+='<p class="help-result-intro">'+esc(rule.intro)+'</p>';
+  if(rule.pistes?.length)h+='<div class="help-pistes">'+rule.pistes.map(x=>'<span class="help-piste">'+esc(x)+'</span>').join('')+'</div>';
+  h+='<div class="help-resources">';
+  if(sourceList.length){
+    sourceList.forEach((r,i)=>{
+      h+='<button class="help-resource '+(rule.level==='red'&&i===0?'help-resource-primary':'')+'" onclick="openHelpResource(\''+jsQuote(r.category)+'\',\''+jsQuote(r.group)+'\','+r.index+')"><span><strong>'+esc(r.label)+'</strong><small>'+esc(r.category)+' · '+esc(r.group)+'</small></span><span class="arrow">›</span></button>';
+    });
+  }else{
+    h+='<div class="help-no-result">Aucune fiche précise ne ressort encore. Utilise la recherche libre pour parcourir la bibliothèque.</div>';
+  }
+  h+='</div><div class="help-level-note">Le niveau indique la priorité du relais vers une ressource ; ce n’est pas un diagnostic.</div></div>';
+  result.innerHTML=h;
+}
+function jsQuote(s){return String(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'")}
+function resourceObject(r){
+  if(!r||!data[r[0]]?.groups?.[r[1]]?.[r[2]])return null;
+  return {category:r[0],group:r[1],index:r[2],label:r[3]||itemLabel(data[r[0]].groups[r[1]][r[2]])};
+}
+function openHelpResource(category,group,index){
+  closeEmergency();
+  openItem(category,group,index);
+}
+function openEmergency(){
+  const panel=document.getElementById('helpEmergencyPanel');
+  if(panel){panel.classList.add('open');panel.setAttribute('aria-hidden','false')}
+}
+function closeEmergency(){
+  const panel=document.getElementById('helpEmergencyPanel');
+  if(panel){panel.classList.remove('open');panel.setAttribute('aria-hidden','true')}
+}
+function searchHelpResources(query){
+  const q=normalizeText(query||'');
+  if(!q)return [];
+  const words=q.split(/[^a-z0-9-]+/).filter(w=>w.length>=3);
+  const out=[];
+  Object.entries(data).forEach(([category,section])=>{
+    Object.entries(section.groups||{}).forEach(([group,items])=>{
+      (items||[]).forEach((item,index)=>{
+        const label=normalizeText(itemLabel(item));
+        const content=normalizeText(typeof item==='string'?item:(item.content||''));
+        let score=0;
+        words.forEach(w=>{if(label.includes(w))score+=5;else if(content.includes(w))score+=1});
+        if(category==='Boîte à outils'&&group==='Réglementation'){
+          if(/reglement|bafa|encadrement|taux|transport|baignade|deplacement|deplacement|medicament|securite|declaration|projet/.test(q))score+=6;
+        }
+        if(score>0)out.push({category,group,index,label:itemLabel(item),score});
+      });
+    });
+  });
+  return out.sort((a,b)=>b.score-a.score).slice(0,8).map(x=>[x.category,x.group,x.index,x.label]);
+}
+function searchHelpLibrary(queryOverride){
+  const input=document.getElementById('helpLibrarySearch');
+  const q=(queryOverride!==undefined?queryOverride:(input?.value||'')).trim();
+  if(input&&queryOverride!==undefined)input.value=queryOverride;
+  const out=document.getElementById('helpLibraryResults');if(!out)return;
+  if(!q){out.innerHTML='<div class="help-no-result">Écris un mot ou une expression pour chercher dans les fiches.</div>';return}
+  const results=searchHelpResources(q);
+  if(!results.length){out.innerHTML='<div class="help-no-result">Aucune fiche trouvée. Essaie un autre terme.</div>';return}
+  out.innerHTML='<div class="help-library-results"></div>';
+  const list=out.firstElementChild;
+  results.forEach(r=>{
+    const b=document.createElement('button');b.className='help-resource';
+    b.innerHTML='<span><strong>'+esc(r[3])+'</strong><small>'+esc(r[0])+' · '+esc(r[1])+'</small></span><span class="arrow">›</span>';
+    b.onclick=()=>openHelpResource(r[0],r[1],r[2]);
+    list.appendChild(b);
+  });
 }
 
 function itemLabel(x){return typeof x==='string'?x:(x.name||'Fiche')}
