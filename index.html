@@ -328,6 +328,264 @@ body::after{
 .account-footnote{margin:12px 4px 0;text-align:center;color:#6c7a71;font-size:10px}
 @media(max-width:390px){.account-grid.two{grid-template-columns:1fr}}
 
+
+/* V38 — Assistant d’activité + filtres */
+.assistant-intro{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  margin:8px 0 14px;
+  padding:14px 15px;
+  border-radius:18px;
+  background:rgba(255,255,255,.42);
+  border:1px solid rgba(255,255,255,.70);
+}
+.assistant-intro strong{font-size:15px}
+.assistant-intro span{font-size:12px;color:#68766d;line-height:1.4}
+.assistant-filter-bar{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:0 0 12px;
+}
+.assistant-filter{
+  min-height:42px;
+  padding:0 12px;
+  border-radius:999px;
+  border:1px solid rgba(69,98,76,.15);
+  background:rgba(255,255,255,.58);
+  color:#334138;
+  font:inherit;
+  font-size:11px;
+  font-weight:850;
+  cursor:pointer;
+  transition:.18s ease;
+}
+.assistant-filter b{
+  margin-left:4px;
+  color:#6c8c70;
+}
+.assistant-filter.active{
+  background:linear-gradient(135deg,rgba(143,199,108,.86),rgba(80,155,92,.86));
+  border-color:rgba(68,135,77,.35);
+  color:#fff;
+  box-shadow:0 7px 16px rgba(62,129,73,.17);
+}
+.assistant-filter.active b{color:#fff}
+.assistant-filter-fields{
+  display:grid;
+  gap:9px;
+  margin-bottom:12px;
+}
+.assistant-field{
+  display:grid;
+  grid-template-columns:105px 1fr;
+  align-items:center;
+  gap:10px;
+  padding:9px 11px;
+  border-radius:16px;
+  background:rgba(255,255,255,.46);
+  border:1px solid rgba(255,255,255,.72);
+}
+.assistant-field-label{
+  font-size:11px;
+  font-weight:900;
+  color:#526057;
+}
+.assistant-field input{
+  width:100%;
+  box-sizing:border-box;
+  min-height:42px;
+  padding:10px 11px;
+  border-radius:13px;
+  border:1px solid rgba(80,103,86,.15);
+  background:rgba(255,255,255,.76);
+  font:inherit;
+  font-size:12px;
+  outline:none;
+}
+.assistant-field input:focus{
+  border-color:rgba(71,140,79,.45);
+  box-shadow:0 0 0 4px rgba(90,157,96,.10);
+}
+.assistant-free-text{
+  display:block;
+  margin-top:6px;
+}
+.assistant-free-text span{
+  display:block;
+  margin-bottom:6px;
+  font-size:12px;
+  font-weight:850;
+  color:#536158;
+}
+.assistant-free-text textarea{
+  width:100%;
+  min-height:90px;
+  box-sizing:border-box;
+  padding:12px 13px;
+  border-radius:16px;
+  border:1px solid rgba(80,103,86,.15);
+  background:rgba(255,255,255,.68);
+  font:inherit;
+  font-size:12px;
+  resize:vertical;
+  outline:none;
+}
+.assistant-generate-row{
+  display:flex;
+  gap:9px;
+  margin:11px 0 4px;
+}
+.assistant-generate-btn{flex:1}
+.assistant-result{
+  margin-top:14px;
+  overflow:hidden;
+  border-radius:24px;
+  background:rgba(255,255,255,.57);
+  border:1px solid rgba(255,255,255,.80);
+  box-shadow:0 15px 32px rgba(35,68,45,.09);
+}
+.assistant-result-head{
+  padding:17px 17px 14px;
+  background:linear-gradient(135deg,rgba(225,244,216,.72),rgba(255,255,255,.40));
+}
+.assistant-result-head small{
+  display:block;
+  margin-bottom:5px;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.11em;
+  text-transform:uppercase;
+  color:#5f8265;
+}
+.assistant-result-head h3{
+  margin:0;
+  font-size:22px;
+  line-height:1.05;
+}
+.assistant-result-meta{
+  margin-top:8px;
+  color:#627068;
+  font-size:11px;
+  line-height:1.5;
+}
+.assistant-result-body{padding:14px 17px 17px}
+.assistant-result-section{
+  padding:10px 0;
+  border-top:1px solid rgba(75,100,81,.10);
+}
+.assistant-result-section:first-child{border-top:0;padding-top:0}
+.assistant-result-section h4{margin:0 0 5px;font-size:13px}
+.assistant-result-section p{margin:0;color:#4e5c53;font-size:12px;line-height:1.5}
+.assistant-result-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  padding-top:12px;
+}
+.activity-filter-box{
+  margin:12px 0 14px;
+  padding:14px;
+  border-radius:21px;
+  background:rgba(255,255,255,.38);
+  border:1px solid rgba(255,255,255,.68);
+}
+.activity-filter-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:9px;
+}
+.activity-filter-title strong{font-size:14px}
+.activity-filter-title small{color:#6b786f;font-size:10px}
+.activity-filter-chips{
+  display:flex;
+  flex-wrap:wrap;
+  gap:7px;
+  margin-bottom:9px;
+}
+.activity-filter-chip{
+  min-height:36px;
+  padding:0 10px;
+  border-radius:999px;
+  border:1px solid rgba(70,100,77,.14);
+  background:rgba(255,255,255,.58);
+  color:#3b4a40;
+  font:inherit;
+  font-size:10px;
+  font-weight:850;
+  cursor:pointer;
+}
+.activity-filter-chip.active{
+  background:rgba(117,175,102,.78);
+  color:#fff;
+}
+.activity-filter-inputs{display:grid;gap:7px}
+.activity-filter-field{display:none}
+.activity-filter-field.open{display:block}
+.activity-filter-field input{
+  width:100%;
+  box-sizing:border-box;
+  min-height:42px;
+  border-radius:13px;
+  border:1px solid rgba(80,103,86,.15);
+  background:rgba(255,255,255,.76);
+  padding:10px 11px;
+  font:inherit;
+  font-size:12px;
+}
+.activity-filter-results{
+  display:grid;
+  gap:8px;
+}
+.activity-filter-results .itembtn{margin:0}
+.activity-filter-empty{
+  padding:14px;
+  border-radius:17px;
+  background:rgba(255,255,255,.48);
+  color:#6e7b73;
+  font-size:12px;
+  text-align:center;
+}
+@media(max-width:420px){
+  .assistant-field{grid-template-columns:88px 1fr}
+}
+
+
+/* V38 — Assistant d’activité et filtres rapides */
+.assistant-intro{display:flex;flex-direction:column;gap:4px;margin:8px 0 14px;padding:14px 15px;border-radius:18px;background:rgba(255,255,255,.42);border:1px solid rgba(255,255,255,.70)}
+.assistant-intro strong{font-size:15px}.assistant-intro span{font-size:12px;color:#68766d;line-height:1.4}
+.assistant-filter-bar{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px}
+.assistant-filter{min-height:42px;padding:0 12px;border-radius:999px;border:1px solid rgba(69,98,76,.15);background:rgba(255,255,255,.58);color:#334138;font:inherit;font-size:11px;font-weight:850;cursor:pointer;transition:.18s ease}
+.assistant-filter b{margin-left:4px;color:#6c8c70}.assistant-filter.active{background:linear-gradient(135deg,rgba(143,199,108,.86),rgba(80,155,92,.86));border-color:rgba(68,135,77,.35);color:#fff;box-shadow:0 7px 16px rgba(62,129,73,.17)}.assistant-filter.active b{color:#fff}
+.assistant-filter-fields{display:grid;gap:9px;margin-bottom:12px}
+.assistant-field{display:grid;grid-template-columns:105px 1fr;align-items:center;gap:10px;padding:9px 11px;border-radius:16px;background:rgba(255,255,255,.46);border:1px solid rgba(255,255,255,.72)}
+.assistant-field-label{font-size:11px;font-weight:900;color:#526057}
+.assistant-field input{width:100%;box-sizing:border-box;min-height:42px;padding:10px 11px;border-radius:13px;border:1px solid rgba(80,103,86,.15);background:rgba(255,255,255,.76);font:inherit;font-size:12px;outline:none}
+.assistant-field input:focus{border-color:rgba(71,140,79,.45);box-shadow:0 0 0 4px rgba(90,157,96,.10)}
+.assistant-free-text{display:block;margin-top:6px}.assistant-free-text span{display:block;margin-bottom:6px;font-size:12px;font-weight:850;color:#536158}
+.assistant-free-text textarea{width:100%;min-height:90px;box-sizing:border-box;padding:12px 13px;border-radius:16px;border:1px solid rgba(80,103,86,.15);background:rgba(255,255,255,.68);font:inherit;font-size:12px;resize:vertical;outline:none}
+.assistant-generate-row{display:flex;gap:9px;margin:11px 0 4px}.assistant-generate-btn{flex:1}
+.assistant-result{margin-top:14px;overflow:hidden;border-radius:24px;background:rgba(255,255,255,.57);border:1px solid rgba(255,255,255,.80);box-shadow:0 15px 32px rgba(35,68,45,.09)}
+.assistant-result-head{padding:17px 17px 14px;background:linear-gradient(135deg,rgba(225,244,216,.72),rgba(255,255,255,.40))}
+.assistant-result-head small{display:block;margin-bottom:5px;font-size:10px;font-weight:900;letter-spacing:.11em;text-transform:uppercase;color:#5f8265}
+.assistant-result-head h3{margin:0;font-size:22px;line-height:1.05}.assistant-result-meta{margin-top:8px;color:#627068;font-size:11px;line-height:1.5}
+.assistant-result-body{padding:14px 17px 17px}.assistant-result-section{padding:10px 0;border-top:1px solid rgba(75,100,81,.10)}
+.assistant-result-section:first-child{border-top:0;padding-top:0}.assistant-result-section h4{margin:0 0 5px;font-size:13px}.assistant-result-section p{margin:0;color:#4e5c53;font-size:12px;line-height:1.5}
+.assistant-result-actions{display:flex;flex-wrap:wrap;gap:8px;padding-top:12px}
+.activity-filter-box{margin:12px 0 14px;padding:14px;border-radius:21px;background:rgba(255,255,255,.38);border:1px solid rgba(255,255,255,.68)}
+.activity-filter-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}.activity-filter-title strong{font-size:14px}.activity-filter-title small{color:#6b786f;font-size:10px}
+.activity-filter-chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:9px}
+.activity-filter-chip{min-height:36px;padding:0 10px;border-radius:999px;border:1px solid rgba(70,100,77,.14);background:rgba(255,255,255,.58);color:#3b4a40;font:inherit;font-size:10px;font-weight:850;cursor:pointer}
+.activity-filter-chip.active{background:rgba(117,175,102,.78);color:#fff}
+.activity-filter-inputs{display:grid;gap:7px}.activity-filter-field{display:none}.activity-filter-field.open{display:block}
+.activity-filter-field input{width:100%;box-sizing:border-box;min-height:42px;border-radius:13px;border:1px solid rgba(80,103,86,.15);background:rgba(255,255,255,.76);padding:10px 11px;font:inherit;font-size:12px}
+.activity-filter-results{display:grid;gap:8px}.activity-filter-results .itembtn{margin:0}
+.activity-filter-empty{padding:14px;border-radius:17px;background:rgba(255,255,255,.48);color:#6e7b73;font-size:12px;text-align:center}
+@media(max-width:420px){.assistant-field{grid-template-columns:88px 1fr}}
+
 </style></head>
 <body>
 <div class="app">
@@ -338,7 +596,7 @@ body::after{
 <section class="section"><div class="promo"><div><span class="badge">NOUVEAU</span><h3>Votre compagnon<br>de terrain</h3><p>Des ressources, des idées, des solutions… toujours avec vous.</p><button class="cta" onclick="show('help')">Explorer maintenant&nbsp; →</button></div><div class="bagarea"><div class="bag">🎒</div><div class="note">Animer<br>c’est semer<br>aujourd’hui 🌱</div></div></div></section>
 <section class="glass-section"><div class="head"><h2>Parcourir les univers</h2><button class="see" onclick="show('categories')">Voir tout ›</button></div><div class="glass-scroll"><button class="universe-tile a" onclick="cat('Activités')"><div class="ico">⛺</div><strong>Activités</strong><span>Jeux & animations</span></button><button class="universe-tile b" onclick="cat('Vie quotidienne')"><div class="ico">☀️</div><strong>Vie quotidienne</strong><span>Les temps de la journée</span></button><button class="universe-tile c" onclick="cat('Publics')"><div class="ico">👥</div><strong>Publics</strong><span>Mieux comprendre</span></button><button class="universe-tile d" onclick="cat('Rôle de l’animateur')"><div class="ico">🧑‍🏫</div><strong>Rôle de l’animateur</strong><span>Posture & acteurs</span></button><button class="universe-tile e" onclick="cat('Boîte à outils')"><div class="ico">🧰</div><strong>Boîte à outils</strong><span>Réflexes pratiques</span></button><button class="universe-tile f" onclick="show('help')"><div class="ico">🛟</div><strong>Help</strong><span>Une situation ?</span></button><button class="universe-tile g" onclick="cat('Ressources')"><div class="ico">📚</div><strong>Ressources</strong><span>Fiches & supports</span></button><button class="universe-tile h" onclick="show('generator')"><div class="ico">✨</div><strong>Générer</strong><span>Créer une activité</span></button></div></section>
 <section class="glass-section"><div class="head"><h2>Mes favoris</h2><button class="see" onclick="show('favorites')">Voir tout ›</button></div><div id="homeFavorites" class="home-mini-list"><div class="home-empty">Ajoute une fiche avec ☆ pour la retrouver ici.</div></div></section>
-<section class="glass-section"><div class="head"><h2>Dernière fiche consultée</h2></div><div id="homeLastViewed" class="home-mini-list"><div class="home-empty">Tes dernières fiches consultées apparaîtront ici.</div></div></section>
+<section class="glass-section"><div class="head"><h2>Dernières fiches consultées</h2></div><div id="homeLastViewed" class="home-mini-list"><div class="home-empty">Tes dernières fiches consultées apparaîtront ici.</div></div></section>
 </section>
 
 <section id="categories" class="view">
@@ -422,21 +680,37 @@ body::after{
     </div>
 
     <div id="aiGenerator" class="hidden">
-      <div class="backrow">
-        <button class="back" onclick="backToGeneratorChoice()">‹ Générer</button>
+      <div class="backrow"><button class="back" onclick="backToGeneratorChoice()">‹ Générer</button></div>
+      <div class="head"><h2>✨ Assistant d’activité</h2></div>
+
+      <div class="assistant-intro">
+        <strong>Va droit au but.</strong>
+        <span>Choisis seulement les informations que tu connais. Tu peux compléter les champs au fur et à mesure.</span>
       </div>
-      <div class="head"><h2>✨ Générer une activité avec l’IA</h2></div>
-      <div class="help generator">
-        <p class="hint">Décris ton besoin comme tu le ferais à un collègue. Le vrai moteur IA sera branché ici plus tard.</p>
-        <div class="gen-chips">
-          <span class="gen-chip">Âge</span><span class="gen-chip">Nombre</span><span class="gen-chip">Durée</span>
-          <span class="gen-chip">Lieu</span><span class="gen-chip">Matériel</span><span class="gen-chip">Énergie</span><span class="gen-chip">Objectif</span>
-        </div>
-        <textarea id="activityAI" placeholder="Ex. : J’ai 4 plots, 3 ballons, 2 cordes, 14 enfants de 8 ans, dehors, 45 min, je veux un truc qui bouge sans élimination."></textarea>
-        <br><br>
-        <button class="primary" onclick="prepareAIGeneration()">✨ Générer mon activité</button>
-        <div id="genAIout"></div>
+
+      <div class="assistant-filter-bar" id="genQuickFilters">
+        <button class="assistant-filter" data-key="age" onclick="toggleGenFilter('age')">Âge <b>+</b></button>
+        <button class="assistant-filter" data-key="number" onclick="toggleGenFilter('number')">Nombre <b>+</b></button>
+        <button class="assistant-filter" data-key="duration" onclick="toggleGenFilter('duration')">Durée <b>+</b></button>
+        <button class="assistant-filter" data-key="place" onclick="toggleGenFilter('place')">Lieu <b>+</b></button>
+        <button class="assistant-filter" data-key="material" onclick="toggleGenFilter('material')">Matériel <b>+</b></button>
+        <button class="assistant-filter" data-key="energy" onclick="toggleGenFilter('energy')">Énergie <b>+</b></button>
+        <button class="assistant-filter" data-key="objective" onclick="toggleGenFilter('objective')">Objectif pédagogique <b>+</b></button>
       </div>
+
+      <div class="assistant-filter-fields" id="genQuickFields"></div>
+
+      <label class="assistant-free-text">
+        <span>Autre précision</span>
+        <textarea id="activityAI" placeholder="Ex. Je veux un jeu qui bouge, sans élimination, avec très peu de préparation."></textarea>
+      </label>
+
+      <div class="assistant-generate-row">
+        <button class="primary assistant-generate-btn" onclick="prepareAIGeneration()">✨ Générer mon activité</button>
+        <button class="softbtn" onclick="clearGenFilters()">Effacer</button>
+      </div>
+
+      <div id="genAIout"></div>
     </div>
 
     <div id="sheetGenerator" class="hidden">
@@ -822,9 +1096,64 @@ function showActivitySheetGenerator(){
 function getUserName(){return localStorage.getItem('animUserName')||'Animateur'}
 function updateHomePersonalization(){const n=getUserName();const h=document.getElementById('homeUserName');if(h)h.textContent=n;const a=document.getElementById('accountName');if(a&&document.activeElement!==a)a.value=localStorage.getItem('animUserName')||'';renderHomeWidgets()}
 function saveUserName(){const a=document.getElementById('accountName');const n=(a?.value||'').trim();if(n)localStorage.setItem('animUserName',n);else localStorage.removeItem('animUserName');updateHomePersonalization();toast(n?'Prénom enregistré.':'Prénom effacé.');show('home')}
+function getRecentViewed(){
+  try{
+    const v=JSON.parse(localStorage.getItem('animRecentViewed')||'[]');
+    return Array.isArray(v)?v:[];
+  }catch(e){return []}
+}
+function setRecentViewed(list){localStorage.setItem('animRecentViewed',JSON.stringify(list.slice(0,8)))}
+function seedRecentViewed(){
+  if(getRecentViewed().length)return;
+  const defaults=[
+    ['Activités','Animation de courte durée',0],
+    ['Activités','Animation de courte durée',1],
+    ['Activités','Animation de courte durée',2],
+    ['Activités','Animation de courte durée',3]
+  ];
+  const valid=defaults.filter(p=>data[p[0]]?.groups?.[p[1]]?.[p[2]]);
+  setRecentViewed(valid.map(p=>p.join('|')));
+}
 function renderHomeWidgets(){
- const fl=document.getElementById('homeFavorites'); if(fl){fl.innerHTML=''; const valid=favorites.map(key=>{const p=key.split('|');const item=data[p[0]]?.groups?.[p[1]]?.[Number(p[2])];return item?{key,item,category:p[0],group:p[1],index:Number(p[2])}:null}).filter(Boolean).slice(0,6); if(!valid.length){fl.innerHTML='<div class="home-empty">Ajoute une fiche avec ☆ pour la retrouver ici.</div>'}else valid.forEach(x=>{const b=document.createElement('button');b.className='home-mini-card';b.innerHTML='<strong>★ '+esc(itemLabel(x.item))+'</strong><small>'+esc(x.category)+' · '+esc(x.group)+'</small>';b.onclick=()=>openItem(x.category,x.group,x.index);fl.appendChild(b)})}
- const lv=document.getElementById('homeLastViewed'); if(lv){lv.innerHTML='';const key=localStorage.getItem('animLastViewed');if(!key){lv.innerHTML='<div class="home-empty">Tes dernières fiches consultées apparaîtront ici.</div>';return}const p=key.split('|');const item=data[p[0]]?.groups?.[p[1]]?.[Number(p[2])];if(!item){lv.innerHTML='<div class="home-empty">Tes dernières fiches consultées apparaîtront ici.</div>';return}const b=document.createElement('button');b.className='home-mini-card';b.innerHTML='<strong>'+esc(itemLabel(item))+'</strong><small>'+esc(p[0])+' · '+esc(p[1])+'</small>';b.onclick=()=>openItem(p[0],p[1],Number(p[2]));lv.appendChild(b)}
+  const fl=document.getElementById('homeFavorites');
+  if(fl){
+    fl.innerHTML='';
+    const valid=favorites.map(key=>{const p=key.split('|');const item=data[p[0]]?.groups?.[p[1]]?.[Number(p[2])];return item?{key,item,category:p[0],group:p[1],index:Number(p[2])}:null}).filter(Boolean).slice(0,6);
+    if(!valid.length){
+      fl.innerHTML='<div class="home-empty">Ajoute une fiche avec ☆ pour la retrouver ici.</div>';
+    }else{
+      valid.forEach(x=>{
+        const b=document.createElement('button');
+        b.className='home-mini-card';
+        b.innerHTML='<strong>★ '+esc(itemLabel(x.item))+'</strong><small>'+esc(x.category)+' · '+esc(x.group)+'</small>';
+        b.onclick=()=>openItem(x.category,x.group,x.index);
+        fl.appendChild(b);
+      });
+    }
+  }
+
+  const lv=document.getElementById('homeLastViewed');
+  if(lv){
+    seedRecentViewed();
+    const recent=getRecentViewed();
+    lv.innerHTML='';
+    const valid=recent.map(key=>{
+      const p=key.split('|');
+      const item=data[p[0]]?.groups?.[p[1]]?.[Number(p[2])];
+      return item?{key,item,category:p[0],group:p[1],index:Number(p[2])}:null;
+    }).filter(Boolean).slice(0,5);
+    if(!valid.length){
+      lv.innerHTML='<div class="home-empty">Tes dernières fiches consultées apparaîtront ici.</div>';
+    }else{
+      valid.forEach(x=>{
+        const b=document.createElement('button');
+        b.className='home-mini-card';
+        b.innerHTML='<strong>'+esc(itemLabel(x.item))+'</strong><small>'+esc(x.category)+' · '+esc(x.group)+'</small>';
+        b.onclick=()=>openItem(x.category,x.group,x.index);
+        lv.appendChild(b);
+      });
+    }
+  }
 }
 function show(id){
   if(id==='home')updateHomePersonalization();
@@ -838,9 +1167,124 @@ function show(id){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-function cat(name){const d=data[name];if(!d)return;document.getElementById('dtitle').textContent=name;document.getElementById('dcrumb').textContent='Anim Compagnon · '+name;document.getElementById('dbody').innerHTML='<p class="subline">'+esc(d.intro)+'</p><div class="list" id="grouplist"></div>';document.getElementById('dactions').innerHTML='';document.getElementById('favBtn').style.display='none';document.getElementById('detailBack').onclick=()=>show('categories');const list=document.getElementById('grouplist');Object.entries(d.groups).forEach(([group,items])=>{const b=document.createElement('button');b.className='itembtn';b.innerHTML='<span><strong>'+esc(group)+'</strong><small>'+items.length+' fiche'+(items.length>1?'s':'')+'</small></span><span class="arrow">›</span>';b.onclick=()=>subcat(name,group);list.appendChild(b)});show('detail')}
+function cat(name){
+  const d=data[name];
+  if(!d)return;
+  document.getElementById('dtitle').textContent=name;
+  document.getElementById('dcrumb').textContent='Anim Compagnon · '+name;
+  document.getElementById('dactions').innerHTML='';
+  document.getElementById('favBtn').style.display='none';
+  document.getElementById('detailBack').onclick=()=>show('categories');
+
+  if(name==='Activités') renderActivitiesCategory();
+  else{
+    document.getElementById('dbody').innerHTML='<p class="subline">'+esc(d.intro)+'</p><div class="list" id="grouplist"></div>';
+    const list=document.getElementById('grouplist');
+    Object.entries(d.groups).forEach(([group,items])=>{
+      const b=document.createElement('button');
+      b.className='itembtn';
+      b.innerHTML='<span><strong>'+esc(group)+'</strong><small>'+items.length+' fiche'+(items.length>1?'s':'')+'</small></span><span class="arrow">›</span>';
+      b.onclick=()=>subcat(name,group);
+      list.appendChild(b);
+    });
+  }
+  show('detail');
+}
+function getActivityAllItems(){
+  const groups=data['Activités']?.groups||{};
+  const all=[];
+  Object.entries(groups).forEach(([group,items])=>(items||[]).forEach((item,index)=>all.push({item,group,index})));
+  return all;
+}
+function activityFilterTerms(key,value){
+  const v=String(value||'').toLowerCase().trim();
+  const maps={
+    objective:{'coopération':['coopération','coopérer','équipe','collectif','entraide'],'motricité':['motricité','moteur','coordination','adresse','déplacement'],'attention':['attention','observation','concentration','mémoire','écoute'],'expression':['expression','oral','vocabulaire','communication'],'autonomie':['autonomie','initiative'],'créativité':['créativité','imaginaire','créatif','construction','création']},
+    energy:{'calme':['calme','attention','écoute','observation','mémoire','réflexion'],'modéré':['modéré','coordination','coopération','déplacement'],'énergique':['sport','course','courir','mouvement','moteur','relais','extérieur']}
+  };
+  const found=Object.entries(maps[key]||{}).find(([label])=>v.includes(label));
+  return found?found[1]:v.split(/[,;]+/).map(x=>x.trim()).filter(Boolean);
+}
+function activityItemMatches(entry,filters){
+  const hay=(itemLabel(entry.item)+' '+(entry.item.content||'')).toLowerCase();
+  let score=0,active=0;
+  Object.entries(filters).forEach(([key,value])=>{
+    const v=String(value||'').trim().toLowerCase();
+    if(!v)return;
+    active++;
+    if(key==='objective'||key==='energy'){
+      if(activityFilterTerms(key,v).some(t=>hay.includes(t.toLowerCase())))score++;
+    }else if(key==='material'){
+      v.split(/[,;+]+/).map(x=>x.trim()).filter(Boolean).forEach(t=>{if(t&&hay.includes(t))score+=2});
+    }else{
+      v.split(/[,;+]+/).map(x=>x.trim()).filter(Boolean).forEach(t=>{if(t&&hay.includes(t))score++});
+      if(/\d+/.test(v)){const n=v.match(/\d+/)?.[0];if(n&&hay.includes(n))score++}
+    }
+  });
+  return active?score>=1:true;
+}
+function renderActivitiesCategory(filters={}){
+  let body='<p class="subline">Trouve rapidement une activité avec des critères simples.</p>';
+  body+='<div class="activity-filter-box"><div class="activity-filter-title"><strong>🔎 Filtrer les activités</strong><small>Plusieurs filtres possibles</small></div>';
+  body+='<div class="activity-filter-chips">';
+  [['age','Âge'],['objective','Objectifs pédagogiques'],['material','Matériel'],['number','Nombre d’enfants'],['duration','Durée'],['place','Lieu'],['energy','Énergie']].forEach(([key,label])=>{body+='<button type="button" class="activity-filter-chip" data-akey="'+key+'">'+label+'</button>'});
+  body+='</div><div class="activity-filter-inputs">';
+  [['age','Âge'],['objective','Objectifs pédagogiques'],['material','Matériel'],['number','Nombre d’enfants'],['duration','Durée'],['place','Lieu'],['energy','Énergie']].forEach(([key,label])=>{body+='<label class="activity-filter-field" id="activityFilter_'+key+'"><input data-activity-filter="'+key+'" value="'+esc(filters[key]||'')+'" placeholder="'+esc(label)+'…"></label>'});
+  body+='</div></div><div id="activityFilterResults"></div>';
+  document.getElementById('dbody').innerHTML=body;
+  document.querySelectorAll('[data-akey]').forEach(chip=>chip.addEventListener('click',()=>toggleActivityFilterField(chip.getAttribute('data-akey'))));
+  document.querySelectorAll('[data-activity-filter]').forEach(input=>input.addEventListener('input',applyActivityLibraryFilters));
+  renderActivityResults(filters);
+}
+function toggleActivityFilterField(key,autoApply=true){
+  const row=document.getElementById('activityFilter_'+key),chip=document.querySelector('[data-akey="'+key+'"]');
+  if(!row)return;
+  const open=!row.classList.contains('open');
+  row.classList.toggle('open',open);
+  chip?.classList.toggle('active',open);
+  if(autoApply)applyActivityLibraryFilters();
+  if(open)row.querySelector('input')?.focus();
+}
+function getActivityLibraryFilters(){
+  const out={};
+  document.querySelectorAll('[data-activity-filter]').forEach(input=>{const v=(input.value||'').trim();if(v)out[input.getAttribute('data-activity-filter')]=v});
+  return out;
+}
+function applyActivityLibraryFilters(){renderActivityResults(getActivityLibraryFilters())}
+function renderActivityResults(filters={}){
+  const out=document.getElementById('activityFilterResults');
+  if(!out)return;
+  if(!Object.keys(filters).length){
+    out.innerHTML='<div class="list"></div>';
+    const list=out.querySelector('.list');
+    Object.entries(data['Activités'].groups||{}).forEach(([group,items])=>{
+      const b=document.createElement('button');b.className='itembtn';
+      b.innerHTML='<span><strong>'+esc(group)+'</strong><small>'+items.length+' fiche'+(items.length>1?'s':'')+'</small></span><span class="arrow">›</span>';
+      b.onclick=()=>subcat('Activités',group);
+      list.appendChild(b);
+    });
+    return;
+  }
+  const matches=getActivityAllItems().filter(x=>activityItemMatches(x,filters));
+  if(!matches.length){out.innerHTML='<div class="activity-filter-empty">Aucune fiche ne correspond encore à ces critères. Essaie un autre mot-clé ou utilise le générateur.</div>';return}
+  out.innerHTML='<div class="activity-filter-results"></div>';
+  const list=out.firstElementChild;
+  matches.forEach(x=>{
+    const b=document.createElement('button');b.className='itembtn';
+    b.innerHTML='<span><strong>'+esc(itemLabel(x.item))+'</strong><small>'+esc(x.group)+' · Ouvrir la fiche →</small></span><span class="arrow">›</span>';
+    b.onclick=()=>openItem('Activités',x.group,x.index);
+    list.appendChild(b);
+  });
+}
 function subcat(category,group){const items=data[category].groups[group]||[];document.getElementById('dtitle').textContent=group;document.getElementById('dcrumb').textContent='Anim Compagnon · '+category+' · '+group;document.getElementById('favBtn').style.display='none';document.getElementById('detailBack').onclick=()=>cat(category);document.getElementById('dbody').innerHTML='<p class="subline">Choisis une fiche pour l’ouvrir.</p><div class="list" id="itemlist"></div>';document.getElementById('dactions').innerHTML='';const list=document.getElementById('itemlist');items.forEach((item,i)=>{const b=document.createElement('button');b.className='itembtn';b.innerHTML='<span><strong>'+esc(itemLabel(item))+'</strong><small>Ouvrir la fiche →</small></span><span class="arrow">›</span>';b.onclick=()=>openItem(category,group,i);list.appendChild(b)});show('detail')}
-function openItem(category,group,index){const item=data[category].groups[group][index];localStorage.setItem('animLastViewed',category+'|'+group+'|'+index);renderHomeWidgets();current={category,group,item,index,key:category+'|'+group+'|'+index};document.getElementById('ficheTitle').textContent=itemLabel(item);document.getElementById('ficheCrumb').textContent='Anim Compagnon · '+category+' · '+group;document.getElementById('ficheBody').innerHTML=itemContent(item);document.getElementById('ficheActions').innerHTML=`<button class="softbtn" onclick="shareCurrent()">↗ Partager</button><button class="softbtn" onclick="show('help');closeFiche()">🛟 Ouvrir Help</button>`;updateFavButton();const overlay=document.getElementById('ficheOverlay');overlay.classList.add('open');overlay.setAttribute('aria-hidden','false');document.body.style.overflow='hidden'}
+function openItem(category,group,index){
+ const item=data[category].groups[group][index];
+ const viewedKey=category+'|'+group+'|'+index;
+ localStorage.setItem('animLastViewed',viewedKey);
+ const history=getRecentViewed().filter(x=>x!==viewedKey);
+ history.unshift(viewedKey);
+ setRecentViewed(history);
+ renderHomeWidgets();current={category,group,item,index,key:category+'|'+group+'|'+index};document.getElementById('ficheTitle').textContent=itemLabel(item);document.getElementById('ficheCrumb').textContent='Anim Compagnon · '+category+' · '+group;document.getElementById('ficheBody').innerHTML=itemContent(item);document.getElementById('ficheActions').innerHTML=`<button class="softbtn" onclick="shareCurrent()">↗ Partager</button><button class="softbtn" onclick="show('help');closeFiche()">🛟 Ouvrir Help</button>`;updateFavButton();const overlay=document.getElementById('ficheOverlay');overlay.classList.add('open');overlay.setAttribute('aria-hidden','false');document.body.style.overflow='hidden'}
 function closeFiche(){const overlay=document.getElementById('ficheOverlay');if(!overlay)return;overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');document.body.style.overflow=''}
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.getElementById('ficheOverlay')?.classList.contains('open'))closeFiche()});
 function updateFavButton(){const b=document.getElementById('ficheFav');if(!b)return;const saved=favorites.includes(current.key);b.textContent=saved?'★':'☆';b.setAttribute('aria-label',saved?'Retirer des favoris':'Ajouter aux favoris');b.title=saved?'Retirer des favoris':'Ajouter aux favoris'}
@@ -877,26 +1321,170 @@ function sectionHtml(title,body){
   return '<section class="preview-section"><h3>'+title+'</h3>'+body+'</section>';
 }
 
-function openGeneratorMode(mode){
-  document.getElementById('generatorChoice').classList.add('hidden');
-  document.getElementById('sheetGenerator').classList.toggle('hidden',mode!=='sheet');
-  document.getElementById('aiGenerator').classList.toggle('hidden',mode!=='ai');
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-function backToGeneratorChoice(){
-  document.getElementById('generatorChoice').classList.remove('hidden');
-  document.getElementById('sheetGenerator').classList.add('hidden');
-  document.getElementById('aiGenerator').classList.add('hidden');
-  document.getElementById('activityPreview')?.classList.add('hidden');
-  document.getElementById('activityForm')?.classList.remove('hidden');
-  window.scrollTo({top:0,behavior:'smooth'});
-}
-function prepareAIGeneration(){
-  const q=document.getElementById('activityAI').value.trim();
-  if(!q)return toast('Décris ton groupe et tes contraintes.');
-  document.getElementById('genAIout').innerHTML='<div class="help-result"><div class="level green">✨ Demande prête</div><p>La demande est bien enregistrée pour le futur moteur IA.</p><div class="actionbox">« '+esc2(q)+' »</div><p>Pour l’instant, aucune activité n’est inventée automatiquement. Quand l’IA sera connectée, elle pourra produire une activité puis proposer de la transformer directement en fiche d’activité.</p></div>';
-}
 
+function val(id){const el=document.getElementById(id);return el?(el.value||'').trim():''}
+function esc2(t){return esc(t==null?'':t)}
+function linesToHtml(t){const x=esc2(t||'');return x?'<ul>'+x.split(/\n+/).filter(Boolean).map(line=>'<li>'+line+'</li>').join('')+'</ul>':'<p class="preview-empty">Non renseigné</p>'}
+function setField(id,value){const el=document.getElementById(id);if(el)el.value=value||''}
+
+const LOCAL_ACTIVITY_TEMPLATES=[
+  {
+    title:'Le défi des zones',
+    goals:'Coopération, motricité et rapidité de décision.',
+    material:'Plots, cerceaux ou objets disponibles pour matérialiser des zones.',
+    setup:'Créer 3 à 5 zones clairement visibles.',
+    rules:'Les enfants se déplacent entre les zones selon la consigne annoncée. À chaque changement, ils doivent réaliser un petit défi. Les défis peuvent être physiques, d’observation ou coopératifs.',
+    variants:'Ajouter une contrainte de temps, changer les déplacements ou donner un défi collectif à chaque zone.',
+    vigilance:'Définir les limites de déplacement et éviter les courses dans les espaces encombrés.'
+  },
+  {
+    title:'La mission express',
+    goals:'Écoute, coopération et réactivité.',
+    material:'Aucun matériel indispensable.',
+    setup:'Réunir le groupe dans un espace dégagé.',
+    rules:'L’animateur annonce une mission courte : former un groupe de 3, toucher un objet précis, se classer selon une consigne, puis revenir au point de départ. Les missions s’enchaînent rapidement.',
+    variants:'Imposer un temps, donner les missions en chuchotant ou laisser un enfant devenir maître de mission.',
+    vigilance:'Adapter les déplacements et éviter les éliminations.'
+  },
+  {
+    title:'Le relais sans élimination',
+    goals:'Coopération, motricité et encouragement entre pairs.',
+    material:'Ballons, plots, cerceaux ou tout petit matériel disponible.',
+    setup:'Installer un aller-retour simple et sécurisé.',
+    rules:'En équipe, chaque enfant réalise un petit parcours puis transmet un objet au suivant. Le groupe cherche surtout à réussir ensemble plutôt qu’à battre les autres.',
+    variants:'Changer le mode de déplacement, ajouter une contrainte de coordination ou transformer le défi en objectif collectif.',
+    vigilance:'Adapter le parcours aux capacités des enfants et garder des distances suffisantes.'
+  },
+  {
+    title:'Le mot mystère',
+    goals:'Expression orale, vocabulaire et imagination.',
+    material:'Aucun matériel indispensable.',
+    setup:'Faire asseoir ou rassembler le groupe.',
+    rules:'L’animateur choisit un mot ou une catégorie. Les enfants doivent le faire deviner sans utiliser certains mots interdits ou en donnant des indices de plus en plus précis.',
+    variants:'Limiter le temps, changer les rôles ou imposer un thème.',
+    vigilance:'Choisir des mots accessibles et éviter de mettre un enfant en difficulté devant le groupe.'
+  },
+  {
+    title:'Le défi coopératif',
+    goals:'Coopération, communication et résolution de problème.',
+    material:'Le matériel déjà disponible dans la structure.',
+    setup:'Préparer un défi réalisable par l’ensemble du groupe.',
+    rules:'Les enfants doivent trouver ensemble une stratégie pour atteindre un objectif commun. L’animateur observe, relance et adapte la difficulté si nécessaire.',
+    variants:'Ajouter une contrainte de temps, limiter un type de matériel ou faire évoluer le défi.',
+    vigilance:'Valoriser la recherche collective plutôt que la vitesse individuelle.'
+  },
+  {
+    title:'Le parcours des consignes',
+    goals:'Écoute, attention, coordination et respect des consignes.',
+    material:'Plots, cerceaux, cordes ou objets de la pièce.',
+    setup:'Créer un petit parcours avec plusieurs étapes.',
+    rules:'Chaque étape correspond à une consigne précise : contourner, sauter, marcher, toucher, mémoriser ou coopérer. Les enfants avancent en suivant les consignes annoncées.',
+    variants:'Faire mémoriser plusieurs consignes ou laisser un enfant inventer une étape.',
+    vigilance:'Sécuriser le parcours et adapter les mouvements à l’âge du groupe.'
+  }
+];
+
+function toggleGenFilter(key){
+  const btn=document.querySelector('#genQuickFilters .assistant-filter[data-key="'+key+'"]');
+  const wrap=document.getElementById('genQuickFields');
+  if(!btn||!wrap)return;
+  const id='genField_'+key;
+  let row=document.getElementById(id);
+  const active=!btn.classList.contains('active');
+  btn.classList.toggle('active',active);
+  btn.querySelector('b').textContent=active?'✓':'+';
+  if(active && !row){
+    const labels={age:'Âge',number:'Nombre',duration:'Durée',place:'Lieu',material:'Matériel',energy:'Énergie',objective:'Objectif pédagogique'};
+    row=document.createElement('label');
+    row.className='assistant-field';
+    row.id=id;
+    row.innerHTML='<span class="assistant-field-label">'+labels[key]+'</span><input data-gen-key="'+key+'" placeholder="'+({
+      age:'Ex. 8 ans',
+      number:'Ex. 14 enfants',
+      duration:'Ex. 45 min',
+      place:'Ex. extérieur',
+      material:'Ex. 4 plots, 3 ballons',
+      energy:'Ex. calme / énergique',
+      objective:'Ex. coopération'
+    }[key]||'')+'">';
+    wrap.appendChild(row);
+    row.querySelector('input')?.focus();
+  }else if(!active && row){
+    row.remove();
+  }
+}
+function getGeneratorFilters(){
+  const f={};
+  document.querySelectorAll('#genQuickFields [data-gen-key]').forEach(i=>{
+    const v=(i.value||'').trim();
+    if(v)f[i.getAttribute('data-gen-key')]=v;
+  });
+  return f;
+}
+function clearGenFilters(){
+  document.getElementById('genQuickFields').innerHTML='';
+  document.querySelectorAll('#genQuickFilters .assistant-filter').forEach(btn=>{
+    btn.classList.remove('active');
+    const b=btn.querySelector('b');if(b)b.textContent='+';
+  });
+  const ta=document.getElementById('activityAI');if(ta)ta.value='';
+  const out=document.getElementById('genAIout');if(out)out.innerHTML='';
+}
+function normalizeText(t){return String(t||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
+function chooseLocalTemplate(filters,text){
+  const hay=normalizeText(Object.values(filters).join(' ')+' '+text);
+  if(/coop|equipe|collectif|entraide/.test(hay))return LOCAL_ACTIVITY_TEMPLATES[4];
+  if(/mot|parole|oral|vocab|expression/.test(hay))return LOCAL_ACTIVITY_TEMPLATES[3];
+  if(/sport|bouge|energie|energi|courir|course|ballon|cerceau/.test(hay))return LOCAL_ACTIVITY_TEMPLATES[2];
+  if(/ecoute|attention|consigne|memoire|observation/.test(hay))return LOCAL_ACTIVITY_TEMPLATES[5];
+  if(/defi|mission|rapid/.test(hay))return LOCAL_ACTIVITY_TEMPLATES[1];
+  return LOCAL_ACTIVITY_TEMPLATES[Math.floor(Math.random()*LOCAL_ACTIVITY_TEMPLATES.length)];
+}
+function searchLibraryActivities(filters,text){
+  const query=normalizeText(Object.values(filters).join(' ')+' '+text);
+  const words=query.split(/[^a-z0-9-]+/).filter(w=>w.length>=3);
+  const candidates=getActivityAllItems().map(x=>{
+    const hay=normalizeText(itemLabel(x.item)+' '+(x.item.content||''));
+    let score=0;
+    words.forEach(w=>{if(hay.includes(w))score+=1});
+    if(filters.objective){
+      activityFilterTerms('objective',filters.objective).forEach(t=>{if(hay.includes(normalizeText(t)))score+=2});
+    }
+    if(filters.material){
+      normalizeText(filters.material).split(/[,;+]+/).forEach(t=>{if(t.trim()&&hay.includes(t.trim()))score+=2});
+    }
+    return {...x,score};
+  }).filter(x=>x.score>0).sort((a,b)=>b.score-a.score);
+  return candidates.slice(0,3);
+}
+function buildGeneratedContent(filters,text){
+  const matches=searchLibraryActivities(filters,text);
+  const chosen=matches[0]?.item;
+  const template=matches.length?null:chooseLocalTemplate(filters,text);
+  const title=chosen?itemLabel(chosen):template.title;
+  const source=chosen?'À partir d’une fiche déjà présente dans Anim Compagnon, adaptée aux contraintes que tu as indiquées.':'Proposition construite localement à partir de tes critères.';
+  const goals=filters.objective||template?.goals||(chosen?'À préciser selon ton intention pédagogique.':'Coopération, attention et participation.');
+  const material=filters.material||template?.material||'Matériel courant de la structure, selon l’adaptation choisie.';
+  let content={title,source,goals,material};
+  if(chosen){
+    const raw=(chosen.content||'').replace(/^#+.*$/gm,'').replace(/\*\*/g,'').trim();
+    const chunks=raw.split(/\n{2,}/).filter(Boolean);
+    content.rule=chunks.slice(0,2).join(' ');
+    content.variation=chunks.find(x=>normalizeText(x).includes('variante'))||'Prévoir une variante plus simple ou plus complexe selon le groupe.';
+    content.vigilance=chunks.find(x=>normalizeText(x).includes('vigilance'))||'Adapter les consignes, l’espace et le niveau de difficulté au groupe.';
+    content.selected=chosen;
+  }else{
+    content.setup=template.setup;
+    content.rule=template.rules;
+    content.variation=template.variants;
+    content.vigilance=template.vigilance;
+  }
+  return content;
+}
+function generatorMeta(filters){
+  const order=[['age','Âge'],['number','Nombre'],['duration','Durée'],['place','Lieu'],['material','Matériel'],['energy','Énergie'],['objective','Objectif']];
+  return order.filter(([k])=>filters[k]).map(([k,l])=>l+' : '+filters[k]).join(' · ')||'Aucun critère renseigné';
+}
 function generateActivitySheet(){
   const a=collectActivity();
   const caps=a.capacities.length?'<p><strong>Capacités mobilisées :</strong> '+a.capacities.map(esc2).join(' · ')+'</p>':'';
