@@ -1687,6 +1687,78 @@ function cat(name){
   }
   show('detail');
 }
+function search(){
+  const input=document.getElementById('gsearch');
+  const q=(input?.value||'').trim();
+  if(!q){toast('Écris ce que tu recherches.');return;}
+  const si=document.getElementById('sinput'); if(si)si.value=q;
+  show('search');
+  runSearch();
+}
+function runSearch(){
+  const q=(document.getElementById('sinput')?.value||'').trim();
+  const out=document.getElementById('sout'); if(!out)return;
+  if(!q){out.innerHTML='<div class="help-no-result">Écris un mot ou une expression pour chercher dans Anim Compagnon.</div>';return;}
+  const nq=normalizeText(q);
+  const words=nq.split(/[^a-z0-9-]+/).filter(w=>w.length>=2);
+  const ficheResults=[], categoryResults=[];
+  const score=(text,weight=1)=>{const t=normalizeText(text);let n=0; if(t.includes(nq))n+=10*weight; words.forEach(w=>{if(t.includes(w))n+=weight}); return n};
+  Object.entries(data||{}).forEach(([category,section])=>{
+    const catScore=score(category,3);
+    if(catScore)categoryResults.push({type:'category',category,label:category,score:catScore});
+    Object.entries(section?.groups||{}).forEach(([group,items])=>{
+      const gScore=score(group,3);
+      if(gScore)categoryResults.push({type:'group',category,group,label:group,score:gScore+catScore});
+      if(Array.isArray(items)){
+        items.forEach((item,index)=>{
+          const content=typeof item==='string'?item:(item?.content||'');
+          const name=itemLabel(item);
+          const sc=score(name,6)+score(content,1)+score(category,2)+score(group,2);
+          if(sc)ficheResults.push({type:'fiche',category,group,index,label:name,score:sc,excerpt:content});
+          if(item?.subitems) item.subitems.forEach((sub,si)=>{
+            const subname=itemLabel(sub), subcontent=sub?.content||'';
+            const ssc=score(subname,6)+score(subcontent,1)+score(group,2)+score(category,2);
+            if(ssc)ficheResults.push({type:'nested',category,group,index:si,objectiveIndex:index,label:subname,score:ssc,excerpt:subcontent});
+          });
+        });
+      }else if(items&&typeof items==='object'){
+        Object.entries(items).forEach(([subgroup,subitems])=>(subitems||[]).forEach((item,index)=>{
+          const name=itemLabel(item), content=item?.content||'';
+          const sc=score(name,6)+score(content,1)+score(subgroup,3)+score(group,2)+score(category,2);
+          if(sc)ficheResults.push({type:'object',category,group,subgroup,index,label:name,score:sc,excerpt:content});
+        }));
+      }
+    });
+  });
+  ficheResults.sort((a,b)=>b.score-a.score);
+  categoryResults.sort((a,b)=>b.score-a.score);
+  const topF=ficheResults.slice(0,10), topC=categoryResults.slice(0,6);
+  let html='';
+  if(!topF.length&&!topC.length){out.innerHTML='<div class="help-no-result">Aucun résultat pour « '+esc(q)+' ». Essaie un autre terme ou une autre formulation.</div>';return;}
+  if(topF.length){
+    html+='<div class="search-section-title">📚 FICHES</div><div class="list">';
+    topF.forEach(r=>{
+      const preview=normalizeText(r.excerpt||'').slice(0,150);
+      const click=r.type==='object'
+        ? `openHelpResource('${jsQuote(r.category)}','${jsQuote(r.group)}',${r.index},null,'${jsQuote(r.subgroup)}')`
+        : r.type==='nested'
+          ? `openHelpResource('${jsQuote(r.category)}','${jsQuote(r.group)}',${r.objectiveIndex},${r.index})`
+          : `openHelpResource('${jsQuote(r.category)}','${jsQuote(r.group)}',${r.index})`;
+      html+=`<button class="itembtn" onclick="${click}"><span><strong>${esc(r.label)}</strong><small>${esc(r.category)} · ${esc(r.group)}${r.subgroup?' · '+esc(r.subgroup):''}${preview?' — '+esc(preview)+'…':''}</small></span><span class="arrow">›</span></button>`;
+    });
+    html+='</div>';
+  }
+  if(topC.length){
+    html+='<div class="search-section-title" style="margin-top:18px">🗂️ CATÉGORIES</div><div class="list">';
+    topC.forEach(r=>{
+      if(r.type==='category') html+=`<button class="itembtn" onclick="category('${jsQuote(r.category)}')"><span><strong>${esc(r.label)}</strong><small>Catégorie</small></span><span class="arrow">›</span></button>`;
+      else html+=`<button class="itembtn" onclick="subcat('${jsQuote(r.category)}','${jsQuote(r.group)}')"><span><strong>${esc(r.label)}</strong><small>${esc(r.category)} · Sous-catégorie</small></span><span class="arrow">›</span></button>`;
+    });
+    html+='</div>';
+  }
+  out.innerHTML=html;
+}
+
 function getActivityAllItems(){
   const groups=data['Activités']?.groups||{};
   const all=[];
@@ -2017,10 +2089,13 @@ function parseAIGeneratedText(text,filters){
   const title=value('title') || 'Activité proposée par Anim Compagnon';
   const goals=value('goals') || filters.objective || 'Participation, coopération et plaisir de jouer.';
   const material=value('material') || filters.material || 'Selon les indications fournies.';
-  const setup=value('setup') || 'Préparer l’espace et réunir le groupe.';
-  const rules=value('rules') || 'Présenter la consigne, lancer l’activité et accompagner le groupe en observant son rythme.';
-  const variants=value('variants') || 'Prévoir une version plus simple et une version plus difficile selon le groupe.';
-  const vigilance=value('vigilance') || 'Adapter l’espace, les consignes et le niveau de difficulté au groupe.';
+  if(!value('setup') || !value('rules') || !value('variants') || !value('vigilance')){
+    throw new Error('La réponse de l’IA est incomplète. Réessaie : chaque partie de l’activité doit être détaillée.');
+  }
+  const setup=value('setup');
+  const rules=value('rules');
+  const variants=value('variants');
+  const vigilance=value('vigilance');
 
   return {title,goals,material,setup,rules,variants,vigilance,filters,text:clean,source:'Générée par l’IA Anim Compagnon'};
 }
