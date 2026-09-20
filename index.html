@@ -2126,8 +2126,6 @@ Sous chaque titre, écris un contenu concret, précis et directement utilisable 
 }
 
 function parseAIGeneratedText(text,filters){
-  // Le Worker peut renvoyer des titres simples, Markdown (**TITRE**) ou des titres ## TITRE.
-  // On normalise uniquement les titres pour rendre le parseur robuste sans modifier le contenu.
   const clean=String(text||'')
     .replace(/\r/g,'')
     .replace(/^\s*```(?:text|markdown)?\s*/i,'')
@@ -2136,9 +2134,11 @@ function parseAIGeneratedText(text,filters){
 
   const normalizeHeading=line=>String(line||'')
     .replace(/^\s{0,3}#{1,6}\s*/,'')
+    .replace(/^\s*[-•*]\s*/,'')
     .replace(/^\s*\*\*(.*?)\*\*\s*$/,'$1')
     .replace(/^\s*__([^_]+)__\s*$/,'$1')
-    .replace(/\s*:\s*$/,'')
+    .replace(/^[^A-Za-zÀ-ÿ]*(NOM|OBJECTIF|OBJECTIFS|MATÉRIEL|MATERIEL|MISE EN PLACE|INSTALLATION|DÉROULEMENT|DEROULEMENT|RÈGLES ET DÉROULEMENT|REGLES ET DEROULEMENT|RÈGLES|REGLES|VARIANTES|VARIANTE|VIGILANCE|POINTS DE VIGILANCE).*$/i,'$1')
+    .replace(/\s*[:：]\s*$/,'')
     .trim()
     .toUpperCase();
 
@@ -2151,37 +2151,59 @@ function parseAIGeneratedText(text,filters){
     variants:['VARIANTES','VARIANTE'],
     vigilance:['VIGILANCE','POINTS DE VIGILANCE']
   };
+  const canon=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().replace(/’/g,"'").trim();
+  const aliasCanon={}; Object.entries(aliases).forEach(([k,v])=>aliasCanon[k]=v.map(x=>canon(x)));
 
-  const canonical=key=>aliases[key].map(normalizeHeading);
-  const allHeadings=Object.values(aliases).flat().map(normalizeHeading);
   const lines=clean.split('\n');
-  const sections={};
-  let current=null;
-
+  const sections={}; let current=null;
   lines.forEach(line=>{
-    const h=normalizeHeading(line);
+    const h=canon(normalizeHeading(line));
     let found=null;
-    for(const [key,names] of Object.entries(aliases)){
-      if(names.map(normalizeHeading).includes(h)){ found=key; break; }
+    for(const [key,names] of Object.entries(aliasCanon)){
+      if(names.includes(h)){found=key;break;}
     }
-    if(found){ current=found; if(!(found in sections))sections[found]=[]; return; }
+    if(found){current=found;if(!sections[found])sections[found]=[];return;}
     if(current)sections[current].push(line);
   });
 
-  const value=key=>sections[key]
-    ? sections[key].join('\n').replace(/^\s*[-•]\s+/gm,'').trim()
-    : '';
+  const value=key=>String((sections[key]||[]).join('\n')).trim();
+  const nonEmpty=v=>v && v.replace(/[-•*\s]/g,'').length>2;
 
-  const title=value('title') || 'Activité proposée par Anim Compagnon';
-  const goals=value('goals') || filters.objective || 'Participation, coopération et plaisir de jouer.';
-  const material=value('material') || filters.material || 'Selon les indications fournies.';
-  if(!value('setup') || !value('rules') || !value('variants') || !value('vigilance')){
-    throw new Error('La réponse de l’IA est incomplète. Réessaie : chaque partie de l’activité doit être détaillée.');
+  let title=value('title');
+  let goals=value('goals');
+  let material=value('material');
+  let setup=value('setup');
+  let rules=value('rules');
+  let variants=value('variants');
+  let vigilance=value('vigilance');
+
+  // Certains modèles renvoient une réponse structurée mais avec des titres légèrement différents.
+  // On tente donc une seconde extraction par motifs avant d'abandonner.
+  const extractBetween=(label,nextLabels)=>{
+    const labels=label.map(canon).map(x=>x.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|');
+    const next=nextLabels.map(canon).map(x=>x.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|');
+    const re=new RegExp('(?:^|\\n)\\s*[^\\n]*?(?:'+labels+')\\s*[:：]?\\s*\\n?([\\s\\S]*?)(?=\\n\\s*[^\\n]*?(?:'+next+')\\s*[:：]?\\s*\\n|$)','i');
+    return (clean.match(re)||[])[1]?.trim()||'';
+  };
+  if(!nonEmpty(title))title=extractBetween(aliases.title,['OBJECTIF']);
+  if(!nonEmpty(goals))goals=extractBetween(aliases.goals,['MATÉRIEL']);
+  if(!nonEmpty(material))material=extractBetween(aliases.material,['MISE EN PLACE']);
+  if(!nonEmpty(setup))setup=extractBetween(aliases.setup,['DÉROULEMENT']);
+  if(!nonEmpty(rules))rules=extractBetween(aliases.rules,['VARIANTES']);
+  if(!nonEmpty(variants))variants=extractBetween(aliases.variants,['VIGILANCE']);
+  if(!nonEmpty(vigilance))vigilance=extractBetween(aliases.vigilance,[]);
+
+  // Si l'IA a répondu en texte libre malgré la consigne, on affiche sa réponse plutôt que de la déclarer faussement « incomplète ».
+  if(!nonEmpty(rules)) rules=clean;
+  if(!nonEmpty(title)){
+    const first=clean.split('\n').map(x=>x.trim()).find(x=>x.length>3);
+    title=(first||'Activité proposée par Anim Compagnon').replace(/^#+\s*/,'').replace(/^[-•*]\s*/,'').slice(0,100);
   }
-  const setup=value('setup');
-  const rules=value('rules');
-  const variants=value('variants');
-  const vigilance=value('vigilance');
+  if(!nonEmpty(goals))goals=filters.objective||'Objectif à préciser selon le groupe.';
+  if(!nonEmpty(material))material=filters.material||'Voir les contraintes indiquées par l’animateur.';
+  if(!nonEmpty(setup))setup='Installer l’espace et le matériel indiqués, puis réunir le groupe avant de donner les consignes.';
+  if(!nonEmpty(variants))variants='Adapter la difficulté, le rythme ou le nombre de manches en fonction du groupe.';
+  if(!nonEmpty(vigilance))vigilance='Adapter l’espace, les consignes et le niveau de difficulté à l’âge du groupe et aux conditions réelles.';
 
   return {title,goals,material,setup,rules,variants,vigilance,filters,text:clean,source:'Générée par l’IA Anim Compagnon'};
 }
