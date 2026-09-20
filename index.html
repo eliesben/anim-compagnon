@@ -1907,14 +1907,21 @@ ${free || 'Aucune précision supplémentaire.'}
 
 Consignes importantes :
 - Respecte strictement l’âge, le nombre d’enfants, la durée, le lieu et le matériel lorsqu’ils sont indiqués.
-- N’invente pas de matériel indispensable qui n’est pas disponible. Si une adaptation nécessite du matériel facultatif, indique-le comme facultatif.
-- Propose une activité concrète, simple à mettre en œuvre et adaptée au contexte ACM.
+- N’invente PAS de matériel indispensable qui n’est pas disponible. Si un élément supplémentaire peut aider mais n’est pas nécessaire, indique-le comme facultatif.
+- L’activité doit être réellement JOUABLE. Ne donne jamais de formulation générique du type « présenter la consigne », « lancer l’activité », « accompagner le groupe » ou « prévoir une version plus simple » sans expliquer concrètement COMMENT.
+- Invente une activité précise : les enfants doivent savoir exactement quoi faire, dans quel ordre, avec quelles règles et comment on sait que le jeu fonctionne.
+- Utilise intelligemment le matériel fourni. Si 4 plots et 3 ballons sont disponibles, construis réellement le jeu autour de ces éléments.
+- Le déroulement doit être suffisamment détaillé pour qu’un animateur puisse prendre la fiche et lancer l’activité sans devoir inventer les règles lui-même.
+- Indique la répartition du groupe, l’installation, le signal de départ, les actions des enfants, les règles, les tours/manches éventuels, la façon de relancer le jeu et la fin de l’activité lorsque cela est pertinent.
+- Adapte réellement le niveau de difficulté à l’âge et à la durée demandés.
 - Évite les éliminations définitives et privilégie la participation de tous lorsque c’est compatible avec la demande.
+- Prévois des variantes réellement jouables, liées à l’activité créée, et non des variantes génériques.
+- Les points de vigilance doivent être concrets et liés à l’activité, à l’espace, au matériel et au public.
 - Prends en compte la sécurité, le rythme du groupe et les besoins particuliers sans faire de diagnostic.
 - Si un critère manque, fais un choix raisonnable sans demander une nouvelle question.
 - Réponds en français.
 
-Retourne exactement cette structure, avec les titres suivants :
+Retourne exactement cette structure, avec les titres suivants, dans cet ordre :
 NOM DE L’ACTIVITÉ
 OBJECTIF
 MATÉRIEL
@@ -1923,7 +1930,7 @@ DÉROULEMENT
 VARIANTES
 VIGILANCE
 
-Sous chaque titre, écris un contenu clair et directement utilisable par un animateur.`;
+Sous chaque titre, écris un contenu concret, précis et directement utilisable par un animateur. Le DÉROULEMENT doit notamment contenir les règles et les étapes du jeu. Ne laisse aucune section vide et ne remplace jamais une explication par une formule vague.`;
 
   try{
     const response=await fetch('https://anim-compagnon-api.eliesbendjedou30.workers.dev/',{
