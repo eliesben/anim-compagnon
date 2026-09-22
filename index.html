@@ -128,17 +128,90 @@ button,input,textarea{font:inherit}button{cursor:pointer}button:active{transform
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .tile{aspect-ratio:1;border:0;border-radius:20px;position:relative;overflow:hidden;color:#fff;box-shadow:var(--ombre-legere);background:#6f956f}
 
-/* 🖼️ Chaque tuile utilise maintenant sa variable d'image */
-.tile:nth-child(1){background:linear-gradient(rgba(0,0,0,.20),rgba(0,0,0,.45)),var(--image-activites);background-size:cover;background-position:center}
-.tile:nth-child(2){background:linear-gradient(rgba(0,0,0,.20),rgba(0,0,0,.45)),var(--image-vie-quotidienne);background-size:cover;background-position:center}
-.tile:nth-child(3){background:linear-gradient(rgba(0,0,0,.20),rgba(0,0,0,.45)),var(--image-publics);background-size:cover;background-position:center}
-.tile:nth-child(4){background:linear-gradient(rgba(0,0,0,.20),rgba(0,0,0,.45)),var(--image-role);background-size:cover;background-position:center}
-.tile:nth-child(5){background:linear-gradient(rgba(0,0,0,.20),rgba(0,0,0,.45)),var(--image-boite-outils);background-size:cover;background-position:center}
-.tile:nth-child(6){background:linear-gradient(rgba(0,0,0,.20),rgba(0,0,0,.45)),var(--image-ressources);background-size:cover;background-position:center}
+.tile{
+  aspect-ratio:1;
+  border:0;
+  border-radius:20px;
+  position:relative;
+  overflow:hidden;
+  color:#fff;
+  box-shadow:var(--ombre-legere);
+  background:#6f956f;
+}
 
-.tile:after{content:"";position:absolute;inset:0;background:linear-gradient(#0001,#0008)}
-.tile span{position:absolute;inset:0;z-index:1;display:grid;place-items:center;padding:10px;text-align:center;font-size:var(--carte);font-weight:700;text-transform:uppercase}
+/* 🖼️ IMAGE — ACTIVITÉS */
+.tile-activites{
+  background:
+    linear-gradient(rgba(0,0,0,.20),rgba(0,0,0,.45)),
+    var(--image-activites);
+  background-size:cover;
+  background-position:center;
+}
 
+/* 🖼️ IMAGE — VIE QUOTIDIENNE */
+.tile-vie-quotidienne{
+  background:
+    linear-gradient(rgba(0,0,0,.20),rgba(0,0,0,.45)),
+    var(--image-vie-quotidienne);
+  background-size:cover;
+  background-position:center;
+}
+
+/* 🖼️ IMAGE — PUBLICS */
+.tile-publics{
+  background:
+    linear-gradient(rgba(0,0,0,.20),rgba(0,0,0,.45)),
+    var(--image-publics);
+  background-size:cover;
+  background-position:center;
+}
+
+/* 🖼️ IMAGE — RÔLE DE L'ANIMATEUR */
+.tile-role{
+  background:
+    linear-gradient(rgba(0,0,0,.20),rgba(0,0,0,.45)),
+    var(--image-role);
+  background-size:cover;
+  background-position:center;
+}
+
+/* 🖼️ IMAGE — BOÎTE À OUTILS */
+.tile-boite-outils{
+  background:
+    linear-gradient(rgba(0,0,0,.20),rgba(0,0,0,.45)),
+    var(--image-boite-outils);
+  background-size:cover;
+  background-position:center;
+}
+
+/* 🖼️ IMAGE — RESSOURCES */
+.tile-ressources{
+  background:
+    linear-gradient(rgba(0,0,0,.20),rgba(0,0,0,.45)),
+    var(--image-ressources);
+  background-size:cover;
+  background-position:center;
+}
+
+.tile:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(#0001,#0008);
+}
+
+.tile span{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  display:grid;
+  place-items:center;
+  padding:10px;
+  text-align:center;
+  font-size:var(--carte);
+  font-weight:700;
+  text-transform:uppercase;
+}
 /* =========================================================
    🃏 CARTES ACTIVITÉS
    ========================================================= */
