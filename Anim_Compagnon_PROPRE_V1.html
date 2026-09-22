@@ -1,0 +1,647 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#84B98A">
+<title>Anim Compagnon</title>
+<style>
+/* =========================================================
+   🎨 ZONE DE PERSONNALISATION — MODIFIE UNIQUEMENT ICI
+   ========================================================= */
+:root{
+  /* 🎨 COULEURS */
+  --vert:#84B98A;                 /* Vert principal */
+  --vert-fonce:#5F9367;           /* Vert plus sombre */
+  --noir:#111111;                 /* Texte + bouton principal */
+  --blanc-casse:#FAF9F5;          /* Cartes et surfaces */
+  --beige:#EFE8DC;                /* Encarts / badges */
+  --anthracite:#333333;           /* Texte secondaire */
+
+  /* 🌿 FOND */
+  --image-fond: url("images/ecrin-de-verdure.png");
+  --fond-overlay:rgba(250,249,245,.25);
+
+  /* 🔤 TYPOGRAPHIE */
+  --font:Calibri,Arial,sans-serif;
+  --titre:20px;
+  --carte:14px;
+  --texte:12px;
+  --bouton:12px;
+
+  /* 📐 DIMENSIONS */
+  --marge:16px;
+  --gap:12px;
+  --grand-gap:20px;
+  --rayon:20px;
+  --rayon-bouton:14px;
+  --hauteur-bouton:44px;
+
+  /* 🌫️ OMBRES */
+  --ombre:0 10px 28px rgba(31,45,36,.10);
+  --ombre-legere:0 5px 16px rgba(31,45,36,.08);
+
+  /* 🖼️ IMAGES GÉNÉRIQUES */
+  --image-activites:none;
+  --image-publics:none;
+  --image-role:none;
+  --image-ressources:none;
+  --image-bafa:none;
+}
+
+/* =========================================================
+   🧱 BASE
+   ========================================================= */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;min-height:100vh;font-family:var(--font);color:var(--noir);
+  background:
+    radial-gradient(ellipse at 8% 18%,rgba(132,185,138,.45),transparent 27%),
+    radial-gradient(ellipse at 92% 25%,rgba(224,213,186,.48),transparent 28%),
+    radial-gradient(ellipse at 85% 85%,rgba(168,183,162,.38),transparent 30%),
+    #f7f5ed;
+  background-image:linear-gradient(var(--fond-overlay),var(--fond-overlay)),var(--image-fond);
+  background-size:cover;background-position:center;background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;
+}
+button,input,textarea{font:inherit}button{cursor:pointer}button:active{transform:scale(.985)}
+.app{width:min(100%,560px);min-height:100vh;margin:auto;padding-bottom:100px}
+.view{display:none;animation:in .2s ease}.view.active{display:block}
+@keyframes in{from{opacity:.45;transform:translateY(5px)}to{opacity:1;transform:none}}
+.hidden{display:none!important}
+
+/* =========================================================
+   🧭 EN-TÊTES / LOGO
+   ========================================================= */
+.header,.page-head{padding:20px var(--marge) 8px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:10px}
+.logo{width:58px;height:58px;border-radius:18px;background:rgba(250,249,245,.92);box-shadow:var(--ombre-legere);display:grid;place-items:center}
+.logo svg{width:43px;height:43px}
+.brand h1{margin:0;font-size:22px;line-height:1;font-weight:700}
+.brand p{margin:5px 0 0;font-size:11px;color:var(--anthracite)}
+.icon-btn{width:44px;height:44px;border:1px solid #222;background:rgba(250,249,245,.92);border-radius:14px;display:grid;place-items:center}
+.icon-btn svg{width:21px;height:21px}
+.page-head .back{margin-bottom:12px}
+.page-title{margin:0;font-size:var(--titre);font-weight:700;text-transform:uppercase}
+.page-intro{margin:8px 0 0;color:var(--anthracite);font-size:var(--texte);line-height:1.5}
+
+/* =========================================================
+   🔎 RECHERCHE
+   ========================================================= */
+.search{padding:10px var(--marge) 6px}
+.searchbox{height:46px;display:flex;align-items:center;gap:9px;padding:0 13px;background:rgba(250,249,245,.94);border:1px solid #222;border-radius:16px;box-shadow:var(--ombre-legere)}
+.searchbox svg{width:19px;height:19px}.searchbox input{width:100%;border:0;outline:0;background:transparent;font-size:var(--texte)}
+
+/* =========================================================
+   🧩 SECTIONS
+   ========================================================= */
+.section{padding:14px var(--marge)}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.section-title{margin:0;font-size:var(--titre);font-weight:700;text-transform:uppercase}
+.link{border:0;background:none;color:var(--vert-fonce);font-size:var(--bouton);font-weight:700;text-transform:uppercase;padding:4px 0}
+
+/* =========================================================
+   ⭐ À LA UNE — CARROUSEL MANUEL
+   ========================================================= */
+.scroll{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin:0 calc(var(--marge)*-1);padding:0 var(--marge) 7px}
+.scroll::-webkit-scrollbar{display:none}
+.hero{position:relative;flex:0 0 86vw;max-width:482px;height:230px;border:0;border-radius:22px;overflow:hidden;color:#fff;text-align:left;scroll-snap-align:start;background:linear-gradient(135deg,#6f956f,#304d35);box-shadow:var(--ombre)}
+.hero:nth-child(2){background:linear-gradient(135deg,#c8b88e,#6e7655)}
+.hero:nth-child(3){background:linear-gradient(135deg,#9db69d,#48654e)}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 38%,rgba(0,0,0,.58))}
+.hero .icon{position:absolute;right:16px;top:16px;width:45px;height:45px;border-radius:15px;background:#ffffff32;display:grid;place-items:center;z-index:2}
+.hero .icon svg{width:23px;height:23px}
+.hero .caption{position:absolute;left:16px;right:16px;bottom:15px;z-index:2}
+.hero small{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px}
+.hero h2{margin:7px 0 5px;font-size:20px;line-height:1.05;font-weight:700;text-transform:uppercase}
+.hero p{margin:0;font-size:10px;line-height:1.35}
+
+/* =========================================================
+   🗂️ CATÉGORIES
+   ========================================================= */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile{aspect-ratio:1;border:0;border-radius:20px;position:relative;overflow:hidden;color:#fff;box-shadow:var(--ombre-legere);background:linear-gradient(135deg,#83a883,#36593c)}
+.tile:nth-child(2){background:linear-gradient(135deg,#d2b98c,#8b6946)}
+.tile:nth-child(3){background:linear-gradient(135deg,#91aa93,#49664d)}
+.tile:nth-child(4){background:linear-gradient(135deg,#a6b4a2,#5a725d)}
+.tile:nth-child(5){background:linear-gradient(135deg,#b9aa83,#6f6346)}
+.tile:nth-child(6){background:linear-gradient(135deg,#7e9a84,#3d5e45)}
+.tile:after{content:"";position:absolute;inset:0;background:linear-gradient(#0001,#0008)}
+.tile span{position:absolute;inset:0;z-index:1;display:grid;place-items:center;padding:10px;text-align:center;font-size:var(--carte);font-weight:700;text-transform:uppercase}
+
+/* =========================================================
+   🃏 CARTES ACTIVITÉS
+   ========================================================= */
+.activity-list{display:flex;flex-direction:column;gap:12px}
+.activity{display:grid;grid-template-columns:105px 1fr;min-height:120px;overflow:hidden;border:1px solid #fff;border-radius:20px;background:rgba(250,249,245,.95);box-shadow:var(--ombre);text-align:left}
+.activity-img{background:linear-gradient(145deg,#b7cbb5,#607c61),var(--image-activites);background-size:cover;background-position:center}
+.activity-info{padding:14px;min-width:0}
+.activity h2{margin:0 0 8px;font-size:var(--carte);line-height:1.2;text-transform:uppercase}
+.badges{display:flex;flex-wrap:wrap;gap:5px}.badge{padding:4px 7px;border-radius:99px;background:var(--beige);font-size:9px;font-weight:700}
+.activity p{margin:8px 0 0;font-size:var(--texte);line-height:1.4;color:var(--anthracite)}
+
+/* =========================================================
+   📄 CARTES / FICHES
+   ========================================================= */
+.card{background:rgba(250,249,245,.95);border:1px solid #fff;border-radius:var(--rayon);padding:18px;box-shadow:var(--ombre)}
+.card+.card{margin-top:12px}
+.card h2{margin:0 0 8px;font-size:var(--titre);font-weight:700;text-transform:uppercase}
+.card h3{margin:18px 0 7px;font-size:var(--carte);font-weight:700;text-transform:uppercase}
+.card p,.card li{font-size:var(--texte);line-height:1.55;color:var(--anthracite)}
+.card ul,.card ol{padding-left:20px}
+.info{margin-top:14px;padding:13px;border-left:4px solid var(--vert);border-radius:12px;background:rgba(239,232,220,.72)}
+.info strong{display:block;margin-bottom:5px;font-size:var(--carte);text-transform:uppercase}
+
+/* =========================================================
+   🔘 BOUTONS
+   ========================================================= */
+.btn{min-height:var(--hauteur-bouton);padding:0 18px;border-radius:var(--rayon-bouton);display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:var(--bouton);font-weight:700;text-transform:uppercase}
+.btn svg{width:18px;height:18px}
+.primary{background:var(--noir);color:#fff;border:1px solid var(--noir)}
+.secondary{background:var(--blanc-casse);color:var(--noir);border:1px solid var(--noir)}
+.green{background:var(--vert);color:#fff;border:1px solid var(--vert)}
+.full{width:100%}.row{display:flex;gap:8px;flex-wrap:wrap}
+
+/* =========================================================
+   🤖 GÉNÉRATEUR
+   ========================================================= */
+.generator{background:rgba(250,249,245,.95);border:1px solid #fff;border-radius:22px;padding:16px;box-shadow:var(--ombre)}
+.label{display:block;margin-bottom:7px;font-size:var(--carte);font-weight:700;text-transform:uppercase}
+textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;background:#fff;outline:0;font-size:var(--texte);line-height:1.5;resize:vertical}
+.generator textarea{min-height:145px}
+.chip-title{display:block;margin:15px 0 7px;font-size:var(--carte);font-weight:700;text-transform:uppercase}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{min-height:32px;padding:0 11px;border-radius:99px;border:1px solid #222;background:var(--blanc-casse);font-size:var(--texte);font-weight:700}
+.chip.selected{background:var(--noir);color:#fff}
+.photo{margin-top:14px;padding:13px;border:1px dashed #555;border-radius:16px;background:#ffffff88}
+.loading{padding:18px;text-align:center}.loading span{display:inline-block;width:7px;height:7px;margin:0 3px;border-radius:50%;background:var(--vert);animation:pulse 1s infinite}.loading span:nth-child(2){animation-delay:.15s}.loading span:nth-child(3){animation-delay:.3s}
+@keyframes pulse{50%{opacity:.2;transform:scale(.8)}}
+.result{margin-top:14px}.result h3{margin:18px 0 7px;font-size:var(--carte);text-transform:uppercase}.result p,.result li{font-size:var(--texte);line-height:1.55;color:var(--anthracite)}
+
+/* =========================================================
+   🆘 HELP
+   ========================================================= */
+.help-level{padding:13px;border-radius:15px;margin-top:10px;font-size:var(--texte);line-height:1.45}
+.help-level strong{display:block;margin-bottom:4px;font-size:var(--carte);text-transform:uppercase}
+.help-green{background:#e7f3e9}.help-orange{background:#fff0dc}.help-red{background:#f9e3e4}
+.emergency{margin-top:12px;padding:13px;border-radius:15px;background:#f7e0e1;color:#7e1e27;font-size:var(--texte);line-height:1.45}
+.emergency strong{display:block;margin-bottom:4px;text-transform:uppercase}
+
+/* =========================================================
+   👤 COMPTE
+   ========================================================= */
+.avatar{width:52px;height:52px;border-radius:17px;background:var(--vert);color:#fff;display:grid;place-items:center;font-weight:700}
+.profile{display:flex;align-items:center;gap:12px}.profile strong{font-size:var(--carte);text-transform:uppercase}.profile p{margin:4px 0 0}
+
+/* =========================================================
+   📱 NAVIGATION BASSE
+   ========================================================= */
+.bottom{position:fixed;left:12px;right:12px;bottom:10px;height:68px;z-index:100;border-radius:22px;background:rgba(250,249,245,.94);border:1px solid #fff;box-shadow:0 10px 30px #1f2d2424;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.bottom-inner{height:100%;display:grid;grid-template-columns:repeat(5,1fr);padding:7px}
+.nav{border:0;background:transparent;color:#5f6467;border-radius:15px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:9px;font-weight:700;text-transform:uppercase}
+.nav-icon{width:31px;height:27px;border-radius:11px;display:grid;place-items:center}.nav-icon svg{width:20px;height:20px}
+.nav.active{color:var(--vert-fonce)}.nav.active .nav-icon{background:#84b98a38}
+
+/* =========================================================
+   🪄 ÉTATS
+   ========================================================= */
+.empty{padding:24px 14px;text-align:center;background:#faf9f5cc;border-radius:18px;font-size:var(--texte);color:var(--anthracite)}
+.empty strong{display:block;margin-bottom:6px;color:var(--noir);font-size:var(--carte);text-transform:uppercase}
+.toast{display:none;position:fixed;left:50%;bottom:92px;z-index:200;transform:translateX(-50%);max-width:calc(100vw - 32px);padding:10px 13px;border-radius:13px;background:var(--noir);color:#fff;font-size:var(--texte);font-weight:700;text-align:center}.toast.show{display:block}
+
+/* =========================================================
+   📱 MOBILE
+   ========================================================= */
+@media(max-width:390px){.brand h1{font-size:20px}.activity{grid-template-columns:92px 1fr}.hero{flex-basis:86vw}}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<!-- ========================= 🏠 ACCUEIL ========================= -->
+<main id="home" class="view active">
+<header class="header">
+  <div class="top">
+    <div class="brand">
+      <div class="logo">
+        <svg viewBox="0 0 48 48" fill="none">
+          <path d="M24 39C24 31 27 23 35 14" stroke="#5F9367" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M25 30C17 29 12 25 11 18C18 17 24 21 25 30Z" fill="#84B98A"/>
+          <path d="M27 23C28 16 33 11 40 10C40 17 35 22 27 23Z" fill="#A8B7A2"/>
+          <path d="M25 35C18 36 13 33 10 28C17 27 22 29 25 35Z" fill="#D1D1D1"/>
+        </svg>
+      </div>
+      <div><h1>Anim Compagnon</h1><p>La boîte à outils de l'animateur</p></div>
+    </div>
+    <button class="icon-btn" onclick="go('account')" aria-label="Compte">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="3.3"/><path d="M5 20c.8-3.4 3.2-5.1 7-5.1s6.2 1.7 7 5.1"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="search">
+  <label class="searchbox">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="10.8" cy="10.8" r="6.5"/><path d="m16 16 4 4"/></svg>
+    <input id="searchInput" type="search" placeholder="Que cherches-tu ?">
+  </label>
+</div>
+
+<section class="section">
+  <div class="section-head"><h2 class="section-title">À la une</h2></div>
+  <div class="scroll">
+    <button class="hero" onclick="go('generator')">
+      <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3v18M3 12h18M5 5l14 14M19 5 5 19"/></svg></span>
+      <div class="caption"><small>Besoin d'une idée ?</small><h2>Générer une activité</h2><p>Décris ton groupe, ton matériel et le temps disponible.</p></div>
+    </button>
+    <button class="hero" onclick="go('activities')">
+      <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="8.5"/><path d="M8 12h8M12 8v8"/></svg></span>
+      <div class="caption"><small>Activités</small><h2>Trouver rapidement</h2><p>Retrouve les activités publiées dans ta bibliothèque.</p></div>
+    </button>
+    <button class="hero" onclick="go('toolbox')">
+      <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 8.5h16v11H4z"/><path d="M8 8.5V6.8A2.8 2.8 0 0 1 10.8 4h2.4A2.8 2.8 0 0 1 16 6.8v1.7"/></svg></span>
+      <div class="caption"><small>Boîte à outils</small><h2>Les outils de terrain</h2><p>Méthodes et repères pour préparer et mener tes activités.</p></div>
+    </button>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-head"><h2 class="section-title">Catégories</h2><button class="link" onclick="go('categories')">Voir tout</button></div>
+  <div class="grid">
+    <button class="tile" onclick="go('activities')"><span>Activités</span></button>
+    <button class="tile" onclick="go('publics')"><span>Publics</span></button>
+    <button class="tile" onclick="go('role')"><span>Rôle de l'animateur</span></button>
+    <button class="tile" onclick="go('toolbox')"><span>Boîte à outils</span></button>
+  </div>
+</section>
+
+<section class="section">
+  <div class="card">
+    <h2>Besoin d'une activité ?</h2>
+    <p>Décris simplement ta situation et laisse l'IA construire une proposition adaptée.</p>
+    <div style="height:12px"></div>
+    <button class="btn primary full" onclick="go('generator')">Générer une activité</button>
+  </div>
+</section>
+</main>
+
+<!-- ========================= 🗂️ CATÉGORIES ========================= -->
+<main id="categories" class="view">
+  <header class="page-head"><h1 class="page-title">Catégories</h1><p class="page-intro">Explore Anim Compagnon par grands domaines.</p></header>
+  <section class="section">
+    <div class="grid">
+      <button class="tile" onclick="go('activities')"><span>Activités</span></button>
+      <button class="tile" onclick="go('daily')"><span>Vie quotidienne</span></button>
+      <button class="tile" onclick="go('publics')"><span>Publics</span></button>
+      <button class="tile" onclick="go('role')"><span>Rôle de l'animateur</span></button>
+      <button class="tile" onclick="go('toolbox')"><span>Boîte à outils</span></button>
+      <button class="tile" onclick="go('resources')"><span>Ressources</span></button>
+    </div>
+  </section>
+</main>
+
+<!-- ========================= 🎲 ACTIVITÉS ========================= -->
+<main id="activities" class="view">
+  <header class="page-head"><button class="link back" onclick="go('categories')">← Retour</button><h1 class="page-title">Activités</h1><p class="page-intro">Des idées directement utilisables sur le terrain.</p></header>
+  <section class="section">
+    <div class="chips" id="catFilters">
+      <button class="chip selected" data-cat="all">Toutes</button>
+      <button class="chip" data-cat="Animation de courte durée">Courte durée</button>
+      <button class="chip" data-cat="Activités manuelles">Manuelles</button>
+      <button class="chip" data-cat="Jeux sportifs extérieurs">Sportives</button>
+      <button class="chip" data-cat="Chants">Chants</button>
+    </div>
+  </section>
+  <section class="section" style="padding-top:0"><div id="activityLoading" class="loading"><span></span><span></span><span></span></div><div id="activityList" class="activity-list"></div></section>
+</main>
+
+<!-- ========================= 👥 PUBLICS ========================= -->
+<main id="publics" class="view">
+  <header class="page-head"><button class="link back" onclick="go('categories')">← Retour</button><h1 class="page-title">Publics</h1><p class="page-intro">Repères pour mieux connaître les publics accueillis.</p></header>
+  <section class="section"><div class="simple-list">
+    <button class="card" onclick="detail('3–6 ans','Public','Caractéristiques du public, besoins et intérêts, points de vigilance, idées d’activités.')"><h2>3–6 ans</h2><p>Connaître les besoins et caractéristiques des jeunes enfants.</p></button>
+    <button class="card" onclick="detail('6–12 ans','Public','Repères de développement, autonomie, socialisation et accompagnement.')"><h2>6–12 ans</h2><p>Repères pour le public élémentaire.</p></button>
+    <button class="card" onclick="detail('12–17 ans','Public','Repères pour accompagner les adolescents et leurs projets.')"><h2>12–17 ans</h2><p>Besoins, relations au groupe et accompagnement.</p></button>
+    <button class="card" onclick="detail('Public en situation de handicap','Public','Inclusion, adaptation et points de vigilance.')"><h2>Handicap</h2><p>Adapter son accueil, sa posture et ses activités.</p></button>
+  </div></section>
+</main>
+
+<!-- ========================= 🧑‍🏫 RÔLE ========================= -->
+<main id="role" class="view">
+  <header class="page-head"><button class="link back" onclick="go('categories')">← Retour</button><h1 class="page-title">Rôle de l'animateur</h1><p class="page-intro">Comprendre son rôle et ajuster sa posture.</p></header>
+  <section class="section"><div class="simple-list">
+    <button class="card" onclick="detail('Fonctions de l’animateur','Rôle de l’animateur','Sécurité, accueil, vie quotidienne, activités et projets.')"><h2>Fonctions de l'animateur</h2><p>Les grandes fonctions à mobiliser en ACM.</p></button>
+    <button class="card" onclick="detail('Aptitudes de l’animateur','Rôle de l’animateur','Valeurs, relations, adaptation et prévention des discriminations.')"><h2>Aptitudes de l'animateur</h2><p>Compétences et réflexes utiles sur le terrain.</p></button>
+    <button class="card" onclick="detail('Les différents acteurs de l’ACM','Rôle de l’animateur','Organisateur, direction, animateurs, familles et autres acteurs.')"><h2>Les différents acteurs de l'ACM</h2><p>Qui fait quoi et comment chacun agit.</p></button>
+    <button class="card" onclick="detail('Posture de l’animateur','Rôle de l’animateur','Observer, comprendre, adapter et transmettre.')"><h2>Posture de l'animateur</h2><p>Des repères pour ajuster sa présence.</p></button>
+  </div></section>
+</main>
+
+<!-- ========================= 🍽️ VIE QUOTIDIENNE ========================= -->
+<main id="daily" class="view">
+  <header class="page-head"><button class="link back" onclick="go('categories')">← Retour</button><h1 class="page-title">Vie quotidienne</h1><p class="page-intro">Des repères pour accompagner les temps du quotidien.</p></header>
+  <section class="section"><div class="simple-list">
+    <button class="card" onclick="detail('Respecter le rythme de l’enfant','Vie quotidienne','Observer les besoins de repos, de mouvement et de transition.')"><h2>Respecter le rythme de l'enfant</h2><p>Rythmes, transitions et temps de repos.</p></button>
+    <button class="card" onclick="detail('Favoriser le vivre-ensemble','Vie quotidienne','Accompagner les relations et les moments collectifs.')"><h2>Favoriser le vivre-ensemble</h2><p>Repères pour les temps collectifs.</p></button>
+    <button class="card" onclick="detail('Développer l’autonomie','Vie quotidienne','Donner une place active à l’enfant dans les temps du quotidien.')"><h2>Développer l'autonomie</h2><p>Faire avec, puis laisser faire.</p></button>
+  </div></section>
+</main>
+
+<!-- ========================= 🧰 BOÎTE À OUTILS ========================= -->
+<main id="toolbox" class="view">
+  <header class="page-head"><button class="link back" onclick="go('categories')">← Retour</button><h1 class="page-title">Boîte à outils</h1><p class="page-intro">Des outils directement utilisables par l'animateur.</p></header>
+  <section class="section"><div class="simple-list">
+    <button class="card" onclick="tool('Mener une activité','Préparer → Présenter → Faire comprendre → Lancer → Observer → Adapter → Terminer → Faire le bilan.')"><h2>Mener une activité</h2><p>Préparer, lancer, observer, adapter et terminer.</p></button>
+    <button class="card" onclick="tool('Fiches d’activités','Identification → objectifs → matériel → déroulement → variantes → adaptations → vigilance → posture → évaluation → bilan.')"><h2>Fiches d'activités</h2><p>Créer une fiche claire et pratique.</p></button>
+    <button class="card" onclick="tool('PSAADRAFRA','Préparation · Sensibilisation · Accueil · Aménagement · Déroulement · Rythme · Animation · Fin · Rangement · Analyse.')"><h2>PSAADRAFRA</h2><p>Une méthode pour penser les étapes d'une activité.</p></button>
+    <button class="card" onclick="tool('Les types de grands jeux','Chasse au trésor · jeu de piste · olympiades · stands · jeu social · casino · enquête · fureur.')"><h2>Les types de grands jeux</h2><p>Comprendre les principes des différents formats.</p></button>
+  </div></section>
+</main>
+
+<!-- ========================= 📚 RESSOURCES ========================= -->
+<main id="resources" class="view">
+  <header class="page-head"><button class="link back" onclick="go('categories')">← Retour</button><h1 class="page-title">Ressources</h1><p class="page-intro">Des fiches de référence pour progresser dans sa pratique.</p></header>
+  <section class="section"><div class="simple-list">
+    <button class="card" onclick="detail('Animer','Ressources','Imaginaire, personnage, attitudes de l’animateur et ressources thématiques.')"><h2>Animer</h2><p>Imaginaire, personnage, posture et thématiques d'animation.</p></button>
+    <button class="card" onclick="detail('Le BAFA, c’est quoi ?','Ressources','Cursus BAFA, organismes et repères de formation.')"><h2>Le BAFA, c'est quoi ?</h2><p>Comprendre les différentes étapes de la formation.</p></button>
+    <button class="card" onclick="detail('Formation professionnelle','Ressources','Débouchés et évolutions de carrière.')"><h2>Formation professionnelle</h2><p>Débouchés et évolutions de carrière.</p></button>
+  </div></section>
+</main>
+
+<!-- ========================= 🤖 GÉNÉRATEUR ========================= -->
+<main id="generator" class="view">
+  <header class="page-head"><h1 class="page-title">Générer une activité</h1><p class="page-intro">Décris ce que tu as. Les paramètres sont facultatifs.</p></header>
+  <section class="section">
+    <div class="generator">
+      <label class="label" for="prompt">Ta situation</label>
+      <textarea id="prompt" placeholder="Ex. : J'ai 14 enfants de 8 ans, 4 plots, 3 ballons et 2 cordes. Je suis dehors pendant 45 minutes et je veux un jeu qui bouge."></textarea>
+      <p style="font-size:var(--texte);color:var(--anthracite)">Écris naturellement : l'IA n'impose pas de formulation.</p>
+
+      <div class="photo"><strong style="font-size:var(--carte)">Montrer mon matériel</strong><br><input id="photo" type="file" accept="image/*" capture="environment"></div>
+
+      <span class="chip-title">Âge</span>
+      <div class="chips">
+        <button class="chip" data-filter="age">3–6 ans</button><button class="chip" data-filter="age">6–12 ans</button><button class="chip" data-filter="age">12–17 ans</button>
+      </div>
+      <span class="chip-title">Durée</span>
+      <div class="chips">
+        <button class="chip" data-filter="durée">5 min</button><button class="chip" data-filter="durée">15 min</button><button class="chip" data-filter="durée">30 min</button><button class="chip" data-filter="durée">1 h</button>
+      </div>
+      <span class="chip-title">Lieu</span>
+      <div class="chips"><button class="chip" data-filter="lieu">Intérieur</button><button class="chip" data-filter="lieu">Extérieur</button></div>
+      <span class="chip-title">Énergie</span>
+      <div class="chips"><button class="chip" data-filter="énergie">Calme</button><button class="chip" data-filter="énergie">Dynamique</button></div>
+      <span class="chip-title">Objectif pédagogique</span>
+      <div class="chips">
+        <button class="chip" data-filter="objectif">Coopération</button><button class="chip" data-filter="objectif">Autonomie</button><button class="chip" data-filter="objectif">Motricité</button><button class="chip" data-filter="objectif">Expression</button><button class="chip" data-filter="objectif">Vivre-ensemble</button>
+      </div>
+
+      <div style="height:15px"></div>
+      <button class="btn primary full" id="generateBtn" onclick="generate()">Générer l'activité</button>
+      <div id="genLoad" class="loading hidden"><span></span><span></span><span></span></div>
+      <div id="genResult" class="result hidden"></div>
+    </div>
+  </section>
+</main>
+
+<!-- ========================= 🆘 HELP ========================= -->
+<main id="help" class="view">
+  <header class="page-head"><h1 class="page-title">Help</h1><p class="page-intro">Décris la situation. Help t'oriente vers les ressources adaptées.</p></header>
+  <section class="section">
+    <div class="card">
+      <label class="label" for="helpText">Qu'est-ce qui se passe ?</label>
+      <textarea id="helpText" style="min-height:130px" placeholder="Décris les faits que tu observes, sans poser toi-même de diagnostic."></textarea>
+      <div style="height:10px"></div><button class="btn primary" onclick="helpAnalyse()">Analyser la situation</button>
+      <div id="helpResult"></div>
+    </div>
+    <div class="card">
+      <h2>Repères</h2>
+      <div class="help-level help-green"><strong>Problématique pédagogique / courante</strong>Situation pouvant être accompagnée dans la pratique quotidienne.</div>
+      <div class="help-level help-orange"><strong>À surveiller / à accompagner</strong>Observer, échanger et transmettre à la personne responsable.</div>
+      <div class="help-level help-red"><strong>Situation préoccupante</strong>Suivre les procédures de protection et d'alerte adaptées.</div>
+      <div class="emergency"><strong>Danger immédiat</strong>Protège l'enfant et le groupe, préviens la direction et utilise le numéro d'urgence adapté.</div>
+    </div>
+  </section>
+</main>
+
+<!-- ========================= 👤 COMPTE ========================= -->
+<main id="account" class="view">
+  <header class="page-head"><h1 class="page-title">Compte</h1><p class="page-intro">Tes préférences et tes favoris.</p></header>
+  <section class="section">
+    <div class="card"><div class="profile"><div class="avatar">A</div><div><strong>Animateur</strong><p>Ton compagnon de terrain.</p></div></div></div>
+    <div class="card"><h2>Mes favoris</h2><div id="favorites" class="empty"><strong>Aucun favori</strong>Les fiches que tu ajoutes apparaîtront ici.</div></div>
+    <div class="card"><h2>À propos</h2><p>Anim Compagnon est une boîte à outils destinée aux animateurs en ACM, périscolaire, colonies et formations BAFA.</p></div>
+  </section>
+</main>
+
+<!-- ========================= 📄 DÉTAIL ========================= -->
+<main id="detail" class="view">
+  <header class="page-head"><button class="link" onclick="back()">← Retour</button><h1 id="detailTitle" class="page-title"></h1><p id="detailIntro" class="page-intro"></p></header>
+  <section class="section"><div id="detailBody" class="card"></div></section>
+</main>
+</div>
+
+<!-- ========================= 📱 NAVIGATION ========================= -->
+<nav class="bottom"><div class="bottom-inner">
+  <button class="nav active" data-nav="home" onclick="go('home')"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M9 21v-7h6v7"/></svg></span>Accueil</button>
+  <button class="nav" data-nav="categories" onclick="go('categories')"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg></span>Catégories</button>
+  <button class="nav" data-nav="generator" onclick="go('generator')"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3v18M3 12h18M5 5l14 14M19 5 5 19"/></svg></span>Générer</button>
+  <button class="nav" data-nav="help" onclick="go('help')"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M9.8 9a2.4 2.4 0 1 1 4.4 1.4c-.8 1.1-2.2 1.2-2.2 2.8"/><path d="M12 16.8h.01"/></svg></span>Help</button>
+  <button class="nav" data-nav="account" onclick="go('account')"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="3.3"/><path d="M5 20c.8-3.4 3.2-5.1 7-5.1s6.2 1.7 7 5.1"/></svg></span>Compte</button>
+</div></nav>
+<div id="toast" class="toast"></div>
+
+<script>
+/* =========================================================
+   ⚙️ CONFIGURATION
+   ========================================================= */
+const ACTIVITIES_API="https://anim-compagnon-api.eliesbendjedou30.workers.dev/activities";
+const AI_API="https://anim-compagnon-api.eliesbendjedou30.workers.dev/";
+let activities=[],previous="home",currentCategory="all";
+
+/* =========================================================
+   🧭 NAVIGATION
+   ========================================================= */
+function go(id){
+  const current=document.querySelector(".view.active");
+  if(current&&current.id!==id) previous=current.id;
+  document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+  const target=document.getElementById(id);if(!target)return;
+  target.classList.add("active");
+  const main=["home","categories","generator","help","account"].includes(id)?id:
+    id==="detail"?(previous.startsWith("category")?"categories":previous):id==="activities"?"categories":
+    ["publics","role","daily","toolbox","resources"].includes(id)?"categories":"home";
+  document.querySelectorAll(".nav").forEach(n=>n.classList.toggle("active",n.dataset.nav===main));
+  window.scrollTo({top:0,behavior:"smooth"});
+  if(id==="activities")renderActivities();
+  if(id==="account")renderFavorites();
+}
+function back(){go(previous==="activities"?"activities":previous||"home")}
+
+/* =========================================================
+   🔎 RECHERCHE
+   ========================================================= */
+document.getElementById("searchInput").addEventListener("keydown",e=>{
+  if(e.key!=="Enter")return;
+  const q=e.target.value.trim().toLowerCase();if(!q)return;
+  const found=activities.filter(a=>Object.values(a).join(" ").toLowerCase().includes(q));
+  go("activities");renderActivityCards(found);
+});
+
+/* =========================================================
+   🎲 BASEROW
+   ========================================================= */
+function field(r,names){
+  for(const n of names)if(r[n]!==undefined&&r[n]!==null&&String(r[n]).trim()!=="")return r[n];
+  return "";
+}
+function mapActivity(r){
+  const pub=field(r,["PUBLIÉ","PUBLIE","Publié","published"]);
+  const p=String(pub).toLowerCase();
+  return {
+    id:r.id||Math.random(),name:String(field(r,["NOM DE L’ACTIVITÉ","NOM DE L'ACTIVITÉ","TITRES","Titre","name"])||"Activité sans titre"),
+    category:String(field(r,["CATÉGORIE","CATEGORIE","Catégorie","Catégories","category"])||""),
+    age:String(field(r,["ÂGE","Age","age"])||""),children:String(field(r,["NOMBRE D'ENFANTS","Nombre d'enfants"])||""),
+    duration:String(field(r,["DURÉE","Durée","duration"])||""),prep:String(field(r,["TEMPS DE PRÉPARATION","Temps de préparation"])||""),
+    location:String(field(r,["LIEU","Lieu","location"])||""),energy:String(field(r,["NIVEAU D'ÉNERGIE","Niveau d'énergie"])||""),
+    material:String(field(r,["MATÉRIEL","Matériel"])||""),objectives:String(field(r,["OBJECTIFS PÉDAGOGIQUES","Objectifs pédagogiques"])||""),
+    development:String(field(r,["DÉROULEMENT","Déroulement"])||""),variants:String(field(r,["VARIANTES","Variantes"])||""),
+    vigilance:String(field(r,["POINTS DE VIGILANCE","Points de vigilance"])||""),
+    image:String(field(r,["IMAGE","Image"])||""),
+    published:pub===true||["true","1","oui","yes","vrai","publié","publie"].includes(p)
+  };
+}
+async function loadActivities(){
+  try{
+    const res=await fetch(ACTIVITIES_API,{cache:"no-store"});if(!res.ok)throw Error(res.status);
+    const data=await res.json(),rows=Array.isArray(data)?data:(data.results||data.activities||[]);
+    activities=rows.map(mapActivity).filter(a=>a.published);
+    renderActivities();
+  }catch(e){
+    console.error(e);document.getElementById("activityLoading").classList.add("hidden");
+    document.getElementById("activityList").innerHTML='<div class="empty"><strong>Activités indisponibles</strong>Impossible de charger le contenu Baserow pour le moment.</div>';
+  }
+}
+document.querySelectorAll("#catFilters .chip").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll("#catFilters .chip").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");
+  currentCategory=b.dataset.cat;renderActivities();
+});
+function renderActivities(){
+  const list=document.getElementById("activityList");if(!list)return;
+  document.getElementById("activityLoading").classList.add("hidden");
+  let arr=currentCategory==="all"?activities:activities.filter(a=>a.category.toLowerCase()===currentCategory.toLowerCase());
+  renderActivityCards(arr);
+}
+function renderActivityCards(arr){
+  const list=document.getElementById("activityList");if(!arr.length){list.innerHTML='<div class="empty"><strong>Aucune activité trouvée</strong>Essaie un autre filtre ou utilise le générateur.</div>';return}
+  window.rendered=arr;
+  list.innerHTML=arr.map((a,i)=>`
+    <button class="activity" onclick="openActivity(${i})">
+      <div class="activity-img" ${a.image?`style="background-image:linear-gradient(#315a3c22,#315a3c66),url('${esc(a.image)}')"`:""}></div>
+      <div class="activity-info">
+        <h2>${esc(a.name)}</h2>
+        <div class="badges">${[a.age,a.duration,a.children?a.children+" enfants":""].filter(Boolean).map(x=>`<span class="badge">${esc(x)}</span>`).join("")}</div>
+        ${a.objectives?`<p>${esc(short(a.objectives,110))}</p>`:""}
+      </div>
+    </button>`).join("");
+}
+function openActivity(i){
+  const a=window.rendered[i];if(!a)return;
+  previous="activities";
+  document.getElementById("detailTitle").textContent=a.name;
+  document.getElementById("detailIntro").textContent=[a.age,a.duration,a.location].filter(Boolean).join(" • ");
+  document.getElementById("detailBody").innerHTML=[
+    ["Objectifs pédagogiques",a.objectives],["Matériel",a.material],["Déroulement",a.development],["Variantes",a.variants],["Points de vigilance",a.vigilance]
+  ].filter(x=>x[1]).map(x=>`<h2>${esc(x[0])}</h2><p style="white-space:pre-line">${esc(x[1])}</p>`).join("")+
+  `<div class="info"><strong>À retenir</strong><p>La fiche prépare l'activité. Le groupe, lui, est vivant : observe, adapte et accompagne.</p></div>
+   <div style="height:12px"></div><button class="btn primary" onclick='favorite(${JSON.stringify(a)})'>Ajouter aux favoris</button>`;
+  go("detail");
+}
+
+/* =========================================================
+   🧰 CONTENU
+   ========================================================= */
+function detail(title,category,intro){
+  previous=category==="Public"?"publics":category==="Rôle de l’animateur"?"role":category==="Vie quotidienne"?"daily":"resources";
+  document.getElementById("detailTitle").textContent=title;
+  document.getElementById("detailIntro").textContent=intro;
+  document.getElementById("detailBody").innerHTML=`
+    <h2>À retenir</h2><p>${esc(intro)}</p>
+    <h2>En pratique</h2><p>Cette fiche est prête à accueillir le contenu détaillé d'Anim Compagnon.</p>
+    <h2>Points de vigilance</h2><p>Le contenu précis pourra être enrichi sans modifier la structure graphique.</p>`;
+  go("detail");
+}
+function tool(title,intro){
+  previous="toolbox";document.getElementById("detailTitle").textContent=title;document.getElementById("detailIntro").textContent="Boîte à outils";
+  document.getElementById("detailBody").innerHTML=`<h2>${esc(title)}</h2><p>${esc(intro)}</p>
+  ${title==="PSAADRAFRA"?`<h2>Les étapes</h2><p><strong>P</strong> Préparation<br><strong>S</strong> Sensibilisation<br><strong>A</strong> Accueil<br><strong>A</strong> Aménagement<br><strong>D</strong> Déroulement<br><strong>R</strong> Rythme<br><strong>A</strong> Animation<br><strong>F</strong> Fin<br><strong>R</strong> Rangement<br><strong>A</strong> Analyse</p>`:""}
+  <div class="info"><strong>À retenir</strong><p>Je prépare l'activité… mais je m'adapte aux enfants. La fiche est prévue. Le groupe, lui, est vivant.</p></div>`;
+  go("detail");
+}
+
+/* =========================================================
+   🤖 IA
+   ========================================================= */
+document.querySelectorAll(".chip[data-filter]").forEach(b=>b.onclick=()=>b.classList.toggle("selected"));
+function filters(){
+  const out=[];document.querySelectorAll(".chip[data-filter].selected").forEach(b=>out.push(b.dataset.filter+": "+b.textContent.trim()));return out.join(" | ");
+}
+async function generate(){
+  const prompt=document.getElementById("prompt").value.trim(),f=filters(),load=document.getElementById("genLoad"),res=document.getElementById("genResult");
+  if(!prompt&&!f&&!document.getElementById("photo").files.length){toast("Décris ta situation ou choisis un paramètre.");return}
+  load.classList.remove("hidden");res.classList.add("hidden");
+  const message=`Tu es l'assistant pédagogique d'Anim Compagnon. Crée UNE activité concrète pour un animateur en ACM. Demande: ${prompt||"non précisée"}. Paramètres: ${f||"aucun"}. Réponds en français avec : TITRE, ÂGE / DURÉE / LIEU, OBJECTIFS PÉDAGOGIQUES, MATÉRIEL, DÉROULEMENT, VARIANTES, POINTS DE VIGILANCE.`;
+  try{
+    const r=await fetch(AI_API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({prompt:message})});
+    if(!r.ok)throw Error(r.status);const d=await r.json();const text=d.output_text||d.text||d.response||(Array.isArray(d.output)?JSON.stringify(d.output):"");
+    if(!text)throw Error("Réponse vide");
+    res.innerHTML=`<div class="card">${formatAI(String(text))}</div><div style="height:10px"></div><div class="row"><button class="btn secondary" onclick="generate()">Autre activité</button><button class="btn green" onclick="toast('Modifie ta demande puis relance la génération.')">Affiner</button></div>`;
+  }catch(e){res.innerHTML='<div class="card"><h2>Génération indisponible</h2><p>Le service IA n’a pas répondu correctement. Vérifie le Worker puis réessaie.</p></div>'}
+  finally{load.classList.add("hidden");res.classList.remove("hidden")}
+}
+function formatAI(t){
+  return esc(t).replace(/\n/g,"<br>").replace(/(?:^|<br>)(TITRE|ÂGE \/ DURÉE \/ LIEU|OBJECTIFS PÉDAGOGIQUES|MATÉRIEL|DÉROULEMENT|VARIANTES|POINTS DE VIGILANCE)(?=<br>|$)/g,'<h3>$1</h3>');
+}
+
+/* =========================================================
+   🆘 HELP
+   ========================================================= */
+function helpAnalyse(){
+  const q=document.getElementById("helpText").value.trim().toLowerCase(),r=document.getElementById("helpResult");
+  if(!q){toast("Décris d'abord la situation.");return}
+  const danger=["violence","frappe","blessure","marque","étrangle","abus","agression","attouche","viol","danger","maltrait","suicide","automutil"];
+  const watch=["s'isole","s’isole","triste","peur","angoisse","changement de comportement","pleure","refuse"];
+  let c="help-green",t="Problématique pédagogique / courante",m="Observe la situation, prends en compte le contexte et adapte ton accompagnement.";
+  if(danger.some(x=>q.includes(x))){c="help-red";t="Situation préoccupante";m="Protège l'enfant et le groupe, préviens la direction et suis la procédure adaptée. N'enquête pas et ne pose pas toi-même de diagnostic."}
+  else if(watch.some(x=>q.includes(x))){c="help-orange";t="À surveiller / à accompagner";m="Observe les faits, échange avec la direction et adapte l'accompagnement. Un changement de comportement mérite d'être pris au sérieux sans poser de diagnostic."}
+  r.innerHTML=`<div class="help-level ${c}"><strong>${t}</strong>${m}</div><div class="info"><strong>Pistes</strong><p>Observer les faits concrets.<br>Adapter l'accompagnement immédiat.<br>Transmettre les éléments utiles à la personne responsable.<br>Consulter la fiche ressource correspondante.</p></div>`;
+}
+
+/* =========================================================
+   ⭐ FAVORIS
+   ========================================================= */
+function getFav(){try{return JSON.parse(localStorage.getItem("animFav")||"[]")}catch{return[]}}
+function favorite(a){const f=getFav(),i=f.findIndex(x=>x.id===a.id);if(i>=0){f.splice(i,1);toast("Retiré des favoris.")}else{f.push(a);toast("Ajouté aux favoris.")}localStorage.setItem("animFav",JSON.stringify(f))}
+function renderFavorites(){
+  const el=document.getElementById("favorites"),f=getFav();
+  if(!f.length){el.className="empty";el.innerHTML="<strong>Aucun favori</strong>Les fiches que tu ajoutes apparaîtront ici.";return}
+  el.className="";el.innerHTML=f.map((a,i)=>`<button class="card" style="width:100%;text-align:left;margin-bottom:8px" onclick="openFavorite(${i})"><h2>${esc(a.name)}</h2><p>${esc([a.age,a.duration].filter(Boolean).join(" • "))}</p></button>`).join("");
+}
+function openFavorite(i){const f=getFav(),a=f[i];if(a){window.rendered=[a];openActivity(0)}}
+
+/* =========================================================
+   🛡️ UTILITAIRES
+   ========================================================= */
+function esc(v){return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
+function short(v,n){v=String(v||"");return v.length>n?v.slice(0,n-1)+"…":v}
+function toast(m){const e=document.getElementById("toast");e.textContent=m;e.classList.add("show");clearTimeout(window.tt);window.tt=setTimeout(()=>e.classList.remove("show"),2400)}
+
+/* =========================================================
+   🚀 DÉMARRAGE
+   ========================================================= */
+loadActivities();
+</script>
+</body>
+</html>
