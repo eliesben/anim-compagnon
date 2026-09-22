@@ -130,7 +130,13 @@ button,input,textarea{font:inherit}button{cursor:pointer}button:active{transform
 .tile:nth-child(6){background:linear-gradient(135deg,#7e9a84,#3d5e45)}
 .tile:after{content:"";position:absolute;inset:0;background:linear-gradient(#0001,#0008)}
 .tile span{position:absolute;inset:0;z-index:1;display:grid;place-items:center;padding:10px;text-align:center;font-size:var(--carte);font-weight:700;text-transform:uppercase}
-
+.tile:nth-child(1){
+  background:
+    linear-gradient(rgba(0,0,0,.20),rgba(0,0,0,.45)),
+    var(--image-activites);
+  background-size:cover;
+  background-position:center;
+}
 /* =========================================================
    🃏 CARTES ACTIVITÉS
    ========================================================= */
