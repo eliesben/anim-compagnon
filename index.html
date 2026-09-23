@@ -424,6 +424,204 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
 .generated-activity p:last-child{
   margin-bottom:0;
 }
+/* =========================================================
+   ✨ GÉNÉRATEUR IA — NOUVEL AFFICHAGE
+   ========================================================= */
+
+.ai-proposals {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.ai-proposal {
+  background: rgba(255,255,255,.94);
+  border: 1px solid rgba(0,0,0,.08);
+  border-radius: 22px;
+  padding: 18px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.06);
+}
+
+.ai-proposal-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.ai-proposal-number {
+  min-width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #000;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.ai-proposal-title {
+  flex: 1;
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.ai-proposal-description {
+  margin: 12px 0 14px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #333;
+}
+
+.ai-proposal-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 15px;
+}
+
+.ai-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: #f3f3ef;
+  font-size: 12px;
+  color: #222;
+}
+
+.ai-proposal-objectives {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.ai-objective {
+  font-size: 12px;
+  padding: 6px 9px;
+  border-radius: 999px;
+  background: #e8f1e7;
+  color: #1d4a2a;
+}
+
+.ai-proposal-button {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid #000;
+  border-radius: 14px;
+  background: #000;
+  color: #fff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.ai-proposal-button:active {
+  transform: scale(.98);
+}
+
+
+/* =========================================================
+   📋 FICHE D'ACTIVITÉ
+   ========================================================= */
+
+.ai-activity-sheet {
+  background: rgba(255,255,255,.96);
+  border-radius: 24px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.07);
+}
+
+.ai-sheet-header {
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(0,0,0,.08);
+  margin-bottom: 18px;
+}
+
+.ai-sheet-title {
+  margin: 0 0 12px;
+  font-size: 26px;
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.ai-sheet-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.ai-sheet-section {
+  margin-top: 22px;
+}
+
+.ai-sheet-section h3 {
+  margin: 0 0 10px;
+  font-size: 17px;
+  line-height: 1.3;
+}
+
+.ai-sheet-section p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.ai-sheet-section ul,
+.ai-sheet-section ol {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.ai-sheet-section li {
+  margin-bottom: 7px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.ai-sheet-material {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.ai-material-item {
+  padding: 8px 10px;
+  background: #f3f3ef;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+.ai-sheet-variant {
+  background: #f7f7f4;
+  border-radius: 14px;
+  padding: 12px;
+  margin-bottom: 8px;
+}
+
+.ai-sheet-vigilance {
+  background: #fff8ec;
+  border-radius: 14px;
+  padding: 13px;
+}
+
+.ai-sheet-posture {
+  background: #eef5ed;
+  border-radius: 14px;
+  padding: 13px;
+}
+
+.ai-back-button {
+  margin-top: 14px;
+}
 </style>
 </head>
 
@@ -1118,6 +1316,14 @@ loadActivities();
    ✨ GÉNÉRATEUR D'ACTIVITÉ
    ========================================================= */
 
+let aiProposals = [];
+let selectedAIProposal = null;
+
+
+/* =========================================================
+   NAVIGATION DU GÉNÉRATEUR
+   ========================================================= */
+
 function openGeneratorMode(mode){
 
   const iaChoice = document.getElementById("generatorIAChoice");
@@ -1128,25 +1334,1095 @@ function openGeneratorMode(mode){
   if(iaText) iaText.hidden = true;
   if(iaPhoto) iaPhoto.hidden = true;
 
+  const proposals = document.getElementById("aiGeneratedProposals");
+  const sheet = document.getElementById("aiGeneratedSheet");
+
+  if(proposals) proposals.remove();
+  if(sheet) sheet.remove();
+
   if(mode === "ia"){
+
     if(iaChoice) iaChoice.hidden = false;
+
     return;
   }
 
   if(mode === "ia-text"){
+
     if(iaText) iaText.hidden = false;
+
     return;
   }
 
   if(mode === "ia-photo"){
+
     if(iaPhoto) iaPhoto.hidden = false;
+
     return;
   }
 
   if(mode === "fiche"){
+
     toast("Le générateur de fiche arrive.");
+
     return;
   }
+}
+
+
+/* =========================================================
+   🤖 GÉNÉRATION DES 3 PROPOSITIONS
+   ========================================================= */
+
+async function generateAIActivity(){
+
+  const age =
+    document.getElementById("aiAge")?.value.trim() || "";
+
+  const children =
+    document.getElementById("aiChildren")?.value.trim() || "";
+
+  const duration =
+    document.getElementById("aiDuration")?.value.trim() || "";
+
+  const place =
+    document.getElementById("aiPlace")?.value.trim() || "";
+
+  const material =
+    document.getElementById("aiMaterial")?.value.trim() || "";
+
+  const objective =
+    document.getElementById("aiObjective")?.value.trim() || "";
+
+
+  if(
+    !age &&
+    !children &&
+    !duration &&
+    !place &&
+    !material &&
+    !objective
+  ){
+
+    toast("Décris au moins un peu ton besoin.");
+
+    return;
+  }
+
+
+  toast("Je cherche des idées pour toi…");
+
+
+  const prompt = `
+Tu es l'assistant pédagogique d'Anim Compagnon.
+
+Tu aides un animateur en ACM à trouver des activités concrètes,
+réalisables et adaptées à son contexte.
+
+Voici sa demande :
+
+Âge des enfants : ${age || "non précisé"}
+Nombre d'enfants : ${children || "non précisé"}
+Durée : ${duration || "non précisée"}
+Lieu : ${place || "non précisé"}
+Matériel disponible : ${material || "non précisé"}
+Objectif ou envie : ${objective || "non précisé"}
+
+PROPOSE EXACTEMENT 3 ACTIVITÉS DIFFÉRENTES.
+
+Les trois activités doivent être réellement différentes
+et adaptées aux informations données.
+
+Réponds UNIQUEMENT avec un JSON valide.
+
+Format obligatoire :
+
+{
+  "propositions": [
+    {
+      "titre": "Nom de l'activité",
+      "description": "Courte présentation de l'activité en 2 ou 3 phrases.",
+      "age": "8-12 ans",
+      "duree": "30 min",
+      "lieu": "Extérieur",
+      "energie": "Dynamique",
+      "objectifs": [
+        "Coopération",
+        "Motricité"
+      ],
+      "materiel": [
+        "4 plots",
+        "3 ballons"
+      ]
+    }
+  ]
+}
+
+Ne mets aucun texte avant ou après le JSON.
+`;
+
+
+  try{
+
+    const response = await fetch(AI_API,{
+
+      method:"POST",
+
+      headers:{
+        "Content-Type":"application/json"
+      },
+
+      body:JSON.stringify({
+        prompt:prompt
+      })
+
+    });
+
+
+    if(!response.ok){
+
+      const errorText = await response.text();
+
+      console.error("Erreur Worker :",errorText);
+
+      throw new Error("Erreur Worker : " + response.status);
+
+    }
+
+
+    const data = await response.json();
+
+
+    let result = "";
+
+
+    if(typeof data.output_text === "string"){
+
+      result = data.output_text;
+
+    }
+
+
+    if(!result && Array.isArray(data.output)){
+
+      for(const item of data.output){
+
+        if(!Array.isArray(item.content)) continue;
+
+        for(const content of item.content){
+
+          if(typeof content.text === "string"){
+
+            result += content.text;
+
+          }
+
+        }
+
+      }
+
+    }
+
+
+    if(!result && typeof data.text === "string"){
+
+      result = data.text;
+
+    }
+
+
+    if(!result && typeof data.response === "string"){
+
+      result = data.response;
+
+    }
+
+
+    result = result.trim();
+
+
+    if(!result){
+
+      throw new Error("Réponse IA vide.");
+
+    }
+
+
+    /*
+      Sécurité : si l'IA ajoute accidentellement
+      des ```json ... ```, on les retire.
+    */
+
+    result = result
+      .replace(/^```json\s*/i,"")
+      .replace(/^```\s*/i,"")
+      .replace(/\s*```$/,"")
+      .trim();
+
+
+    const parsed = JSON.parse(result);
+
+
+    if(
+      !parsed.propositions ||
+      !Array.isArray(parsed.propositions) ||
+      parsed.propositions.length === 0
+    ){
+
+      throw new Error("Aucune proposition reçue.");
+
+    }
+
+
+    aiProposals = parsed.propositions.slice(0,3);
+
+
+    showAIProposals();
+
+
+  }catch(error){
+
+    console.error("Erreur génération IA :",error);
+
+    toast("L'IA n'a pas réussi à générer les propositions.");
+
+  }
+
+}
+
+
+/* =========================================================
+   🎲 AFFICHAGE DES 3 PROPOSITIONS
+   ========================================================= */
+
+function showAIProposals(){
+
+  const existing =
+    document.getElementById("aiGeneratedProposals");
+
+  if(existing){
+
+    existing.remove();
+
+  }
+
+
+  const section =
+    document.createElement("section");
+
+  section.id = "aiGeneratedProposals";
+  section.className = "section generator-panel";
+
+
+  section.innerHTML = `
+
+    <div class="section-head">
+
+      <h2 class="section-title">
+        🎲 J'ai quelques idées pour toi
+      </h2>
+
+      <p class="page-intro">
+        Choisis celle qui te plaît le plus.
+        Je préparerai ensuite la fiche complète.
+      </p>
+
+    </div>
+
+
+    <div class="ai-proposals">
+
+      ${aiProposals.map((proposal,index)=>{
+
+        const objectives =
+          Array.isArray(proposal.objectifs)
+            ? proposal.objectifs
+            : [];
+
+        const material =
+          Array.isArray(proposal.materiel)
+            ? proposal.materiel
+            : [];
+
+        return `
+
+          <article class="ai-proposal">
+
+            <div class="ai-proposal-top">
+
+              <span class="ai-proposal-number">
+                ${index + 1}
+              </span>
+
+              <h3 class="ai-proposal-title">
+                ${esc(proposal.titre || "Activité")}
+              </h3>
+
+            </div>
+
+
+            <p class="ai-proposal-description">
+
+              ${esc(
+                proposal.description ||
+                "Une activité adaptée à ta demande."
+              )}
+
+            </p>
+
+
+            <div class="ai-proposal-meta">
+
+              ${proposal.age
+                ? `<span class="ai-meta">👥 ${esc(proposal.age)}</span>`
+                : ""}
+
+              ${proposal.duree
+                ? `<span class="ai-meta">⏱️ ${esc(proposal.duree)}</span>`
+                : ""}
+
+              ${proposal.lieu
+                ? `<span class="ai-meta">📍 ${esc(proposal.lieu)}</span>`
+                : ""}
+
+              ${proposal.energie
+                ? `<span class="ai-meta">⚡ ${esc(proposal.energie)}</span>`
+                : ""}
+
+            </div>
+
+
+            ${
+              objectives.length
+              ?
+              `
+              <div class="ai-proposal-objectives">
+
+                ${objectives
+                  .slice(0,5)
+                  .map(o =>
+                    `<span class="ai-objective">
+                      ${esc(o)}
+                    </span>`
+                  )
+                  .join("")}
+
+              </div>
+              `
+              :
+              ""
+            }
+
+
+            ${
+              material.length
+              ?
+              `
+              <div class="ai-proposal-description">
+
+                🧰 ${material
+                  .slice(0,5)
+                  .map(m => esc(m))
+                  .join(" · ")}
+
+              </div>
+              `
+              :
+              ""
+            }
+
+
+            <button
+              class="ai-proposal-button"
+              onclick="generateActivitySheet(${index})"
+            >
+              📋 Créer la fiche de cette activité
+            </button>
+
+          </article>
+
+        `;
+
+      }).join("")}
+
+    </div>
+
+  `;
+
+
+  const generatorText =
+    document.getElementById("generatorIAText");
+
+
+  if(generatorText){
+
+    generatorText.insertAdjacentElement(
+      "afterend",
+      section
+    );
+
+  }
+
+
+  section.scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+  });
+
+}
+
+
+/* =========================================================
+   📋 GÉNÉRATION DE LA FICHE COMPLÈTE
+   ========================================================= */
+
+async function generateActivitySheet(index){
+
+  const proposal = aiProposals[index];
+
+  if(!proposal){
+
+    toast("Cette activité n'est plus disponible.");
+
+    return;
+
+  }
+
+
+  selectedAIProposal = proposal;
+
+
+  toast("Je prépare la fiche complète…");
+
+
+  const prompt = `
+Tu es l'assistant pédagogique d'Anim Compagnon.
+
+Transforme cette proposition d'activité en une fiche
+complète, claire et directement utilisable par un animateur ACM.
+
+PROPOSITION :
+
+${JSON.stringify(proposal, null, 2)}
+
+Crée une fiche pratique.
+
+Tu dois respecter impérativement :
+- l'âge
+- le nombre d'enfants si disponible
+- la durée
+- le lieu
+- le matériel
+- l'objectif
+- la faisabilité réelle de l'activité
+
+Réponds UNIQUEMENT avec un JSON valide.
+
+Format :
+
+{
+  "titre": "",
+  "age": "",
+  "nombre_enfants": "",
+  "duree": "",
+  "temps_preparation": "",
+  "lieu": "",
+  "energie": "",
+  "objectifs": [],
+  "materiel": [],
+  "preparation": "",
+  "deroulement": [],
+  "variantes": [],
+  "adaptations": [],
+  "points_vigilance": [],
+  "posture_animateur": ""
+}
+
+Le déroulement doit être présenté sous forme d'étapes
+claires et concrètes.
+
+Ne mets aucun texte avant ou après le JSON.
+`;
+
+
+  try{
+
+    const response = await fetch(AI_API,{
+
+      method:"POST",
+
+      headers:{
+        "Content-Type":"application/json"
+      },
+
+      body:JSON.stringify({
+        prompt:prompt
+      })
+
+    });
+
+
+    if(!response.ok){
+
+      throw new Error(
+        "Erreur Worker : " + response.status
+      );
+
+    }
+
+
+    const data = await response.json();
+
+
+    let result = "";
+
+
+    if(typeof data.output_text === "string"){
+
+      result = data.output_text;
+
+    }
+
+
+    if(!result && Array.isArray(data.output)){
+
+      for(const item of data.output){
+
+        if(!Array.isArray(item.content)) continue;
+
+        for(const content of item.content){
+
+          if(typeof content.text === "string"){
+
+            result += content.text;
+
+          }
+
+        }
+
+      }
+
+    }
+
+
+    if(!result && typeof data.text === "string"){
+
+      result = data.text;
+
+    }
+
+
+    if(!result && typeof data.response === "string"){
+
+      result = data.response;
+
+    }
+
+
+    result = result
+      .replace(/^```json\s*/i,"")
+      .replace(/^```\s*/i,"")
+      .replace(/\s*```$/,"")
+      .trim();
+
+
+    const sheet = JSON.parse(result);
+
+
+    showActivitySheet(sheet);
+
+
+  }catch(error){
+
+    console.error(
+      "Erreur génération fiche :",
+      error
+    );
+
+    toast(
+      "Impossible de créer la fiche pour le moment."
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   📖 AFFICHAGE DE LA FICHE
+   ========================================================= */
+
+function showActivitySheet(sheet){
+
+  const existing =
+    document.getElementById("aiGeneratedSheet");
+
+  if(existing){
+
+    existing.remove();
+
+  }
+
+
+  const section =
+    document.createElement("section");
+
+
+  section.id = "aiGeneratedSheet";
+  section.className = "section generator-panel";
+
+
+  const objectives =
+    Array.isArray(sheet.objectifs)
+      ? sheet.objectifs
+      : [];
+
+
+  const material =
+    Array.isArray(sheet.materiel)
+      ? sheet.materiel
+      : [];
+
+
+  const steps =
+    Array.isArray(sheet.deroulement)
+      ? sheet.deroulement
+      : [];
+
+
+  const variants =
+    Array.isArray(sheet.variantes)
+      ? sheet.variantes
+      : [];
+
+
+  const adaptations =
+    Array.isArray(sheet.adaptations)
+      ? sheet.adaptations
+      : [];
+
+
+  const vigilance =
+    Array.isArray(sheet.points_vigilance)
+      ? sheet.points_vigilance
+      : [];
+
+
+  section.innerHTML = `
+
+    <div class="section-head">
+
+      <h2 class="section-title">
+        📋 Ta fiche d'activité
+      </h2>
+
+      <p class="page-intro">
+        Prête à être utilisée sur le terrain.
+      </p>
+
+    </div>
+
+
+    <article class="ai-activity-sheet">
+
+
+      <!-- EN-TÊTE -->
+
+      <header class="ai-sheet-header">
+
+        <h1 class="ai-sheet-title">
+          ${esc(sheet.titre || "Activité")}
+        </h1>
+
+
+        <div class="ai-sheet-meta">
+
+          ${
+            sheet.age
+            ? `<span class="ai-meta">
+                👥 ${esc(sheet.age)}
+              </span>`
+            : ""
+          }
+
+          ${
+            sheet.nombre_enfants
+            ? `<span class="ai-meta">
+                🧒 ${esc(sheet.nombre_enfants)}
+              </span>`
+            : ""
+          }
+
+          ${
+            sheet.duree
+            ? `<span class="ai-meta">
+                ⏱️ ${esc(sheet.duree)}
+              </span>`
+            : ""
+          }
+
+          ${
+            sheet.lieu
+            ? `<span class="ai-meta">
+                📍 ${esc(sheet.lieu)}
+              </span>`
+            : ""
+          }
+
+          ${
+            sheet.energie
+            ? `<span class="ai-meta">
+                ⚡ ${esc(sheet.energie)}
+              </span>`
+            : ""
+          }
+
+        </div>
+
+      </header>
+
+
+      <!-- OBJECTIFS -->
+
+      ${
+        objectives.length
+        ?
+        `
+        <section class="ai-sheet-section">
+
+          <h3>🎯 Objectifs pédagogiques</h3>
+
+          <div class="ai-proposal-objectives">
+
+            ${objectives
+              .map(o =>
+                `<span class="ai-objective">
+                  ${esc(o)}
+                </span>`
+              )
+              .join("")}
+
+          </div>
+
+        </section>
+        `
+        :
+        ""
+      }
+
+
+      <!-- MATÉRIEL -->
+
+      ${
+        material.length
+        ?
+        `
+        <section class="ai-sheet-section">
+
+          <h3>🧰 Matériel</h3>
+
+          <div class="ai-sheet-material">
+
+            ${material
+              .map(m =>
+                `<span class="ai-material-item">
+                  ${esc(m)}
+                </span>`
+              )
+              .join("")}
+
+          </div>
+
+        </section>
+        `
+        :
+        ""
+      }
+
+
+      <!-- PRÉPARATION -->
+
+      ${
+        sheet.preparation
+        ?
+        `
+        <section class="ai-sheet-section">
+
+          <h3>🛠️ Préparation</h3>
+
+          <p>
+            ${formatText(sheet.preparation)}
+          </p>
+
+        </section>
+        `
+        :
+        ""
+      }
+
+
+      <!-- DÉROULEMENT -->
+
+      ${
+        steps.length
+        ?
+        `
+        <section class="ai-sheet-section">
+
+          <h3>🎬 Déroulement</h3>
+
+          <ol>
+
+            ${steps
+              .map(step =>
+                `<li>
+                  ${formatText(
+                    typeof step === "string"
+                      ? step
+                      : JSON.stringify(step)
+                  )}
+                </li>`
+              )
+              .join("")}
+
+          </ol>
+
+        </section>
+        `
+        :
+        ""
+      }
+
+
+      <!-- VARIANTES -->
+
+      ${
+        variants.length
+        ?
+        `
+        <section class="ai-sheet-section">
+
+          <h3>🔄 Variantes</h3>
+
+          ${variants
+            .map(v =>
+              `
+              <div class="ai-sheet-variant">
+                ${formatText(
+                  typeof v === "string"
+                    ? v
+                    : JSON.stringify(v)
+                )}
+              </div>
+              `
+            )
+            .join("")}
+
+        </section>
+        `
+        :
+        ""
+      }
+
+
+      <!-- ADAPTATIONS -->
+
+      ${
+        adaptations.length
+        ?
+        `
+        <section class="ai-sheet-section">
+
+          <h3>♿ Adaptations</h3>
+
+          <ul>
+
+            ${adaptations
+              .map(a =>
+                `<li>
+                  ${formatText(
+                    typeof a === "string"
+                      ? a
+                      : JSON.stringify(a)
+                  )}
+                </li>`
+              )
+              .join("")}
+
+          </ul>
+
+        </section>
+        `
+        :
+        ""
+      }
+
+
+      <!-- VIGILANCE -->
+
+      ${
+        vigilance.length
+        ?
+        `
+        <section class="ai-sheet-section">
+
+          <h3>⚠️ Points de vigilance</h3>
+
+          <div class="ai-sheet-vigilance">
+
+            <ul>
+
+              ${vigilance
+                .map(v =>
+                  `<li>
+                    ${formatText(
+                      typeof v === "string"
+                        ? v
+                        : JSON.stringify(v)
+                    )}
+                  </li>`
+                )
+                .join("")}
+
+            </ul>
+
+          </div>
+
+        </section>
+        `
+        :
+        ""
+      }
+
+
+      <!-- POSTURE -->
+
+      ${
+        sheet.posture_animateur
+        ?
+        `
+        <section class="ai-sheet-section">
+
+          <h3>🧑‍🏫 Posture de l'animateur</h3>
+
+          <div class="ai-sheet-posture">
+
+            ${formatText(sheet.posture_animateur)}
+
+          </div>
+
+        </section>
+        `
+        :
+        ""
+      }
+
+
+    </article>
+
+
+    <button
+      class="primary-btn ai-back-button"
+      onclick="backToAIProposals()"
+    >
+      ← Voir les autres propositions
+    </button>
+
+
+  `;
+
+
+  const proposals =
+    document.getElementById(
+      "aiGeneratedProposals"
+    );
+
+
+  if(proposals){
+
+    proposals.insertAdjacentElement(
+      "afterend",
+      section
+    );
+
+  }else{
+
+    const generatorText =
+      document.getElementById(
+        "generatorIAText"
+      );
+
+    if(generatorText){
+
+      generatorText.insertAdjacentElement(
+        "afterend",
+        section
+      );
+
+    }
+
+  }
+
+
+  section.scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+  });
+
+}
+
+
+/* =========================================================
+   ↩️ RETOUR AUX PROPOSITIONS
+   ========================================================= */
+
+function backToAIProposals(){
+
+  const sheet =
+    document.getElementById(
+      "aiGeneratedSheet"
+    );
+
+  if(sheet){
+
+    sheet.remove();
+
+  }
+
+
+  const proposals =
+    document.getElementById(
+      "aiGeneratedProposals"
+    );
+
+
+  if(proposals){
+
+    proposals.scrollIntoView({
+      behavior:"smooth",
+      block:"start"
+    });
+
+  }
+
+}
+
+
+/* =========================================================
+   🧹 FORMATAGE
+   ========================================================= */
+
+function formatText(value){
+
+  if(value === null || value === undefined){
+
+    return "";
+
+  }
+
+  return esc(String(value))
+    .replace(/\n/g,"<br>");
+
 }
 
 
@@ -1156,19 +2432,30 @@ function openGeneratorMode(mode){
 
 function handleMaterialPhoto(event){
 
-  const file = event.target.files[0];
+  const file =
+    event.target.files[0];
 
   if(!file) return;
 
-  const preview = document.getElementById("photoPreview");
+
+  const preview =
+    document.getElementById(
+      "photoPreview"
+    );
+
 
   if(!preview) return;
 
-  const url = URL.createObjectURL(file);
+
+  const url =
+    URL.createObjectURL(file);
+
 
   preview.hidden = false;
 
+
   preview.innerHTML = `
+
     <img
       src="${url}"
       alt="Photo du matériel"
@@ -1186,7 +2473,9 @@ function handleMaterialPhoto(event){
     >
       ✨ Trouver des activités
     </button>
+
   `;
+
 }
 
 
@@ -1196,194 +2485,10 @@ function handleMaterialPhoto(event){
 
 function analyzeMaterialPhoto(){
 
-  toast("L'analyse photo sera branchée ensuite.");
+  toast(
+    "L'analyse photo sera branchée ensuite."
+  );
 
-}
-
-
-/* =========================================================
-   🤖 GÉNÉRATION IA
-   ========================================================= */
-
-async function generateAIActivity(){
-
-  const age = document.getElementById("aiAge")?.value.trim() || "";
-  const children = document.getElementById("aiChildren")?.value.trim() || "";
-  const duration = document.getElementById("aiDuration")?.value.trim() || "";
-  const place = document.getElementById("aiPlace")?.value.trim() || "";
-  const material = document.getElementById("aiMaterial")?.value.trim() || "";
-  const objective = document.getElementById("aiObjective")?.value.trim() || "";
-
-  if(!age && !children && !duration && !place && !material && !objective){
-    toast("Décris au moins un peu ton besoin.");
-    return;
-  }
-
-  toast("Génération de ton activité…");
-
-  const prompt = `
-Tu es l'assistant pédagogique d'Anim Compagnon.
-
-Crée une activité concrète et directement utilisable par un animateur en ACM.
-
-Âge : ${age || "non précisé"}
-Nombre d'enfants : ${children || "non précisé"}
-Durée : ${duration || "non précisée"}
-Lieu : ${place || "non précisé"}
-Matériel : ${material || "non précisé"}
-Objectif / envie : ${objective || "non précisé"}
-
-Adapte l'activité à toutes ces informations.
-
-Réponds en français avec :
-
-NOM DE L'ACTIVITÉ
-
-ÂGE
-
-NOMBRE D'ENFANTS
-
-DURÉE
-
-TEMPS DE PRÉPARATION
-
-LIEU
-
-OBJECTIFS PÉDAGOGIQUES
-
-MATÉRIEL
-
-DÉROULEMENT
-
-VARIANTES
-
-ADAPTATIONS
-
-POINTS DE VIGILANCE
-
-POSTURE DE L'ANIMATEUR
-
-Ne mets pas de préambule.
-`;
-
-  try{
-
-    const response = await fetch(AI_API,{
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json"
-      },
-      body:JSON.stringify({
-        prompt:prompt
-      })
-    });
-
-    if(!response.ok){
-
-      const errorText = await response.text();
-
-      console.error("Erreur Worker :",errorText);
-
-      throw new Error("Erreur Worker : "+response.status);
-    }
-
-    const data = await response.json();
-
-    console.log("Réponse IA :",data);
-
-    let result = "";
-
-    if(typeof data.output_text === "string"){
-      result = data.output_text;
-    }
-
-    if(!result && Array.isArray(data.output)){
-
-      for(const item of data.output){
-
-        if(!Array.isArray(item.content)) continue;
-
-        for(const content of item.content){
-
-          if(typeof content.text === "string"){
-            result += content.text;
-          }
-
-        }
-      }
-    }
-
-    if(!result && typeof data.text === "string"){
-      result = data.text;
-    }
-
-    if(!result && typeof data.response === "string"){
-      result = data.response;
-    }
-
-    result = result.trim();
-
-    if(!result){
-      throw new Error("Réponse IA vide");
-    }
-
-    showAIGeneratedActivity(result);
-
-  }catch(error){
-
-    console.error("Erreur génération IA :",error);
-
-    toast("L'IA n'a pas réussi à générer l'activité.");
-
-  }
-}
-
-
-/* =========================================================
-   📄 AFFICHAGE ACTIVITÉ GÉNÉRÉE
-   ========================================================= */
-
-function showAIGeneratedActivity(result){
-
-  const existing = document.getElementById("aiGeneratedResult");
-
-  if(existing){
-    existing.remove();
-  }
-
-  const section = document.createElement("section");
-
-  section.id = "aiGeneratedResult";
-  section.className = "section generator-panel";
-
-  section.innerHTML = `
-    <div class="section-head">
-      <h2 class="section-title">Ton activité</h2>
-    </div>
-
-    <div class="generated-activity">
-      ${formatAIResult(result)}
-    </div>
-  `;
-
-  const generatorText = document.getElementById("generatorIAText");
-
-  if(generatorText){
-    generatorText.insertAdjacentElement("afterend",section);
-  }
-}
-
-
-/* =========================================================
-   📝 FORMATAGE
-   ========================================================= */
-
-function formatAIResult(text){
-
-  return esc(text)
-    .replace(/\n\n/g,"</p><p>")
-    .replace(/\n/g,"<br>")
-    .replace(/^(.+)$/,"<p>$1</p>");
 }
 </script>
 </body>
