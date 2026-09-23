@@ -844,44 +844,8 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
 <main id="role" class="view">
   <header class="page-head"><button class="link back" onclick="go('categories')">← Retour</button><h1 class="page-title">Rôle de l'animateur</h1><p class="page-intro">Comprendre son rôle et ajuster sa posture.</p></header>
   <section class="section">
-    <div class="simple-list">
-
-      <button class="card resource-card"
-        onclick="detail('Fonctions de l’animateur','Rôle de l’animateur','Sécurité, accueil, vie quotidienne, activités et projets.')">
-        <div class="resource-img" style="--img:url('images/role-fonctions.jpg')"></div>
-        <div class="resource-info">
-          <h2>Fonctions de l'animateur</h2>
-          <p>Les grandes fonctions à mobiliser en ACM.</p>
-        </div>
-      </button>
-
-      <button class="card resource-card"
-        onclick="detail('Aptitudes de l’animateur','Rôle de l’animateur','Valeurs, relations, adaptation et prévention des discriminations.')">
-        <div class="resource-img" style="--img:url('images/role-aptitudes.jpg')"></div>
-        <div class="resource-info">
-          <h2>Aptitudes de l'animateur</h2>
-          <p>Compétences et réflexes utiles sur le terrain.</p>
-        </div>
-      </button>
-
-      <button class="card resource-card"
-        onclick="detail('Les différents acteurs de l’ACM','Rôle de l’animateur','Organisateur, direction, animateurs, familles et autres acteurs.')">
-        <div class="resource-img" style="--img:url('images/role-acteurs.jpg')"></div>
-        <div class="resource-info">
-          <h2>Les différents acteurs de l'ACM</h2>
-          <p>Qui fait quoi et comment chacun agit.</p>
-        </div>
-      </button>
-
-      <button class="card resource-card"
-        onclick="detail('Posture de l’animateur','Rôle de l’animateur','Observer, comprendre, adapter et transmettre.')">
-        <div class="resource-img" style="--img:url('images/role-posture.jpg')"></div>
-        <div class="resource-info">
-          <h2>Posture de l'animateur</h2>
-          <p>Des repères pour ajuster sa présence.</p>
-        </div>
-      </button>
-
+    <div id="roleList" class="simple-list">
+      <div class="empty"><strong>Chargement</strong>Les fiches arrivent…</div>
     </div>
   </section>
 </main>
@@ -890,35 +854,8 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
 <main id="daily" class="view">
   <header class="page-head"><button class="link back" onclick="go('categories')">← Retour</button><h1 class="page-title">Vie quotidienne</h1><p class="page-intro">Des repères pour accompagner les temps du quotidien.</p></header>
   <section class="section">
-    <div class="simple-list">
-
-      <button class="card resource-card"
-        onclick="detail('Respecter le rythme de l’enfant','Vie quotidienne','Observer les besoins de repos, de mouvement et de transition.')">
-        <div class="resource-img" style="--img:url('images/quotidien-rythme.jpg')"></div>
-        <div class="resource-info">
-          <h2>Respecter le rythme de l'enfant</h2>
-          <p>Rythmes, transitions et temps de repos.</p>
-        </div>
-      </button>
-
-      <button class="card resource-card"
-        onclick="detail('Favoriser le vivre-ensemble','Vie quotidienne','Accompagner les relations et les moments collectifs.')">
-        <div class="resource-img" style="--img:url('images/quotidien-vivre-ensemble.jpg')"></div>
-        <div class="resource-info">
-          <h2>Favoriser le vivre-ensemble</h2>
-          <p>Repères pour les temps collectifs.</p>
-        </div>
-      </button>
-
-      <button class="card resource-card"
-        onclick="detail('Développer l’autonomie','Vie quotidienne','Donner une place active à l’enfant dans les temps du quotidien.')">
-        <div class="resource-img" style="--img:url('images/quotidien-autonomie.jpg')"></div>
-        <div class="resource-info">
-          <h2>Développer l'autonomie</h2>
-          <p>Faire avec, puis laisser faire.</p>
-        </div>
-      </button>
-
+    <div id="dailyList" class="simple-list">
+      <div class="empty"><strong>Chargement</strong>Les fiches arrivent…</div>
     </div>
   </section>
 </main>
@@ -927,44 +864,8 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
 <main id="toolbox" class="view">
   <header class="page-head"><button class="link back" onclick="go('categories')">← Retour</button><h1 class="page-title">Boîte à outils</h1><p class="page-intro">Des outils directement utilisables par l'animateur.</p></header>
   <section class="section">
-    <div class="simple-list">
-
-      <button class="card resource-card"
-        onclick="tool('Mener une activité','Préparer → Présenter → Faire comprendre → Lancer → Observer → Adapter → Terminer → Faire le bilan.')">
-        <div class="resource-img" style="--img:url('images/outil-mener.jpg')"></div>
-        <div class="resource-info">
-          <h2>Mener une activité</h2>
-          <p>Préparer, lancer, observer, adapter et terminer.</p>
-        </div>
-      </button>
-
-      <button class="card resource-card"
-        onclick="tool('Fiches d’activités','Identification → objectifs → matériel → déroulement → variantes → adaptations → vigilance → posture → évaluation → bilan.')">
-        <div class="resource-img" style="--img:url('images/outil-fiches.jpg')"></div>
-        <div class="resource-info">
-          <h2>Fiches d'activités</h2>
-          <p>Créer une fiche claire et pratique.</p>
-        </div>
-      </button>
-
-      <button class="card resource-card"
-        onclick="tool('PSAADRAFRA','Préparation · Sensibilisation · Accueil · Aménagement · Déroulement · Rythme · Animation · Fin · Rangement · Analyse.')">
-        <div class="resource-img" style="--img:url('images/outil-psaadrafra.jpg')"></div>
-        <div class="resource-info">
-          <h2>PSAADRAFRA</h2>
-          <p>Une méthode pour penser les étapes d'une activité.</p>
-        </div>
-      </button>
-
-      <button class="card resource-card"
-        onclick="tool('Les types de grands jeux','Chasse au trésor · jeu de piste · olympiades · stands · jeu social · casino · enquête · fureur.')">
-        <div class="resource-img" style="--img:url('images/outil-grands-jeux.jpg')"></div>
-        <div class="resource-info">
-          <h2>Les types de grands jeux</h2>
-          <p>Comprendre les principes des différents formats.</p>
-        </div>
-      </button>
-
+    <div id="toolboxList" class="simple-list">
+      <div class="empty"><strong>Chargement</strong>Les fiches arrivent…</div>
     </div>
   </section>
 </main>
@@ -1587,46 +1488,70 @@ function renderPublics(){
   const list=document.getElementById("publicsList");
   if(!list) return;
 
-  const publicResources=resources.filter(resource=>
-    String(resource.category).trim().toLowerCase()==="publics"
+  const publicResources=resources.filter(r=>
+    String(r.category).trim().toUpperCase()==="PUBLICS"
   );
 
   const subcategories=[];
-
-  publicResources.forEach(resource=>{
-    const sub=String(resource.subcategory || "").trim();
-    if(sub && !subcategories.some(item=>item.toLowerCase()===sub.toLowerCase())){
+  publicResources.forEach(r=>{
+    const sub=String(r.subcategory||"").trim();
+    if(sub && !subcategories.some(s=>s.toLowerCase()===sub.toLowerCase())){
       subcategories.push(sub);
     }
   });
 
   if(!subcategories.length){
-    list.innerHTML=`
-      <div class="empty">
-        <strong>Aucun public disponible</strong>
-        Les fiches de publics seront bientôt disponibles.
-      </div>
-    `;
+    list.innerHTML='<div class="empty"><strong>Aucun public disponible</strong>Les fiches de publics seront bientôt disponibles.</div>';
     return;
   }
 
-  list.innerHTML=subcategories.map(subcategory=>{
-    const count=publicResources.filter(resource=>
-      String(resource.subcategory || "").trim().toLowerCase()===subcategory.toLowerCase()
+  list.innerHTML=subcategories.map(sub=>{
+    const count=publicResources.filter(r=>
+      String(r.subcategory||"").trim().toLowerCase()===sub.toLowerCase()
     ).length;
-
     return `
-      <button class="card resource-card" onclick="openPublicSubcategory(${JSON.stringify(subcategory)})">
+      <button class="card resource-card" onclick="openPublicSubcategory(${JSON.stringify(sub)})">
         <div class="resource-img" style="--img:none"></div>
         <div class="resource-info">
-          <h2>${esc(subcategory)}</h2>
-          <p>${count} fiche${count>1 ? "s" : ""} disponible${count>1 ? "s" : ""}</p>
+          <h2>${esc(sub)}</h2>
+          <p>${count} fiche${count>1?"s":""} disponible${count>1?"s":""}</p>
         </div>
       </button>
     `;
   }).join("");
 }
 
+/* ===== PAGES SIMPLES ALIMENTÉES PAR BASEROW ===== */
+function renderResourceCategoryPage(listId,categoryValue){
+  const list=document.getElementById(listId);
+  if(!list) return;
+
+  const items=resources.filter(r=>
+    String(r.category).trim().toUpperCase()===categoryValue
+  );
+
+  if(!items.length){
+    list.innerHTML='<div class="empty"><strong>Aucune fiche</strong>Aucune fiche publiée pour le moment.</div>';
+    return;
+  }
+
+  list.innerHTML=items.map(r=>`
+    <article class="card">
+      <h2>${esc(r.title||"Fiche sans titre")}</h2>
+      ${r.summary?`<p>${esc(r.summary)}</p>`:""}
+      ${r.pdf?`<div style="height:10px"></div><button class="btn primary full" onclick="openResourcePDF(${Number(r.id)})">Ouvrir la fiche PDF</button>`:""}
+    </article>
+  `).join("");
+}
+
+function renderResourcesPage(){
+  const loading=document.getElementById("resourcesLoading");
+  if(loading)loading.classList.add("hidden");
+  renderResourceCategoryPage("resourcesList","RESSOURCES");
+}
+function renderRolePage(){ renderResourceCategoryPage("roleList","ROLE"); }
+function renderDailyPage(){ renderResourceCategoryPage("dailyList","QUOTIDIEN"); }
+function renderToolboxPage(){ renderResourceCategoryPage("toolboxList","OUTILS"); }
 function openPublicSubcategory(subcategory){
   const title=document.getElementById("publicSubcategoryTitle");
   const intro=document.getElementById("publicSubcategoryIntro");
