@@ -350,12 +350,23 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
 
 <section class="section">
   <div class="section-head"><h2 class="section-title">Catégories</h2><button class="link" onclick="go('categories')">Voir tout</button></div>
-  <div class="grid">
-    <button class="tile" onclick="go('activities')"><span>Activités</span></button>
-    <button class="tile" onclick="go('publics')"><span>Publics</span></button>
-    <button class="tile" onclick="go('role')"><span>Rôle de l'animateur</span></button>
-    <button class="tile" onclick="go('toolbox')"><span>Boîte à outils</span></button>
-  </div>
+<div class="grid">
+  <button class="tile tile-activites" onclick="go('activities')">
+    <span>Activités</span>
+  </button>
+
+  <button class="tile tile-publics" onclick="go('publics')">
+    <span>Publics</span>
+  </button>
+
+  <button class="tile tile-role" onclick="go('role')">
+    <span>Rôle de l'animateur</span>
+  </button>
+
+  <button class="tile tile-boite-outils" onclick="go('toolbox')">
+    <span>Boîte à outils</span>
+  </button>
+</div>
 </section>
 
 <section class="section">
