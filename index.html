@@ -350,22 +350,11 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
 
 <section class="section">
   <div class="section-head"><h2 class="section-title">Catégories</h2><button class="link" onclick="go('categories')">Voir tout</button></div>
-<div class="grid">
-  <button class="tile tile-activites" onclick="go('activities')">
-    <span>Activités</span>
-  </button>
-
-  <button class="tile tile-publics" onclick="go('publics')">
-    <span>Publics</span>
-  </button>
-
-  <button class="tile tile-role" onclick="go('role')">
-    <span>Rôle de l'animateur</span>
-  </button>
-
-  <button class="tile tile-boite-outils" onclick="go('toolbox')">
-    <span>Boîte à outils</span>
-  </button>
+<div class="grid" id="homeCategories">
+  <div class="empty">
+    <strong>Chargement</strong>
+    Les catégories arrivent…
+  </div>
 </div>
 </section>
 
@@ -383,22 +372,11 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
 <main id="categories" class="view">
   <header class="page-head"><h1 class="page-title">Catégories</h1><p class="page-intro">Explore Anim Compagnon par grands domaines.</p></header>
   <section class="section">
-  <div class="grid">
-  <button class="tile tile-activites" onclick="go('activities')">
-    <span>Activités</span>
-  </button>
-
-  <button class="tile tile-publics" onclick="go('publics')">
-    <span>Publics</span>
-  </button>
-
-  <button class="tile tile-role" onclick="go('role')">
-    <span>Rôle de l'animateur</span>
-  </button>
-
-  <button class="tile tile-boite-outils" onclick="go('toolbox')">
-    <span>Boîte à outils</span>
-  </button>
+  <div class="grid" id="allCategories">
+  <div class="empty">
+    <strong>Chargement</strong>
+    Les catégories arrivent…
+  </div>
 </div>
   </section>
 </main>
@@ -559,8 +537,9 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
    ⚙️ CONFIGURATION
    ========================================================= */
 const ACTIVITIES_API="https://anim-compagnon-api.eliesbendjedou30.workers.dev/activities";
+const CATEGORIES_API="https://anim-compagnon-api.eliesbendjedou30.workers.dev/categories";
 const AI_API="https://anim-compagnon-api.eliesbendjedou30.workers.dev/";
-let activities=[],previous="home",currentCategory="all";
+let activities=[],categories=[],previous="home",currentCategory="all";
 
 /* =========================================================
    🧭 NAVIGATION
@@ -590,7 +569,130 @@ document.getElementById("searchInput").addEventListener("keydown",e=>{
   const found=activities.filter(a=>Object.values(a).join(" ").toLowerCase().includes(q));
   go("activities");renderActivityCards(found);
 });
+/* =========================================================
+   🗂️ CATÉGORIES — BASEROW
+   ========================================================= */
 
+function categoryTarget(slug){
+  const targets={
+    activites:"activities",
+    viequot:"daily",
+    publics:"publics",
+    role:"role",
+    boite:"toolbox",
+    ressources:"resources"
+  };
+
+  return targets[slug] || null;
+}
+
+function categoryClass(slug){
+  const classes={
+    activites:"tile-activites",
+    viequot:"tile-vie-quotidienne",
+    publics:"tile-publics",
+    role:"tile-role",
+    boite:"tile-boite-outils",
+    ressources:"tile-ressources"
+  };
+
+  return classes[slug] || "";
+}
+
+function renderCategoryGrid(id,items){
+
+  const el=document.getElementById(id);
+
+  if(!el)return;
+
+  if(!items.length){
+    el.innerHTML=
+      '<div class="empty"><strong>Aucune catégorie</strong>Aucune catégorie publiée pour le moment.</div>';
+    return;
+  }
+
+  el.innerHTML=items.map(c=>{
+
+    const target=categoryTarget(c.slug);
+    const cls=categoryClass(c.slug);
+
+    const action=target
+      ? `onclick="go('${target}')"`
+      : `onclick="toast('Cette catégorie sera bientôt disponible.')"`; 
+
+    return `
+      <button class="tile ${cls}" ${action}>
+        <span>${esc(c.name)}</span>
+      </button>
+    `;
+
+  }).join("");
+}
+
+async function loadCategories(){
+
+  try{
+
+    const res=await fetch(CATEGORIES_API,{cache:"no-store"});
+
+    if(!res.ok)throw Error(res.status);
+
+    const data=await res.json();
+
+    const rows=Array.isArray(data)
+      ? data
+      : (data.results || []);
+
+    categories=rows.map(r=>({
+
+      id:r.id,
+
+      name:String(r.NOM || "Catégorie sans nom"),
+
+      slug:String(r.SLUG || "")
+        .trim()
+        .toLowerCase(),
+
+      description:String(r.DESCRIPTION || ""),
+
+      image:String(r.IMAGE || ""),
+
+      order:Number(r.ORDRE) || 9999,
+
+      home:String(r.ACCUEIL || "")
+        .toLowerCase()==="oui",
+
+      published:["oui","true","1","yes"]
+        .includes(String(r.PUBLIÉ || "").toLowerCase())
+
+    }))
+    .filter(c=>c.published)
+    .sort((a,b)=>a.order-b.order);
+
+    renderCategoryGrid(
+      "homeCategories",
+      categories.filter(c=>c.home)
+    );
+
+    renderCategoryGrid(
+      "allCategories",
+      categories
+    );
+
+  }catch(e){
+
+    console.error(e);
+
+    const message=
+      '<div class="empty"><strong>Catégories indisponibles</strong>Impossible de charger les catégories pour le moment.</div>';
+
+    const home=document.getElementById("homeCategories");
+    const all=document.getElementById("allCategories");
+
+    if(home)home.innerHTML=message;
+    if(all)all.innerHTML=message;
+  }
+}
 /* =========================================================
    🎲 BASEROW
    ========================================================= */
@@ -742,6 +844,7 @@ function toast(m){const e=document.getElementById("toast");e.textContent=m;e.cla
 /* =========================================================
    🚀 DÉMARRAGE
    ========================================================= */
+loadCategories();
 loadActivities();
 </script>
 </body>
