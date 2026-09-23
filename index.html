@@ -1155,9 +1155,57 @@ function back(){go(previous==="activities"?"activities":previous||"home")}
 document.getElementById("searchInput").addEventListener("keydown",e=>{
   if(e.key!=="Enter")return;
   const q=e.target.value.trim().toLowerCase();if(!q)return;
-  const found=activities.filter(a=>Object.values(a).join(" ").toLowerCase().includes(q));
-  go("activities");renderActivityCards(found);
+  runGlobalSearch(q);
 });
+
+function runGlobalSearch(q){
+  const matchedActivities=activities.filter(a=>Object.values(a).join(" ").toLowerCase().includes(q));
+  const matchedResources=resources.filter(r=>[r.title,r.summary,r.category,r.subcategory].join(" ").toLowerCase().includes(q));
+
+  window.rendered=matchedActivities;
+
+  const total=matchedActivities.length+matchedResources.length;
+  const intro=document.getElementById("searchResultsIntro");
+  if(intro)intro.textContent=total?`${total} résultat${total>1?"s":""} pour « ${q} »`:`Aucun résultat pour « ${q} »`;
+
+  const list=document.getElementById("searchResultsList");
+  if(!list)return;
+
+  if(!total){
+    list.innerHTML='<div class="empty"><strong>Aucun résultat</strong>Essaie un autre mot-clé.</div>';
+    go("searchResults");
+    return;
+  }
+
+  let html="";
+
+  if(matchedActivities.length){
+    html+=`<h2 class="section-title" style="margin:0 0 12px">Activités</h2><div class="activity-list" style="margin-bottom:20px">`;
+    html+=matchedActivities.map((a,i)=>`
+      <button class="activity" onclick="openActivity(${i})">
+        <div class="activity-info">
+          <h2>${esc(a.name)}</h2>
+          <div class="badges">${[a.age,a.duration,a.children?a.children+" enfants":""].filter(Boolean).map(x=>`<span class="badge">${esc(x)}</span>`).join("")}</div>
+          ${a.objectives?`<p>${esc(short(a.objectives,110))}</p>`:""}
+        </div>
+      </button>`).join("");
+    html+=`</div>`;
+  }
+
+  if(matchedResources.length){
+    html+=`<h2 class="section-title" style="margin:0 0 12px">Fiches ressources</h2><div class="simple-list">`;
+    html+=matchedResources.map(r=>`
+      <article class="card">
+        <h2>${esc(r.title||"Fiche sans titre")}</h2>
+        ${r.summary?`<p>${esc(r.summary)}</p>`:""}
+        ${r.pdf?`<div style="height:10px"></div><button class="btn primary full" onclick="openResourcePDF(${Number(r.id)})">Ouvrir la fiche PDF</button>`:""}
+      </article>`).join("");
+    html+=`</div>`;
+  }
+
+  list.innerHTML=html;
+  go("searchResults");
+}
 /* =========================================================
    🗂️ CATÉGORIES — BASEROW
    ========================================================= */
