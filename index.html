@@ -1094,6 +1094,116 @@ function toast(m){const e=document.getElementById("toast");e.textContent=m;e.cla
    ========================================================= */
 loadCategories();
 loadActivities();
+/* =========================================================
+   ✨ GÉNÉRATEUR D'ACTIVITÉ
+   ========================================================= */
+
+function openGeneratorMode(mode){
+
+  const iaChoice = document.getElementById("generatorIAChoice");
+  const iaText = document.getElementById("generatorIAText");
+  const iaPhoto = document.getElementById("generatorIAPhoto");
+
+  if(iaChoice) iaChoice.hidden = true;
+  if(iaText) iaText.hidden = true;
+  if(iaPhoto) iaPhoto.hidden = true;
+
+  if(mode === "ia"){
+    if(iaChoice) iaChoice.hidden = false;
+    return;
+  }
+
+  if(mode === "ia-text"){
+    if(iaText) iaText.hidden = false;
+    return;
+  }
+
+  if(mode === "ia-photo"){
+    if(iaPhoto) iaPhoto.hidden = false;
+    return;
+  }
+
+  if(mode === "fiche"){
+    toast("Le générateur de fiche arrive.");
+    return;
+  }
+}
+
+
+/* =========================================================
+   📸 PHOTO DU MATÉRIEL
+   ========================================================= */
+
+function handleMaterialPhoto(event){
+
+  const file = event.target.files[0];
+
+  if(!file) return;
+
+  const preview = document.getElementById("photoPreview");
+
+  if(!preview) return;
+
+  const url = URL.createObjectURL(file);
+
+  preview.hidden = false;
+
+  preview.innerHTML = `
+    <img
+      src="${url}"
+      alt="Photo du matériel"
+      style="
+        width:100%;
+        max-height:300px;
+        object-fit:cover;
+        border-radius:20px;
+      "
+    >
+
+    <button
+      class="primary-btn"
+      onclick="analyzeMaterialPhoto()"
+    >
+      ✨ Trouver des activités
+    </button>
+  `;
+}
+
+
+/* =========================================================
+   🤖 ANALYSE DU MATÉRIEL
+   ========================================================= */
+
+function analyzeMaterialPhoto(){
+
+  toast("Analyse du matériel…");
+
+  // L'analyse IA de la photo sera branchée ici.
+}
+
+
+/* =========================================================
+   🤖 GÉNÉRATION IA TEXTE
+   ========================================================= */
+
+function generateAIActivity(){
+
+  const age = document.getElementById("aiAge")?.value || "";
+  const children = document.getElementById("aiChildren")?.value || "";
+  const duration = document.getElementById("aiDuration")?.value || "";
+  const place = document.getElementById("aiPlace")?.value || "";
+  const material = document.getElementById("aiMaterial")?.value || "";
+  const objective = document.getElementById("aiObjective")?.value || "";
+
+  if(!age && !children && !duration && !place && !material && !objective){
+    toast("Décris au moins un peu ton besoin.");
+    return;
+  }
+
+  toast("Génération de ton activité…");
+
+  // On branchera ici ton IA actuelle.
+}
 
 
 function openGeneratorMode(mode){
@@ -1169,6 +1279,7 @@ function analyzeMaterialPhoto(){
 
   // On branchera ici la vraie analyse IA de l'image.
 }
+
 </script>
 </body>
 </html>
