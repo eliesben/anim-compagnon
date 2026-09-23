@@ -817,7 +817,84 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
 
 <!-- ========================= 👥 PUBLICS ========================= -->
 <main id="publics" class="view">
-  <header class="page-head"><button class="link back" onclick="go('categories')">← Retour</button><h1 class="page-title">Publics</h1><p class="page-intro">Repères pour mieux connaître les publics accueillis.</p></header>
+
+  <header class="page-head">
+
+    <button
+      class="link back"
+      onclick="go('categories')"
+    >
+      ← Retour
+    </button>
+
+    <h1 class="page-title">
+      Publics
+    </h1>
+
+    <p class="page-intro">
+      Repères pour mieux connaître les publics accueillis.
+    </p>
+
+  </header>
+
+  <section class="section">
+
+    <div
+      id="publicsList"
+      class="simple-list"
+    >
+
+      <div class="empty">
+
+        <strong>Chargement</strong>
+
+        Les publics arrivent…
+
+      </div>
+
+    </div>
+
+  </section>
+
+</main>
+<!-- ========================= 👶 PUBLIC → SOUS-CATÉGORIE ========================= -->
+
+<main id="publicSubcategory" class="view">
+
+  <header class="page-head">
+
+    <button
+      class="link back"
+      onclick="go('publics')"
+    >
+      ← Retour
+    </button>
+
+    <h1
+      id="publicSubcategoryTitle"
+      class="page-title"
+    ></h1>
+
+    <p
+      id="publicSubcategoryIntro"
+      class="page-intro"
+    >
+      Les fiches disponibles pour ce public.
+    </p>
+
+  </header>
+
+  <section class="section">
+
+    <div
+      id="publicSubcategoryList"
+      class="simple-list"
+    ></div>
+
+  </section>
+
+</main>
+   
   <section class="section">
     <div class="simple-list">
 
@@ -1261,7 +1338,7 @@ function go(id){
   target.classList.add("active");
   const main=["home","categories","generator","help","account"].includes(id)?id:
     id==="detail"?(previous.startsWith("category")?"categories":previous):id==="activities"?"categories":
-    ["publics","role","daily","toolbox","resources"].includes(id)?"categories":"home";
+   ["publics","publicSubcategory","role","daily","toolbox","resources"].includes(id)?"categories":"home";
   document.querySelectorAll(".nav").forEach(n=>n.classList.toggle("active",n.dataset.nav===main));
   window.scrollTo({top:0,behavior:"smooth"});
   if(id==="activities")renderActivities();
@@ -1554,6 +1631,7 @@ function toast(m){const e=document.getElementById("toast");e.textContent=m;e.cla
    ========================================================= */
 loadCategories();
 loadActivities();
+
 /* =========================================================
    📚 RESSOURCES — BASEROW
    ========================================================= */
@@ -1561,49 +1639,28 @@ loadActivities();
 const RESOURCES_API =
   "https://anim-compagnon-api.eliesbendjedou30.workers.dev/resources";
 
-
 function resourceField(row, names){
-
   for(const name of names){
-
     if(
       row[name] !== undefined &&
       row[name] !== null &&
       String(row[name]).trim() !== ""
     ){
-
       return row[name];
-
     }
-
   }
 
   return "";
-
 }
 
-
 function resourceText(value){
-
-  if(value === null || value === undefined){
-    return "";
-  }
+  if(value === null || value === undefined) return "";
 
   if(typeof value === "string"){
     return value;
   }
 
-  /*
-    Champs Baserow de type sélection
-    Exemple :
-    {
-      id: 7869163,
-      value: "PUBLICS"
-    }
-  */
-
   if(typeof value === "object"){
-
     if(value.value !== undefined){
       return String(value.value);
     }
@@ -1611,28 +1668,20 @@ function resourceText(value){
     if(value.name !== undefined){
       return String(value.name);
     }
-
   }
 
   return String(value);
-
 }
 
-
 function resourceFileUrl(value){
-
-  if(!value){
-    return "";
-  }
+  if(!value) return "";
 
   if(Array.isArray(value)){
-
     const file = value[0];
 
     if(file && file.url){
       return file.url;
     }
-
   }
 
   if(typeof value === "object" && value.url){
@@ -1640,9 +1689,7 @@ function resourceFileUrl(value){
   }
 
   return "";
-
 }
-
 
 function mapResource(row){
 
@@ -1654,68 +1701,53 @@ function mapResource(row){
 
   return {
 
-    id: row.id || Math.random(),
+    id: row.id,
 
-    title: resourceText(
-      resourceField(row, [
-        "TITRE",
-        "Titre",
-        "titre"
-      ])
-    ),
+    title: resourceText(resourceField(row, [
+      "TITRE",
+      "Titre",
+      "titre"
+    ])),
 
-    category: resourceText(
-      resourceField(row, [
-        "CATÉGORIES",
-        "CATEGORIES",
-        "Catégories",
-        "Catégorie"
-      ])
-    ),
+    category: resourceText(resourceField(row, [
+      "CATÉGORIES",
+      "CATEGORIES",
+      "Catégories",
+      "Catégorie"
+    ])),
 
-    subcategory: resourceText(
-      resourceField(row, [
-        "SOUS-CATÉGORIE",
-        "SOUS-CATEGORIE",
-        "Sous-catégorie",
-        "Sous-categorie"
-      ])
-    ),
+    subcategory: resourceText(resourceField(row, [
+      "SOUS-CATÉGORIE",
+      "SOUS-CATEGORIE",
+      "Sous-catégorie",
+      "Sous-categorie"
+    ])),
 
-    summary: resourceText(
-      resourceField(row, [
-        "RÉSUMÉ",
-        "RESUME",
-        "Résumé",
-        "resume"
-      ])
-    ),
+    summary: resourceText(resourceField(row, [
+      "RÉSUMÉ",
+      "RESUME",
+      "Résumé",
+      "resume"
+    ])),
 
-    pdf: resourceFileUrl(
-      resourceField(row, [
-        "PDF",
-        "Pdf",
-        "pdf"
-      ])
-    ),
+    pdf: resourceFileUrl(resourceField(row, [
+      "PDF",
+      "Pdf",
+      "pdf"
+    ])),
 
-    order: Number(
-      resourceField(row, [
-        "ORDRE",
-        "Ordre",
-        "ordre"
-      ])
-    ) || 9999,
+    order: Number(resourceField(row, [
+      "ORDRE",
+      "Ordre",
+      "ordre"
+    ])) || 9999,
 
     active:
       actif === true ||
       ["true","1","oui","yes","vrai"]
         .includes(String(actif).toLowerCase())
-
   };
-
 }
-
 
 async function loadResources(){
 
@@ -1734,10 +1766,9 @@ async function loadResources(){
 
     const data = await response.json();
 
-    const rows =
-      Array.isArray(data)
-        ? data
-        : (data.results || []);
+    const rows = Array.isArray(data)
+      ? data
+      : (data.results || []);
 
     resources = rows
       .map(mapResource)
@@ -1749,8 +1780,9 @@ async function loadResources(){
       resources
     );
 
-  }
-  catch(error){
+    renderPublics();
+
+  }catch(error){
 
     console.error(
       "Erreur chargement ressources :",
@@ -1759,333 +1791,191 @@ async function loadResources(){
 
     resources = [];
 
+    renderPublics();
   }
-
 }
+
+
 /* =========================================================
-   📚 RESSOURCES — BASEROW
+   👥 PUBLICS
    ========================================================= */
 
-const RESOURCES_API =
-  "https://anim-compagnon-api.eliesbendjedou30.workers.dev/resources";
+function renderPublics(){
 
-
-function resourceField(row, names){
-
-  for(const name of names){
-
-    if(
-      row[name] !== undefined &&
-      row[name] !== null &&
-      String(row[name]).trim() !== ""
-    ){
-
-      return row[name];
-
-    }
-
-  }
-
-  return "";
-
-}
-
-
-function resourceText(value){
-
-  if(value === null || value === undefined){
-    return "";
-  }
-
-  if(typeof value === "string"){
-    return value;
-  }
-
-  if(typeof value === "object"){
-
-    if(value.value !== undefined){
-      return String(value.value);
-    }
-
-    if(value.name !== undefined){
-      return String(value.name);
-    }
-
-  }
-
-  return String(value);
-
-}
-
-
-function resourceFileUrl(value){
-
-  if(!value){
-    return "";
-  }
-
-  /*
-    Champ fichier Baserow :
-    [
-      {
-        "url": "...",
-        "name": "..."
-      }
-    ]
-  */
-
-  if(Array.isArray(value)){
-
-    const file = value[0];
-
-    if(file && file.url){
-      return file.url;
-    }
-
-  }
-
-  /*
-    Sécurité si Baserow renvoie directement un objet
-  */
-
-  if(typeof value === "object" && value.url){
-    return value.url;
-  }
-
-  return "";
-
-}
-
-
-function mapResource(row){
-
-  const actif = resourceField(row, [
-    "Actif",
-    "ACTIF",
-    "actif"
-  ]);
-
-  const title = resourceField(row, [
-    "TITRE",
-    "Titre",
-    "titre"
-  ]);
-
-  const category = resourceField(row, [
-    "CATÉGORIES",
-    "CATEGORIES",
-    "Catégories",
-    "Catégorie",
-    "category"
-  ]);
-
-  const subcategory = resourceField(row, [
-    "SOUS-CATÉGORIE",
-    "SOUS-CATEGORIE",
-    "Sous-catégorie",
-    "Sous-categorie"
-  ]);
-
-  const summary = resourceField(row, [
-    "RÉSUMÉ",
-    "RESUME",
-    "Résumé",
-    "resume"
-  ]);
-
-  const pdf = resourceField(row, [
-    "PDF",
-    "Pdf",
-    "pdf"
-  ]);
-
-  const order = resourceField(row, [
-    "ORDRE",
-    "Ordre",
-    "ordre"
-  ]);
-
-  return {
-
-    id: row.id || Math.random(),
-
-    title: resourceText(title) || "Ressource sans titre",
-
-    category: resourceText(category),
-
-    subcategory: resourceText(subcategory),
-
-    summary: resourceText(summary),
-
-    pdf: resourceFileUrl(pdf),
-
-    order: Number(order) || 9999,
-
-    active:
-      actif === true ||
-      ["true","1","oui","yes","vrai"]
-        .includes(String(actif).toLowerCase())
-
-  };
-
-}
-
-
-async function loadResources(){
-
-  const list = document.getElementById("resourcesList");
-  const loading = document.getElementById("resourcesLoading");
+  const list = document.getElementById("publicsList");
 
   if(!list) return;
 
-  try{
+  const publicResources = resources.filter(resource =>
+    String(resource.category)
+      .trim()
+      .toLowerCase() === "publics"
+  );
 
-    const response = await fetch(
-      RESOURCES_API,
-      {
-        cache: "no-store"
-      }
-    );
+  const subcategories = [];
 
-    if(!response.ok){
-      throw new Error(response.status);
+  publicResources.forEach(resource => {
+
+    const sub = String(
+      resource.subcategory || ""
+    ).trim();
+
+    if(
+      sub &&
+      !subcategories.some(
+        x => x.toLowerCase() === sub.toLowerCase()
+      )
+    ){
+      subcategories.push(sub);
     }
 
-    const data = await response.json();
+  });
 
-    const rows =
-      Array.isArray(data)
-        ? data
-        : (data.results || []);
+  if(!subcategories.length){
 
-    const resources = rows
+    list.innerHTML = `
+      <div class="empty">
+        <strong>Aucun public disponible</strong>
+        Les fiches de publics seront bientôt disponibles.
+      </div>
+    `;
 
-      .map(mapResource)
+    return;
+  }
 
-      .filter(resource => resource.active)
+  list.innerHTML = subcategories.map(subcategory => {
 
-      .sort((a,b) => a.order - b.order);
+    const count = publicResources.filter(resource =>
+      String(resource.subcategory || "")
+        .trim()
+        .toLowerCase() === subcategory.toLowerCase()
+    ).length;
 
-    loading?.classList.add("hidden");
-
-    if(!resources.length){
-
-      list.innerHTML = `
-        <div class="empty">
-
-          <strong>Aucune ressource</strong>
-
-          Les ressources seront bientôt disponibles.
-
+    return `
+      <button
+        class="card resource-card"
+        onclick="openPublicSubcategory(${JSON.stringify(subcategory)})"
+      >
+        <div class="resource-info">
+          <h2>${esc(subcategory)}</h2>
+          <p>
+            ${count} fiche${count > 1 ? "s" : ""} disponible${count > 1 ? "s" : ""}
+          </p>
         </div>
-      `;
+      </button>
+    `;
 
-      return;
+  }).join("");
+}
 
-    }
 
-    list.innerHTML = resources.map((resource,index) => {
+/* =========================================================
+   👶 PUBLIC → SOUS-CATÉGORIE
+   ========================================================= */
 
-      const category =
-        resource.category
-          ? `<span class="badge">${esc(resource.category)}</span>`
-          : "";
+function openPublicSubcategory(subcategory){
 
-      const subcategory =
-        resource.subcategory
-          ? `<span class="badge">${esc(resource.subcategory)}</span>`
-          : "";
+  const title =
+    document.getElementById("publicSubcategoryTitle");
 
-      const pdfButton =
+  const intro =
+    document.getElementById("publicSubcategoryIntro");
+
+  const list =
+    document.getElementById("publicSubcategoryList");
+
+  if(!title || !intro || !list) return;
+
+  const wanted =
+    String(subcategory || "")
+      .trim()
+      .toLowerCase();
+
+  const matches = resources
+    .filter(resource =>
+      String(resource.category)
+        .trim()
+        .toLowerCase() === "publics" &&
+
+      String(resource.subcategory || "")
+        .trim()
+        .toLowerCase() === wanted
+    )
+    .sort((a,b) => a.order - b.order);
+
+  title.textContent = subcategory;
+
+  intro.textContent =
+    "Les fiches disponibles pour ce public.";
+
+  if(!matches.length){
+
+    list.innerHTML = `
+      <div class="empty">
+        <strong>Aucune fiche</strong>
+        Aucune ressource n'est disponible pour ce public.
+      </div>
+    `;
+
+    go("publicSubcategory");
+
+    return;
+  }
+
+  list.innerHTML = matches.map(resource => `
+
+    <article class="card">
+
+      <h2>${esc(resource.title)}</h2>
+
+      ${
+        resource.summary
+          ? `<p>${esc(resource.summary)}</p>`
+          : ""
+      }
+
+      ${
         resource.pdf
           ? `
+            <div style="height:10px"></div>
+
             <button
               class="btn secondary full"
-              onclick="event.stopPropagation(); openResourcePDF(${index})"
+              onclick="openResourcePDF(${Number(resource.id)})"
             >
               Ouvrir la fiche PDF
             </button>
           `
-          : "";
+          : ""
+      }
 
-      return `
+    </article>
 
-        <article class="card resource-card">
+  `).join("");
 
-          <div class="resource-info">
-
-            <div class="badges">
-
-              ${category}
-              ${subcategory}
-
-            </div>
-
-            <h2>${esc(resource.title)}</h2>
-
-            ${
-              resource.summary
-                ? `<p>${esc(resource.summary)}</p>`
-                : ""
-            }
-
-            <div style="height:10px"></div>
-
-            ${pdfButton}
-
-          </div>
-
-        </article>
-
-      `;
-
-    }).join("");
-
-    /*
-      On conserve les ressources pour les boutons PDF
-    */
-
-    window.resourcesData = resources;
-
-  }
-  catch(error){
-
-    console.error(
-      "Erreur chargement ressources :",
-      error
-    );
-
-    loading?.classList.add("hidden");
-
-    list.innerHTML = `
-
-      <div class="empty">
-
-        <strong>Ressources indisponibles</strong>
-
-        Impossible de charger les ressources pour le moment.
-
-      </div>
-
-    `;
-
-  }
-
+  go("publicSubcategory");
 }
 
 
-function openResourcePDF(index){
+function openResourcePDF(id){
 
-  const resource =
-    window.resourcesData?.[index];
+  const resource = resources.find(
+    item => Number(item.id) === Number(id)
+  );
 
   if(!resource){
+
     toast("Ressource introuvable.");
+
     return;
   }
 
   if(!resource.pdf){
-    toast("Cette ressource ne possède pas encore de PDF.");
+
+    toast(
+      "Cette ressource ne possède pas encore de PDF."
+    );
+
     return;
   }
 
@@ -2094,8 +1984,14 @@ function openResourcePDF(index){
     "_blank",
     "noopener,noreferrer"
   );
-
 }
+
+
+/* =========================================================
+   🚀 DÉMARRAGE
+   ========================================================= */
+
+loadResources();   
 /* =========================================================
    ✨ GÉNÉRATEUR D'ACTIVITÉ
    ========================================================= */
