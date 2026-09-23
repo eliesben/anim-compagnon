@@ -216,7 +216,7 @@ button,input,textarea{font:inherit}button{cursor:pointer}button:active{transform
    🃏 CARTES ACTIVITÉS
    ========================================================= */
 .activity-list{display:flex;flex-direction:column;gap:12px}
-.activity{display:grid;grid-template-columns:105px 1fr;min-height:120px;overflow:hidden;border:1px solid #fff;border-radius:20px;background:rgba(250,249,245,.95);box-shadow:var(--ombre);text-align:left}
+.activity{display:grid;grid-template-columns:1fr;min-height:0;overflow:hidden;border:1px solid #fff;border-radius:20px;background:rgba(250,249,245,.95);box-shadow:var(--ombre);text-align:left}
 .activity-img{background:linear-gradient(145deg,#b7cbb5,#607c61),var(--image-activites-cartes);background-size:cover;background-position:center}
 .activity-info{padding:14px;min-width:0}
 .activity h2{margin:0 0 8px;font-size:var(--carte);line-height:1.2;text-transform:uppercase}
@@ -295,7 +295,7 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
 /* =========================================================
    📱 MOBILE
    ========================================================= */
-@media(max-width:390px){.brand h1{font-size:20px}.activity{grid-template-columns:92px 1fr}.hero{flex-basis:86vw}}
+@media(max-width:390px){.brand h1{font-size:20px}.hero{flex-basis:86vw}}
 
 .generator-options,
 .generator-suboptions{
@@ -1255,7 +1255,6 @@ function renderActivityCards(arr){
   window.rendered=arr;
   list.innerHTML=arr.map((a,i)=>`
     <button class="activity" onclick="openActivity(${i})">
-      <div class="activity-img" ${a.image?`style="background-image:linear-gradient(#315a3c22,#315a3c66),url('${esc(a.image)}')"`:""}></div>
       <div class="activity-info">
         <h2>${esc(a.name)}</h2>
         <div class="badges">${[a.age,a.duration,a.children?a.children+" enfants":""].filter(Boolean).map(x=>`<span class="badge">${esc(x)}</span>`).join("")}</div>
