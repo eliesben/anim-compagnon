@@ -1255,6 +1255,7 @@ function renderActivityCards(arr){
 }
 function openActivity(i){
   const a=window.rendered[i];if(!a)return;
+window.currentActivity=a;
   previous="activities";
   document.getElementById("detailTitle").textContent=a.name;
   document.getElementById("detailIntro").textContent=[a.age,a.duration,a.location].filter(Boolean).join(" • ");
@@ -1262,8 +1263,7 @@ function openActivity(i){
     ["Objectifs pédagogiques",a.objectives],["Matériel",a.material],["Déroulement",a.development],["Variantes",a.variants],["Points de vigilance",a.vigilance]
   ].filter(x=>x[1]).map(x=>`<h2>${esc(x[0])}</h2><p style="white-space:pre-line">${esc(x[1])}</p>`).join("")+
   `<div class="info"><strong>À retenir</strong><p>La fiche prépare l'activité. Le groupe, lui, est vivant : observe, adapte et accompagne.</p></div>
-   <div style="height:12px"></div><button class="btn primary" onclick='favorite(${JSON.stringify(a)})'>Ajouter aux favoris</button>`;
-  go("detail");
+   <div style="height:12px"></div><button class="btn primary" onclick="favorite(window.currentActivity)">Ajouter aux favoris</button>`;
 }
 
 /* =========================================================
