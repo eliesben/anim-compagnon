@@ -622,6 +622,43 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
 .ai-back-button {
   margin-top: 14px;
 }
+/* =========================================================
+   📋 ACTIONS FICHE
+   ========================================================= */
+
+.ai-sheet-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.ai-sheet-action {
+  min-height: 44px;
+  border: 1px solid #000;
+  border-radius: 14px;
+  background: #fff;
+  color: #000;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.ai-sheet-action-primary {
+  grid-column: 1 / -1;
+  background: #000;
+  color: #fff;
+}
+
+.ai-sheet-action:active {
+  transform: scale(.98);
+}
+
+.ai-favorite-active {
+  background: #e8f1e7;
+  color: #1d4a2a;
+}
 </style>
 </head>
 
@@ -1953,7 +1990,17 @@ Ne mets aucun texte avant ou après le JSON.
    ========================================================= */
 
 function showActivitySheet(sheet){
+window.currentAISheet = sheet;
+const favorites = getAIFavorites();
 
+const isFavorite = favorites.some(
+  item =>
+    item.titre === sheet.titre
+);
+
+setTimeout(() => {
+  updateFavoriteButton(isFavorite);
+}, 0);
   const existing =
     document.getElementById("aiGeneratedSheet");
 
@@ -2080,7 +2127,31 @@ function showActivitySheet(sheet){
         </div>
 
       </header>
+<div class="ai-sheet-actions">
 
+  <button
+    id="aiFavoriteButton"
+    class="ai-sheet-action ai-sheet-action-primary"
+    onclick="toggleAIFavorite()"
+  >
+    ♡ Ajouter aux favoris
+  </button>
+
+  <button
+    class="ai-sheet-action"
+    onclick="downloadAIFiche()"
+  >
+    ↓ Télécharger
+  </button>
+
+  <button
+    class="ai-sheet-action"
+    onclick="printAIFiche()"
+  >
+    🖨 Imprimer
+  </button>
+
+</div>
 
       <!-- OBJECTIFS -->
 
@@ -2368,6 +2439,9 @@ function showActivitySheet(sheet){
     behavior:"smooth",
     block:"start"
   });
+setTimeout(() => {
+  updateFavoriteButton(isFavorite);
+}, 0);
 
 }
 
@@ -2488,6 +2562,134 @@ function analyzeMaterialPhoto(){
   toast(
     "L'analyse photo sera branchée ensuite."
   );
+
+}
+/* =========================================================
+   ⭐ FAVORIS — FICHE IA
+   ========================================================= */
+
+function getAIFavorites(){
+
+  try{
+
+    return JSON.parse(
+      localStorage.getItem("animCompagnonAIFavorites") || "[]"
+    );
+
+  }catch(error){
+
+    return [];
+
+  }
+
+}
+
+
+function saveAIFavorites(favorites){
+
+  localStorage.setItem(
+    "animCompagnonAIFavorites",
+    JSON.stringify(favorites)
+  );
+
+}
+
+
+function toggleAIFavorite(){
+
+  if(!selectedAIProposal){
+
+    toast("Aucune activité sélectionnée.");
+
+    return;
+
+  }
+
+  const favorites = getAIFavorites();
+
+  const index = favorites.findIndex(
+    item =>
+      item.titre === selectedAIProposal.titre
+  );
+
+
+  if(index !== -1){
+
+    favorites.splice(index,1);
+
+    saveAIFavorites(favorites);
+
+    updateFavoriteButton(false);
+
+    toast("Activité retirée des favoris.");
+
+    return;
+
+  }
+
+
+  favorites.push({
+
+    id:
+      "ai-" +
+      Date.now() +
+      "-" +
+      Math.random()
+        .toString(36)
+        .substring(2,8),
+
+    type:"ai",
+
+    titre:selectedAIProposal.titre,
+
+    proposal:selectedAIProposal,
+
+    fiche:window.currentAISheet || null,
+
+    createdAt:new Date().toISOString()
+
+  });
+
+
+  saveAIFavorites(favorites);
+
+  updateFavoriteButton(true);
+
+  toast("Activité ajoutée aux favoris ⭐");
+
+}
+
+
+function updateFavoriteButton(isFavorite){
+
+  const button =
+    document.getElementById(
+      "aiFavoriteButton"
+    );
+
+
+  if(!button) return;
+
+
+  if(isFavorite){
+
+    button.classList.add(
+      "ai-favorite-active"
+    );
+
+    button.innerHTML =
+      "♥ Dans mes favoris";
+
+  }else{
+
+    button.classList.remove(
+      "ai-favorite-active"
+    );
+
+    button.innerHTML =
+      "♡ Ajouter aux favoris";
+
+  }
 
 }
 </script>
