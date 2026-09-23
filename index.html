@@ -669,6 +669,56 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
   .ai-activity-sheet{box-shadow:none}
 }
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+/* =========================================================
+   📚 CARTES RESSOURCES (image à gauche)
+   ========================================================= */
+.simple-list{display:flex;flex-direction:column;gap:12px}
+
+.resource-card{
+  display:grid;
+  grid-template-columns:96px 1fr;
+  align-items:stretch;
+  width:100%;
+  min-height:100px;
+  padding:0;
+  overflow:hidden;
+  text-align:left;
+  cursor:pointer;
+  color:var(--noir);
+}
+.card.resource-card+.card{margin-top:0}
+
+.resource-img{
+  background:
+    var(--img, none),
+    linear-gradient(145deg,#b7cbb5,#607c61);
+  background-size:cover;
+  background-position:center;
+}
+
+.resource-info{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:6px;
+  padding:14px 16px;
+  min-width:0;
+}
+.resource-info h2{
+  margin:0;
+  font-size:18px;
+  line-height:1.2;
+  text-align:left;
+}
+.resource-info p{
+  margin:0;
+  font-size:var(--texte);
+  line-height:1.4;
+  text-align:left;
+}
+@media(max-width:390px){
+  .resource-card{grid-template-columns:80px 1fr}
+}
 </style>
 </head>
 
@@ -816,6 +866,35 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
 <main id="resources" class="view">
   <header class="page-head"><button class="link back" onclick="go('categories')">← Retour</button><h1 class="page-title">Ressources</h1><p class="page-intro">Des fiches de référence pour progresser dans sa pratique.</p></header>
   <section class="section"><div class="simple-list">
+
+  <button class="card resource-card"
+    onclick="detail('Animer','Ressources','Imaginaire, personnage, attitudes de l’animateur et ressources thématiques.')">
+    <div class="resource-img" style="--img:url('images/ressource-animer.jpg')"></div>
+    <div class="resource-info">
+      <h2>Animer</h2>
+      <p>Imaginaire, personnage, posture et thématiques d'animation.</p>
+    </div>
+  </button>
+
+  <button class="card resource-card"
+    onclick="detail('Le BAFA, c’est quoi ?','Ressources','Cursus BAFA, organismes et repères de formation.')">
+    <div class="resource-img" style="--img:url('images/ressource-bafa.jpg')"></div>
+    <div class="resource-info">
+      <h2>Le BAFA, c'est quoi ?</h2>
+      <p>Comprendre les différentes étapes de la formation.</p>
+    </div>
+  </button>
+
+  <button class="card resource-card"
+    onclick="detail('Formation professionnelle','Ressources','Débouchés et évolutions de carrière.')">
+    <div class="resource-img" style="--img:url('images/ressource-formation.jpg')"></div>
+    <div class="resource-info">
+      <h2>Formation professionnelle</h2>
+      <p>Débouchés et évolutions de carrière.</p>
+    </div>
+  </button>
+
+</div>
     <button class="card" onclick="detail('Animer','Ressources','Imaginaire, personnage, attitudes de l’animateur et ressources thématiques.')"><h2>Animer</h2><p>Imaginaire, personnage, posture et thématiques d'animation.</p></button>
     <button class="card" onclick="detail('Le BAFA, c’est quoi ?','Ressources','Cursus BAFA, organismes et repères de formation.')"><h2>Le BAFA, c'est quoi ?</h2><p>Comprendre les différentes étapes de la formation.</p></button>
     <button class="card" onclick="detail('Formation professionnelle','Ressources','Débouchés et évolutions de carrière.')"><h2>Formation professionnelle</h2><p>Débouchés et évolutions de carrière.</p></button>
