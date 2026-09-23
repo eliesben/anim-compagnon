@@ -659,6 +659,15 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
   background: #e8f1e7;
   color: #1d4a2a;
 }
+@media print{
+  body{background:#fff}
+  .bottom,.toast,.page-head,.generator-options,
+  #generatorIAChoice,#generatorIAText,#generatorIAPhoto,
+  #aiGeneratedProposals,.ai-sheet-actions,.ai-back-button{
+    display:none!important;
+  }
+  .ai-activity-sheet{box-shadow:none}
+}
 </style>
 </head>
 
@@ -2691,6 +2700,56 @@ function updateFavoriteButton(isFavorite){
 
   }
 
+}
+function printAIFiche(){
+  if(!window.currentAISheet){
+    toast("Aucune fiche à imprimer.");
+    return;
+  }
+  window.print();
+}
+function downloadAIFiche(){
+  const s = window.currentAISheet;
+  if(!s){
+    toast("Aucune fiche à télécharger.");
+    return;
+  }
+
+  const toText = x => typeof x === "string" ? x : JSON.stringify(x);
+  const bullets = arr => Array.isArray(arr) ? arr.map(x => "- " + toText(x)).join("\n") : "";
+  const numbered = arr => Array.isArray(arr) ? arr.map((x,i) => (i+1) + ". " + toText(x)).join("\n") : "";
+
+  const parts = [
+    (s.titre || "Activité").toUpperCase(),
+    "",
+    [s.age, s.nombre_enfants, s.duree, s.lieu, s.energie].filter(Boolean).join(" | "),
+    "",
+    "OBJECTIFS\n" + bullets(s.objectifs),
+    "MATÉRIEL\n" + bullets(s.materiel),
+    s.preparation ? "PRÉPARATION\n" + s.preparation : "",
+    "DÉROULEMENT\n" + numbered(s.deroulement),
+    "VARIANTES\n" + bullets(s.variantes),
+    "ADAPTATIONS\n" + bullets(s.adaptations),
+    "POINTS DE VIGILANCE\n" + bullets(s.points_vigilance),
+    s.posture_animateur ? "POSTURE DE L'ANIMATEUR\n" + s.posture_animateur : ""
+  ].filter(p => p !== "");
+
+  const blob = new Blob([parts.join("\n\n")], {type:"text/plain;charset=utf-8"});
+  const url = URL.createObjectURL(blob);
+
+  const name = (s.titre || "fiche-activite")
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+    .replace(/[^\w\-]+/g,"_");
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = name + ".txt";
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+
+  toast("Fiche téléchargée.");
 }
 </script>
 </body>
