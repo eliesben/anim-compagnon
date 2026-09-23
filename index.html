@@ -1223,37 +1223,32 @@ async function generateAIActivity(){
   const prompt = `
 Tu es l'assistant pédagogique d'Anim Compagnon, une application destinée aux animateurs en ACM.
 
-Crée une activité réellement adaptée aux informations fournies.
+Crée une activité concrète, réaliste et directement utilisable par un animateur.
 
-INFORMATIONS DE L'ANIMATEUR :
+Informations :
 
-Âge des enfants : ${age || "non précisé"}
+Âge : ${age || "non précisé"}
 Nombre d'enfants : ${children || "non précisé"}
 Durée : ${duration || "non précisée"}
 Lieu : ${place || "non précisé"}
-Matériel disponible : ${material || "non précisé"}
+Matériel : ${material || "non précisé"}
 Objectif ou envie : ${objective || "non précisé"}
 
-CONSIGNES :
+Adapte impérativement l'activité à l'âge, au nombre d'enfants, au temps disponible, au lieu et au matériel.
 
-- Ne propose pas une activité nécessitant du matériel qui n'est pas disponible, sauf si cela est indispensable et clairement signalé.
-- Adapte l'activité à l'âge des enfants.
-- Respecte la durée demandée.
-- Prends en compte le lieu.
-- Propose une activité concrète, facilement réalisable par un animateur.
-- Prévois des variantes si elles sont pertinentes.
-- Indique les points de vigilance liés à la sécurité et à l'encadrement.
-- Les objectifs pédagogiques doivent être cohérents avec l'activité.
-
-Présente la réponse exactement avec cette structure :
+Réponds en français avec exactement ces rubriques :
 
 NOM DE L'ACTIVITÉ
 
 ÂGE
-Nombre d'enfants
-Durée
-Lieu
-Temps de préparation
+
+NOMBRE D'ENFANTS
+
+DURÉE
+
+TEMPS DE PRÉPARATION
+
+LIEU
 
 OBJECTIFS PÉDAGOGIQUES
 
@@ -1269,8 +1264,7 @@ POINTS DE VIGILANCE
 
 POSTURE DE L'ANIMATEUR
 
-Ne mets pas de préambule inutile.
-Ne parle pas de toi.
+Ne mets aucun préambule.
 `;
 
   try{
@@ -1281,33 +1275,71 @@ Ne parle pas de toi.
         "Content-Type":"application/json"
       },
       body:JSON.stringify({
-        prompt
+        prompt:prompt
       })
     });
 
     if(!response.ok){
-      throw new Error("Erreur serveur");
+      const errorText = await response.text();
+      console.error("Erreur Worker :",errorText);
+      throw new Error("Erreur Worker "+response.status);
     }
 
     const data = await response.json();
 
-    let result =
-      data.output_text ||
-      data.output?.[0]?.content?.[0]?.text ||
-      data.response ||
-      "";
+    console.log("Réponse IA :",data);
+
+    let result = "";
+
+    /* Réponse directe éventuelle */
+    if(typeof data.output_text === "string"){
+      result = data.output_text;
+    }
+
+    /* Réponse Responses API */
+    if(!result && Array.isArray(data.output)){
+
+      for(const item of data.output){
+
+        if(!Array.isArray(item.content)) continue;
+
+        for(const content of item.content){
+
+          if(typeof content.text === "string"){
+            result += content.text;
+          }
+
+        }
+
+      }
+
+    }
+
+    /* Autres formats éventuels */
+    if(!result && typeof data.text === "string"){
+      result = data.text;
+    }
+
+    if(!result && typeof data.response === "string"){
+      result = data.response;
+    }
+
+    result = result.trim();
+
+    console.log("Texte récupéré :",result);
 
     if(!result){
-      throw new Error("Réponse IA vide");
+      throw new Error("La réponse IA est vide.");
     }
 
     showAIGeneratedActivity(result);
 
   }catch(error){
 
-    console.error(error);
+    console.error("Erreur génération IA :",error);
 
-    toast("Impossible de générer l'activité pour le moment.");
+    toast("L'IA n'a pas réussi à générer l'activité.");
+
   }
 }
 function showAIGeneratedActivity(result){
