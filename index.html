@@ -578,7 +578,9 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
 </main>
 
 <!-- ========================= 🤖 GÉNÉRATEUR ========================= -->
-<header class="page-head">
+<main id="generator" class="view">
+
+   <header class="page-head">
   <h1 class="page-title">Générer une activité</h1>
   <p class="page-intro">
     Choisis comment tu veux construire ton activité.
@@ -1118,9 +1120,17 @@ loadActivities();
 
 function openGeneratorMode(mode){
 
+  console.log("GENERATOR MODE :", mode);
+
   const iaChoice = document.getElementById("generatorIAChoice");
   const iaText = document.getElementById("generatorIAText");
   const iaPhoto = document.getElementById("generatorIAPhoto");
+
+  console.log({
+    iaChoice,
+    iaText,
+    iaPhoto
+  });
 
   if(iaChoice) iaChoice.hidden = true;
   if(iaText) iaText.hidden = true;
@@ -1146,7 +1156,6 @@ function openGeneratorMode(mode){
     return;
   }
 }
-
 
 /* =========================================================
    📸 PHOTO DU MATÉRIEL
