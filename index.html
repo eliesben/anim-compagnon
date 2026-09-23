@@ -1689,10 +1689,22 @@ function openPublicSubcategory(subcategory){
 }
 
 function openResourcePDF(id){
-  const resource=resources.find(item=>Number(item.id)===Number(id));
-  if(!resource){toast("Ressource introuvable.");return;}
-  if(!resource.pdf){toast("Cette ressource ne possède pas encore de PDF.");return;}
-  window.open(resource.pdf,"_blank","noopener,noreferrer");
+
+  const resource = resources.find(
+    r => Number(r.id) === Number(id)
+  );
+
+  if(!resource){
+    toast("Fiche introuvable.");
+    return;
+  }
+
+  if(!resource.pdf){
+    toast("Aucun PDF associé à cette fiche.");
+    return;
+  }
+
+  window.location.href = resource.pdf;
 }
 
 loadResources();
