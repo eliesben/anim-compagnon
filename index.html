@@ -1186,14 +1186,14 @@ function analyzeMaterialPhoto(){
    🤖 GÉNÉRATION IA TEXTE
    ========================================================= */
 
-function generateAIActivity(){
+async function generateAIActivity(){
 
-  const age = document.getElementById("aiAge")?.value || "";
-  const children = document.getElementById("aiChildren")?.value || "";
-  const duration = document.getElementById("aiDuration")?.value || "";
-  const place = document.getElementById("aiPlace")?.value || "";
-  const material = document.getElementById("aiMaterial")?.value || "";
-  const objective = document.getElementById("aiObjective")?.value || "";
+  const age = document.getElementById("aiAge")?.value.trim() || "";
+  const children = document.getElementById("aiChildren")?.value.trim() || "";
+  const duration = document.getElementById("aiDuration")?.value.trim() || "";
+  const place = document.getElementById("aiPlace")?.value.trim() || "";
+  const material = document.getElementById("aiMaterial")?.value.trim() || "";
+  const objective = document.getElementById("aiObjective")?.value.trim() || "";
 
   if(!age && !children && !duration && !place && !material && !objective){
     toast("Décris au moins un peu ton besoin.");
@@ -1202,7 +1202,95 @@ function generateAIActivity(){
 
   toast("Génération de ton activité…");
 
-  // On branchera ici ton IA actuelle.
+  const prompt = `
+Tu es l'assistant pédagogique d'Anim Compagnon, une application destinée aux animateurs en ACM.
+
+Crée une activité réellement adaptée aux informations fournies.
+
+INFORMATIONS DE L'ANIMATEUR :
+
+Âge des enfants : ${age || "non précisé"}
+Nombre d'enfants : ${children || "non précisé"}
+Durée : ${duration || "non précisée"}
+Lieu : ${place || "non précisé"}
+Matériel disponible : ${material || "non précisé"}
+Objectif ou envie : ${objective || "non précisé"}
+
+CONSIGNES :
+
+- Ne propose pas une activité nécessitant du matériel qui n'est pas disponible, sauf si cela est indispensable et clairement signalé.
+- Adapte l'activité à l'âge des enfants.
+- Respecte la durée demandée.
+- Prends en compte le lieu.
+- Propose une activité concrète, facilement réalisable par un animateur.
+- Prévois des variantes si elles sont pertinentes.
+- Indique les points de vigilance liés à la sécurité et à l'encadrement.
+- Les objectifs pédagogiques doivent être cohérents avec l'activité.
+
+Présente la réponse exactement avec cette structure :
+
+NOM DE L'ACTIVITÉ
+
+ÂGE
+Nombre d'enfants
+Durée
+Lieu
+Temps de préparation
+
+OBJECTIFS PÉDAGOGIQUES
+
+MATÉRIEL
+
+DÉROULEMENT
+
+VARIANTES
+
+ADAPTATIONS
+
+POINTS DE VIGILANCE
+
+POSTURE DE L'ANIMATEUR
+
+Ne mets pas de préambule inutile.
+Ne parle pas de toi.
+`;
+
+  try{
+
+    const response = await fetch(AI_API,{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        prompt
+      })
+    });
+
+    if(!response.ok){
+      throw new Error("Erreur serveur");
+    }
+
+    const data = await response.json();
+
+    let result =
+      data.output_text ||
+      data.output?.[0]?.content?.[0]?.text ||
+      data.response ||
+      "";
+
+    if(!result){
+      throw new Error("Réponse IA vide");
+    }
+
+    showAIGeneratedActivity(result);
+
+  }catch(error){
+
+    console.error(error);
+
+    toast("Impossible de générer l'activité pour le moment.");
+  }
 }
 
 
