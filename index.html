@@ -1618,37 +1618,18 @@ async function loadResources(){
     resources=rows.map(mapResource).filter(r=>r.active).sort((a,b)=>a.order-b.order);
     renderPublics();
     renderResourcesPage();
+    renderRolePage();
+    renderDailyPage();
+    renderToolboxPage();
   }catch(e){
     console.error(e);
+    ["resourcesList","roleList","dailyList","toolboxList","publicsList"].forEach(id=>{
+      const el=document.getElementById(id);
+      if(el)el.innerHTML='<div class="empty"><strong>Contenu indisponible</strong>Impossible de charger le contenu Baserow pour le moment.</div>';
+    });
     const loading=document.getElementById("resourcesLoading");
-    const list=document.getElementById("resourcesList");
     if(loading)loading.classList.add("hidden");
-    if(list)list.innerHTML='<div class="empty"><strong>Ressources indisponibles</strong>Impossible de charger le contenu Baserow pour le moment.</div>';
-    const publicsList=document.getElementById("publicsList");
-    if(publicsList)publicsList.innerHTML='<div class="empty"><strong>Publics indisponibles</strong>Impossible de charger le contenu Baserow pour le moment.</div>';
   }
-}
-
-function renderResourcesPage(){
-  const loading=document.getElementById("resourcesLoading");
-  const list=document.getElementById("resourcesList");
-  if(!list)return;
-  if(loading)loading.classList.add("hidden");
-
-  const items=resources.filter(r=>String(r.category).trim().toLowerCase()==="ressources");
-
-  if(!items.length){
-    list.innerHTML='<div class="empty"><strong>Aucune ressource</strong>Aucune ressource publiée pour le moment.</div>';
-    return;
-  }
-
-  list.innerHTML=items.map(r=>`
-    <article class="card">
-      <h2>${esc(r.title||"Ressource sans titre")}</h2>
-      ${r.summary?`<p>${esc(r.summary)}</p>`:""}
-      ${r.pdf?`<div style="height:10px"></div><button class="btn primary full" onclick="openResourcePDF(${Number(r.id)})">Ouvrir la fiche PDF</button>`:""}
-    </article>
-  `).join("");
 }
 loadResources();
 /* =========================================================
