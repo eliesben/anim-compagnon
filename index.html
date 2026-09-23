@@ -1550,6 +1550,341 @@ function toast(m){const e=document.getElementById("toast");e.textContent=m;e.cla
    ========================================================= */
 loadCategories();
 loadActivities();
+loadResources();
+/* =========================================================
+   📚 RESSOURCES — BASEROW
+   ========================================================= */
+
+const RESOURCES_API =
+  "https://anim-compagnon-api.eliesbendjedou30.workers.dev/resources";
+
+
+function resourceField(row, names){
+
+  for(const name of names){
+
+    if(
+      row[name] !== undefined &&
+      row[name] !== null &&
+      String(row[name]).trim() !== ""
+    ){
+
+      return row[name];
+
+    }
+
+  }
+
+  return "";
+
+}
+
+
+function resourceText(value){
+
+  if(value === null || value === undefined){
+    return "";
+  }
+
+  if(typeof value === "string"){
+    return value;
+  }
+
+  if(typeof value === "object"){
+
+    if(value.value !== undefined){
+      return String(value.value);
+    }
+
+    if(value.name !== undefined){
+      return String(value.name);
+    }
+
+  }
+
+  return String(value);
+
+}
+
+
+function resourceFileUrl(value){
+
+  if(!value){
+    return "";
+  }
+
+  /*
+    Champ fichier Baserow :
+    [
+      {
+        "url": "...",
+        "name": "..."
+      }
+    ]
+  */
+
+  if(Array.isArray(value)){
+
+    const file = value[0];
+
+    if(file && file.url){
+      return file.url;
+    }
+
+  }
+
+  /*
+    Sécurité si Baserow renvoie directement un objet
+  */
+
+  if(typeof value === "object" && value.url){
+    return value.url;
+  }
+
+  return "";
+
+}
+
+
+function mapResource(row){
+
+  const actif = resourceField(row, [
+    "Actif",
+    "ACTIF",
+    "actif"
+  ]);
+
+  const title = resourceField(row, [
+    "TITRE",
+    "Titre",
+    "titre"
+  ]);
+
+  const category = resourceField(row, [
+    "CATÉGORIES",
+    "CATEGORIES",
+    "Catégories",
+    "Catégorie",
+    "category"
+  ]);
+
+  const subcategory = resourceField(row, [
+    "SOUS-CATÉGORIE",
+    "SOUS-CATEGORIE",
+    "Sous-catégorie",
+    "Sous-categorie"
+  ]);
+
+  const summary = resourceField(row, [
+    "RÉSUMÉ",
+    "RESUME",
+    "Résumé",
+    "resume"
+  ]);
+
+  const pdf = resourceField(row, [
+    "PDF",
+    "Pdf",
+    "pdf"
+  ]);
+
+  const order = resourceField(row, [
+    "ORDRE",
+    "Ordre",
+    "ordre"
+  ]);
+
+  return {
+
+    id: row.id || Math.random(),
+
+    title: resourceText(title) || "Ressource sans titre",
+
+    category: resourceText(category),
+
+    subcategory: resourceText(subcategory),
+
+    summary: resourceText(summary),
+
+    pdf: resourceFileUrl(pdf),
+
+    order: Number(order) || 9999,
+
+    active:
+      actif === true ||
+      ["true","1","oui","yes","vrai"]
+        .includes(String(actif).toLowerCase())
+
+  };
+
+}
+
+
+async function loadResources(){
+
+  const list = document.getElementById("resourcesList");
+  const loading = document.getElementById("resourcesLoading");
+
+  if(!list) return;
+
+  try{
+
+    const response = await fetch(
+      RESOURCES_API,
+      {
+        cache: "no-store"
+      }
+    );
+
+    if(!response.ok){
+      throw new Error(response.status);
+    }
+
+    const data = await response.json();
+
+    const rows =
+      Array.isArray(data)
+        ? data
+        : (data.results || []);
+
+    const resources = rows
+
+      .map(mapResource)
+
+      .filter(resource => resource.active)
+
+      .sort((a,b) => a.order - b.order);
+
+    loading?.classList.add("hidden");
+
+    if(!resources.length){
+
+      list.innerHTML = `
+        <div class="empty">
+
+          <strong>Aucune ressource</strong>
+
+          Les ressources seront bientôt disponibles.
+
+        </div>
+      `;
+
+      return;
+
+    }
+
+    list.innerHTML = resources.map((resource,index) => {
+
+      const category =
+        resource.category
+          ? `<span class="badge">${esc(resource.category)}</span>`
+          : "";
+
+      const subcategory =
+        resource.subcategory
+          ? `<span class="badge">${esc(resource.subcategory)}</span>`
+          : "";
+
+      const pdfButton =
+        resource.pdf
+          ? `
+            <button
+              class="btn secondary full"
+              onclick="event.stopPropagation(); openResourcePDF(${index})"
+            >
+              Ouvrir la fiche PDF
+            </button>
+          `
+          : "";
+
+      return `
+
+        <article class="card resource-card">
+
+          <div class="resource-info">
+
+            <div class="badges">
+
+              ${category}
+              ${subcategory}
+
+            </div>
+
+            <h2>${esc(resource.title)}</h2>
+
+            ${
+              resource.summary
+                ? `<p>${esc(resource.summary)}</p>`
+                : ""
+            }
+
+            <div style="height:10px"></div>
+
+            ${pdfButton}
+
+          </div>
+
+        </article>
+
+      `;
+
+    }).join("");
+
+    /*
+      On conserve les ressources pour les boutons PDF
+    */
+
+    window.resourcesData = resources;
+
+  }
+  catch(error){
+
+    console.error(
+      "Erreur chargement ressources :",
+      error
+    );
+
+    loading?.classList.add("hidden");
+
+    list.innerHTML = `
+
+      <div class="empty">
+
+        <strong>Ressources indisponibles</strong>
+
+        Impossible de charger les ressources pour le moment.
+
+      </div>
+
+    `;
+
+  }
+
+}
+
+
+function openResourcePDF(index){
+
+  const resource =
+    window.resourcesData?.[index];
+
+  if(!resource){
+    toast("Ressource introuvable.");
+    return;
+  }
+
+  if(!resource.pdf){
+    toast("Cette ressource ne possède pas encore de PDF.");
+    return;
+  }
+
+  window.open(
+    resource.pdf,
+    "_blank",
+    "noopener,noreferrer"
+  );
+
+}
 /* =========================================================
    ✨ GÉNÉRATEUR D'ACTIVITÉ
    ========================================================= */
