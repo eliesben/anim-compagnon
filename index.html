@@ -406,6 +406,24 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
   gap:12px;
   margin-top:16px;
 }
+.generated-activity{
+  padding:20px;
+  background:#fff;
+  border:1px solid rgba(17,17,17,.12);
+  border-radius:20px;
+  box-shadow:var(--ombre-legere);
+  color:var(--noir);
+  font-size:15px;
+  line-height:1.6;
+}
+
+.generated-activity p{
+  margin:0 0 12px;
+}
+
+.generated-activity p:last-child{
+  margin-bottom:0;
+}
 </style>
 </head>
 
@@ -1292,7 +1310,49 @@ Ne parle pas de toi.
     toast("Impossible de générer l'activité pour le moment.");
   }
 }
+function showAIGeneratedActivity(result){
 
+  const existing = document.getElementById("aiGeneratedResult");
+
+  if(existing){
+    existing.remove();
+  }
+
+  const section = document.createElement("section");
+
+  section.id = "aiGeneratedResult";
+  section.className = "section generator-panel";
+
+  section.innerHTML = `
+    <div class="section-head">
+      <h2 class="section-title">Ton activité</h2>
+    </div>
+
+    <div class="generated-activity">
+      ${formatAIResult(result)}
+    </div>
+
+    <button
+      class="primary-btn"
+      onclick="document.getElementById('generatorIAText')?.scrollIntoView({behavior:'smooth'})"
+    >
+      ← Modifier ma demande
+    </button>
+  `;
+
+  const generatorText = document.getElementById("generatorIAText");
+
+  if(generatorText){
+    generatorText.insertAdjacentElement("afterend",section);
+  }
+}
+function formatAIResult(text){
+
+  return esc(text)
+    .replace(/\n\n/g,"</p><p>")
+    .replace(/\n/g,"<br>")
+    .replace(/^(.+)$/,"<p>$1</p>");
+}
 
 function openGeneratorMode(mode){
 
