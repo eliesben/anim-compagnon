@@ -818,11 +818,44 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
 <main id="publics" class="view">
   <header class="page-head"><button class="link back" onclick="go('categories')">← Retour</button><h1 class="page-title">Publics</h1><p class="page-intro">Repères pour mieux connaître les publics accueillis.</p></header>
   <section class="section"><div class="simple-list">
-    <button class="card" onclick="detail('3–6 ans','Public','Caractéristiques du public, besoins et intérêts, points de vigilance, idées d’activités.')"><h2>3–6 ans</h2><p>Connaître les besoins et caractéristiques des jeunes enfants.</p></button>
-    <button class="card" onclick="detail('6–12 ans','Public','Repères de développement, autonomie, socialisation et accompagnement.')"><h2>6–12 ans</h2><p>Repères pour le public élémentaire.</p></button>
-    <button class="card" onclick="detail('12–17 ans','Public','Repères pour accompagner les adolescents et leurs projets.')"><h2>12–17 ans</h2><p>Besoins, relations au groupe et accompagnement.</p></button>
-    <button class="card" onclick="detail('Public en situation de handicap','Public','Inclusion, adaptation et points de vigilance.')"><h2>Handicap</h2><p>Adapter son accueil, sa posture et ses activités.</p></button>
-  </div></section>
+
+  <button class="card resource-card"
+    onclick="detail('3–6 ans','Public','Caractéristiques du public, besoins et intérêts, points de vigilance, idées d’activités.')">
+    <div class="resource-img" style="--img:url('images/public-3-6.jpg')"></div>
+    <div class="resource-info">
+      <h2>3–6 ans</h2>
+      <p>Connaître les besoins et caractéristiques des jeunes enfants.</p>
+    </div>
+  </button>
+
+  <button class="card resource-card"
+    onclick="detail('6–12 ans','Public','Repères de développement, autonomie, socialisation et accompagnement.')">
+    <div class="resource-img" style="--img:url('images/public-6-12.jpg')"></div>
+    <div class="resource-info">
+      <h2>6–12 ans</h2>
+      <p>Repères pour le public élémentaire.</p>
+    </div>
+  </button>
+
+  <button class="card resource-card"
+    onclick="detail('12–17 ans','Public','Repères pour accompagner les adolescents et leurs projets.')">
+    <div class="resource-img" style="--img:url('images/public-12-17.jpg')"></div>
+    <div class="resource-info">
+      <h2>12–17 ans</h2>
+      <p>Besoins, relations au groupe et accompagnement.</p>
+    </div>
+  </button>
+
+  <button class="card resource-card"
+    onclick="detail('Public en situation de handicap','Public','Inclusion, adaptation et points de vigilance.')">
+    <div class="resource-img" style="--img:url('images/public-handicap.jpg')"></div>
+    <div class="resource-info">
+      <h2>Handicap</h2>
+      <p>Adapter son accueil, sa posture et ses activités.</p>
+    </div>
+  </button>
+
+</div>
 </main>
 
 <!-- ========================= 🧑‍🏫 RÔLE ========================= -->
