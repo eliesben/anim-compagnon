@@ -1070,28 +1070,7 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
   <div id="photoPreview" class="photo-preview" hidden></div>
 </section>
 </main>
-function vssDangerYes(){
-  document.getElementById("vssStepDanger").hidden=true;
-  document.getElementById("vssDangerResult").hidden=false;
-}
-function vssDangerNo(){
-  document.getElementById("vssStepDanger").hidden=true;
-  document.getElementById("vssStepMemo").hidden=false;
-}
-function vssShowOrientation(){
-  document.getElementById("vssStepMemo").hidden=true;
-  document.getElementById("vssStepOrientation").hidden=false;
-}
-function vssReset(){
-  document.getElementById("vssDangerResult").hidden=true;
-  document.getElementById("vssStepMemo").hidden=true;
-  document.getElementById("vssStepOrientation").hidden=true;
-  document.getElementById("vssStepDanger").hidden=false;
-  ["vssDate","vssLieu","vssFaits","vssPersonnes"].forEach(id=>{
-    const el=document.getElementById(id);
-    if(el)el.value="";
-  });
-}
+
 <!-- ========================= 🆘 HELP ========================= -->
 <main id="help" class="view">
   <header class="page-head"><h1 class="page-title">Help</h1><p class="page-intro">Décris la situation. Help t'oriente vers les ressources adaptées.</p></header>
@@ -1547,7 +1526,29 @@ async function generate(){
 function formatAI(t){
   return esc(t).replace(/\n/g,"<br>").replace(/(?:^|<br>)(TITRE|ÂGE \/ DURÉE \/ LIEU|OBJECTIFS PÉDAGOGIQUES|MATÉRIEL|DÉROULEMENT|VARIANTES|POINTS DE VIGILANCE)(?=<br>|$)/g,'<h3>$1</h3>');
 }
-
+   
+function vssDangerYes(){
+  document.getElementById("vssStepDanger").hidden=true;
+  document.getElementById("vssDangerResult").hidden=false;
+}
+function vssDangerNo(){
+  document.getElementById("vssStepDanger").hidden=true;
+  document.getElementById("vssStepMemo").hidden=false;
+}
+function vssShowOrientation(){
+  document.getElementById("vssStepMemo").hidden=true;
+  document.getElementById("vssStepOrientation").hidden=false;
+}
+function vssReset(){
+  document.getElementById("vssDangerResult").hidden=true;
+  document.getElementById("vssStepMemo").hidden=true;
+  document.getElementById("vssStepOrientation").hidden=true;
+  document.getElementById("vssStepDanger").hidden=false;
+  ["vssDate","vssLieu","vssFaits","vssPersonnes"].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)el.value="";
+  });
+}
 /* =========================================================
    🆘 HELP
    ========================================================= */
