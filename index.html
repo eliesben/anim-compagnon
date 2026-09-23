@@ -296,6 +296,116 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
    📱 MOBILE
    ========================================================= */
 @media(max-width:390px){.brand h1{font-size:20px}.activity{grid-template-columns:92px 1fr}.hero{flex-basis:86vw}}
+
+.generator-options,
+.generator-suboptions{
+  display:grid;
+  gap:12px;
+}
+
+.generator-card{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:20px;
+  border:1px solid #111;
+  border-radius:20px;
+  background:#fff;
+  color:#111;
+  text-align:left;
+  cursor:pointer;
+  box-shadow:0 4px 14px rgba(0,0,0,.06);
+}
+
+.generator-card-icon{
+  width:48px;
+  height:48px;
+  min-width:48px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:14px;
+  background:#f2f2ed;
+  font-size:24px;
+}
+
+.generator-card-content{
+  flex:1;
+}
+
+.generator-card h2,
+.generator-card h3{
+  margin:0 0 5px;
+  font-size:18px;
+  font-weight:700;
+}
+
+.generator-card p{
+  margin:0;
+  font-size:14px;
+  line-height:1.45;
+  color:#333;
+}
+
+.generator-card-arrow{
+  font-size:22px;
+}
+
+.generator-card-small{
+  padding:18px;
+}
+
+.generator-panel{
+  margin-top:20px;
+}
+
+.form-grid{
+  display:grid;
+  gap:14px;
+}
+
+.form-grid label{
+  display:grid;
+  gap:7px;
+  font-size:14px;
+  font-weight:700;
+}
+
+.form-grid input,
+.form-grid textarea{
+  width:100%;
+  box-sizing:border-box;
+  padding:13px 14px;
+  border:1px solid #111;
+  border-radius:14px;
+  background:#fff;
+  color:#111;
+  font:inherit;
+}
+
+.form-grid textarea{
+  min-height:90px;
+  resize:vertical;
+}
+
+.primary-btn{
+  margin-top:16px;
+  min-height:44px;
+  padding:12px 18px;
+  border:1px solid #111;
+  border-radius:14px;
+  background:#111;
+  color:#fff;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.photo-preview{
+  display:grid;
+  gap:12px;
+  margin-top:16px;
+}
 </style>
 </head>
 
@@ -450,41 +560,179 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
 </main>
 
 <!-- ========================= 🤖 GÉNÉRATEUR ========================= -->
-<main id="generator" class="view">
-  <header class="page-head"><h1 class="page-title">Générer une activité</h1><p class="page-intro">Décris ce que tu as. Les paramètres sont facultatifs.</p></header>
-  <section class="section">
-    <div class="generator">
-      <label class="label" for="prompt">Ta situation</label>
-      <textarea id="prompt" placeholder="Ex. : J'ai 14 enfants de 8 ans, 4 plots, 3 ballons et 2 cordes. Je suis dehors pendant 45 minutes et je veux un jeu qui bouge."></textarea>
-      <p style="font-size:var(--texte);color:var(--anthracite)">Écris naturellement : l'IA n'impose pas de formulation.</p>
+<header class="page-head">
+  <h1 class="page-title">Générer une activité</h1>
+  <p class="page-intro">
+    Choisis comment tu veux construire ton activité.
+  </p>
+</header>
 
-      <div class="photo"><strong style="font-size:var(--carte)">Montrer mon matériel</strong><br><input id="photo" type="file" accept="image/*" capture="environment"></div>
+<section class="section generator-options">
 
-      <span class="chip-title">Âge</span>
-      <div class="chips">
-        <button class="chip" data-filter="age">3–6 ans</button><button class="chip" data-filter="age">6–12 ans</button><button class="chip" data-filter="age">12–17 ans</button>
-      </div>
-      <span class="chip-title">Durée</span>
-      <div class="chips">
-        <button class="chip" data-filter="durée">5 min</button><button class="chip" data-filter="durée">15 min</button><button class="chip" data-filter="durée">30 min</button><button class="chip" data-filter="durée">1 h</button>
-      </div>
-      <span class="chip-title">Lieu</span>
-      <div class="chips"><button class="chip" data-filter="lieu">Intérieur</button><button class="chip" data-filter="lieu">Extérieur</button></div>
-      <span class="chip-title">Énergie</span>
-      <div class="chips"><button class="chip" data-filter="énergie">Calme</button><button class="chip" data-filter="énergie">Dynamique</button></div>
-      <span class="chip-title">Objectif pédagogique</span>
-      <div class="chips">
-        <button class="chip" data-filter="objectif">Coopération</button><button class="chip" data-filter="objectif">Autonomie</button><button class="chip" data-filter="objectif">Motricité</button><button class="chip" data-filter="objectif">Expression</button><button class="chip" data-filter="objectif">Vivre-ensemble</button>
-      </div>
+  <!-- CRÉER UNE FICHE -->
+  <button class="generator-card" onclick="openGeneratorMode('fiche')">
+    <div class="generator-card-icon">📋</div>
 
-      <div style="height:15px"></div>
-      <button class="btn primary full" id="generateBtn" onclick="generate()">Générer l'activité</button>
-      <div id="genLoad" class="loading hidden"><span></span><span></span><span></span></div>
-      <div id="genResult" class="result hidden"></div>
+    <div class="generator-card-content">
+      <h2>Créer une fiche d'activité</h2>
+      <p>
+        Construis ton activité toi-même à partir d'une fiche complète.
+      </p>
     </div>
-  </section>
-</main>
 
+    <span class="generator-card-arrow">→</span>
+  </button>
+
+
+  <!-- IA -->
+  <button class="generator-card" onclick="openGeneratorMode('ia')">
+    <div class="generator-card-icon">✨</div>
+
+    <div class="generator-card-content">
+      <h2>Générer avec l'IA</h2>
+      <p>
+        Décris ton besoin ou photographie ton matériel.
+      </p>
+    </div>
+
+    <span class="generator-card-arrow">→</span>
+  </button>
+
+</section>
+
+
+<!-- CHOIX IA -->
+<section id="generatorIAChoice" class="section generator-subsection" hidden>
+
+  <div class="section-head">
+    <h2 class="section-title">Comment veux-tu commencer ?</h2>
+  </div>
+
+  <div class="generator-suboptions">
+
+    <!-- DESCRIPTION -->
+    <button class="generator-card generator-card-small"
+            onclick="openGeneratorMode('ia-text')">
+
+      <div class="generator-card-icon">📝</div>
+
+      <div class="generator-card-content">
+        <h3>Je décris mon besoin</h3>
+        <p>
+          Indique l'âge, le nombre d'enfants, la durée,
+          le lieu, le matériel et ce que tu recherches.
+        </p>
+      </div>
+
+      <span class="generator-card-arrow">→</span>
+
+    </button>
+
+
+    <!-- PHOTO -->
+    <button class="generator-card generator-card-small"
+            onclick="openGeneratorMode('ia-photo')">
+
+      <div class="generator-card-icon">📸</div>
+
+      <div class="generator-card-content">
+        <h3>Je photographie mon matériel</h3>
+        <p>
+          Prends ton matériel en photo et laisse l'IA
+          imaginer des activités adaptées.
+        </p>
+      </div>
+
+      <span class="generator-card-arrow">→</span>
+
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- FORMULAIRE IA TEXTE -->
+<section id="generatorIAText" class="section generator-panel" hidden>
+
+  <div class="section-head">
+    <h2 class="section-title">Décris ton besoin</h2>
+  </div>
+
+  <div class="form-grid">
+
+    <label>
+      Âge des enfants
+      <input id="aiAge" type="text" placeholder="Ex. 8 ans">
+    </label>
+
+    <label>
+      Nombre d'enfants
+      <input id="aiChildren" type="number" placeholder="Ex. 14">
+    </label>
+
+    <label>
+      Durée
+      <input id="aiDuration" type="text" placeholder="Ex. 45 minutes">
+    </label>
+
+    <label>
+      Lieu
+      <input id="aiPlace" type="text" placeholder="Ex. extérieur">
+    </label>
+
+    <label>
+      Matériel disponible
+      <textarea id="aiMaterial"
+        placeholder="Ex. 4 plots, 3 ballons, 2 cordes"></textarea>
+    </label>
+
+    <label>
+      Objectif / envie
+      <textarea id="aiObjective"
+        placeholder="Ex. un jeu qui bouge et favorise la coopération"></textarea>
+    </label>
+
+  </div>
+
+  <button class="primary-btn" onclick="generateAIActivity()">
+    ✨ Générer mon activité
+  </button>
+
+</section>
+
+
+<!-- PHOTO -->
+<section id="generatorIAPhoto" class="section generator-panel" hidden>
+
+  <div class="section-head">
+    <h2 class="section-title">Photographie ton matériel</h2>
+  </div>
+
+  <p class="page-intro">
+    Prends une photo du matériel dont tu disposes.
+    L'IA identifiera ce qu'elle peut utiliser pour créer des activités.
+  </p>
+
+  <input
+    id="materialPhoto"
+    type="file"
+    accept="image/*"
+    capture="environment"
+    hidden
+    onchange="handleMaterialPhoto(event)"
+  >
+
+  <button
+    class="primary-btn"
+    onclick="document.getElementById('materialPhoto').click()"
+  >
+    📸 Prendre une photo
+  </button>
+
+  <div id="photoPreview" class="photo-preview" hidden></div>
+
+</section>
 <!-- ========================= 🆘 HELP ========================= -->
 <main id="help" class="view">
   <header class="page-head"><h1 class="page-title">Help</h1><p class="page-intro">Décris la situation. Help t'oriente vers les ressources adaptées.</p></header>
@@ -846,6 +1094,81 @@ function toast(m){const e=document.getElementById("toast");e.textContent=m;e.cla
    ========================================================= */
 loadCategories();
 loadActivities();
+
+
+function openGeneratorMode(mode){
+
+  const iaChoice=document.getElementById("generatorIAChoice");
+  const iaText=document.getElementById("generatorIAText");
+  const iaPhoto=document.getElementById("generatorIAPhoto");
+
+  if(iaChoice)iaChoice.hidden=true;
+  if(iaText)iaText.hidden=true;
+  if(iaPhoto)iaPhoto.hidden=true;
+
+  if(mode==="ia"){
+    if(iaChoice)iaChoice.hidden=false;
+    return;
+  }
+
+  if(mode==="ia-text"){
+    if(iaText)iaText.hidden=false;
+    return;
+  }
+
+  if(mode==="ia-photo"){
+    if(iaPhoto)iaPhoto.hidden=false;
+    return;
+  }
+
+  if(mode==="fiche"){
+    toast("Le générateur de fiche arrive.");
+  }
+}
+
+
+function handleMaterialPhoto(event){
+
+  const file=event.target.files[0];
+
+  if(!file)return;
+
+  const preview=document.getElementById("photoPreview");
+
+  if(!preview)return;
+
+  const url=URL.createObjectURL(file);
+
+  preview.hidden=false;
+
+  preview.innerHTML=`
+    <img
+      src="${url}"
+      alt="Photo du matériel"
+      style="
+        width:100%;
+        max-height:300px;
+        object-fit:cover;
+        border-radius:20px;
+      "
+    >
+
+    <button
+      class="primary-btn"
+      onclick="analyzeMaterialPhoto()"
+    >
+      ✨ Trouver des activités
+    </button>
+  `;
+}
+
+
+function analyzeMaterialPhoto(){
+
+  toast("Analyse du matériel…");
+
+  // On branchera ici la vraie analyse IA de l'image.
+}
 </script>
 </body>
 </html>
