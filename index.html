@@ -1447,15 +1447,123 @@ function formatAI(t){
 /* =========================================================
    🆘 HELP
    ========================================================= */
-function helpAnalyse(){
-  const q=document.getElementById("helpText").value.trim().toLowerCase(),r=document.getElementById("helpResult");
+const HELP_DANGER_KEYWORDS=["violence","frappe","blessure","marque","étrangle","abus","agression","attouche","viol","danger","maltrait","suicide","automutil"];
+
+function helpKeywordCheck(q){
+  return HELP_DANGER_KEYWORDS.some(x=>q.includes(x));
+}
+
+function renderHelpResult(level,title,message,actions){
+  const r=document.getElementById("helpResult");
+  const colorClass=level==="rouge"?"help-red":level==="orange"?"help-orange":"help-green";
+  const actionsHtml=(Array.isArray(actions)&&actions.length)
+    ? actions.map(a=>esc(a)).join("<br>")
+    : "Observer les faits concrets.<br>Adapter l'accompagnement immédiat.<br>Transmettre les éléments utiles à la personne responsable.<br>Consulter la fiche ressource correspondante.";
+  r.innerHTML=`<div class="help-level ${colorClass}"><strong>${esc(title)}</strong>${esc(message)}</div><div class="info"><strong>Pistes</strong><p>${actionsHtml}</p></div>`;
+}
+
+async function helpAnalyse(){
+  const rawText=document.getElementById("helpText").value.trim();
+  const q=rawText.toLowerCase();
+  const r=document.getElementById("helpResult");
   if(!q){toast("Décris d'abord la situation.");return}
-  const danger=["violence","frappe","blessure","marque","étrangle","abus","agression","attouche","viol","danger","maltrait","suicide","automutil"];
-  const watch=["s'isole","s’isole","triste","peur","angoisse","changement de comportement","pleure","refuse"];
-  let c="help-green",t="Problématique pédagogique / courante",m="Observe la situation, prends en compte le contexte et adapte ton accompagnement.";
-  if(danger.some(x=>q.includes(x))){c="help-red";t="Situation préoccupante";m="Protège l'enfant et le groupe, préviens la direction et suis la procédure adaptée. N'enquête pas et ne pose pas toi-même de diagnostic."}
-  else if(watch.some(x=>q.includes(x))){c="help-orange";t="À surveiller / à accompagner";m="Observe les faits, échange avec la direction et adapte l'accompagnement. Un changement de comportement mérite d'être pris au sérieux sans poser de diagnostic."}
-  r.innerHTML=`<div class="help-level ${c}"><strong>${t}</strong>${m}</div><div class="info"><strong>Pistes</strong><p>Observer les faits concrets.<br>Adapter l'accompagnement immédiat.<br>Transmettre les éléments utiles à la personne responsable.<br>Consulter la fiche ressource correspondante.</p></div>`;
+
+  /* Filet de sécurité local : un mot de danger affiche le rouge
+     immédiatement, sans attendre l'IA (ne dépend pas du réseau). */
+  const forcedDanger=helpKeywordCheck(q);
+  if(forcedDanger){
+    renderHelpResult("rouge","Situation préoccupante","Protège l'enfant et le groupe, préviens la direction et suis la procédure adaptée. N'enquête pas et ne pose pas toi-même de diagnostic.",[
+      "Mettre l'enfant et le groupe en sécurité immédiatement.",
+      "Prévenir la direction sans délai.",
+      "Suivre la procédure de protection de l'enfance en vigueur dans ta structure.",
+      "Ne pas enquêter ni poser de diagnostic toi-même."
+    ]);
+  }else{
+    r.innerHTML=`<div class="loading"><span></span><span></span><span></span></div>`;
+  }
+
+  const prompt=`Tu es un outil d'aide à la décision pour des animateurs en ACM (centres de loisirs, colonies, BAFA) en France. Tu n'es ni médecin, ni psychologue, ni travailleur social, et tu ne dois JAMAIS poser de diagnostic médical, psychologique ou social sur un enfant.
+
+Situation décrite par l'animateur :
+"${rawText}"
+
+Classe cette situation dans UN SEUL des 3 niveaux suivants :
+- "vert" : problématique pédagogique / courante, gérable dans la pratique quotidienne
+- "orange" : à surveiller / à accompagner, nécessite d'observer et d'échanger avec la direction
+- "rouge" : situation préoccupante, nécessite de suivre les procédures de protection de l'enfance et d'alerter immédiatement la direction
+
+Règles impératives :
+- Ne jamais minimiser une situation qui pourrait être grave, même si les mots utilisés semblent anodins.
+- En cas de doute entre deux niveaux, choisis toujours le niveau le plus élevé (le plus prudent).
+- Ne jamais poser de diagnostic (n'écris pas "l'enfant souffre de X" ou "c'est probablement Y").
+- Rappelle implicitement que la décision finale revient à un adulte responsable / la direction, jamais à l'animateur seul.
+- Reste factuel, concret, et oriente vers des actions précises.
+
+Réponds UNIQUEMENT avec un JSON valide, sans aucun texte avant ou après :
+{
+  "niveau": "vert",
+  "titre": "Titre court",
+  "message": "2 à 3 phrases expliquant le niveau et donnant un conseil concret.",
+  "actions": ["Action concrète 1", "Action concrète 2", "Action concrète 3"]
+}`;
+
+  try{
+    const response=await fetch(AI_API,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({prompt:prompt})
+    });
+
+    if(!response.ok)throw new Error("Erreur Worker : "+response.status);
+
+    const data=await response.json();
+
+    let result="";
+    if(typeof data.output_text==="string")result=data.output_text;
+    if(!result && Array.isArray(data.output)){
+      for(const item of data.output){
+        if(!Array.isArray(item.content))continue;
+        for(const content of item.content){
+          if(typeof content.text==="string")result+=content.text;
+        }
+      }
+    }
+    if(!result && typeof data.text==="string")result=data.text;
+    if(!result && typeof data.response==="string")result=data.response;
+
+    result=result.replace(/^```json\s*/i,"").replace(/^```\s*/i,"").replace(/\s*```$/,"").trim();
+
+    if(!result)throw new Error("Réponse IA vide.");
+
+    const parsed=JSON.parse(result);
+
+    let niveau=String(parsed.niveau||"").toLowerCase();
+    if(!["vert","orange","rouge"].includes(niveau))niveau="orange";
+
+    /* Le filet de sécurité local reste prioritaire : on ne redescend
+       jamais en dessous du rouge si un mot de danger a été détecté. */
+    if(forcedDanger)niveau="rouge";
+
+    renderHelpResult(
+      niveau,
+      parsed.titre||(niveau==="rouge"?"Situation préoccupante":niveau==="orange"?"À surveiller / à accompagner":"Problématique pédagogique / courante"),
+      parsed.message||"Observe la situation, prends en compte le contexte et adapte ton accompagnement.",
+      parsed.actions
+    );
+
+  }catch(error){
+    console.error("Erreur analyse Help :",error);
+
+    if(!forcedDanger){
+      const watch=["s'isole","s’isole","triste","peur","angoisse","changement de comportement","pleure","refuse"];
+      if(watch.some(x=>q.includes(x))){
+        renderHelpResult("orange","À surveiller / à accompagner","Observe les faits, échange avec la direction et adapte l'accompagnement. Un changement de comportement mérite d'être pris au sérieux sans poser de diagnostic.");
+      }else{
+        renderHelpResult("vert","Problématique pédagogique / courante","Observe la situation, prends en compte le contexte et adapte ton accompagnement.");
+      }
+      toast("Analyse IA indisponible, résultat basé sur une estimation simple.");
+    }
+  }
 }
 
 /* =========================================================
