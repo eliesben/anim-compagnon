@@ -1221,22 +1221,24 @@ async function generateAIActivity(){
   toast("Génération de ton activité…");
 
   const prompt = `
-Tu es l'assistant pédagogique d'Anim Compagnon, une application destinée aux animateurs en ACM.
+Tu es l'assistant pédagogique d'Anim Compagnon.
 
-Crée une activité concrète, réaliste et directement utilisable par un animateur.
+Tu aides un animateur en ACM à créer une activité concrète et directement utilisable.
 
-Informations :
+Voici sa demande :
 
-Âge : ${age || "non précisé"}
+Âge des enfants : ${age || "non précisé"}
 Nombre d'enfants : ${children || "non précisé"}
 Durée : ${duration || "non précisée"}
 Lieu : ${place || "non précisé"}
-Matériel : ${material || "non précisé"}
+Matériel disponible : ${material || "non précisé"}
 Objectif ou envie : ${objective || "non précisé"}
 
-Adapte impérativement l'activité à l'âge, au nombre d'enfants, au temps disponible, au lieu et au matériel.
+Crée une activité adaptée à ces informations.
 
-Réponds en français avec exactement ces rubriques :
+Respecte l'âge, le nombre d'enfants, la durée, le lieu et le matériel disponible.
+
+Réponds en français avec cette structure :
 
 NOM DE L'ACTIVITÉ
 
@@ -1264,7 +1266,7 @@ POINTS DE VIGILANCE
 
 POSTURE DE L'ANIMATEUR
 
-Ne mets aucun préambule.
+Ne mets pas de préambule.
 `;
 
   try{
@@ -1280,23 +1282,24 @@ Ne mets aucun préambule.
     });
 
     if(!response.ok){
+
       const errorText = await response.text();
+
       console.error("Erreur Worker :",errorText);
-      throw new Error("Erreur Worker "+response.status);
+
+      throw new Error("Erreur Worker : "+response.status);
     }
 
     const data = await response.json();
 
-    console.log("Réponse IA :",data);
+    console.log("Réponse complète du Worker :",data);
 
     let result = "";
 
-    /* Réponse directe éventuelle */
     if(typeof data.output_text === "string"){
       result = data.output_text;
     }
 
-    /* Réponse Responses API */
     if(!result && Array.isArray(data.output)){
 
       for(const item of data.output){
@@ -1310,12 +1313,9 @@ Ne mets aucun préambule.
           }
 
         }
-
       }
-
     }
 
-    /* Autres formats éventuels */
     if(!result && typeof data.text === "string"){
       result = data.text;
     }
@@ -1331,6 +1331,17 @@ Ne mets aucun préambule.
     if(!result){
       throw new Error("La réponse IA est vide.");
     }
+
+    showAIGeneratedActivity(result);
+
+  }catch(error){
+
+    console.error("Erreur génération IA :",error);
+
+    toast("L'IA n'a pas réussi à générer l'activité.");
+
+  }
+}
 
     showAIGeneratedActivity(result);
 
