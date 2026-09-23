@@ -861,11 +861,45 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
 <!-- ========================= 🧑‍🏫 RÔLE ========================= -->
 <main id="role" class="view">
   <header class="page-head"><button class="link back" onclick="go('categories')">← Retour</button><h1 class="page-title">Rôle de l'animateur</h1><p class="page-intro">Comprendre son rôle et ajuster sa posture.</p></header>
-  <section class="section"><div class="simple-list">
-    <button class="card" onclick="detail('Fonctions de l’animateur','Rôle de l’animateur','Sécurité, accueil, vie quotidienne, activités et projets.')"><h2>Fonctions de l'animateur</h2><p>Les grandes fonctions à mobiliser en ACM.</p></button>
-    <button class="card" onclick="detail('Aptitudes de l’animateur','Rôle de l’animateur','Valeurs, relations, adaptation et prévention des discriminations.')"><h2>Aptitudes de l'animateur</h2><p>Compétences et réflexes utiles sur le terrain.</p></button>
-    <button class="card" onclick="detail('Les différents acteurs de l’ACM','Rôle de l’animateur','Organisateur, direction, animateurs, familles et autres acteurs.')"><h2>Les différents acteurs de l'ACM</h2><p>Qui fait quoi et comment chacun agit.</p></button>
-    <button class="card" onclick="detail('Posture de l’animateur','Rôle de l’animateur','Observer, comprendre, adapter et transmettre.')"><h2>Posture de l'animateur</h2><p>Des repères pour ajuster sa présence.</p></button>
+  <section class="section"><<div class="simple-list">
+
+  <button class="card resource-card"
+    onclick="detail('Fonctions de l’animateur','Rôle de l’animateur','Sécurité, accueil, vie quotidienne, activités et projets.')">
+    <div class="resource-img" style="--img:url('images/role-fonctions.jpg')"></div>
+    <div class="resource-info">
+      <h2>Fonctions de l'animateur</h2>
+      <p>Les grandes fonctions à mobiliser en ACM.</p>
+    </div>
+  </button>
+
+  <button class="card resource-card"
+    onclick="detail('Aptitudes de l’animateur','Rôle de l’animateur','Valeurs, relations, adaptation et prévention des discriminations.')">
+    <div class="resource-img" style="--img:url('images/role-aptitudes.jpg')"></div>
+    <div class="resource-info">
+      <h2>Aptitudes de l'animateur</h2>
+      <p>Compétences et réflexes utiles sur le terrain.</p>
+    </div>
+  </button>
+
+  <button class="card resource-card"
+    onclick="detail('Les différents acteurs de l’ACM','Rôle de l’animateur','Organisateur, direction, animateurs, familles et autres acteurs.')">
+    <div class="resource-img" style="--img:url('images/role-acteurs.jpg')"></div>
+    <div class="resource-info">
+      <h2>Les différents acteurs de l'ACM</h2>
+      <p>Qui fait quoi et comment chacun agit.</p>
+    </div>
+  </button>
+
+  <button class="card resource-card"
+    onclick="detail('Posture de l’animateur','Rôle de l’animateur','Observer, comprendre, adapter et transmettre.')">
+    <div class="resource-img" style="--img:url('images/role-posture.jpg')"></div>
+    <div class="resource-info">
+      <h2>Posture de l'animateur</h2>
+      <p>Des repères pour ajuster sa présence.</p>
+    </div>
+  </button>
+
+</div>
   </div></section>
 </main>
 
@@ -883,10 +917,44 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
 <main id="toolbox" class="view">
   <header class="page-head"><button class="link back" onclick="go('categories')">← Retour</button><h1 class="page-title">Boîte à outils</h1><p class="page-intro">Des outils directement utilisables par l'animateur.</p></header>
   <section class="section"><div class="simple-list">
-    <button class="card" onclick="tool('Mener une activité','Préparer → Présenter → Faire comprendre → Lancer → Observer → Adapter → Terminer → Faire le bilan.')"><h2>Mener une activité</h2><p>Préparer, lancer, observer, adapter et terminer.</p></button>
-    <button class="card" onclick="tool('Fiches d’activités','Identification → objectifs → matériel → déroulement → variantes → adaptations → vigilance → posture → évaluation → bilan.')"><h2>Fiches d'activités</h2><p>Créer une fiche claire et pratique.</p></button>
-    <button class="card" onclick="tool('PSAADRAFRA','Préparation · Sensibilisation · Accueil · Aménagement · Déroulement · Rythme · Animation · Fin · Rangement · Analyse.')"><h2>PSAADRAFRA</h2><p>Une méthode pour penser les étapes d'une activité.</p></button>
-    <button class="card" onclick="tool('Les types de grands jeux','Chasse au trésor · jeu de piste · olympiades · stands · jeu social · casino · enquête · fureur.')"><h2>Les types de grands jeux</h2><p>Comprendre les principes des différents formats.</p></button>
+
+  <button class="card resource-card"
+    onclick="tool('Mener une activité','Préparer → Présenter → Faire comprendre → Lancer → Observer → Adapter → Terminer → Faire le bilan.')">
+    <div class="resource-img" style="--img:url('images/outil-mener.jpg')"></div>
+    <div class="resource-info">
+      <h2>Mener une activité</h2>
+      <p>Préparer, lancer, observer, adapter et terminer.</p>
+    </div>
+  </button>
+
+  <button class="card resource-card"
+    onclick="tool('Fiches d’activités','Identification → objectifs → matériel → déroulement → variantes → adaptations → vigilance → posture → évaluation → bilan.')">
+    <div class="resource-img" style="--img:url('images/outil-fiches.jpg')"></div>
+    <div class="resource-info">
+      <h2>Fiches d'activités</h2>
+      <p>Créer une fiche claire et pratique.</p>
+    </div>
+  </button>
+
+  <button class="card resource-card"
+    onclick="tool('PSAADRAFRA','Préparation · Sensibilisation · Accueil · Aménagement · Déroulement · Rythme · Animation · Fin · Rangement · Analyse.')">
+    <div class="resource-img" style="--img:url('images/outil-psaadrafra.jpg')"></div>
+    <div class="resource-info">
+      <h2>PSAADRAFRA</h2>
+      <p>Une méthode pour penser les étapes d'une activité.</p>
+    </div>
+  </button>
+
+  <button class="card resource-card"
+    onclick="tool('Les types de grands jeux','Chasse au trésor · jeu de piste · olympiades · stands · jeu social · casino · enquête · fureur.')">
+    <div class="resource-img" style="--img:url('images/outil-grands-jeux.jpg')"></div>
+    <div class="resource-info">
+      <h2>Les types de grands jeux</h2>
+      <p>Comprendre les principes des différents formats.</p>
+    </div>
+  </button>
+
+</div>
   </div></section>
 </main>
 
