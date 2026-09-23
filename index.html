@@ -1120,17 +1120,9 @@ loadActivities();
 
 function openGeneratorMode(mode){
 
-  console.log("GENERATOR MODE :", mode);
-
   const iaChoice = document.getElementById("generatorIAChoice");
   const iaText = document.getElementById("generatorIAText");
   const iaPhoto = document.getElementById("generatorIAPhoto");
-
-  console.log({
-    iaChoice,
-    iaText,
-    iaPhoto
-  });
 
   if(iaChoice) iaChoice.hidden = true;
   if(iaText) iaText.hidden = true;
@@ -1156,6 +1148,7 @@ function openGeneratorMode(mode){
     return;
   }
 }
+
 
 /* =========================================================
    📸 PHOTO DU MATÉRIEL
@@ -1198,19 +1191,18 @@ function handleMaterialPhoto(event){
 
 
 /* =========================================================
-   🤖 ANALYSE DU MATÉRIEL
+   🤖 ANALYSE PHOTO
    ========================================================= */
 
 function analyzeMaterialPhoto(){
 
-  toast("Analyse du matériel…");
+  toast("L'analyse photo sera branchée ensuite.");
 
-  // L'analyse IA de la photo sera branchée ici.
 }
 
 
 /* =========================================================
-   🤖 GÉNÉRATION IA TEXTE
+   🤖 GÉNÉRATION IA
    ========================================================= */
 
 async function generateAIActivity(){
@@ -1232,22 +1224,18 @@ async function generateAIActivity(){
   const prompt = `
 Tu es l'assistant pédagogique d'Anim Compagnon.
 
-Tu aides un animateur en ACM à créer une activité concrète et directement utilisable.
+Crée une activité concrète et directement utilisable par un animateur en ACM.
 
-Voici sa demande :
-
-Âge des enfants : ${age || "non précisé"}
+Âge : ${age || "non précisé"}
 Nombre d'enfants : ${children || "non précisé"}
 Durée : ${duration || "non précisée"}
 Lieu : ${place || "non précisé"}
-Matériel disponible : ${material || "non précisé"}
-Objectif ou envie : ${objective || "non précisé"}
+Matériel : ${material || "non précisé"}
+Objectif / envie : ${objective || "non précisé"}
 
-Crée une activité adaptée à ces informations.
+Adapte l'activité à toutes ces informations.
 
-Respecte l'âge, le nombre d'enfants, la durée, le lieu et le matériel disponible.
-
-Réponds en français avec cette structure :
+Réponds en français avec :
 
 NOM DE L'ACTIVITÉ
 
@@ -1301,7 +1289,7 @@ Ne mets pas de préambule.
 
     const data = await response.json();
 
-    console.log("Réponse complète du Worker :",data);
+    console.log("Réponse IA :",data);
 
     let result = "";
 
@@ -1335,10 +1323,8 @@ Ne mets pas de préambule.
 
     result = result.trim();
 
-    console.log("Texte récupéré :",result);
-
     if(!result){
-      throw new Error("La réponse IA est vide.");
+      throw new Error("Réponse IA vide");
     }
 
     showAIGeneratedActivity(result);
@@ -1352,16 +1338,11 @@ Ne mets pas de préambule.
   }
 }
 
-    showAIGeneratedActivity(result);
 
-  }catch(error){
+/* =========================================================
+   📄 AFFICHAGE ACTIVITÉ GÉNÉRÉE
+   ========================================================= */
 
-    console.error("Erreur génération IA :",error);
-
-    toast("L'IA n'a pas réussi à générer l'activité.");
-
-  }
-}
 function showAIGeneratedActivity(result){
 
   const existing = document.getElementById("aiGeneratedResult");
@@ -1383,13 +1364,6 @@ function showAIGeneratedActivity(result){
     <div class="generated-activity">
       ${formatAIResult(result)}
     </div>
-
-    <button
-      class="primary-btn"
-      onclick="document.getElementById('generatorIAText')?.scrollIntoView({behavior:'smooth'})"
-    >
-      ← Modifier ma demande
-    </button>
   `;
 
   const generatorText = document.getElementById("generatorIAText");
@@ -1398,6 +1372,12 @@ function showAIGeneratedActivity(result){
     generatorText.insertAdjacentElement("afterend",section);
   }
 }
+
+
+/* =========================================================
+   📝 FORMATAGE
+   ========================================================= */
+
 function formatAIResult(text){
 
   return esc(text)
@@ -1405,81 +1385,6 @@ function formatAIResult(text){
     .replace(/\n/g,"<br>")
     .replace(/^(.+)$/,"<p>$1</p>");
 }
-
-function openGeneratorMode(mode){
-
-  const iaChoice=document.getElementById("generatorIAChoice");
-  const iaText=document.getElementById("generatorIAText");
-  const iaPhoto=document.getElementById("generatorIAPhoto");
-
-  if(iaChoice)iaChoice.hidden=true;
-  if(iaText)iaText.hidden=true;
-  if(iaPhoto)iaPhoto.hidden=true;
-
-  if(mode==="ia"){
-    if(iaChoice)iaChoice.hidden=false;
-    return;
-  }
-
-  if(mode==="ia-text"){
-    if(iaText)iaText.hidden=false;
-    return;
-  }
-
-  if(mode==="ia-photo"){
-    if(iaPhoto)iaPhoto.hidden=false;
-    return;
-  }
-
-  if(mode==="fiche"){
-    toast("Le générateur de fiche arrive.");
-  }
-}
-
-
-function handleMaterialPhoto(event){
-
-  const file=event.target.files[0];
-
-  if(!file)return;
-
-  const preview=document.getElementById("photoPreview");
-
-  if(!preview)return;
-
-  const url=URL.createObjectURL(file);
-
-  preview.hidden=false;
-
-  preview.innerHTML=`
-    <img
-      src="${url}"
-      alt="Photo du matériel"
-      style="
-        width:100%;
-        max-height:300px;
-        object-fit:cover;
-        border-radius:20px;
-      "
-    >
-
-    <button
-      class="primary-btn"
-      onclick="analyzeMaterialPhoto()"
-    >
-      ✨ Trouver des activités
-    </button>
-  `;
-}
-
-
-function analyzeMaterialPhoto(){
-
-  toast("Analyse du matériel…");
-
-  // On branchera ici la vraie analyse IA de l'image.
-}
-
 </script>
 </body>
 </html>
