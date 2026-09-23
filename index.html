@@ -1505,12 +1505,14 @@ function renderPublics(){
     return;
   }
 
-  list.innerHTML=subcategories.map(sub=>{
+    window.publicSubcategoriesList=subcategories;
+
+  list.innerHTML=subcategories.map((sub,i)=>{
     const count=publicResources.filter(r=>
       String(r.subcategory||"").trim().toLowerCase()===sub.toLowerCase()
     ).length;
     return `
-      <button class="card resource-card" onclick="openPublicSubcategory(${JSON.stringify(sub)})">
+      <button class="card resource-card" onclick="openPublicSubcategoryAt(${i})">
         <div class="resource-img" style="--img:none"></div>
         <div class="resource-info">
           <h2>${esc(sub)}</h2>
@@ -1519,6 +1521,12 @@ function renderPublics(){
       </button>
     `;
   }).join("");
+}
+
+function openPublicSubcategoryAt(i){
+  const sub=window.publicSubcategoriesList&&window.publicSubcategoriesList[i];
+  if(sub===undefined)return;
+  openPublicSubcategory(sub);
 }
 
 /* ===== PAGES SIMPLES ALIMENTÉES PAR BASEROW ===== */
