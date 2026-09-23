@@ -668,6 +668,7 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
   }
   .ai-activity-sheet{box-shadow:none}
 }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </style>
 </head>
 
@@ -2708,48 +2709,105 @@ function printAIFiche(){
   }
   window.print();
 }
+/* ===== CONTENU DE LA FICHE (utilisé pour Word et PDF) ===== */
+function ficheToHTML(s){
+  const list = (arr, tag="ul") => Array.isArray(arr) && arr.length
+    ? `<${tag}>` + arr.map(x => `<li>${esc(typeof x === "string" ? x : JSON.stringify(x))}</li>`).join("") + `</${tag}>`
+    : "";
+  const block = (titre, contenu) => contenu ? `<h2>${titre}</h2>${contenu}` : "";
+
+  return `
+    <h1>${esc(s.titre || "Activité")}</h1>
+    <p>${[s.age, s.nombre_enfants, s.duree, s.lieu, s.energie].filter(Boolean).map(esc).join(" · ")}</p>
+    ${block("Objectifs pédagogiques", list(s.objectifs))}
+    ${block("Matériel", list(s.materiel))}
+    ${block("Préparation", s.preparation ? `<p>${esc(s.preparation)}</p>` : "")}
+    ${block("Déroulement", list(s.deroulement, "ol"))}
+    ${block("Variantes", list(s.variantes))}
+    ${block("Adaptations", list(s.adaptations))}
+    ${block("Points de vigilance", list(s.points_vigilance))}
+    ${block("Posture de l'animateur", s.posture_animateur ? `<p>${esc(s.posture_animateur)}</p>` : "")}
+  `;
+}
+
+function ficheFileName(s){
+  return (s.titre || "fiche-activite")
+    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+    .replace(/[^\w\-]+/g,"_");
+}
+
+/* ===== LE CHOIX WORD / PDF ===== */
 function downloadAIFiche(){
-  const s = window.currentAISheet;
-  if(!s){
+  if(!window.currentAISheet){
     toast("Aucune fiche à télécharger.");
     return;
   }
 
-  const toText = x => typeof x === "string" ? x : JSON.stringify(x);
-  const bullets = arr => Array.isArray(arr) ? arr.map(x => "- " + toText(x)).join("\n") : "";
-  const numbered = arr => Array.isArray(arr) ? arr.map((x,i) => (i+1) + ". " + toText(x)).join("\n") : "";
+  const existing = document.getElementById("aiDownloadChoice");
+  if(existing){ existing.remove(); return; }
 
-  const parts = [
-    (s.titre || "Activité").toUpperCase(),
-    "",
-    [s.age, s.nombre_enfants, s.duree, s.lieu, s.energie].filter(Boolean).join(" | "),
-    "",
-    "OBJECTIFS\n" + bullets(s.objectifs),
-    "MATÉRIEL\n" + bullets(s.materiel),
-    s.preparation ? "PRÉPARATION\n" + s.preparation : "",
-    "DÉROULEMENT\n" + numbered(s.deroulement),
-    "VARIANTES\n" + bullets(s.variantes),
-    "ADAPTATIONS\n" + bullets(s.adaptations),
-    "POINTS DE VIGILANCE\n" + bullets(s.points_vigilance),
-    s.posture_animateur ? "POSTURE DE L'ANIMATEUR\n" + s.posture_animateur : ""
-  ].filter(p => p !== "");
+  const panel = document.createElement("div");
+  panel.id = "aiDownloadChoice";
+  panel.className = "ai-sheet-actions";
+  panel.innerHTML = `
+    <button class="ai-sheet-action" onclick="downloadFicheWord()">📝 Word</button>
+    <button class="ai-sheet-action" onclick="downloadFichePDF()">📄 PDF</button>
+  `;
 
-  const blob = new Blob([parts.join("\n\n")], {type:"text/plain;charset=utf-8"});
+  document.querySelector(".ai-sheet-actions")
+    .insertAdjacentElement("afterend", panel);
+}
+
+/* ===== WORD ===== */
+function downloadFicheWord(){
+  const s = window.currentAISheet;
+  if(!s) return;
+
+  const html = `
+    <html xmlns:o="urn:schemas-microsoft-com:office:office"
+          xmlns:w="urn:schemas-microsoft-com:office:word"
+          xmlns="http://www.w3.org/TR/REC-html40">
+    <head><meta charset="utf-8"><title>${esc(s.titre || "Fiche")}</title></head>
+    <body style="font-family:Calibri,Arial,sans-serif">${ficheToHTML(s)}</body>
+    </html>`;
+
+  const blob = new Blob(["\ufeff" + html], {type:"application/msword;charset=utf-8"});
   const url = URL.createObjectURL(blob);
-
-  const name = (s.titre || "fiche-activite")
-    .normalize("NFD").replace(/[\u0300-\u036f]/g,"")
-    .replace(/[^\w\-]+/g,"_");
-
   const link = document.createElement("a");
   link.href = url;
-  link.download = name + ".txt";
+  link.download = ficheFileName(s) + ".doc";
   document.body.appendChild(link);
   link.click();
   link.remove();
   URL.revokeObjectURL(url);
 
-  toast("Fiche téléchargée.");
+  toast("Fiche Word téléchargée.");
+}
+
+/* ===== PDF ===== */
+function downloadFichePDF(){
+  const s = window.currentAISheet;
+  if(!s) return;
+
+  if(typeof html2pdf === "undefined"){
+    toast("Le module PDF n'est pas chargé.");
+    return;
+  }
+
+  const box = document.createElement("div");
+  box.style.cssText = "position:absolute;left:-9999px;top:0;width:700px;padding:20px;background:#fff;color:#111;font-family:Calibri,Arial,sans-serif;font-size:14px;line-height:1.5";
+  box.innerHTML = ficheToHTML(s);
+  document.body.appendChild(box);
+
+  html2pdf().set({
+    margin: 12,
+    filename: ficheFileName(s) + ".pdf",
+    html2canvas: {scale: 2},
+    jsPDF: {unit:"mm", format:"a4", orientation:"portrait"}
+  }).from(box).save()
+    .then(() => toast("Fiche PDF téléchargée."))
+    .catch(() => toast("Impossible de créer le PDF."))
+    .finally(() => box.remove());
 }
 </script>
 </body>
