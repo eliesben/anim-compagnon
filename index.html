@@ -1070,10 +1070,38 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
   <div id="photoPreview" class="photo-preview" hidden></div>
 </section>
 </main>
+function vssDangerYes(){
+  document.getElementById("vssStepDanger").hidden=true;
+  document.getElementById("vssDangerResult").hidden=false;
+}
+function vssDangerNo(){
+  document.getElementById("vssStepDanger").hidden=true;
+  document.getElementById("vssStepMemo").hidden=false;
+}
+function vssShowOrientation(){
+  document.getElementById("vssStepMemo").hidden=true;
+  document.getElementById("vssStepOrientation").hidden=false;
+}
+function vssReset(){
+  document.getElementById("vssDangerResult").hidden=true;
+  document.getElementById("vssStepMemo").hidden=true;
+  document.getElementById("vssStepOrientation").hidden=true;
+  document.getElementById("vssStepDanger").hidden=false;
+  ["vssDate","vssLieu","vssFaits","vssPersonnes"].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)el.value="";
+  });
+}
 <!-- ========================= 🆘 HELP ========================= -->
 <main id="help" class="view">
   <header class="page-head"><h1 class="page-title">Help</h1><p class="page-intro">Décris la situation. Help t'oriente vers les ressources adaptées.</p></header>
   <section class="section">
+    <div class="card" style="border:2px solid #7e1e27;background:#fdeceea8">
+      <h2 style="color:#7e1e27">🚨 Violence envers un mineur ?</h2>
+      <p>Si tu es témoin ou informé d'une violence sexuelle, sexiste ou physique envers un enfant, utilise cet outil pour savoir quoi faire, tout de suite.</p>
+      <div style="height:10px"></div>
+      <button class="btn primary full" onclick="go('vss')" style="background:#7e1e27;border-color:#7e1e27">Je dois signaler une violence</button>
+    </div>
     <div class="card">
       <label class="label" for="helpText">Qu'est-ce qui se passe ?</label>
       <textarea id="helpText" style="min-height:130px" placeholder="Décris les faits que tu observes, sans poser toi-même de diagnostic."></textarea>
@@ -1089,7 +1117,82 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
     </div>
   </section>
 </main>
+<!-- ========================= 🚨 SIGNALEMENT VSS ========================= -->
+<main id="vss" class="view">
+  <header class="page-head">
+    <button class="link back" onclick="go('help')">← Retour</button>
+    <h1 class="page-title">Signaler une violence</h1>
+    <p class="page-intro">Cet outil t'oriente vers les bons contacts. Rien de ce que tu écris ici n'est enregistré ni envoyé : tout reste uniquement sur ton téléphone.</p>
+  </header>
 
+  <section class="section">
+
+    <div id="vssStepDanger" class="card">
+      <h2>Y a-t-il un danger immédiat ?</h2>
+      <p>L'enfant est en danger maintenant, ou vient de subir une agression grave.</p>
+      <div style="height:12px"></div>
+      <div class="row">
+        <button class="btn primary" onclick="vssDangerYes()">Oui, danger immédiat</button>
+        <button class="btn secondary" onclick="vssDangerNo()">Non, pas de danger immédiat</button>
+      </div>
+    </div>
+
+    <div id="vssDangerResult" class="card" hidden>
+      <div class="emergency">
+        <strong>Danger immédiat</strong>
+        Mets l'enfant et le groupe en sécurité, puis appelle tout de suite.
+      </div>
+      <div style="height:12px"></div>
+      <a class="btn primary full" href="tel:17">📞 Appeler le 17 (Police / Gendarmerie)</a>
+      <div style="height:8px"></div>
+      <a class="btn secondary full" href="tel:112">📞 Appeler le 112 (Numéro d'urgence européen)</a>
+      <div class="info"><strong>Ensuite</strong><p>Préviens la direction de la structure dès que possible. Ne laisse jamais l'enfant seul avec la personne mise en cause.</p></div>
+    </div>
+
+    <div id="vssStepMemo" class="card" hidden>
+      <h2>Prépare les faits avant d'appeler</h2>
+      <p>Ce texte reste uniquement sur ton téléphone : il n'est ni envoyé, ni enregistré nulle part. Note uniquement des faits, sans interpréter.</p>
+      <div style="height:10px"></div>
+      <label class="label" for="vssDate">Date et heure</label>
+      <input id="vssDate" type="text" placeholder="Ex. 23/09/2026 vers 15h30">
+      <div style="height:10px"></div>
+      <label class="label" for="vssLieu">Lieu</label>
+      <input id="vssLieu" type="text" placeholder="Ex. cour de récréation">
+      <div style="height:10px"></div>
+      <label class="label" for="vssFaits">Ce que tu as vu ou entendu (faits précis, sans interprétation)</label>
+      <textarea id="vssFaits" style="min-height:110px" placeholder="Décris uniquement ce que tu as constaté."></textarea>
+      <div style="height:10px"></div>
+      <label class="label" for="vssPersonnes">Personnes présentes</label>
+      <input id="vssPersonnes" type="text" placeholder="Ex. deux autres enfants, un animateur">
+      <div style="height:12px"></div>
+      <button class="btn primary full" onclick="vssShowOrientation()">Continuer</button>
+    </div>
+
+    <div id="vssStepOrientation" class="card" hidden>
+      <h2>Vers qui te tourner</h2>
+      <p>Suis ces étapes, dans cet ordre si possible.</p>
+
+      <div style="height:14px"></div>
+      <div class="info"><strong>1. Le référent protection ou la direction</strong><p>Préviens sans délai la personne responsable de ta structure.</p></div>
+
+      <div style="height:10px"></div>
+      <div class="info"><strong>2. La CRIP de ton département</strong><p>Cellule de Recueil des Informations Préoccupantes, aux heures ouvrées. Cherche « CRIP + nom de ton département » pour trouver le bon contact.</p></div>
+
+      <div style="height:10px"></div>
+      <a class="btn primary full" href="tel:119">📞 Appeler le 119 — Allô Enfance en Danger (24h/24, gratuit, anonyme)</a>
+
+      <div style="height:10px"></div>
+      <div class="info"><strong>3. Procureur de la République</strong><p>En cas d'infraction pénale claire (agression, viol...), un signalement direct ou un dépôt de plainte au commissariat/gendarmerie est possible, en général après avoir échangé avec l'ASE ou le 119.</p></div>
+
+      <div style="height:14px"></div>
+      <div class="emergency"><strong>À retenir</strong>Les animateurs et responsables d'ACM ont une obligation légale de signalement (article 40 du Code de procédure pénale, loi du 5 mars 2007). Mieux vaut signaler à tort que ne pas signaler un danger réel.</div>
+
+      <div style="height:12px"></div>
+      <button class="btn secondary full" onclick="vssReset()">Recommencer</button>
+    </div>
+
+  </section>
+</main>
 <!-- ========================= 👤 COMPTE ========================= -->
 <main id="account" class="view">
   <header class="page-head"><h1 class="page-title">Compte</h1><p class="page-intro">Tes préférences et tes favoris.</p></header>
@@ -1139,8 +1242,9 @@ function go(id){
   document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
   const target=document.getElementById(id);if(!target)return;
   target.classList.add("active");
-  const main=["home","categories","generator","help","account"].includes(id)?id:
+    const main=["home","categories","generator","help","account"].includes(id)?id:
     id==="detail"?(previous.startsWith("category")?"categories":previous):id==="activities"?"categories":
+    id==="vss"?"help":
     ["publics","publicSubcategory","role","daily","toolbox","resources"].includes(id)?"categories":"home";
   document.querySelectorAll(".nav").forEach(n=>n.classList.toggle("active",n.dataset.nav===main));
   window.scrollTo({top:0,behavior:"smooth"});
