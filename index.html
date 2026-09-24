@@ -24,8 +24,8 @@
 
   /* 🔤 TYPOGRAPHIE */
   --font:Calibri,Arial,sans-serif;
-  --titre:23px;
-  --carte:19px;
+  --titre:25px;
+  --carte:20px;
   --texte:14px;
   --bouton:14px;
 
@@ -764,6 +764,10 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
       <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 8.5h16v11H4z"/><path d="M8 8.5V6.8A2.8 2.8 0 0 1 10.8 4h2.4A2.8 2.8 0 0 1 16 6.8v1.7"/></svg></span>
       <div class="caption"><small>Boîte à outils</small><h2>Les outils de terrain</h2><p>Méthodes et repères pour préparer et mener tes activités.</p></div>
     </button>
+    <button class="hero" onclick="go('projets')">
+      <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 6h16M4 12h16M4 18h10"/></svg></span>
+      <div class="caption"><small>Projets</small><h2>Mes projets pédagogiques</h2><p>Suis tes projets et leurs séances au fil du temps.</p></div>
+    </button>
   </div>
 </section>
 
@@ -1070,17 +1074,10 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
   <div id="photoPreview" class="photo-preview" hidden></div>
 </section>
 </main>
-
 <!-- ========================= 🆘 HELP ========================= -->
 <main id="help" class="view">
   <header class="page-head"><h1 class="page-title">Help</h1><p class="page-intro">Décris la situation. Help t'oriente vers les ressources adaptées.</p></header>
   <section class="section">
-    <div class="card" style="border:2px solid #7e1e27;background:#fdeceea8">
-      <h2 style="color:#7e1e27">🚨 Violence envers un mineur ?</h2>
-      <p>Si tu es témoin ou informé d'une violence sexuelle, sexiste ou physique envers un enfant, utilise cet outil pour savoir quoi faire, tout de suite.</p>
-      <div style="height:10px"></div>
-      <button class="btn primary full" onclick="go('vss')" style="background:#7e1e27;border-color:#7e1e27">Je dois signaler une violence</button>
-    </div>
     <div class="card">
       <label class="label" for="helpText">Qu'est-ce qui se passe ?</label>
       <textarea id="helpText" style="min-height:130px" placeholder="Décris les faits que tu observes, sans poser toi-même de diagnostic."></textarea>
@@ -1096,82 +1093,7 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
     </div>
   </section>
 </main>
-<!-- ========================= 🚨 SIGNALEMENT VSS ========================= -->
-<main id="vss" class="view">
-  <header class="page-head">
-    <button class="link back" onclick="go('help')">← Retour</button>
-    <h1 class="page-title">Signaler une violence</h1>
-    <p class="page-intro">Cet outil t'oriente vers les bons contacts. Rien de ce que tu écris ici n'est enregistré ni envoyé : tout reste uniquement sur ton téléphone.</p>
-  </header>
 
-  <section class="section">
-
-    <div id="vssStepDanger" class="card">
-      <h2>Y a-t-il un danger immédiat ?</h2>
-      <p>L'enfant est en danger maintenant, ou vient de subir une agression grave.</p>
-      <div style="height:12px"></div>
-      <div class="row">
-        <button class="btn primary" onclick="vssDangerYes()">Oui, danger immédiat</button>
-        <button class="btn secondary" onclick="vssDangerNo()">Non, pas de danger immédiat</button>
-      </div>
-    </div>
-
-    <div id="vssDangerResult" class="card" hidden>
-      <div class="emergency">
-        <strong>Danger immédiat</strong>
-        Mets l'enfant et le groupe en sécurité, puis appelle tout de suite.
-      </div>
-      <div style="height:12px"></div>
-      <a class="btn primary full" href="tel:17">📞 Appeler le 17 (Police / Gendarmerie)</a>
-      <div style="height:8px"></div>
-      <a class="btn secondary full" href="tel:112">📞 Appeler le 112 (Numéro d'urgence européen)</a>
-      <div class="info"><strong>Ensuite</strong><p>Préviens la direction de la structure dès que possible. Ne laisse jamais l'enfant seul avec la personne mise en cause.</p></div>
-    </div>
-
-    <div id="vssStepMemo" class="card" hidden>
-      <h2>Prépare les faits avant d'appeler</h2>
-      <p>Ce texte reste uniquement sur ton téléphone : il n'est ni envoyé, ni enregistré nulle part. Note uniquement des faits, sans interpréter.</p>
-      <div style="height:10px"></div>
-      <label class="label" for="vssDate">Date et heure</label>
-      <input id="vssDate" type="text" placeholder="Ex. 23/09/2026 vers 15h30">
-      <div style="height:10px"></div>
-      <label class="label" for="vssLieu">Lieu</label>
-      <input id="vssLieu" type="text" placeholder="Ex. cour de récréation">
-      <div style="height:10px"></div>
-      <label class="label" for="vssFaits">Ce que tu as vu ou entendu (faits précis, sans interprétation)</label>
-      <textarea id="vssFaits" style="min-height:110px" placeholder="Décris uniquement ce que tu as constaté."></textarea>
-      <div style="height:10px"></div>
-      <label class="label" for="vssPersonnes">Personnes présentes</label>
-      <input id="vssPersonnes" type="text" placeholder="Ex. deux autres enfants, un animateur">
-      <div style="height:12px"></div>
-      <button class="btn primary full" onclick="vssShowOrientation()">Continuer</button>
-    </div>
-
-    <div id="vssStepOrientation" class="card" hidden>
-      <h2>Vers qui te tourner</h2>
-      <p>Suis ces étapes, dans cet ordre si possible.</p>
-
-      <div style="height:14px"></div>
-      <div class="info"><strong>1. Le référent protection ou la direction</strong><p>Préviens sans délai la personne responsable de ta structure.</p></div>
-
-      <div style="height:10px"></div>
-      <div class="info"><strong>2. La CRIP de ton département</strong><p>Cellule de Recueil des Informations Préoccupantes, aux heures ouvrées. Cherche « CRIP + nom de ton département » pour trouver le bon contact.</p></div>
-
-      <div style="height:10px"></div>
-      <a class="btn primary full" href="tel:119">📞 Appeler le 119 — Allô Enfance en Danger (24h/24, gratuit, anonyme)</a>
-
-      <div style="height:10px"></div>
-      <div class="info"><strong>3. Procureur de la République</strong><p>En cas d'infraction pénale claire (agression, viol...), un signalement direct ou un dépôt de plainte au commissariat/gendarmerie est possible, en général après avoir échangé avec l'ASE ou le 119.</p></div>
-
-      <div style="height:14px"></div>
-      <div class="emergency"><strong>À retenir</strong>Les animateurs et responsables d'ACM ont une obligation légale de signalement (article 40 du Code de procédure pénale, loi du 5 mars 2007). Mieux vaut signaler à tort que ne pas signaler un danger réel.</div>
-
-      <div style="height:12px"></div>
-      <button class="btn secondary full" onclick="vssReset()">Recommencer</button>
-    </div>
-
-  </section>
-</main>
 <!-- ========================= 👤 COMPTE ========================= -->
 <main id="account" class="view">
   <header class="page-head"><h1 class="page-title">Compte</h1><p class="page-intro">Tes préférences et tes favoris.</p></header>
@@ -1186,6 +1108,99 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
 <main id="detail" class="view">
   <header class="page-head"><button class="link" onclick="back()">← Retour</button><h1 id="detailTitle" class="page-title"></h1><p id="detailIntro" class="page-intro"></p></header>
   <section class="section"><div id="detailBody" class="card"></div></section>
+</main>
+
+<!-- ========================= 🗂️ PROJETS ========================= -->
+<main id="projets" class="view">
+  <header class="page-head">
+    <h1 class="page-title">Mes projets</h1>
+    <p class="page-intro">Suis tes projets pédagogiques et leurs séances.</p>
+  </header>
+
+  <section class="section">
+    <button class="btn primary full" onclick="openProjetForm()">+ Nouveau projet</button>
+  </section>
+
+  <section id="projetForm" class="section" hidden>
+    <div class="card">
+      <h2>Nouveau projet</h2>
+      <div class="form-grid">
+        <label>Titre
+          <input id="projetTitre" type="text" placeholder="Ex. Jardin partagé">
+        </label>
+        <label>Contexte
+          <textarea id="projetContexte" placeholder="Décris le contexte du projet"></textarea>
+        </label>
+        <label>Date de début
+          <input id="projetDateDebut" type="date">
+        </label>
+        <label>Date de fin
+          <input id="projetDateFin" type="date">
+        </label>
+        <label>Créé par
+          <input id="projetCreePar" type="text" placeholder="Ton prénom">
+        </label>
+      </div>
+      <button class="primary-btn" onclick="submitNewProjet()">Créer le projet</button>
+    </div>
+  </section>
+
+  <section class="section">
+    <div id="projetsLoading" class="loading"><span></span><span></span><span></span></div>
+    <div id="projetsList" class="simple-list"></div>
+  </section>
+</main>
+
+<!-- ========================= 📄 DÉTAIL PROJET ========================= -->
+<main id="projetDetail" class="view">
+  <header class="page-head">
+    <button class="link back" onclick="go('projets')">← Retour</button>
+    <h1 id="projetDetailTitle" class="page-title"></h1>
+    <p id="projetDetailIntro" class="page-intro"></p>
+  </header>
+
+  <section class="section">
+    <div id="projetDetailBody" class="card"></div>
+  </section>
+
+  <section class="section">
+    <button class="btn primary full" onclick="openSeanceForm()">+ Nouvelle séance</button>
+  </section>
+
+  <section id="seanceForm" class="section" hidden>
+    <div class="card">
+      <h2>Nouvelle séance</h2>
+      <div class="form-grid">
+        <label>Titre
+          <input id="seanceTitre" type="text" placeholder="Ex. Découverte du jardin">
+        </label>
+        <label>Numéro
+          <input id="seanceNumero" type="text" placeholder="Ex. 2">
+        </label>
+        <label>Date
+          <input id="seanceDate" type="date">
+        </label>
+        <label>Objectifs
+          <textarea id="seanceObjectifs"></textarea>
+        </label>
+        <label>Contenu
+          <textarea id="seanceContenu"></textarea>
+        </label>
+        <label>Moyens
+          <textarea id="seanceMoyens"></textarea>
+        </label>
+        <label>Évaluation
+          <textarea id="seanceEvaluation"></textarea>
+        </label>
+      </div>
+      <button class="primary-btn" onclick="submitNewSeance()">Ajouter la séance</button>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title" style="padding-bottom:10px">Séances</h2>
+    <div id="projetSeancesList" class="simple-list"></div>
+  </section>
 </main>
 </div>
 
@@ -1205,10 +1220,15 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
    ========================================================= */
 const ACTIVITIES_API="https://anim-compagnon-api.eliesbendjedou30.workers.dev/activities";
 const CATEGORIES_API="https://anim-compagnon-api.eliesbendjedou30.workers.dev/categories";
+const PROJETS_API="https://anim-compagnon-api.eliesbendjedou30.workers.dev/projets";
+const SEANCES_API="https://anim-compagnon-api.eliesbendjedou30.workers.dev/seances";
 const AI_API="https://anim-compagnon-api.eliesbendjedou30.workers.dev/";
 let activities = [];
 let categories = [];
 let resources = [];
+let projets = [];
+let seances = [];
+let currentProjetId = null;
 let previous = "home";
 let currentCategory = "all";
 
@@ -1221,14 +1241,14 @@ function go(id){
   document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
   const target=document.getElementById(id);if(!target)return;
   target.classList.add("active");
-    const main=["home","categories","generator","help","account"].includes(id)?id:
+  const main=["home","categories","generator","help","account"].includes(id)?id:
     id==="detail"?(previous.startsWith("category")?"categories":previous):id==="activities"?"categories":
-    id==="vss"?"help":
     ["publics","publicSubcategory","role","daily","toolbox","resources"].includes(id)?"categories":"home";
   document.querySelectorAll(".nav").forEach(n=>n.classList.toggle("active",n.dataset.nav===main));
   window.scrollTo({top:0,behavior:"smooth"});
   if(id==="activities")renderActivities();
   if(id==="account")renderFavorites();
+  if(id==="projets")loadProjets();
 }
 function back(){go(previous==="activities"?"activities":previous||"home")}
 
@@ -1238,57 +1258,9 @@ function back(){go(previous==="activities"?"activities":previous||"home")}
 document.getElementById("searchInput").addEventListener("keydown",e=>{
   if(e.key!=="Enter")return;
   const q=e.target.value.trim().toLowerCase();if(!q)return;
-  runGlobalSearch(q);
+  const found=activities.filter(a=>Object.values(a).join(" ").toLowerCase().includes(q));
+  go("activities");renderActivityCards(found);
 });
-
-function runGlobalSearch(q){
-  const matchedActivities=activities.filter(a=>Object.values(a).join(" ").toLowerCase().includes(q));
-  const matchedResources=resources.filter(r=>[r.title,r.summary,r.category,r.subcategory].join(" ").toLowerCase().includes(q));
-
-  window.rendered=matchedActivities;
-
-  const total=matchedActivities.length+matchedResources.length;
-  const intro=document.getElementById("searchResultsIntro");
-  if(intro)intro.textContent=total?`${total} résultat${total>1?"s":""} pour « ${q} »`:`Aucun résultat pour « ${q} »`;
-
-  const list=document.getElementById("searchResultsList");
-  if(!list)return;
-
-  if(!total){
-    list.innerHTML='<div class="empty"><strong>Aucun résultat</strong>Essaie un autre mot-clé.</div>';
-    go("searchResults");
-    return;
-  }
-
-  let html="";
-
-  if(matchedActivities.length){
-    html+=`<h2 class="section-title" style="margin:0 0 12px">Activités</h2><div class="activity-list" style="margin-bottom:20px">`;
-    html+=matchedActivities.map((a,i)=>`
-      <button class="activity" onclick="openActivity(${i})">
-        <div class="activity-info">
-          <h2>${esc(a.name)}</h2>
-          <div class="badges">${[a.age,a.duration,a.children?a.children+" enfants":""].filter(Boolean).map(x=>`<span class="badge">${esc(x)}</span>`).join("")}</div>
-          ${a.objectives?`<p>${esc(short(a.objectives,110))}</p>`:""}
-        </div>
-      </button>`).join("");
-    html+=`</div>`;
-  }
-
-  if(matchedResources.length){
-    html+=`<h2 class="section-title" style="margin:0 0 12px">Fiches ressources</h2><div class="simple-list">`;
-    html+=matchedResources.map(r=>`
-      <article class="card">
-        <h2>${esc(r.title||"Fiche sans titre")}</h2>
-        ${r.summary?`<p>${esc(r.summary)}</p>`:""}
-        ${r.pdf?`<div style="height:10px"></div><button class="btn primary full" onclick="openResourcePDF(${Number(r.id)})">Ouvrir la fiche PDF</button>`:""}
-      </article>`).join("");
-    html+=`</div>`;
-  }
-
-  list.innerHTML=html;
-  go("searchResults");
-}
 /* =========================================================
    🗂️ CATÉGORIES — BASEROW
    ========================================================= */
@@ -1526,163 +1498,19 @@ async function generate(){
 function formatAI(t){
   return esc(t).replace(/\n/g,"<br>").replace(/(?:^|<br>)(TITRE|ÂGE \/ DURÉE \/ LIEU|OBJECTIFS PÉDAGOGIQUES|MATÉRIEL|DÉROULEMENT|VARIANTES|POINTS DE VIGILANCE)(?=<br>|$)/g,'<h3>$1</h3>');
 }
-   
-function vssDangerYes(){
-  document.getElementById("vssStepDanger").hidden=true;
-  document.getElementById("vssDangerResult").hidden=false;
-}
-function vssDangerNo(){
-  document.getElementById("vssStepDanger").hidden=true;
-  document.getElementById("vssStepMemo").hidden=false;
-}
-function vssShowOrientation(){
-  document.getElementById("vssStepMemo").hidden=true;
-  document.getElementById("vssStepOrientation").hidden=false;
-}
-function vssReset(){
-  document.getElementById("vssDangerResult").hidden=true;
-  document.getElementById("vssStepMemo").hidden=true;
-  document.getElementById("vssStepOrientation").hidden=true;
-  document.getElementById("vssStepDanger").hidden=false;
-  ["vssDate","vssLieu","vssFaits","vssPersonnes"].forEach(id=>{
-    const el=document.getElementById(id);
-    if(el)el.value="";
-  });
-}
+
 /* =========================================================
    🆘 HELP
    ========================================================= */
-const HELP_DANGER_KEYWORDS=["violence","frappe","blessure","marque","étrangle","abus","agression","attouche","viol","danger","maltrait","suicide","automutil"];
-
-function helpKeywordCheck(q){
-  return HELP_DANGER_KEYWORDS.some(x=>q.includes(x));
-}
-
-function renderHelpResult(level,title,message,actions){
-  const r=document.getElementById("helpResult");
-  const colorClass=level==="rouge"?"help-red":level==="orange"?"help-orange":"help-green";
-  const icon=level==="rouge"?"🔴":level==="orange"?"🟠":"🟢";
-
-  const actionsList=(Array.isArray(actions)&&actions.length)
-    ? actions
-    : ["Observer les faits concrets.","Adapter l'accompagnement immédiat.","Transmettre les éléments utiles à la personne responsable.","Consulter la fiche ressource correspondante."];
-
-  r.innerHTML=`
-    <div class="help-level ${colorClass}">
-      <strong>${icon} ${esc(title)}</strong>
-      <p style="margin:8px 0 0;line-height:1.55">${esc(message)}</p>
-    </div>
-    <div class="info">
-      <strong>Pistes à suivre</strong>
-      <ul style="margin:8px 0 0;padding-left:18px">
-        ${actionsList.map(a=>`<li style="margin-bottom:6px;line-height:1.45">${esc(a)}</li>`).join("")}
-      </ul>
-    </div>
-  `;
-}
-
-async function helpAnalyse(){
-  const rawText=document.getElementById("helpText").value.trim();
-  const q=rawText.toLowerCase();
-  const r=document.getElementById("helpResult");
+function helpAnalyse(){
+  const q=document.getElementById("helpText").value.trim().toLowerCase(),r=document.getElementById("helpResult");
   if(!q){toast("Décris d'abord la situation.");return}
-
-  /* Filet de sécurité local : un mot de danger affiche le rouge
-     immédiatement, sans attendre l'IA (ne dépend pas du réseau). */
-  const forcedDanger=helpKeywordCheck(q);
-  if(forcedDanger){
-    renderHelpResult("rouge","Situation préoccupante","Protège l'enfant et le groupe, préviens la direction et suis la procédure adaptée. N'enquête pas et ne pose pas toi-même de diagnostic.",[
-      "Mettre l'enfant et le groupe en sécurité immédiatement.",
-      "Prévenir la direction sans délai.",
-      "Suivre la procédure de protection de l'enfance en vigueur dans ta structure.",
-      "Ne pas enquêter ni poser de diagnostic toi-même."
-    ]);
-  }else{
-    r.innerHTML=`<div class="loading"><span></span><span></span><span></span></div>`;
-  }
-
-  const prompt=`Tu es un outil d'aide à la décision pour des animateurs en ACM (centres de loisirs, colonies, BAFA) en France. Tu n'es ni médecin, ni psychologue, ni travailleur social, et tu ne dois JAMAIS poser de diagnostic médical, psychologique ou social sur un enfant.
-
-Situation décrite par l'animateur :
-"${rawText}"
-
-Classe cette situation dans UN SEUL des 3 niveaux suivants :
-- "vert" : problématique pédagogique / courante, gérable dans la pratique quotidienne
-- "orange" : à surveiller / à accompagner, nécessite d'observer et d'échanger avec la direction
-- "rouge" : situation préoccupante, nécessite de suivre les procédures de protection de l'enfance et d'alerter immédiatement la direction
-
-Règles impératives :
-- Ne jamais minimiser une situation qui pourrait être grave, même si les mots utilisés semblent anodins.
-- En cas de doute entre deux niveaux, choisis toujours le niveau le plus élevé (le plus prudent).
-- Ne jamais poser de diagnostic (n'écris pas "l'enfant souffre de X" ou "c'est probablement Y").
-- Rappelle implicitement que la décision finale revient à un adulte responsable / la direction, jamais à l'animateur seul.
-- Reste factuel, concret, et oriente vers des actions précises.
-
-Réponds UNIQUEMENT avec un JSON valide, sans aucun texte avant ou après :
-{
-  "niveau": "vert",
-  "titre": "Titre court",
-  "message": "2 à 3 phrases expliquant le niveau et donnant un conseil concret.",
-  "actions": ["Action concrète 1", "Action concrète 2", "Action concrète 3"]
-}`;
-
-  try{
-    const response=await fetch(AI_API,{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({prompt:prompt})
-    });
-
-    if(!response.ok)throw new Error("Erreur Worker : "+response.status);
-
-    const data=await response.json();
-
-    let result="";
-    if(typeof data.output_text==="string")result=data.output_text;
-    if(!result && Array.isArray(data.output)){
-      for(const item of data.output){
-        if(!Array.isArray(item.content))continue;
-        for(const content of item.content){
-          if(typeof content.text==="string")result+=content.text;
-        }
-      }
-    }
-    if(!result && typeof data.text==="string")result=data.text;
-    if(!result && typeof data.response==="string")result=data.response;
-
-    result=result.replace(/^```json\s*/i,"").replace(/^```\s*/i,"").replace(/\s*```$/,"").trim();
-
-    if(!result)throw new Error("Réponse IA vide.");
-
-    const parsed=JSON.parse(result);
-
-    let niveau=String(parsed.niveau||"").toLowerCase();
-    if(!["vert","orange","rouge"].includes(niveau))niveau="orange";
-
-    /* Le filet de sécurité local reste prioritaire : on ne redescend
-       jamais en dessous du rouge si un mot de danger a été détecté. */
-    if(forcedDanger)niveau="rouge";
-
-    renderHelpResult(
-      niveau,
-      parsed.titre||(niveau==="rouge"?"Situation préoccupante":niveau==="orange"?"À surveiller / à accompagner":"Problématique pédagogique / courante"),
-      parsed.message||"Observe la situation, prends en compte le contexte et adapte ton accompagnement.",
-      parsed.actions
-    );
-
-  }catch(error){
-    console.error("Erreur analyse Help :",error);
-
-    if(!forcedDanger){
-      const watch=["s'isole","s’isole","triste","peur","angoisse","changement de comportement","pleure","refuse"];
-      if(watch.some(x=>q.includes(x))){
-        renderHelpResult("orange","À surveiller / à accompagner","Observe les faits, échange avec la direction et adapte l'accompagnement. Un changement de comportement mérite d'être pris au sérieux sans poser de diagnostic.");
-      }else{
-        renderHelpResult("vert","Problématique pédagogique / courante","Observe la situation, prends en compte le contexte et adapte ton accompagnement.");
-      }
-      toast("Analyse IA indisponible, résultat basé sur une estimation simple.");
-    }
-  }
+  const danger=["violence","frappe","blessure","marque","étrangle","abus","agression","attouche","viol","danger","maltrait","suicide","automutil"];
+  const watch=["s'isole","s’isole","triste","peur","angoisse","changement de comportement","pleure","refuse"];
+  let c="help-green",t="Problématique pédagogique / courante",m="Observe la situation, prends en compte le contexte et adapte ton accompagnement.";
+  if(danger.some(x=>q.includes(x))){c="help-red";t="Situation préoccupante";m="Protège l'enfant et le groupe, préviens la direction et suis la procédure adaptée. N'enquête pas et ne pose pas toi-même de diagnostic."}
+  else if(watch.some(x=>q.includes(x))){c="help-orange";t="À surveiller / à accompagner";m="Observe les faits, échange avec la direction et adapte l'accompagnement. Un changement de comportement mérite d'être pris au sérieux sans poser de diagnostic."}
+  r.innerHTML=`<div class="help-level ${c}"><strong>${t}</strong>${m}</div><div class="info"><strong>Pistes</strong><p>Observer les faits concrets.<br>Adapter l'accompagnement immédiat.<br>Transmettre les éléments utiles à la personne responsable.<br>Consulter la fiche ressource correspondante.</p></div>`;
 }
 
 /* =========================================================
@@ -1703,6 +1531,228 @@ function openFavorite(i){const f=getFav(),a=f[i];if(a){window.rendered=[a];openA
 function esc(v){return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
 function short(v,n){v=String(v||"");return v.length>n?v.slice(0,n-1)+"…":v}
 function toast(m){const e=document.getElementById("toast");e.textContent=m;e.classList.add("show");clearTimeout(window.tt);window.tt=setTimeout(()=>e.classList.remove("show"),2400)}
+
+/* =========================================================
+   🗂️ PROJETS & SÉANCES — BASEROW
+   ========================================================= */
+
+function statusText(v){
+  if(v===null || v===undefined) return "";
+  if(typeof v==="object") return String(v.value||"");
+  return String(v);
+}
+
+function mapProjet(r){
+  return {
+    id:r.id,
+    titre:String(r.TITRE || "Projet sans titre"),
+    contexte:String(r.CONTEXTE || ""),
+    dateDebut:String(r.DATE_DEBUT || ""),
+    dateFin:String(r.DATE_FIN || ""),
+    statut:statusText(r.STATUT),
+    creePar:String(r["CRÉÉ_PAR"] || r.CREE_PAR || ""),
+    actif:["oui","true","1","yes"].includes(String(r.Actif || "").toLowerCase())
+  };
+}
+
+function mapSeance(r){
+  return {
+    id:r.id,
+    titre:String(r.TITRE || "Séance sans titre"),
+    numero:String(r.NUMERO || ""),
+    date:String(r.DATE || ""),
+    objectifs:String(r.OBJECTIFS || ""),
+    contenu:String(r.CONTENU || ""),
+    moyens:String(r.MOYENS || ""),
+    evaluation:String(r.EVALUATION || ""),
+    statut:statusText(r.STATUT),
+    projetIds:Array.isArray(r.PROJET) ? r.PROJET.map(p=>p.id) : []
+  };
+}
+
+async function loadProjets(){
+  const loading=document.getElementById("projetsLoading");
+  const list=document.getElementById("projetsList");
+  if(loading)loading.classList.remove("hidden");
+  try{
+    const res=await fetch(PROJETS_API,{cache:"no-store"});
+    if(!res.ok)throw Error(res.status);
+    const data=await res.json();
+    const rows=Array.isArray(data)?data:(data.results||[]);
+    projets=rows.map(mapProjet);
+    await loadSeances();
+    renderProjetsList();
+  }catch(e){
+    console.error(e);
+    if(loading)loading.classList.add("hidden");
+    if(list)list.innerHTML='<div class="empty"><strong>Projets indisponibles</strong>Impossible de charger les projets pour le moment.</div>';
+  }
+}
+
+async function loadSeances(){
+  try{
+    const res=await fetch(SEANCES_API,{cache:"no-store"});
+    if(!res.ok)throw Error(res.status);
+    const data=await res.json();
+    const rows=Array.isArray(data)?data:(data.results||[]);
+    seances=rows.map(mapSeance);
+  }catch(e){
+    console.error(e);
+  }
+}
+
+function renderProjetsList(){
+  const loading=document.getElementById("projetsLoading");
+  const list=document.getElementById("projetsList");
+  if(loading)loading.classList.add("hidden");
+  if(!list)return;
+  if(!projets.length){
+    list.innerHTML='<div class="empty"><strong>Aucun projet</strong>Crée ton premier projet pédagogique.</div>';
+    return;
+  }
+  list.innerHTML=projets.map((p,i)=>{
+    const nbSeances=seances.filter(s=>s.projetIds.includes(p.id)).length;
+    const meta=[p.statut,[p.dateDebut,p.dateFin].filter(Boolean).join(" → "),nbSeances?`${nbSeances} séance${nbSeances>1?"s":""}`:""].filter(Boolean).join(" • ");
+    return `
+      <button class="card" style="width:100%;text-align:left" onclick="openProjet(${i})">
+        <h2>${esc(p.titre)}</h2>
+        <p>${esc(meta)}</p>
+      </button>
+    `;
+  }).join("");
+}
+
+function openProjet(i){
+  const p=projets[i];if(!p)return;
+  currentProjetId=p.id;
+  previous="projets";
+  document.getElementById("projetDetailTitle").textContent=p.titre;
+  document.getElementById("projetDetailIntro").textContent=[p.statut,[p.dateDebut,p.dateFin].filter(Boolean).join(" → ")].filter(Boolean).join(" • ");
+  document.getElementById("projetDetailBody").innerHTML=[
+    ["Contexte",p.contexte],["Créé par",p.creePar]
+  ].filter(x=>x[1]).map(x=>`<h2>${esc(x[0])}</h2><p style="white-space:pre-line">${esc(x[1])}</p>`).join("")
+  || '<p>Aucune information complémentaire pour ce projet.</p>';
+  const form=document.getElementById("seanceForm");
+  if(form)form.hidden=true;
+  renderProjetSeances();
+  go("projetDetail");
+}
+
+function renderProjetSeances(){
+  const list=document.getElementById("projetSeancesList");
+  if(!list)return;
+  const items=seances
+    .filter(s=>s.projetIds.includes(currentProjetId))
+    .sort((a,b)=>(Number(a.numero)||0)-(Number(b.numero)||0));
+  if(!items.length){
+    list.innerHTML='<div class="empty"><strong>Aucune séance</strong>Ajoute la première séance de ce projet.</div>';
+    return;
+  }
+  list.innerHTML=items.map(s=>`
+    <article class="card">
+      <h2>${esc(s.numero?("Séance "+s.numero+" — "):"")+esc(s.titre)}</h2>
+      <p>${esc([s.date,s.statut].filter(Boolean).join(" • "))}</p>
+      ${s.objectifs?`<h3>Objectifs</h3><p style="white-space:pre-line">${esc(s.objectifs)}</p>`:""}
+      ${s.contenu?`<h3>Contenu</h3><p style="white-space:pre-line">${esc(s.contenu)}</p>`:""}
+      ${s.moyens?`<h3>Moyens</h3><p style="white-space:pre-line">${esc(s.moyens)}</p>`:""}
+      ${s.evaluation?`<h3>Évaluation</h3><p style="white-space:pre-line">${esc(s.evaluation)}</p>`:""}
+    </article>
+  `).join("");
+}
+
+function openProjetForm(){
+  const form=document.getElementById("projetForm");
+  if(!form)return;
+  form.hidden=!form.hidden;
+  if(!form.hidden)form.scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+async function submitNewProjet(){
+  const titre=document.getElementById("projetTitre")?.value.trim()||"";
+  const contexte=document.getElementById("projetContexte")?.value.trim()||"";
+  const dateDebut=document.getElementById("projetDateDebut")?.value||"";
+  const dateFin=document.getElementById("projetDateFin")?.value||"";
+  const creePar=document.getElementById("projetCreePar")?.value.trim()||"";
+  if(!titre){toast("Donne un titre à ton projet.");return}
+  try{
+    const body={
+      TITRE:titre,
+      CONTEXTE:contexte,
+      STATUT:"En cours",
+      "CRÉÉ_PAR":creePar,
+      Actif:"Oui"
+    };
+    if(dateDebut)body.DATE_DEBUT=dateDebut;
+    if(dateFin)body.DATE_FIN=dateFin;
+    const res=await fetch(PROJETS_API,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(body)
+    });
+    if(!res.ok)throw Error(res.status);
+    toast("Projet créé.");
+    const form=document.getElementById("projetForm");
+    if(form)form.hidden=true;
+    ["projetTitre","projetContexte","projetDateDebut","projetDateFin","projetCreePar"].forEach(id=>{
+      const el=document.getElementById(id);if(el)el.value="";
+    });
+    await loadProjets();
+  }catch(e){
+    console.error(e);
+    toast("Impossible de créer le projet.");
+  }
+}
+
+function openSeanceForm(){
+  const form=document.getElementById("seanceForm");
+  if(!form)return;
+  form.hidden=!form.hidden;
+  if(!form.hidden)form.scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+async function submitNewSeance(){
+  if(!currentProjetId){toast("Sélectionne d'abord un projet.");return}
+  const titre=document.getElementById("seanceTitre")?.value.trim()||"";
+  const numero=document.getElementById("seanceNumero")?.value.trim()||"";
+  const date=document.getElementById("seanceDate")?.value||"";
+  const objectifs=document.getElementById("seanceObjectifs")?.value.trim()||"";
+  const contenu=document.getElementById("seanceContenu")?.value.trim()||"";
+  const moyens=document.getElementById("seanceMoyens")?.value.trim()||"";
+  const evaluation=document.getElementById("seanceEvaluation")?.value.trim()||"";
+  if(!titre){toast("Donne un titre à la séance.");return}
+  try{
+    const body={
+      TITRE:titre,
+      NUMERO:numero,
+      OBJECTIFS:objectifs,
+      CONTENU:contenu,
+      MOYENS:moyens,
+      EVALUATION:evaluation,
+      STATUT:"À venir",
+      Actif:"Oui",
+      PROJET:[currentProjetId]
+    };
+    if(date)body.DATE=date;
+    const res=await fetch(SEANCES_API,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(body)
+    });
+    if(!res.ok)throw Error(res.status);
+    toast("Séance ajoutée.");
+    const form=document.getElementById("seanceForm");
+    if(form)form.hidden=true;
+    ["seanceTitre","seanceNumero","seanceDate","seanceObjectifs","seanceContenu","seanceMoyens","seanceEvaluation"].forEach(id=>{
+      const el=document.getElementById(id);if(el)el.value="";
+    });
+    await loadSeances();
+    renderProjetSeances();
+    renderProjetsList();
+  }catch(e){
+    console.error(e);
+    toast("Impossible d'ajouter la séance.");
+  }
+}
 
 /* =========================================================
    🚀 DÉMARRAGE
@@ -1780,14 +1830,12 @@ function renderPublics(){
     return;
   }
 
-    window.publicSubcategoriesList=subcategories;
-
-  list.innerHTML=subcategories.map((sub,i)=>{
+  list.innerHTML=subcategories.map(sub=>{
     const count=publicResources.filter(r=>
       String(r.subcategory||"").trim().toLowerCase()===sub.toLowerCase()
     ).length;
     return `
-      <button class="card resource-card" onclick="openPublicSubcategoryAt(${i})">
+      <button class="card resource-card" onclick="openPublicSubcategory(${JSON.stringify(sub)})">
         <div class="resource-img" style="--img:none"></div>
         <div class="resource-info">
           <h2>${esc(sub)}</h2>
@@ -1796,12 +1844,6 @@ function renderPublics(){
       </button>
     `;
   }).join("");
-}
-
-function openPublicSubcategoryAt(i){
-  const sub=window.publicSubcategoriesList&&window.publicSubcategoriesList[i];
-  if(sub===undefined)return;
-  openPublicSubcategory(sub);
 }
 
 /* ===== PAGES SIMPLES ALIMENTÉES PAR BASEROW ===== */
@@ -1901,18 +1943,37 @@ async function loadResources(){
     resources=rows.map(mapResource).filter(r=>r.active).sort((a,b)=>a.order-b.order);
     renderPublics();
     renderResourcesPage();
-    renderRolePage();
-    renderDailyPage();
-    renderToolboxPage();
   }catch(e){
     console.error(e);
-    ["resourcesList","roleList","dailyList","toolboxList","publicsList"].forEach(id=>{
-      const el=document.getElementById(id);
-      if(el)el.innerHTML='<div class="empty"><strong>Contenu indisponible</strong>Impossible de charger le contenu Baserow pour le moment.</div>';
-    });
     const loading=document.getElementById("resourcesLoading");
+    const list=document.getElementById("resourcesList");
     if(loading)loading.classList.add("hidden");
+    if(list)list.innerHTML='<div class="empty"><strong>Ressources indisponibles</strong>Impossible de charger le contenu Baserow pour le moment.</div>';
+    const publicsList=document.getElementById("publicsList");
+    if(publicsList)publicsList.innerHTML='<div class="empty"><strong>Publics indisponibles</strong>Impossible de charger le contenu Baserow pour le moment.</div>';
   }
+}
+
+function renderResourcesPage(){
+  const loading=document.getElementById("resourcesLoading");
+  const list=document.getElementById("resourcesList");
+  if(!list)return;
+  if(loading)loading.classList.add("hidden");
+
+  const items=resources.filter(r=>String(r.category).trim().toLowerCase()==="ressources");
+
+  if(!items.length){
+    list.innerHTML='<div class="empty"><strong>Aucune ressource</strong>Aucune ressource publiée pour le moment.</div>';
+    return;
+  }
+
+  list.innerHTML=items.map(r=>`
+    <article class="card">
+      <h2>${esc(r.title||"Ressource sans titre")}</h2>
+      ${r.summary?`<p>${esc(r.summary)}</p>`:""}
+      ${r.pdf?`<div style="height:10px"></div><button class="btn primary full" onclick="openResourcePDF(${Number(r.id)})">Ouvrir la fiche PDF</button>`:""}
+    </article>
+  `).join("");
 }
 loadResources();
 /* =========================================================
