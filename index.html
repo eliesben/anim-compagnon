@@ -1561,10 +1561,24 @@ function helpKeywordCheck(q){
 function renderHelpResult(level,title,message,actions){
   const r=document.getElementById("helpResult");
   const colorClass=level==="rouge"?"help-red":level==="orange"?"help-orange":"help-green";
-  const actionsHtml=(Array.isArray(actions)&&actions.length)
-    ? actions.map(a=>esc(a)).join("<br>")
-    : "Observer les faits concrets.<br>Adapter l'accompagnement immédiat.<br>Transmettre les éléments utiles à la personne responsable.<br>Consulter la fiche ressource correspondante.";
-  r.innerHTML=`<div class="help-level ${colorClass}"><strong>${esc(title)}</strong>${esc(message)}</div><div class="info"><strong>Pistes</strong><p>${actionsHtml}</p></div>`;
+  const icon=level==="rouge"?"🔴":level==="orange"?"🟠":"🟢";
+
+  const actionsList=(Array.isArray(actions)&&actions.length)
+    ? actions
+    : ["Observer les faits concrets.","Adapter l'accompagnement immédiat.","Transmettre les éléments utiles à la personne responsable.","Consulter la fiche ressource correspondante."];
+
+  r.innerHTML=`
+    <div class="help-level ${colorClass}">
+      <strong>${icon} ${esc(title)}</strong>
+      <p style="margin:8px 0 0;line-height:1.55">${esc(message)}</p>
+    </div>
+    <div class="info">
+      <strong>Pistes à suivre</strong>
+      <ul style="margin:8px 0 0;padding-left:18px">
+        ${actionsList.map(a=>`<li style="margin-bottom:6px;line-height:1.45">${esc(a)}</li>`).join("")}
+      </ul>
+    </div>
+  `;
 }
 
 async function helpAnalyse(){
