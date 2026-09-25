@@ -116,9 +116,10 @@ button,input,textarea{font:inherit}button{cursor:pointer}button:active{transform
    ========================================================= */
 .scroll{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;margin:0 calc(var(--marge)*-1);padding:0 var(--marge) 7px}
 .scroll::-webkit-scrollbar{display:none}
-.hero{position:relative;flex:0 0 86vw;max-width:482px;height:230px;border:0;border-radius:22px;overflow:hidden;color:#fff;text-align:left;scroll-snap-align:start;background:linear-gradient(135deg,#6f956f,#304d35);box-shadow:var(--ombre)}
-.hero:nth-child(2){background:linear-gradient(135deg,#c8b88e,#6e7655)}
-.hero:nth-child(3){background:linear-gradient(135deg,#9db69d,#48654e)}
+.hero{position:relative;flex:0 0 86vw;max-width:482px;height:230px;border:0;border-radius:22px;overflow:hidden;color:#fff;text-align:left;scroll-snap-align:start;background:#6f956f;background-size:cover;background-position:center;box-shadow:var(--ombre)}
+.hero-generer{background-image:linear-gradient(rgba(0,0,0,.20),rgba(0,0,0,.55)),var(--image-hero-generer)}
+.hero-activites{background-image:linear-gradient(rgba(0,0,0,.20),rgba(0,0,0,.55)),var(--image-hero-activites)}
+.hero-outils{background-image:linear-gradient(rgba(0,0,0,.20),rgba(0,0,0,.55)),var(--image-hero-outils)}
 .hero:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 38%,rgba(0,0,0,.58))}
 .hero .icon{position:absolute;right:16px;top:16px;width:45px;height:45px;border-radius:15px;background:#ffffff32;display:grid;place-items:center;z-index:2}
 .hero .icon svg{width:23px;height:23px}
@@ -757,15 +758,15 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
 <section class="section">
   <div class="section-head"><h2 class="section-title">À la une</h2></div>
   <div class="scroll">
-    <button class="hero" onclick="go('generator')">
+    <button class="hero hero-generer" onclick="go('generator')">
       <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3v18M3 12h18M5 5l14 14M19 5 5 19"/></svg></span>
       <div class="caption"><small>Besoin d'une idée ?</small><h2>Générer une activité</h2><p>Décris ton groupe, ton matériel et le temps disponible.</p></div>
     </button>
-    <button class="hero" onclick="go('activities')">
+    <button class="hero hero-activities" onclick="go('activities')">
       <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="8.5"/><path d="M8 12h8M12 8v8"/></svg></span>
       <div class="caption"><small>Activités</small><h2>Trouver rapidement</h2><p>Retrouve les activités publiées dans ta bibliothèque.</p></div>
     </button>
-    <button class="hero" onclick="go('toolbox')">
+    <button class="hero hero-outils" onclick="go('toolbox')">
       <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 8.5h16v11H4z"/><path d="M8 8.5V6.8A2.8 2.8 0 0 1 10.8 4h2.4A2.8 2.8 0 0 1 16 6.8v1.7"/></svg></span>
       <div class="caption"><small>Boîte à outils</small><h2>Les outils de terrain</h2><p>Méthodes et repères pour préparer et mener tes activités.</p></div>
     </button>
