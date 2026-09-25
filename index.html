@@ -1176,8 +1176,7 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
 <main id="account" class="view">
   <header class="page-head"><h1 class="page-title">Compte</h1><p class="page-intro">Tes préférences et tes favoris.</p></header>
   <section class="section">
-    <div class="card"><div class="profile"><div class="avatar">A</div><div><strong>Animateur</strong><p>Ton compagnon de terrain.</p></div></div></div>
-    <div class="card"><h2>Mes favoris</h2><div id="favorites" class="empty"><strong>Aucun favori</strong>Les fiches que tu ajoutes apparaîtront ici.</div></div>
+<div class="card"><div id="accountProfile"></div></div>    <div class="card"><h2>Mes favoris</h2><div id="favorites" class="empty"><strong>Aucun favori</strong>Les fiches que tu ajoutes apparaîtront ici.</div></div>
     <div class="card"><h2>À propos</h2><p>Anim Compagnon est une boîte à outils destinée aux animateurs en ACM, périscolaire, colonies et formations BAFA.</p></div>
   </section>
 </main>
@@ -1228,7 +1227,7 @@ function go(id){
   document.querySelectorAll(".nav").forEach(n=>n.classList.toggle("active",n.dataset.nav===main));
   window.scrollTo({top:0,behavior:"smooth"});
   if(id==="activities")renderActivities();
-  if(id==="account")renderFavorites();
+if(id==="account"){renderFavorites();renderAccountProfile();}
 }
 function back(){go(previous==="activities"?"activities":previous||"home")}
 
@@ -1703,6 +1702,90 @@ function openFavorite(i){const f=getFav(),a=f[i];if(a){window.rendered=[a];openA
 function esc(v){return String(v??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
 function short(v,n){v=String(v||"");return v.length>n?v.slice(0,n-1)+"…":v}
 function toast(m){const e=document.getElementById("toast");e.textContent=m;e.classList.add("show");clearTimeout(window.tt);window.tt=setTimeout(()=>e.classList.remove("show"),2400)}
+
+/* =========================================================
+   👤 PROFIL (Compte) — stocké sur l'appareil
+   ========================================================= */
+function getProfile(){
+  try{return JSON.parse(localStorage.getItem("animProfile")||"null")}catch{return null}
+}
+function saveProfile(p){
+  localStorage.setItem("animProfile",JSON.stringify(p));
+}
+function clearProfile(){
+  localStorage.removeItem("animProfile");
+  renderAccountProfile();
+}
+function profileInitial(p){
+  const src=(p.prenom||p.nom||"A").trim();
+  return src?src[0].toUpperCase():"A";
+}
+function renderAccountProfile(){
+  const el=document.getElementById("accountProfile");
+  if(!el)return;
+  const p=getProfile();
+  if(p&&p.nom&&p.prenom){
+    el.innerHTML=`
+      <div class="profile">
+        <div class="avatar">${esc(profileInitial(p))}</div>
+        <div>
+          <strong>${esc(p.prenom)} ${esc(p.nom)}</strong>
+          <p>${esc(p.mail||"")}</p>
+        </div>
+      </div>
+      <div style="height:12px"></div>
+      <button class="btn secondary full" onclick="openProfileForm()">Modifier mes informations</button>
+    `;
+  }else{
+    el.innerHTML=`
+      <h2>Connexion</h2>
+      <p>Renseigne tes informations pour personnaliser Anim Compagnon.</p>
+      <div style="height:10px"></div>
+      <div class="form-grid">
+        <label>Nom
+          <input id="profileNom" type="text" placeholder="Ton nom" value="${esc(p&&p.nom||"")}">
+        </label>
+        <label>Prénom
+          <input id="profilePrenom" type="text" placeholder="Ton prénom" value="${esc(p&&p.prenom||"")}">
+        </label>
+        <label>Mail
+          <input id="profileMail" type="email" placeholder="ton.mail@exemple.fr" value="${esc(p&&p.mail||"")}">
+        </label>
+      </div>
+      <button class="primary-btn" onclick="submitProfile()">Enregistrer</button>
+    `;
+  }
+}
+function openProfileForm(){
+  const el=document.getElementById("accountProfile");
+  if(!el)return;
+  const p=getProfile()||{};
+  el.innerHTML=`
+    <h2>Mes informations</h2>
+    <div style="height:10px"></div>
+    <div class="form-grid">
+      <label>Nom
+        <input id="profileNom" type="text" placeholder="Ton nom" value="${esc(p.nom||"")}">
+      </label>
+      <label>Prénom
+        <input id="profilePrenom" type="text" placeholder="Ton prénom" value="${esc(p.prenom||"")}">
+      </label>
+      <label>Mail
+        <input id="profileMail" type="email" placeholder="ton.mail@exemple.fr" value="${esc(p.mail||"")}">
+      </label>
+    </div>
+    <button class="primary-btn" onclick="submitProfile()">Enregistrer</button>
+  `;
+}
+function submitProfile(){
+  const nom=document.getElementById("profileNom")?.value.trim()||"";
+  const prenom=document.getElementById("profilePrenom")?.value.trim()||"";
+  const mail=document.getElementById("profileMail")?.value.trim()||"";
+  if(!nom||!prenom){toast("Indique au moins ton nom et ton prénom.");return}
+  saveProfile({nom:nom,prenom:prenom,mail:mail});
+  toast("Informations enregistrées.");
+  renderAccountProfile();
+}
 
 /* =========================================================
    🚀 DÉMARRAGE
