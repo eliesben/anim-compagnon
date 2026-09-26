@@ -2460,13 +2460,18 @@ function showAIProposals(){
   `;
 
 
-  const generatorText =
+    const generatorText =
     document.getElementById("generatorIAText");
 
+  const generatorPhoto =
+    document.getElementById("generatorIAPhoto");
 
-  if(generatorText){
+  const anchor =
+    (generatorPhoto && !generatorPhoto.hidden) ? generatorPhoto : generatorText;
 
-    generatorText.insertAdjacentElement(
+  if(anchor){
+
+    anchor.insertAdjacentElement(
       "afterend",
       section
     );
