@@ -379,6 +379,7 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
 }
 
 .form-grid input,
+.form-grid select,
 .form-grid textarea{
   width:100%;
   box-sizing:border-box;
@@ -1004,9 +1005,16 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
 
   <div class="form-grid">
 
-    <label>
+        <label>
       Âge des enfants
-      <input id="aiAge" type="text" placeholder="Ex. 8 ans">
+      <select id="aiAge">
+        <option value="">Choisis une tranche d'âge</option>
+        <option value="3-5 ans">3-5 ans</option>
+        <option value="6-8 ans">6-8 ans</option>
+        <option value="9-11 ans">9-11 ans</option>
+        <option value="12-14 ans">12-14 ans</option>
+        <option value="15-17 ans">15-17 ans</option>
+      </select>
     </label>
 
     <label>
@@ -1016,12 +1024,22 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
 
     <label>
       Durée
-      <input id="aiDuration" type="text" placeholder="Ex. 45 minutes">
+      <select id="aiDuration">
+        <option value="">Choisis une durée</option>
+        <option value="15 minutes">15 minutes</option>
+        <option value="30 minutes">30 minutes</option>
+        <option value="45 minutes">45 minutes</option>
+        <option value="1 heure">1 heure</option>
+        <option value="1h30">1h30</option>
+      </select>
     </label>
 
     <label>
       Lieu
-      <input id="aiPlace" type="text" placeholder="Ex. extérieur">
+      <select id="aiPlace" 
+      <option value="">Choisis une lieu</option>
+      <option value="Intérieur">Interieur</option>
+      <option value="Extérieur">Exterieur</option>
     </label>
 
     <label>
