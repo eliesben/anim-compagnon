@@ -396,6 +396,79 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
   resize:vertical;
 }
 
+/* =========================================================
+   🪟 FENÊTRE MODALE — GÉNÉRATEUR IA
+   ========================================================= */
+.modal-overlay{
+  position:fixed;
+  inset:0;
+  z-index:300;
+  background:rgba(31,45,36,.35);
+  backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  display:flex;
+  align-items:flex-end;
+  justify-content:center;
+}
+.modal-overlay[hidden]{display:none}
+.modal-box{
+  position:relative;
+  width:100%;
+  max-width:560px;
+  max-height:88vh;
+  overflow-y:auto;
+  background:rgba(250,249,245,.68);
+  backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
+  border:1px solid rgba(255,255,255,.5);
+  border-bottom:none;
+  border-radius:24px 24px 0 0;
+  padding:24px 0 calc(var(--marge) + 20px);
+  box-shadow:0 -10px 40px rgba(0,0,0,.2);
+  animation:modalIn .25s ease;
+}
+@keyframes modalIn{from{transform:translateY(24px);opacity:.4}to{transform:none;opacity:1}}
+.modal-close{
+  position:absolute;
+  top:14px;
+  right:14px;
+  width:36px;
+  height:36px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.6);
+  background:rgba(255,255,255,.55);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  display:grid;
+  place-items:center;
+  font-size:16px;
+  font-weight:700;
+  color:var(--noir);
+  cursor:pointer;
+  z-index:2;
+}
+@media(min-width:560px){
+  .modal-overlay{align-items:center;padding:20px}
+  .modal-box{border-radius:24px;border-bottom:1px solid rgba(255,255,255,.5)}
+}
+
+.form-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+@media(max-width:420px){
+  .form-row{grid-template-columns:1fr}
+}
+
+.ai-disclaimer{
+  margin:2px 0 0;
+  font-size:11px;
+  line-height:1.4;
+  font-style:italic;
+  color:rgba(17,17,17,.55);
+}
+
 .primary-btn{
   margin-top:16px;
   min-height:44px;
@@ -996,6 +1069,10 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
 </section>
 
 
+<div id="generatorModalOverlay" class="modal-overlay" hidden onclick="if(event.target===this)closeGeneratorModal()">
+<div class="modal-box">
+<button class="modal-close" onclick="closeGeneratorModal()" aria-label="Fermer">✕</button>
+
 <!-- FORMULAIRE IA TEXTE -->
 <section id="generatorIAText" class="section generator-panel" hidden>
 
@@ -1003,45 +1080,49 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
     <h2 class="section-title">Décris ton besoin</h2>
   </div>
 
-  <div class="form-grid">
+   <div class="form-grid">
 
-        <label>
-      Âge des enfants
-      <select id="aiAge">
-        <option value="">Choisis une tranche d'âge</option>
-        <option value="3-5 ans">3-5 ans</option>
-        <option value="6-8 ans">6-8 ans</option>
-        <option value="9-11 ans">9-11 ans</option>
-        <option value="12-14 ans">12-14 ans</option>
-        <option value="15-17 ans">15-17 ans</option>
-      </select>
-    </label>
+    <div class="form-row">
+      <label>
+        Âge des enfants
+        <select id="aiAge">
+          <option value="">Choisis une tranche d'âge</option>
+          <option value="3-5 ans">3-5 ans</option>
+          <option value="6-8 ans">6-8 ans</option>
+          <option value="9-11 ans">9-11 ans</option>
+          <option value="12-14 ans">12-14 ans</option>
+          <option value="15-17 ans">15-17 ans</option>
+        </select>
+      </label>
 
-    <label>
-      Nombre d'enfants
-      <input id="aiChildren" type="number" placeholder="Ex. 14">
-    </label>
+      <label>
+        Nombre d'enfants
+        <input id="aiChildren" type="number" placeholder="Ex. 14">
+      </label>
+    </div>
 
-    <label>
-      Durée
-      <select id="aiDuration">
-        <option value="">Choisis une durée</option>
-        <option value="15 minutes">15 minutes</option>
-        <option value="30 minutes">30 minutes</option>
-        <option value="45 minutes">45 minutes</option>
-        <option value="1 heure">1 heure</option>
-        <option value="1h30">1h30</option>
-      </select>
-    </label>
+    <div class="form-row">
+      <label>
+        Durée
+        <select id="aiDuration">
+          <option value="">Choisis une durée</option>
+          <option value="15 minutes">15 minutes</option>
+          <option value="30 minutes">30 minutes</option>
+          <option value="45 minutes">45 minutes</option>
+          <option value="1 heure">1 heure</option>
+          <option value="1h30">1h30</option>
+        </select>
+      </label>
 
-    <label>
-      Lieu
-      <select id="aiPlace" 
-      <option value="">Choisis une lieu</option>
-      <option value="Intérieur">Interieur</option>
-      <option value="Extérieur">Exterieur</option>
-      </select>
-    </label>
+      <label>
+        Lieu
+        <select id="aiPlace">
+          <option value="">Choisis un lieu</option>
+          <option value="Intérieur">Intérieur</option>
+          <option value="Extérieur">Extérieur</option>
+        </select>
+      </label>
+    </div>
 
     <label>
       Matériel disponible
@@ -1056,6 +1137,8 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
     </label>
 
   </div>
+
+  <p class="ai-disclaimer">Anim Compagnon t'invite à relire les propositions d'activités afin de t'imprégner de leur préparation et de leur déroulement, et proposer aux enfants un contenu de qualité. Chaque activité est adaptable à ton besoin.</p>
 
   <button class="primary-btn" onclick="generateAIActivity()">
     ✨ Générer mon activité
@@ -1091,8 +1174,11 @@ textarea{width:100%;border:1px solid #222;border-radius:16px;padding:13px;backgr
     📸 Prendre une photo
   </button>
 
-  <div id="photoPreview" class="photo-preview" hidden></div>
+    <div id="photoPreview" class="photo-preview" hidden></div>
 </section>
+
+</div>
+</div>
 </main>
 
 <!-- ========================= 🆘 HELP ========================= -->
@@ -2039,10 +2125,12 @@ function openGeneratorMode(mode){
   const iaChoice = document.getElementById("generatorIAChoice");
   const iaText = document.getElementById("generatorIAText");
   const iaPhoto = document.getElementById("generatorIAPhoto");
+  const modalOverlay = document.getElementById("generatorModalOverlay");
 
   if(iaChoice) iaChoice.hidden = true;
   if(iaText) iaText.hidden = true;
   if(iaPhoto) iaPhoto.hidden = true;
+  if(modalOverlay) modalOverlay.hidden = true;
 
   const proposals = document.getElementById("aiGeneratedProposals");
   const sheet = document.getElementById("aiGeneratedSheet");
@@ -2060,6 +2148,7 @@ function openGeneratorMode(mode){
   if(mode === "ia-text"){
 
     if(iaText) iaText.hidden = false;
+    if(modalOverlay) modalOverlay.hidden = false;
 
     return;
   }
@@ -2067,6 +2156,7 @@ function openGeneratorMode(mode){
   if(mode === "ia-photo"){
 
     if(iaPhoto) iaPhoto.hidden = false;
+    if(modalOverlay) modalOverlay.hidden = false;
 
     return;
   }
@@ -2077,6 +2167,15 @@ function openGeneratorMode(mode){
 
     return;
   }
+}
+
+function closeGeneratorModal(){
+  const modalOverlay = document.getElementById("generatorModalOverlay");
+  const iaText = document.getElementById("generatorIAText");
+  const iaPhoto = document.getElementById("generatorIAPhoto");
+  if(modalOverlay) modalOverlay.hidden = true;
+  if(iaText) iaText.hidden = true;
+  if(iaPhoto) iaPhoto.hidden = true;
 }
 
 
