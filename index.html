@@ -3184,6 +3184,7 @@ function handleMaterialPhoto(event){
 
   if(!file) return;
 
+  window.currentMaterialPhotoFile = file;
 
   const preview =
     document.getElementById(
@@ -3230,11 +3231,146 @@ function handleMaterialPhoto(event){
    🤖 ANALYSE PHOTO
    ========================================================= */
 
-function analyzeMaterialPhoto(){
+function resizeImageFile(file, maxDim, quality){
+  maxDim = maxDim || 1024;
+  quality = quality || 0.8;
+  return new Promise(function(resolve, reject){
+    const reader = new FileReader();
+    reader.onload = function(){
+      const img = new Image();
+      img.onload = function(){
+        let width = img.width, height = img.height;
+        if(width > maxDim || height > maxDim){
+          const ratio = Math.min(maxDim / width, maxDim / height);
+          width = Math.round(width * ratio);
+          height = Math.round(height * ratio);
+        }
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(img, 0, 0, width, height);
+        resolve(canvas.toDataURL("image/jpeg", quality));
+      };
+      img.onerror = reject;
+      img.src = reader.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
 
-  toast(
-    "L'analyse photo sera branchée ensuite."
-  );
+async function analyzeMaterialPhoto(){
+
+  const file = window.currentMaterialPhotoFile;
+
+  if(!file){
+    toast("Aucune photo sélectionnée.");
+    return;
+  }
+
+  toast("J'analyse ta photo…");
+
+  const prompt = `
+Tu es l'assistant pédagogique d'Anim Compagnon.
+
+Regarde cette photo de matériel disponible pour un animateur en ACM.
+Identifie le matériel visible, puis propose EXACTEMENT 3 activités
+différentes, réalisables avec ce matériel.
+
+Réponds UNIQUEMENT avec un JSON valide.
+
+Format obligatoire :
+
+{
+  "propositions": [
+    {
+      "titre": "Nom de l'activité",
+      "description": "Courte présentation en 2 ou 3 phrases.",
+      "age": "8-12 ans",
+      "duree": "30 min",
+      "lieu": "Extérieur",
+      "energie": "Dynamique",
+      "objectifs": ["Coopération", "Motricité"],
+      "materiel": ["4 plots", "3 ballons"]
+    }
+  ]
+}
+
+Ne mets aucun texte avant ou après le JSON.
+`;
+
+  try{
+
+    const image = await resizeImageFile(file);
+
+    const response = await fetch(AI_API,{
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body:JSON.stringify({ prompt: prompt, image: image })
+    });
+
+    if(!response.ok){
+      throw new Error("Erreur Worker : " + response.status);
+    }
+
+    const data = await response.json();
+
+    let result = "";
+
+    if(typeof data.output_text === "string"){
+      result = data.output_text;
+    }
+
+    if(!result && Array.isArray(data.output)){
+      for(const item of data.output){
+        if(!Array.isArray(item.content)) continue;
+        for(const content of item.content){
+          if(typeof content.text === "string"){
+            result += content.text;
+          }
+        }
+      }
+    }
+
+    if(!result && typeof data.text === "string"){
+      result = data.text;
+    }
+
+    if(!result && typeof data.response === "string"){
+      result = data.response;
+    }
+
+    result = result
+      .replace(/^```json\s*/i,"")
+      .replace(/^```\s*/i,"")
+      .replace(/\s*```$/,"")
+      .trim();
+
+    if(!result){
+      throw new Error("Réponse IA vide.");
+    }
+
+    const parsed = JSON.parse(result);
+
+    if(
+      !parsed.propositions ||
+      !Array.isArray(parsed.propositions) ||
+      parsed.propositions.length === 0
+    ){
+      throw new Error("Aucune proposition reçue.");
+    }
+
+    aiProposals = parsed.propositions.slice(0,3);
+
+    showAIProposals();
+
+  }catch(error){
+
+    console.error("Erreur analyse photo :", error);
+
+    toast("Impossible d'analyser la photo pour le moment.");
+
+  }
 
 }
 /* =========================================================
