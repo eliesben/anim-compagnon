@@ -415,6 +415,228 @@ input[type="file"]{font-size:13px;color:var(--texte-doux)}
 #toolbox .resource-img{background-image:var(--image-boite-outils)}
 #resources .resource-img{background-image:var(--image-ressources)}
 
+
+/* =========================================================
+   🖼️ PHOTOS DES TYPES D'ACTIVITÉS ET DES TRANCHES D'ÂGE
+   (change l'image ici si tu veux)
+   ========================================================= */
+:root{
+  --image-type-manuelles:url("images/activites.jpg");
+  --image-type-sportives:url("images/publics.jpg");
+  --image-type-chants:url("images/vie-quotidienne.jpg");
+  --image-type-courte:url("images/role-anim.jpg");
+  --image-tranche-3-5:url("images/publics.jpg");
+  --image-tranche-6-11:url("images/activites.jpg");
+  --image-tranche-12-17:url("images/role-anim.jpg");
+}
+
+/* =========================================================
+   🎲 ACTIVITÉS — grille des 4 types
+   ========================================================= */
+.head-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.head-row > div{min-width:0}
+.filter-btn{position:relative;margin-top:2px}
+.filter-badge{position:absolute;top:-3px;right:-3px;min-width:18px;height:18px;padding:0 5px;border-radius:99px;background:var(--vert);color:#10140C;font-size:10.5px;font-weight:800;display:grid;place-items:center}
+.filter-badge[hidden]{display:none}
+.type-grid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:10px;height:max(380px,calc(100dvh - 300px))}
+.type-card{position:relative;border:0;border-radius:22px;overflow:hidden;min-height:0;padding:0;text-align:left;color:#fff;background:#2b3424 center/cover;box-shadow:var(--ombre-legere)}
+.type-card:after{content:"";position:absolute;inset:0;background:var(--voile-photo)}
+.type-card .pill-count{position:absolute;top:11px;left:11px;z-index:1}
+.type-card .type-title{position:absolute;left:14px;right:14px;bottom:13px;z-index:1;margin:0;font-size:22px;font-weight:800;line-height:1.08;letter-spacing:-.3px;text-shadow:0 2px 12px rgba(0,0,0,.5);overflow-wrap:break-word;hyphens:auto}
+.type-card .type-title small{display:block;font-size:10px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:rgba(255,255,255,.68);margin-bottom:3px}
+.pill-count{display:inline-flex;align-items:center;padding:5px 10px;border-radius:99px;background:rgba(20,23,15,.55);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);font-size:11px;font-weight:700;color:#fff}
+.pill-count.hot{background:var(--jaune);border-color:var(--jaune);color:#1B1B0F}
+
+/* =========================================================
+   🧭 FEUILLE DE FILTRES (glisse du bas)
+   ========================================================= */
+.sheet-overlay{position:fixed;inset:0;z-index:400;background:rgba(5,7,4,.62);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:flex;align-items:flex-end;justify-content:center}
+.sheet-overlay[hidden]{display:none}
+.filter-sheet{width:100%;max-width:560px;max-height:86vh;overflow-y:auto;background:var(--surface);border:1px solid rgba(255,255,255,.1);border-bottom:0;border-radius:28px 28px 0 0;padding:22px 18px calc(22px + env(safe-area-inset-bottom));box-shadow:0 -14px 44px rgba(0,0,0,.5);animation:sheetUp .28s cubic-bezier(.2,.8,.2,1)}
+@keyframes sheetUp{from{transform:translateY(40px);opacity:.5}to{transform:none;opacity:1}}
+.filter-sheet .sheet-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.filter-sheet .sheet-head h2{margin:0;font-size:19px;font-weight:800}
+.filter-sheet .chip-title:first-of-type{margin-top:12px}
+.sheet-actions{display:grid;grid-template-columns:1fr 1.3fr;gap:10px;margin-top:24px}
+
+/* =========================================================
+   🃏 LISTE D'ACTIVITÉS — cartes photo
+   ========================================================= */
+.list-head{display:flex;align-items:center;gap:12px}
+.list-head .page-title{font-size:22px}
+.a-card{position:relative;display:block;height:150px;width:100%;border-radius:24px;overflow:visible;cursor:pointer;color:#fff;box-shadow:var(--ombre);-webkit-tap-highlight-color:transparent}
+.a-card:active{transform:scale(.985)}
+.a-card .a-photo{position:absolute;inset:0;border-radius:24px;overflow:hidden;background:#2b3424 center/cover}
+.a-card .a-photo:after{content:"";position:absolute;inset:0;background:var(--voile-photo)}
+.a-card .pill-count{position:absolute;top:12px;left:12px;z-index:2}
+.a-menu{position:absolute;top:10px;right:10px;z-index:3;width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background:rgba(20,23,15,.55);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:grid;place-items:center;color:#fff}
+.a-menu svg{width:16px;height:16px}
+.a-body{position:absolute;left:15px;right:15px;bottom:13px;z-index:2}
+.a-body small{display:block;font-size:10px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:rgba(255,255,255,.68);margin-bottom:2px}
+.a-body h2{margin:0;font-size:20px;font-weight:800;line-height:1.1;letter-spacing:-.3px;text-shadow:0 2px 12px rgba(0,0,0,.5);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.a-mat{display:flex;align-items:center;gap:6px;margin-top:4px;font-size:12px;font-weight:600;color:rgba(255,255,255,.8);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.a-mat svg{width:13px;height:13px;flex:none}
+.qmenu{position:absolute;top:48px;right:10px;z-index:20;width:236px;padding:6px;border-radius:18px;background:rgba(30,34,26,.98);border:1px solid rgba(255,255,255,.1);box-shadow:0 18px 40px rgba(0,0,0,.55);animation:in .15s ease}
+.qmenu[hidden]{display:none}
+.qmenu button{display:flex;align-items:center;gap:10px;width:100%;padding:11px 12px;border:0;border-radius:12px;background:none;color:var(--texte-clair);font-size:13.5px;font-weight:700;text-align:left}
+.qmenu button:active{background:rgba(255,255,255,.08)}
+.qmenu svg{width:17px;height:17px;color:var(--vert);flex:none}
+
+/* =========================================================
+   🪟 FICHE EN VERRE DÉPOLI (activités + publics)
+   ========================================================= */
+.glass-sheet{position:fixed;inset:0;z-index:450;overflow-y:auto;-webkit-overflow-scrolling:touch;background:#111;animation:sheetUp .3s cubic-bezier(.2,.8,.2,1)}
+.glass-sheet[hidden]{display:none}
+.gs-bg{position:fixed;inset:0;overflow:hidden;z-index:0;pointer-events:none}
+.gs-bg img{position:absolute;inset:-8%;width:116%;height:116%;object-fit:cover;filter:blur(42px) saturate(1.2) brightness(.5)}
+.gs-bg:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(9,13,7,.25) 0%,rgba(8,11,6,.55) 40%,rgba(7,10,6,.88) 100%)}
+.gs-inner{position:relative;z-index:1;width:min(100%,560px);margin:0 auto;min-height:100%;padding:calc(16px + env(safe-area-inset-top)) 0 calc(28px + env(safe-area-inset-bottom));color:#fff}
+.gs-top{display:flex;justify-content:flex-end;gap:10px;padding:0 18px}
+.gs-top .icon-btn{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:#fff}
+.gs-top .icon-btn.fav-on{background:var(--jaune);border-color:var(--jaune);color:#1B1B0F}
+.gs-hero{margin:14px 18px 0;height:180px;border-radius:24px;overflow:hidden;box-shadow:0 16px 34px rgba(0,0,0,.4)}
+.gs-hero img{width:100%;height:100%;object-fit:cover;display:block}
+.gs-title{padding:16px 20px 4px}
+.gs-title h1{margin:0;font-size:27px;font-weight:800;letter-spacing:-.4px;line-height:1.08}
+.gs-meta{margin-top:7px;font-size:13px;font-weight:600;color:rgba(255,255,255,.78)}
+.gs-mini{padding:14px 20px 0}
+.gs-mini .label{margin-bottom:7px;color:rgba(255,255,255,.5)}
+.gs-mini p{margin:0;font-size:13px;line-height:1.5;color:rgba(255,255,255,.82)}
+.mini-chips{display:flex;flex-wrap:wrap;gap:6px}
+.mini-chip{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.16);border-radius:99px;padding:5px 11px;font-size:11.5px;font-weight:700;color:#fff}
+.gs-panel{margin:18px 14px 0;padding:20px 18px 8px;border-radius:26px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px)}
+.gs-panel.small{padding:16px 18px 6px}
+.gs-panel h2{margin:0 0 16px;font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.85)}
+.gs-panel.small h2{font-size:12px;margin-bottom:10px;color:rgba(255,255,255,.6)}
+.gs-panel > p{margin:0 0 14px;font-size:13.5px;line-height:1.6;color:rgba(255,255,255,.84);white-space:pre-line}
+.step{display:flex;gap:13px;padding-bottom:18px}
+.step-num{flex:none;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.2);display:grid;place-items:center;font-size:12.5px;font-weight:800}
+.step-body{min-width:0;padding-top:3px}
+.step-body h3{margin:0 0 4px;font-size:15px;font-weight:800}
+.step-body p{margin:0;font-size:13.5px;line-height:1.58;color:rgba(255,255,255,.84)}
+.gs-link{display:inline-flex;align-items:center;gap:7px;margin:0 0 14px;padding:8px 13px;border-radius:99px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.1);color:#fff;font-size:12.5px;font-weight:800}
+.gs-link svg{width:15px;height:15px}
+.gs-fiche + .gs-fiche{border-top:1px solid rgba(255,255,255,.12);padding-top:16px}
+.gs-fiche h3{margin:0 0 6px;font-size:16px;font-weight:800}
+body.sheet-open{overflow:hidden}
+.gs-top .icon-btn[hidden]{display:none}
+.toast{z-index:600}
+
+
+/* =========================================================
+   🧭 BANDEAU FIXE (Menu · Logo · Recherche)
+   ========================================================= */
+.app{padding-top:70px}
+.appbar{position:fixed;top:0;left:50%;transform:translateX(-50%);width:min(100%,560px);z-index:150;
+  display:grid;grid-template-columns:42px 1fr 42px;align-items:center;gap:8px;
+  padding:calc(12px + env(safe-area-inset-top)) 16px 12px;
+  background:rgba(20,23,15,.78);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.06)}
+.appbar-logo{justify-self:center;width:36px;height:36px;border:0;padding:0;border-radius:11px;overflow:hidden;background:none}
+.appbar-logo img{width:100%;height:100%;object-fit:cover;transform:scale(1.4);display:block}
+.search-panel{position:fixed;top:calc(66px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);width:min(100%,560px);z-index:149;padding:10px 16px 14px;background:rgba(20,23,15,.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.06);animation:in .18s ease}
+.search-panel[hidden]{display:none}
+
+/* =========================================================
+   ☰ MENU LATÉRAL
+   ========================================================= */
+.menu-overlay{position:fixed;inset:0;z-index:420;background:rgba(5,7,4,.62);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+.menu-overlay[hidden]{display:none}
+.side{position:absolute;top:0;bottom:0;left:0;width:82%;max-width:340px;display:flex;flex-direction:column;
+  padding:calc(20px + env(safe-area-inset-top)) 16px calc(18px + env(safe-area-inset-bottom));
+  background:#1A1E15;border-right:1px solid rgba(255,255,255,.07);border-radius:0 28px 28px 0;box-shadow:20px 0 50px rgba(0,0,0,.45);animation:sideIn .25s cubic-bezier(.2,.8,.2,1)}
+@keyframes sideIn{from{transform:translateX(-30px);opacity:.5}to{transform:none;opacity:1}}
+.side-head{display:flex;align-items:center;justify-content:space-between;padding:0 6px 22px}
+.side-brand{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:800}
+.side-brand img{width:34px;height:34px;border-radius:10px;object-fit:cover}
+.side-item{display:flex;align-items:center;gap:13px;width:100%;padding:13px 12px;border:0;border-radius:16px;background:none;color:var(--texte-clair);font-size:15.5px;font-weight:800;text-align:left}
+.side-item.on{background:rgba(132,185,138,.16)}
+.side-item svg{width:21px;height:21px;color:var(--vert);flex:none}
+.side-item.help svg{color:var(--rouge)}
+.side-sep{height:1px;background:rgba(255,255,255,.08);margin:18px 8px}
+.side-sec-title{margin:0 12px 6px;font-size:10px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:rgba(244,243,236,.35)}
+.side-link{display:block;width:100%;padding:9px 12px;border:0;background:none;text-align:left;font-size:13.5px;font-weight:600;color:rgba(244,243,236,.62)}
+.side-foot{margin-top:auto;padding:14px 12px 0;font-size:11.5px;font-weight:700;color:rgba(244,243,236,.32)}
+
+/* Fenêtre d'information (confidentialité, à propos) */
+.info-body p{margin:0 0 12px;font-size:14px;line-height:1.6;color:rgba(244,243,236,.82)}
+.info-body a{color:var(--vert-fonce);font-weight:700}
+
+/* =========================================================
+   🏠 ACCUEIL
+   ========================================================= */
+.hello{padding:14px var(--marge) 4px}
+.hello small{display:block;font-size:13px;font-weight:700;color:var(--texte-doux);margin-bottom:4px}
+.hello h1{margin:0;font-size:30px;font-weight:900;letter-spacing:-.8px;line-height:1.05}
+.hero-generer small{background:var(--jaune);border-color:var(--jaune);color:#1B1B0F}
+#homeCategories{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;margin:0 calc(var(--marge)*-1);padding:0 var(--marge) 4px}
+#homeCategories::-webkit-scrollbar{display:none}
+#homeCategories .tile{flex:0 0 122px;height:156px;aspect-ratio:auto;border-radius:20px}
+#homeCategories .tile span{font-size:14.5px;left:11px;right:11px;bottom:11px}
+#homeCategories .empty{flex:1}
+.rows{display:flex;flex-direction:column;gap:9px}
+.row-item{display:flex;align-items:center;gap:12px;width:100%;padding:9px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);color:var(--texte-clair);text-align:left}
+.row-item img{width:58px;height:58px;border-radius:14px;object-fit:cover;flex:none}
+.row-item > div{min-width:0;flex:1}
+.row-item b{display:block;font-size:14.5px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row-item small{display:block;margin-top:3px;font-size:11.5px;font-weight:600;color:var(--texte-doux)}
+.row-item .st{color:var(--jaune);margin-right:6px;flex:none}
+.row-item .st svg{width:18px;height:18px}
+
+/* =========================================================
+   🤖 GÉNÉRER — modes + formulaire
+   ========================================================= */
+.modes{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:5px;border-radius:18px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08)}
+.mode{display:flex;flex-direction:column;align-items:center;gap:5px;padding:11px 4px;border:0;border-radius:14px;background:none;font-size:11.5px;font-weight:800;color:rgba(244,243,236,.6);text-align:center}
+.mode svg{width:20px;height:20px}
+.mode.on{background:var(--texte-clair);color:#14170F}
+.gen-form{padding:18px 16px;border-radius:24px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;gap:20px}
+.gen-form .field-title{display:block;margin:0 0 9px;font-size:11px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:rgba(244,243,236,.55)}
+.gen-form textarea{min-height:92px}
+.gen-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.visually-hidden{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.gen-note{display:flex;gap:9px;align-items:flex-start;margin:14px 2px 0;font-size:12px;line-height:1.45;color:var(--texte-doux)}
+.gen-note svg{width:16px;height:16px;flex:none;margin-top:1px}
+
+/* =========================================================
+   🆘 HELP
+   ========================================================= */
+.alert-card{padding:20px 18px 18px;border-radius:26px;background:linear-gradient(160deg,var(--bordeaux),var(--bordeaux-fonce));box-shadow:0 18px 38px rgba(94,20,28,.45);color:#fff}
+.alert-card h2{margin:0;display:flex;align-items:center;gap:9px;font-size:20px;font-weight:900;letter-spacing:-.3px}
+.alert-card h2 svg{width:22px;height:22px;flex:none}
+.alert-card p{margin:8px 0 16px;font-size:13.5px;line-height:1.5;color:rgba(255,255,255,.88)}
+.alert-btn{display:flex;align-items:center;justify-content:center;width:100%;height:52px;border:0;border-radius:16px;background:#fff;color:#7E1E27;font-size:15px;font-weight:900}
+.calls{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.call{display:flex;flex-direction:column;align-items:center;gap:2px;padding:12px 4px;border-radius:18px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.09);text-align:center;text-decoration:none;color:var(--texte-clair)}
+.call b{font-size:20px;font-weight:900}
+.call span{font-size:10px;font-weight:700;color:var(--texte-doux);line-height:1.2}
+.call.key{background:rgba(224,82,92,.14);border-color:rgba(224,82,92,.4)}
+
+/* =========================================================
+   👤 COMPTE
+   ========================================================= */
+.profile-card{background:linear-gradient(150deg,rgba(132,185,138,.2),rgba(255,255,255,.04));border:1px solid rgba(255,255,255,.09)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.stat{padding:13px 14px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
+.stat b{display:block;font-size:22px;font-weight:900}
+.stat span{display:block;margin-top:2px;font-size:11.5px;font-weight:700;color:var(--texte-doux)}
+.favs{display:flex;gap:10px;overflow-x:auto;scrollbar-width:none;margin:0 calc(var(--marge)*-1);padding:0 var(--marge) 4px}
+.favs::-webkit-scrollbar{display:none}
+.fav-card{position:relative;flex:0 0 150px;height:172px;border:0;padding:0;border-radius:20px;overflow:hidden;background:#2b3424 center/cover;color:#fff;text-align:left}
+.fav-card:after{content:"";position:absolute;inset:0;background:var(--voile-photo)}
+.fav-card .st{position:absolute;top:9px;right:9px;z-index:1;width:28px;height:28px;border-radius:50%;background:var(--jaune);color:#1B1B0F;display:grid;place-items:center}
+.fav-card .st svg{width:14px;height:14px}
+.fav-card div{position:absolute;left:11px;right:11px;bottom:10px;z-index:1}
+.fav-card b{display:block;font-size:14px;font-weight:800;line-height:1.15}
+.fav-card small{display:block;margin-top:3px;font-size:10.5px;font-weight:600;color:rgba(255,255,255,.72)}
+.menu-list{border-radius:22px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);overflow:hidden}
+.menu-list button{display:flex;align-items:center;gap:13px;width:100%;padding:15px 16px;border:0;background:none;color:var(--texte-clair);font-size:14.5px;font-weight:700;text-align:left}
+.menu-list button + button{border-top:1px solid rgba(255,255,255,.07)}
+.menu-list svg.ic{width:20px;height:20px;color:var(--vert);flex:none}
+html{scroll-padding-top:84px}
+#aiGeneratedProposals .section-head,#aiGeneratedSheet .section-head{display:block}
+#aiGeneratedProposals .section-title{font-size:19px;margin-bottom:4px}
+.menu-list .chev{margin-left:auto;width:16px;height:16px;color:rgba(244,243,236,.35)}
+
 /* =========================================================
    📱 MOBILE
    ========================================================= */
@@ -440,72 +662,73 @@ input[type="file"]{font-size:13px;color:var(--texte-doux)}
 </head>
 
 <body>
+<!-- ========================= 🧭 BANDEAU FIXE ========================= -->
+<header class="appbar">
+  <button class="icon-btn" onclick="openSideMenu()" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  <button class="appbar-logo" onclick="go('home')" aria-label="Accueil"><img src="images/logo.png" alt="Anim Compagnon"></button>
+  <button class="icon-btn" onclick="toggleSearch()" aria-label="Rechercher"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.8" cy="10.8" r="6.5"/><path d="m16 16 4 4"/></svg></button>
+</header>
+<div id="searchPanel" class="search-panel" hidden>
+  <label class="searchbox">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="10.8" cy="10.8" r="6.5"/><path d="m16 16 4 4"/></svg>
+    <input id="searchInput" type="search" enterkeyhint="search" placeholder="Que cherches-tu ?">
+  </label>
+</div>
+
+<!-- ========================= ☰ MENU LATÉRAL ========================= -->
+<div id="sideMenu" class="menu-overlay" hidden onclick="if(event.target===this)closeSideMenu()">
+  <aside class="side" role="dialog" aria-label="Menu">
+    <div class="side-head">
+      <span class="side-brand"><img src="images/logo.png" alt="">Anim Compagnon</span>
+      <button class="icon-btn" onclick="closeSideMenu()" aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    </div>
+    <button class="side-item" data-side="home" onclick="sideGo('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/></svg>Accueil</button>
+    <button class="side-item" data-side="favorites" onclick="sideGo('favorites')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8z"/></svg>Favoris</button>
+    <button class="side-item help" data-side="help" onclick="sideGo('help')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.8 9a2.4 2.4 0 1 1 4.4 1.4c-.8 1.1-2.2 1.2-2.2 2.8"/><path d="M12 16.8h.01"/></svg>Help</button>
+    <div class="side-sep"></div>
+    <p class="side-sec-title">Informations</p>
+    <button class="side-link" onclick="closeSideMenu();openInfo('privacy')">Politique de confidentialité</button>
+    <button class="side-link" onclick="closeSideMenu();toast('Les CGU arrivent bientôt.')">CGU</button>
+    <button class="side-link" onclick="closeSideMenu();openInfo('contact')">FAQ / Contactez-nous</button>
+    <button class="side-link" onclick="sideGo('account')">Préférences</button>
+    <button class="side-link" onclick="closeSideMenu();toast('La gestion des cookies arrive bientôt.')">Gestion des cookies</button>
+    <div class="side-foot">Version 1.1</div>
+  </aside>
+</div>
 <div class="app">
 
 <!-- ========================= 🏠 ACCUEIL ========================= -->
 <main id="home" class="view active">
-<header class="header">
-  <div class="top">
-    <div class="brand">
-      <div class="logo">
-  <img src="images/logo.png" alt="Logo Anim Compagnon">
-      </div>
-      <div><h1>Anim Compagnon</h1><p>Ton compagnon d'animation au quotidien !</p></div>
-    </div>
-    <button class="icon-btn" onclick="go('account')" aria-label="Compte">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="3.3"/><path d="M5 20c.8-3.4 3.2-5.1 7-5.1s6.2 1.7 7 5.1"/></svg>
-    </button>
-  </div>
-</header>
-
-<div class="search">
-  <label class="searchbox">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="10.8" cy="10.8" r="6.5"/><path d="m16 16 4 4"/></svg>
-    <input id="searchInput" type="search" placeholder="Que cherches-tu ?">
-  </label>
-</div>
+<div class="hello"><small id="homeHello">Bonjour</small><h1>Prêt pour l'expédition du jour ?</h1></div>
 
 <section class="section">
-  <div class="section-head"><h2 class="section-title">À la une</h2></div>
   <div class="scroll">
     <button class="hero hero-generer" onclick="go('generator')">
-      <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3v18M3 12h18M5 5l14 14M19 5 5 19"/></svg></span>
-      <div class="caption"><small>Besoin d'une idée ?</small><h2>Générer une activité</h2><p>Décris ton groupe, ton matériel et le temps disponible.</p></div>
+      <div class="caption"><small>Recommandé</small><h2>Générer une activité</h2><p>Âge, durée, matériel : l'IA te propose 3 idées en quelques secondes.</p></div>
     </button>
     <button class="hero hero-activities" onclick="go('activities')">
-      <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="8.5"/><path d="M8 12h8M12 8v8"/></svg></span>
       <div class="caption"><small>Activités</small><h2>Trouver rapidement</h2><p>Retrouve les activités publiées dans ta bibliothèque.</p></div>
     </button>
     <button class="hero hero-outils" onclick="go('toolbox')">
-      <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 8.5h16v11H4z"/><path d="M8 8.5V6.8A2.8 2.8 0 0 1 10.8 4h2.4A2.8 2.8 0 0 1 16 6.8v1.7"/></svg></span>
       <div class="caption"><small>Boîte à outils</small><h2>Les outils de terrain</h2><p>Méthodes et repères pour préparer et mener tes activités.</p></div>
     </button>
   </div>
 </section>
 
 <section class="section">
-  <div class="section-head"><h2 class="section-title">Catégories</h2><button class="link" onclick="go('categories')">Voir tout</button></div>
-<div class="grid" id="homeCategories">
-  <div class="empty">
-    <strong>Chargement</strong>
-    Les catégories arrivent…
-  </div>
-</div>
+  <div class="section-head"><h2 class="section-title">Catégories</h2><button class="link" onclick="go('categories')">Tout voir</button></div>
+  <div class="grid" id="homeCategories"><div class="empty"><strong>Chargement</strong>Les catégories arrivent…</div></div>
 </section>
 
-<section class="section">
-  <div class="card">
-    <h2>Besoin d'une activité ?</h2>
-    <p>Décris simplement ta situation et laisse l'IA construire une proposition adaptée.</p>
-    <div style="height:12px"></div>
-    <button class="btn primary full" onclick="go('generator')">Générer une activité</button>
-  </div>
+<section class="section" id="homeFavSection" hidden>
+  <div class="section-head"><h2 class="section-title">Tes favoris</h2><button class="link" onclick="goFavorites()">Tout voir</button></div>
+  <div class="rows" id="homeFavs"></div>
 </section>
 </main>
 
 <!-- ========================= 🗂️ CATÉGORIES ========================= -->
 <main id="categories" class="view">
-  <header class="page-head"><h1 class="page-title">Catégories</h1><p class="page-intro">Explore Anim Compagnon par grands domaines.</p></header>
+  <header class="page-head"><h1 class="page-title">Catégories</h1><p class="page-intro">Tout le matériel de l'expédition</p></header>
   <section class="section">
   <div class="grid" id="allCategories">
   <div class="empty">
@@ -518,22 +741,30 @@ input[type="file"]{font-size:13px;color:var(--texte-doux)}
 
 <!-- ========================= 🎲 ACTIVITÉS ========================= -->
 <main id="activities" class="view">
-  <header class="page-head"><button class="link back" onclick="go('categories')">← Retour</button><h1 class="page-title">Activités</h1><p class="page-intro">Des idées directement utilisables sur le terrain.</p></header>
-  <section class="section">
-    <div class="chips" id="catFilters">
-      <button class="chip selected" data-cat="all">Toutes</button>
-      <button class="chip" data-cat="Animation de courte durée">Courte durée</button>
-      <button class="chip" data-cat="Activités manuelles">Manuelles</button>
-      <button class="chip" data-cat="Jeux sportifs extérieurs">Sportives</button>
-      <button class="chip" data-cat="Chants">Chants</button>
+  <header class="page-head">
+    <div class="head-row">
+      <div><h1 class="page-title">Activités</h1><p class="page-intro">La forêt remplie de trouvailles prêtes à l'emploi</p></div>
+      <button class="icon-btn filter-btn" onclick="openActFilters()" aria-label="Filtrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 6h16M7 12h10M10 18h4"/></svg><span class="filter-badge act-filter-badge" hidden></span></button>
     </div>
-  </section>
-  <section class="section" style="padding-top:0"><div id="activityLoading" class="loading"><span></span><span></span><span></span></div><div id="activityList" class="activity-list"></div></section>
+  </header>
+  <section class="section" style="padding-top:8px"><div id="activityLoading" class="loading"><span></span><span></span><span></span></div><div id="actTypeGrid" class="type-grid"></div></section>
+</main>
+
+<!-- ========================= 🎲 ACTIVITÉS D'UN TYPE ========================= -->
+<main id="activityType" class="view">
+  <header class="page-head">
+    <div class="list-head">
+      <button class="icon-btn" onclick="go('activities')" aria-label="Retour"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m15 6-6 6 6 6"/></svg></button>
+      <div style="flex:1;min-width:0"><h1 id="activityTypeTitle" class="page-title"></h1><p id="activityTypeIntro" class="page-intro"></p></div>
+      <button class="icon-btn filter-btn" onclick="openActFilters()" aria-label="Filtrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 6h16M7 12h10M10 18h4"/></svg><span class="filter-badge act-filter-badge" hidden></span></button>
+    </div>
+  </header>
+  <section class="section" style="padding-top:8px"><div id="activityList" class="activity-list"></div></section>
 </main>
 
 <!-- ========================= 👥 PUBLICS ========================= -->
 <main id="publics" class="view">
-  <header class="page-head"><button class="link back" onclick="go('categories')">← Retour</button><h1 class="page-title">Publics</h1><p class="page-intro">Repères pour mieux connaître les publics accueillis.</p></header>
+  <header class="page-head"><button class="link back" onclick="go('categories')">← Retour</button><h1 class="page-title">Publics</h1><p class="page-intro">Les mondes que tu accueilles sous ta tente</p></header>
   <section class="section">
     <div id="publicsList" class="simple-list">
       <div class="empty">
@@ -612,238 +843,94 @@ input[type="file"]{font-size:13px;color:var(--texte-doux)}
 </main>
 <!-- ========================= 🤖 GÉNÉRATEUR ========================= -->
 <main id="generator" class="view">
+<header class="page-head"><h1 class="page-title">Générer</h1><p class="page-intro">L'atelier où naissent les nouvelles idées</p></header>
 
-   <header class="page-head">
-  <h1 class="page-title">Générer une activité</h1>
-  <p class="page-intro">
-    Choisis comment tu veux construire ton activité.
-  </p>
-</header>
-
-<section class="section generator-options">
-
-  <!-- CRÉER UNE FICHE -->
-  <button class="generator-card" onclick="openGeneratorMode('fiche')">
-    <div class="generator-card-icon">📋</div>
-
-    <div class="generator-card-content">
-      <h2>Créer une fiche d'activité</h2>
-      <p>
-        Construis ton activité toi-même à partir d'une fiche complète.
-      </p>
-    </div>
-
-    <span class="generator-card-arrow">→</span>
-  </button>
-
-
-  <!-- IA -->
-  <button class="generator-card" onclick="openGeneratorMode('ia')">
-    <div class="generator-card-icon">✨</div>
-
-    <div class="generator-card-content">
-      <h2>Générer avec l'IA</h2>
-      <p>
-        Décris ton besoin ou photographie ton matériel.
-      </p>
-    </div>
-
-    <span class="generator-card-arrow">→</span>
-  </button>
-
-</section>
-
-
-<!-- CHOIX IA -->
-<section id="generatorIAChoice" class="section generator-subsection" hidden>
-
-  <div class="section-head">
-    <h2 class="section-title">Comment veux-tu commencer ?</h2>
+<section class="section" style="padding-top:4px">
+  <div class="modes" id="genModes">
+    <button class="mode on" data-mode="ia-text" onclick="openGeneratorMode('ia-text')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1-4.2L15.8 5a1.5 1.5 0 0 1 2.1 0l1.1 1.1a1.5 1.5 0 0 1 0 2.1L8.2 19 4 20z"/></svg>Je décris</button>
+    <button class="mode" data-mode="ia-photo" onclick="openGeneratorMode('ia-photo')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Photo du matériel</button>
+    <button class="mode" data-mode="fiche" onclick="openGeneratorMode('fiche')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 10h6M9 14h6M9 18h3"/></svg>Fiche vierge</button>
   </div>
-
-  <div class="generator-suboptions">
-
-    <!-- DESCRIPTION -->
-    <button class="generator-card generator-card-small"
-            onclick="openGeneratorMode('ia-text')">
-
-      <div class="generator-card-icon">📝</div>
-
-      <div class="generator-card-content">
-        <h3>Je décris mon besoin</h3>
-        <p>
-          Indique l'âge, le nombre d'enfants, la durée,
-          le lieu, le matériel et ce que tu recherches.
-        </p>
-      </div>
-
-      <span class="generator-card-arrow">→</span>
-
-    </button>
-
-
-    <!-- PHOTO -->
-    <button class="generator-card generator-card-small"
-            onclick="openGeneratorMode('ia-photo')">
-
-      <div class="generator-card-icon">📸</div>
-
-      <div class="generator-card-content">
-        <h3>Je photographie mon matériel</h3>
-        <p>
-          Prends ton matériel en photo et laisse l'IA
-          imaginer des activités adaptées.
-        </p>
-      </div>
-
-      <span class="generator-card-arrow">→</span>
-
-    </button>
-
-  </div>
-
 </section>
-
-
-<div id="generatorModalOverlay" class="modal-overlay" hidden onclick="if(event.target===this)closeGeneratorModal()">
-<div class="modal-box">
-<button class="modal-close" onclick="closeGeneratorModal()" aria-label="Fermer">✕</button>
-
-<div id="generatorModalOverlay" class="modal-overlay" hidden onclick="if(event.target===this)closeGeneratorModal()">
-<div class="modal-box">
-<button class="modal-close" onclick="closeGeneratorModal()" aria-label="Fermer">✕</button>
 
 <!-- FORMULAIRE IA TEXTE -->
-<section id="generatorIAText" class="section generator-panel" hidden>
+<section id="generatorIAText" class="section generator-panel" style="margin-top:0;padding-top:4px">
+  <div class="gen-form">
+    <div><span class="field-title">Ce que tu cherches</span>
+      <textarea id="aiObjective" placeholder="Ex. un jeu calme après le repas, qui favorise la coopération"></textarea></div>
 
-  <div class="section-head">
-    <h2 class="section-title">Décris ton besoin</h2>
-  </div>
+    <div><span class="field-title">Tranche d'âge</span>
+      <div class="chips" data-target="aiAge"><button type="button" class="chip" data-value="3-5 ans">3-5 ans</button><button type="button" class="chip" data-value="6-11 ans">6-11 ans</button><button type="button" class="chip" data-value="12-17 ans">12-17 ans</button></div>
+      <select id="aiAge" class="visually-hidden" aria-hidden="true" tabindex="-1"><option value=""></option><option>3-5 ans</option><option>6-11 ans</option><option>12-17 ans</option></select></div>
 
-  <div class="form-grid">
+    <div><span class="field-title">Objectif pédagogique</span>
+      <div class="chips" data-target="aiGoals" data-multi="1"><button type="button" class="chip" data-value="Coopération">Coopération</button><button type="button" class="chip" data-value="Créativité">Créativité</button><button type="button" class="chip" data-value="Motricité">Motricité</button><button type="button" class="chip" data-value="Autonomie">Autonomie</button><button type="button" class="chip" data-value="Confiance en soi">Confiance en soi</button><button type="button" class="chip" data-value="Expression">Expression</button></div></div>
 
-    <div class="form-row">
-      <label>
-        Âge des enfants
-        <select id="aiAge">
-          <option value="">Choisis une tranche d'âge</option>
-          <option value="3-5 ans">3-5 ans</option>
-          <option value="6-8 ans">6-8 ans</option>
-          <option value="9-11 ans">9-11 ans</option>
-          <option value="12-14 ans">12-14 ans</option>
-          <option value="15-17 ans">15-17 ans</option>
-        </select>
-      </label>
+    <div><span class="field-title">Durée</span>
+      <div class="chips" data-target="aiDuration"><button type="button" class="chip" data-value="15 minutes">15 min</button><button type="button" class="chip" data-value="30 minutes">30 min</button><button type="button" class="chip" data-value="45 minutes">45 min</button><button type="button" class="chip" data-value="1 heure">1 h</button><button type="button" class="chip" data-value="1h30">1h30</button></div>
+      <select id="aiDuration" class="visually-hidden" aria-hidden="true" tabindex="-1"><option value=""></option><option>15 minutes</option><option>30 minutes</option><option>45 minutes</option><option>1 heure</option><option>1h30</option></select></div>
 
-      <label>
-        Nombre d'enfants
-        <input id="aiChildren" type="number" placeholder="Ex. 14">
-      </label>
+    <div class="gen-row">
+      <div><span class="field-title">Enfants</span><input id="aiChildren" type="number" inputmode="numeric" min="1" placeholder="Ex. 14"></div>
+      <div><span class="field-title">Lieu</span>
+        <div class="chips" data-target="aiPlace"><button type="button" class="chip" data-value="Intérieur">Intérieur</button><button type="button" class="chip" data-value="Extérieur">Extérieur</button></div>
+        <select id="aiPlace" class="visually-hidden" aria-hidden="true" tabindex="-1"><option value=""></option><option>Intérieur</option><option>Extérieur</option></select></div>
     </div>
 
-    <div class="form-row">
-      <label>
-        Durée
-        <select id="aiDuration">
-          <option value="">Choisis une durée</option>
-          <option value="15 minutes">15 minutes</option>
-          <option value="30 minutes">30 minutes</option>
-          <option value="45 minutes">45 minutes</option>
-          <option value="1 heure">1 heure</option>
-          <option value="1h30">1h30</option>
-        </select>
-      </label>
-
-      <label>
-        Lieu
-        <select id="aiPlace">
-          <option value="">Choisis un lieu</option>
-          <option value="Intérieur">Intérieur</option>
-          <option value="Extérieur">Extérieur</option>
-        </select>
-      </label>
-    </div>
-
-    <label>
-      Matériel disponible
-      <textarea id="aiMaterial"
-        placeholder="Ex. 4 plots, 3 ballons, 2 cordes"></textarea>
-    </label>
-
-    <label>
-      Objectif / envie
-      <textarea id="aiObjective"
-        placeholder="Ex. un jeu qui bouge et favorise la coopération"></textarea>
-    </label>
-
+    <div><span class="field-title">Matériel disponible</span>
+      <textarea id="aiMaterial" placeholder="Ex. 4 plots, 3 ballons, 2 cordes"></textarea></div>
   </div>
 
-  <p class="ai-disclaimer">Anim Compagnon t'invite à relire les propositions d'activités afin de t'imprégner de leur préparation et de leur déroulement, et proposer aux enfants un contenu de qualité. Chaque activité est adaptable à ton besoin.</p>
-
-  <button class="primary-btn" onclick="generateAIActivity()">
-    ✨ Générer mon activité
-  </button>
-
+  <button class="primary-btn" onclick="generateAIActivity()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="width:19px;height:19px;vertical-align:-4px;margin-right:6px"><path d="M12 3l1.6 4.8L18 9.5l-4.4 1.7L12 16l-1.6-4.8L6 9.5l4.4-1.7z"/><path d="M19 15l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/></svg>Générer 3 idées</button>
+  <p class="gen-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v5h1"/></svg>L'IA te fait gagner du temps, mais relis toujours les propositions pour t'imprégner de leur préparation et de leur déroulement avant de les proposer aux enfants.</p>
 </section>
-
 
 <!-- PHOTO -->
-<section id="generatorIAPhoto" class="section generator-panel" hidden>
-
-  <div class="section-head">
-    <h2 class="section-title">Photographie ton matériel</h2>
+<section id="generatorIAPhoto" class="section generator-panel" style="margin-top:0;padding-top:4px" hidden>
+  <div class="gen-form">
+    <div><span class="field-title">Photographie ton matériel</span>
+    <p class="page-intro" style="margin:0">Prends une photo du matériel dont tu disposes. L'IA identifiera ce qu'elle peut utiliser pour créer des activités.</p></div>
   </div>
-
-  <p class="page-intro">
-    Prends une photo du matériel dont tu disposes.
-    L'IA identifiera ce qu'elle peut utiliser pour créer des activités.
-  </p>
-
-  <input
-    id="materialPhoto"
-    type="file"
-    accept="image/*"
-    hidden
-    onchange="handleMaterialPhoto(event)"
-  >
-
-  <button
-    class="primary-btn"
-    onclick="document.getElementById('materialPhoto').click()"
-  >
-    📸 Prendre une photo
-  </button>
-
-    <div id="photoPreview" class="photo-preview" hidden></div>
+  <input id="materialPhoto" type="file" accept="image/*" hidden onchange="handleMaterialPhoto(event)">
+  <button class="primary-btn" onclick="document.getElementById('materialPhoto').click()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="width:19px;height:19px;vertical-align:-4px;margin-right:6px"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Prendre une photo</button>
+  <div id="photoPreview" class="photo-preview" hidden></div>
 </section>
-
-</div>
-</div>
 </main>
 
 <!-- ========================= 🆘 HELP ========================= -->
 <main id="help" class="view">
   <header class="page-head"><h1 class="page-title">Help</h1><p class="page-intro">Décris la situation. Help t'oriente vers les ressources adaptées.</p></header>
   <section class="section">
-    <div class="card" style="border:2px solid #7e1e27;background:#fdeceea8">
-      <h2 style="color:#7e1e27">🚨 Violence envers un mineur ?</h2>
+    <div class="alert-card">
+      <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M12 3 2 20h20z"/><path d="M12 10v4"/><path d="M12 17h.01"/></svg>Violence envers un mineur ?</h2>
       <p>Si tu es témoin ou informé d'une violence sexuelle, sexiste ou physique envers un enfant, utilise cet outil pour savoir quoi faire, tout de suite.</p>
-      <div style="height:10px"></div>
-      <button class="btn primary full" onclick="go('vss')" style="background:#7e1e27;border-color:#7e1e27">Je dois signaler une violence</button>
+      <button class="alert-btn" onclick="go('vss')">Je dois signaler une violence</button>
     </div>
+  </section>
+  <section class="section">
+    <div class="section-head"><h2 class="section-title">Numéros d'urgence</h2></div>
+    <div class="calls">
+      <a class="call" href="tel:15"><b>15</b><span>SAMU</span></a>
+      <a class="call" href="tel:17"><b>17</b><span>Police<br>Gendarmerie</span></a>
+      <a class="call" href="tel:112"><b>112</b><span>Urgence<br>européenne</span></a>
+      <a class="call key" href="tel:119"><b>119</b><span>Enfance<br>en danger</span></a>
+    </div>
+  </section>
+  <section class="section">
+    <div class="section-head"><h2 class="section-title">Analyser une situation</h2></div>
     <div class="card">
       <label class="label" for="helpText">Qu'est-ce qui se passe ?</label>
-      <textarea id="helpText" style="min-height:130px" placeholder="Décris les faits que tu observes, sans poser toi-même de diagnostic."></textarea>
-      <div style="height:10px"></div><button class="btn primary" onclick="helpAnalyse()">Analyser la situation</button>
+      <textarea id="helpText" style="min-height:120px" placeholder="Décris les faits que tu observes, sans poser toi-même de diagnostic."></textarea>
+      <div style="height:12px"></div><button class="btn primary full" onclick="helpAnalyse()">Analyser la situation</button>
       <div id="helpResult"></div>
     </div>
-    <div class="card">
-      <h2>Repères</h2>
-      <div class="help-level help-green"><strong>Problématique pédagogique / courante</strong>Situation pouvant être accompagnée dans la pratique quotidienne.</div>
-      <div class="help-level help-orange"><strong>À surveiller / à accompagner</strong>Observer, échanger et transmettre à la personne responsable.</div>
-      <div class="help-level help-red"><strong>Situation préoccupante</strong>Suivre les procédures de protection et d'alerte adaptées.</div>
-      <div class="emergency"><strong>Danger immédiat</strong>Protège l'enfant et le groupe, préviens la direction et utilise le numéro d'urgence adapté.</div>
-    </div>
+  </section>
+  <section class="section">
+    <div class="section-head"><h2 class="section-title">Repères</h2></div>
+    <div class="help-level help-green"><strong>Problématique pédagogique / courante</strong>Situation pouvant être accompagnée dans la pratique quotidienne.</div>
+    <div class="help-level help-orange"><strong>À surveiller / à accompagner</strong>Observer, échanger et transmettre à la personne responsable.</div>
+    <div class="help-level help-red"><strong>Situation préoccupante</strong>Suivre les procédures de protection et d'alerte adaptées.</div>
+    <div class="emergency"><strong>Danger immédiat</strong>Protège l'enfant et le groupe, préviens la direction et utilise le numéro d'urgence adapté.</div>
   </section>
 </main>
 <!-- ========================= 🚨 SIGNALEMENT VSS ========================= -->
@@ -872,9 +959,9 @@ input[type="file"]{font-size:13px;color:var(--texte-doux)}
         Mets l'enfant et le groupe en sécurité, puis appelle tout de suite.
       </div>
       <div style="height:12px"></div>
-      <a class="btn primary full" href="tel:17">📞 Appeler le 17 (Police / Gendarmerie)</a>
+      <a class="btn primary full" href="tel:17">Appeler le 17 (Police / Gendarmerie)</a>
       <div style="height:8px"></div>
-      <a class="btn secondary full" href="tel:112">📞 Appeler le 112 (Numéro d'urgence européen)</a>
+      <a class="btn secondary full" href="tel:112">Appeler le 112 (Numéro d'urgence européen)</a>
       <div class="info"><strong>Ensuite</strong><p>Préviens la direction de la structure dès que possible. Ne laisse jamais l'enfant seul avec la personne mise en cause.</p></div>
     </div>
 
@@ -908,7 +995,7 @@ input[type="file"]{font-size:13px;color:var(--texte-doux)}
       <div class="info"><strong>2. La CRIP de ton département</strong><p>Cellule de Recueil des Informations Préoccupantes, aux heures ouvrées. Cherche « CRIP + nom de ton département » pour trouver le bon contact.</p></div>
 
       <div style="height:10px"></div>
-      <a class="btn primary full" href="tel:119">📞 Appeler le 119 — Allô Enfance en Danger (24h/24, gratuit, anonyme)</a>
+      <a class="btn primary full" href="tel:119">Appeler le 119 — Allô Enfance en Danger (24h/24, gratuit, anonyme)</a>
 
       <div style="height:10px"></div>
       <div class="info"><strong>3. Procureur de la République</strong><p>En cas d'infraction pénale claire (agression, viol...), un signalement direct ou un dépôt de plainte au commissariat/gendarmerie est possible, en général après avoir échangé avec l'ASE ou le 119.</p></div>
@@ -924,22 +1011,29 @@ input[type="file"]{font-size:13px;color:var(--texte-doux)}
 </main>
 <!-- ========================= 👤 COMPTE ========================= -->
 <main id="account" class="view">
-  <header class="page-head"><h1 class="page-title">Compte</h1><p class="page-intro">Tes préférences et tes favoris.</p></header>
+  <header class="page-head"><h1 class="page-title">Compte</h1><p class="page-intro">Ton carnet de bord</p></header>
   <section class="section">
-<div class="card"><div id="accountProfile"></div></div>    <div class="card"><h2>Mes favoris</h2><div id="favorites" class="empty"><strong>Aucun favori</strong>Les fiches que tu ajoutes apparaîtront ici.</div></div>
-    <div class="card">
-      <h2>À propos</h2>
-      <p>Anim Compagnon est une boîte à outils pensée pour les animateurs en ACM, périscolaire, colonies et formations BAFA : générateur d'activités par IA, fiches pratiques, ressources et un espace Help pour t'accompagner sur le terrain.</p>
-      <p style="margin-top:14px">Les descriptions et photos envoyées au générateur IA sont traitées par un service d'intelligence artificielle (OpenAI) pour créer des propositions d'activités. Ton profil (nom, mail) reste uniquement sur ton téléphone.</p>
-      <p style="margin-top:14px;color:var(--anthracite);font-size:13px">Version 1.0 — Une idée, un bug ? Écris à <a href="mailto:eliesbendjedou30@gmail.com">eliesbendjedou30@gmail.com</a></p>
-    </div>  </section>
- <div class="card">
-      <h2>Signaler un bug</h2>
-      <p>Une fonctionnalité qui ne marche pas comme prévu ? Décris-le, ça nous aide à corriger vite.</p>
-      <div style="height:12px"></div>
-      <button class="btn primary full" onclick="openBugReport()">Signaler un bug</button>
+    <div class="card profile-card"><div id="accountProfile"></div></div>
+    <div class="stats"><div class="stat"><b id="statFav">0</b><span>Favoris</span></div><div class="stat"><b id="statAI">0</b><span>Fiches IA gardées</span></div></div>
+  </section>
+  <section class="section" id="favorites-section">
+    <div class="section-head"><h2 class="section-title">Mes favoris</h2></div>
+    <div id="favorites" class="empty"><strong>Aucun favori</strong>Les fiches que tu ajoutes apparaîtront ici.</div>
+  </section>
+  <section class="section">
+    <div class="section-head"><h2 class="section-title">Aide</h2></div>
+    <div class="menu-list">
+      <button onclick="openBugReport()"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="7" width="8" height="11" rx="4"/><path d="M8 10H4M8 14H4M16 10h4M16 14h4M10 7V5a2 2 0 0 1 4 0v2"/></svg>Signaler un bug<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 6 6 6-6 6"/></svg></button>
+      <button onclick="openInfo('about')"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v5h1"/></svg>À propos d'Anim Compagnon<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 6 6 6-6 6"/></svg></button>
+      <button onclick="openInfo('privacy')"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5 6v5c0 4.5 3 8.3 7 10 4-1.7 7-5.5 7-10V6z"/></svg>Politique de confidentialité<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 6 6 6-6 6"/></svg></button>
     </div>
   </section>
+</main>
+
+<!-- ========================= 🔎 RÉSULTATS DE RECHERCHE ========================= -->
+<main id="searchResults" class="view">
+  <header class="page-head"><h1 class="page-title">Recherche</h1><p id="searchResultsIntro" class="page-intro"></p></header>
+  <section class="section"><div id="searchResultsList"></div></section>
 </main>
 
 <!-- ========================= 📄 DÉTAIL ========================= -->
@@ -949,11 +1043,44 @@ input[type="file"]{font-size:13px;color:var(--texte-doux)}
 </main>
 </div>
 
+<!-- ========================= 🧭 FILTRES ACTIVITÉS ========================= -->
+<div id="actFilterOverlay" class="sheet-overlay" hidden onclick="if(event.target===this)closeActFilters()">
+  <div class="filter-sheet" role="dialog" aria-label="Filtrer les activités">
+    <div class="sheet-head"><h2>Filtrer les activités</h2><button class="icon-btn" onclick="closeActFilters()" aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
+    <span class="chip-title">Objectif pédagogique</span><div class="chips" id="actFilterObj"></div>
+    <span class="chip-title">Tranche d'âge</span><div class="chips" id="actFilterAge"></div>
+    <span class="chip-title">Durée</span><div class="chips" id="actFilterDur"></div>
+    <div class="sheet-actions"><button class="btn secondary" onclick="resetActFilters()">Réinitialiser</button><button class="btn primary" id="actFilterApply" onclick="applyActFilters()">Appliquer</button></div>
+  </div>
+</div>
+
+<!-- ========================= 🪟 FICHE EN VERRE DÉPOLI ========================= -->
+<div id="glassSheet" class="glass-sheet" hidden role="dialog" aria-modal="true">
+  <div class="gs-bg"><img id="gsBgImg" alt=""></div>
+  <div class="gs-inner">
+    <div class="gs-top">
+      <button id="gsFav" class="icon-btn" onclick="gsToggleFav()" aria-label="Favoris"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8z"/></svg></button>
+      <button class="icon-btn" onclick="closeGlassSheet()" aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    </div>
+    <div class="gs-hero"><img id="gsHeroImg" alt=""></div>
+    <div class="gs-title"><h1 id="gsTitle"></h1><div id="gsMeta" class="gs-meta"></div></div>
+    <div id="gsContent"></div>
+  </div>
+</div>
+
+<!-- ========================= ℹ️ INFORMATIONS ========================= -->
+<div id="infoOverlay" class="sheet-overlay" hidden onclick="if(event.target===this)closeInfo()">
+  <div class="filter-sheet" role="dialog">
+    <div class="sheet-head"><h2 id="infoTitle"></h2><button class="icon-btn" onclick="closeInfo()" aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m6 6 12 12M18 6 6 18"/></svg></button></div>
+    <div id="infoBody" class="info-body" style="margin-top:12px"></div>
+  </div>
+</div>
+
 <!-- ========================= 📱 NAVIGATION ========================= -->
 <nav class="bottom"><div class="bottom-inner">
   <button class="nav active" data-nav="home" onclick="go('home')"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M9 21v-7h6v7"/></svg></span>Accueil</button>
   <button class="nav" data-nav="categories" onclick="go('categories')"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><rect x="14" y="14" width="6" height="6" rx="1"/></svg></span>Catégories</button>
-  <button class="nav" data-nav="generator" onclick="go('generator')"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3v18M3 12h18M5 5l14 14M19 5 5 19"/></svg></span>Générer</button>
+  <button class="nav" data-nav="generator" onclick="go('generator')"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3l1.6 4.8L18 9.5l-4.4 1.7L12 16l-1.6-4.8L6 9.5l4.4-1.7z"/><path d="M19 15l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/></svg></span>Générer</button>
   <button class="nav" data-nav="help" onclick="go('help')"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M9.8 9a2.4 2.4 0 1 1 4.4 1.4c-.8 1.1-2.2 1.2-2.2 2.8"/><path d="M12 16.8h.01"/></svg></span>Help</button>
   <button class="nav" data-nav="account" onclick="go('account')"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="3.3"/><path d="M5 20c.8-3.4 3.2-5.1 7-5.1s6.2 1.7 7 5.1"/></svg></span>Compte</button>
 </div></nav>
@@ -982,12 +1109,14 @@ function go(id){
   const target=document.getElementById(id);if(!target)return;
   target.classList.add("active");
     const main=["home","categories","generator","help","account"].includes(id)?id:
-    id==="detail"?(previous.startsWith("category")?"categories":previous):id==="activities"?"categories":
+    id==="detail"?(previous.startsWith("category")?"categories":previous):(id==="activities"||id==="activityType")?"categories":
     id==="vss"?"help":
     ["publics","publicSubcategory","role","daily","toolbox","resources"].includes(id)?"categories":"home";
   document.querySelectorAll(".nav").forEach(n=>n.classList.toggle("active",n.dataset.nav===main));
   window.scrollTo({top:0,behavior:"smooth"});
   if(id==="activities")renderActivities();
+  if(id==="home")renderHomeFavs();
+  closeSearch();
 if(id==="account"){renderFavorites();renderAccountProfile();}
 }
 function back(){go(previous==="activities"?"activities":previous||"home")}
@@ -1047,6 +1176,7 @@ function runGlobalSearch(q){
   }
 
   list.innerHTML=html;
+  closeSearch();
   go("searchResults");
 }
 /* =========================================================
@@ -1203,7 +1333,7 @@ async function loadActivities(){
     activities=rows.map(mapActivity).filter(a=>a.published);
     renderActivities();
   }catch(e){
-    console.error(e);document.getElementById("activityLoading").classList.add("hidden");
+    console.error(e);activitiesFailed=true;renderActivities();document.getElementById("activityLoading").classList.add("hidden");
     document.getElementById("activityList").innerHTML='<div class="empty"><strong>Activités indisponibles</strong>Impossible de charger le contenu Baserow pour le moment.</div>';
   }
 }
@@ -1211,37 +1341,9 @@ document.querySelectorAll("#catFilters .chip").forEach(b=>b.onclick=()=>{
   document.querySelectorAll("#catFilters .chip").forEach(x=>x.classList.remove("selected"));b.classList.add("selected");
   currentCategory=b.dataset.cat;renderActivities();
 });
-function renderActivities(){
-  const list=document.getElementById("activityList");if(!list)return;
-  document.getElementById("activityLoading").classList.add("hidden");
-  let arr=currentCategory==="all"?activities:activities.filter(a=>a.category.toLowerCase()===currentCategory.toLowerCase());
-  renderActivityCards(arr);
-}
-function renderActivityCards(arr){
-  const list=document.getElementById("activityList");if(!arr.length){list.innerHTML='<div class="empty"><strong>Aucune activité trouvée</strong>Essaie un autre filtre ou utilise le générateur.</div>';return}
-  window.rendered=arr;
-  list.innerHTML=arr.map((a,i)=>`
-    <button class="activity" onclick="openActivity(${i})">
-      <div class="activity-info">
-        <h2>${esc(a.name)}</h2>
-        <div class="badges">${[a.age,a.duration,a.children?a.children+" enfants":""].filter(Boolean).map(x=>`<span class="badge">${esc(x)}</span>`).join("")}</div>
-        ${a.objectives?`<p>${esc(short(a.objectives,110))}</p>`:""}
-      </div>
-    </button>`).join("");
-}
-function openActivity(i){
-  const a=window.rendered[i];if(!a)return;
-window.currentActivity=a;
-  previous="activities";
-  document.getElementById("detailTitle").textContent=a.name;
-  document.getElementById("detailIntro").textContent=[a.age,a.duration,a.location].filter(Boolean).join(" • ");
-  document.getElementById("detailBody").innerHTML=[
-    ["Objectifs pédagogiques",a.objectives],["Matériel",a.material],["Déroulement",a.development],["Variantes",a.variants],["Points de vigilance",a.vigilance]
-  ].filter(x=>x[1]).map(x=>`<h2>${esc(x[0])}</h2><p style="white-space:pre-line">${esc(x[1])}</p>`).join("")+
-  `<div class="info"><strong>À retenir</strong><p>La fiche prépare l'activité. Le groupe, lui, est vivant : observe, adapte et accompagne.</p></div>
-   <div style="height:12px"></div><button class="btn primary" onclick="favorite(window.currentActivity)">Ajouter aux favoris</button>`;
-  go("detail");
-}
+
+
+
 /* =========================================================
    🧰 CONTENU
    ========================================================= */
@@ -1450,11 +1552,7 @@ Réponds UNIQUEMENT avec un JSON valide, sans aucun texte avant ou après :
    ========================================================= */
 function getFav(){try{return JSON.parse(localStorage.getItem("animFav")||"[]")}catch{return[]}}
 function favorite(a){const f=getFav(),i=f.findIndex(x=>x.id===a.id);if(i>=0){f.splice(i,1);toast("Retiré des favoris.")}else{f.push(a);toast("Ajouté aux favoris.")}localStorage.setItem("animFav",JSON.stringify(f))}
-function renderFavorites(){
-  const el=document.getElementById("favorites"),f=getFav();
-  if(!f.length){el.className="empty";el.innerHTML="<strong>Aucun favori</strong>Les fiches que tu ajoutes apparaîtront ici.";return}
-  el.className="";el.innerHTML=f.map((a,i)=>`<button class="card" style="width:100%;text-align:left;margin-bottom:8px" onclick="openFavorite(${i})"><h2>${esc(a.name)}</h2><p>${esc([a.age,a.duration].filter(Boolean).join(" • "))}</p></button>`).join("");
-}
+
 function openFavorite(i){const f=getFav(),a=f[i];if(a){window.rendered=[a];openActivity(0)}}
 
 /* =========================================================
@@ -1598,49 +1696,15 @@ function mapResource(row){
     subcategory:resourceText(resourceField(row,["SOUS-CATÉGORIE","SOUS-CATEGORIE","Sous-catégorie","Sous-categorie"])),
     summary:resourceText(resourceField(row,["RÉSUMÉ","RESUME","Résumé","resume"])),
     pdf:resourceFileUrl(resourceField(row,["PDF","Pdf","pdf"])),
+    characteristics:resourceText(resourceField(row,["CARACTÉRISTIQUES","CARACTERISTIQUES","Caractéristiques"])),
+    needs:resourceText(resourceField(row,["BESOINS","Besoins"])),
+    reperes:resourceText(resourceField(row,["REPÈRES","REPERES","Repères"])),
     order:Number(resourceField(row,["ORDRE","Ordre","ordre"])) || 9999,
     active:actif===true || ["true","1","oui","yes","vrai"].includes(String(actif).toLowerCase())
   };
 }
 
-function renderPublics(){
-  const list=document.getElementById("publicsList");
-  if(!list) return;
 
-  const publicResources=resources.filter(r=>
-    String(r.category).trim().toUpperCase()==="PUBLICS"
-  );
-
-  const subcategories=[];
-  publicResources.forEach(r=>{
-    const sub=String(r.subcategory||"").trim();
-    if(sub && !subcategories.some(s=>s.toLowerCase()===sub.toLowerCase())){
-      subcategories.push(sub);
-    }
-  });
-
-  if(!subcategories.length){
-    list.innerHTML='<div class="empty"><strong>Aucun public disponible</strong>Les fiches de publics seront bientôt disponibles.</div>';
-    return;
-  }
-
-    window.publicSubcategoriesList=subcategories;
-
-  list.innerHTML=subcategories.map((sub,i)=>{
-    const count=publicResources.filter(r=>
-      String(r.subcategory||"").trim().toLowerCase()===sub.toLowerCase()
-    ).length;
-    return `
-      <button class="card resource-card" onclick="openPublicSubcategoryAt(${i})">
-        <div class="resource-img" style="--img:none"></div>
-        <div class="resource-info">
-          <h2>${esc(sub)}</h2>
-          <p>${count} fiche${count>1?"s":""} disponible${count>1?"s":""}</p>
-        </div>
-      </button>
-    `;
-  }).join("");
-}
 
 function openPublicSubcategoryAt(i){
   const sub=window.publicSubcategoriesList&&window.publicSubcategoriesList[i];
@@ -1771,63 +1835,9 @@ let selectedAIProposal = null;
    NAVIGATION DU GÉNÉRATEUR
    ========================================================= */
 
-function openGeneratorMode(mode){
 
-  const iaChoice = document.getElementById("generatorIAChoice");
-  const iaText = document.getElementById("generatorIAText");
-  const iaPhoto = document.getElementById("generatorIAPhoto");
-  const modalOverlay = document.getElementById("generatorModalOverlay");
 
-  if(iaChoice) iaChoice.hidden = true;
-  if(iaText) iaText.hidden = true;
-  if(iaPhoto) iaPhoto.hidden = true;
-  if(modalOverlay) modalOverlay.hidden = true;
 
-  const proposals = document.getElementById("aiGeneratedProposals");
-  const sheet = document.getElementById("aiGeneratedSheet");
-
-  if(proposals) proposals.remove();
-  if(sheet) sheet.remove();
-
-  if(mode === "ia"){
-
-    if(iaChoice) iaChoice.hidden = false;
-
-    return;
-  }
-
-  if(mode === "ia-text"){
-
-    if(iaText) iaText.hidden = false;
-    if(modalOverlay) modalOverlay.hidden = false;
-
-    return;
-  }
-
-  if(mode === "ia-photo"){
-
-    if(iaPhoto) iaPhoto.hidden = false;
-    if(modalOverlay) modalOverlay.hidden = false;
-
-    return;
-  }
-
-  if(mode === "fiche"){
-
-    toast("Le générateur de fiche arrive.");
-
-    return;
-  }
-}
-
-function closeGeneratorModal(){
-  const modalOverlay = document.getElementById("generatorModalOverlay");
-  const iaText = document.getElementById("generatorIAText");
-  const iaPhoto = document.getElementById("generatorIAPhoto");
-  if(modalOverlay) modalOverlay.hidden = true;
-  if(iaText) iaText.hidden = true;
-  if(iaPhoto) iaPhoto.hidden = true;
-}
 
 
 /* =========================================================
@@ -1852,7 +1862,7 @@ async function generateAIActivity(){
     document.getElementById("aiMaterial")?.value.trim() || "";
 
   const objective =
-    document.getElementById("aiObjective")?.value.trim() || "";
+    aiObjectiveValue();
 
 
   if(
@@ -3363,6 +3373,450 @@ function downloadFichePDF(){
     .catch(() => toast("Impossible de créer le PDF."))
     .finally(() => box.remove());
 }
+
+/* =========================================================
+   🎲 ACTIVITÉS — grille des 4 types, filtres, liste, fiche
+   ========================================================= */
+const ACT_TYPES=[
+  {cat:"Activités manuelles",name:"Manuelles",kicker:"Créatif",img:"--image-type-manuelles",file:"images/activites.jpg",sub:"trouvailles pour créer de ses mains"},
+  {cat:"Jeux sportifs extérieurs",name:"Sportives",kicker:"Extérieur",img:"--image-type-sportives",file:"images/publics.jpg",sub:"jeux pour bouger dehors"},
+  {cat:"Chants",name:"Chants",kicker:"Musique",img:"--image-type-chants",file:"images/vie-quotidienne.jpg",sub:"chants pour rassembler le groupe"},
+  {cat:"Animation de courte durée",name:"Courte durée",kicker:"Express",img:"--image-type-courte",file:"images/role-anim.jpg",sub:"idées express pour les temps courts"}
+];
+const ACT_OBJECTIVES=[
+  ["Motricité",["motric","moteur","bouger","physique","corporel"]],
+  ["Créativité",["creati","imagin","artist","inventer"]],
+  ["Coopération",["coop","equipe","collectif","ensemble","entraide"]],
+  ["Autonomie",["autonom"]],
+  ["Confiance en soi",["confiance","estime"]],
+  ["Expression",["express","parole","oral","communiq"]]
+];
+const ACT_AGES=[["3-5 ans",3,5],["6-11 ans",6,11],["12-17 ans",12,17]];
+const ACT_DURATIONS=[["- de 15 min",0,14],["15-30 min",15,30],["30 min et +",31,9999]];
+let actFilters={obj:[],age:[],dur:[]};
+let actFiltersDraft=null;
+let currentActType=null;
+let activitiesFailed=false;
+
+function norm(s){return String(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"")}
+function cssImage(varName,fallback){
+  const v=getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+  const m=v.match(/url\(["']?(.*?)["']?\)/);
+  return m?m[1]:fallback;
+}
+function ageRange(text){
+  const t=norm(text);
+  const nums=(t.match(/\d+/g)||[]).map(Number).filter(n=>n<=25);
+  if(nums.length)return [Math.min(...nums),Math.max(...nums)];
+  if(/ado/.test(t))return [12,17];
+  if(/matern|petite enfance|petits/.test(t))return [3,5];
+  if(/enfan|primaire|elementaire/.test(t))return [6,11];
+  if(/tous|tout age/.test(t))return [3,17];
+  return null;
+}
+function durationMinutes(text){
+  const t=norm(text).replace(",",".");
+  let m=t.match(/(\d+(?:\.\d+)?)\s*h(?:eures?)?\s*(\d+)?/);
+  if(m)return Math.round(parseFloat(m[1])*60+(m[2]?Number(m[2]):0));
+  m=t.match(/(\d+)\s*(?:-|a|à)\s*(\d+)\s*min/);
+  if(m)return Math.round((Number(m[1])+Number(m[2]))/2);
+  m=t.match(/(\d+)\s*min/);
+  if(m)return Number(m[1]);
+  m=t.match(/^\s*(\d+)\s*$/);
+  return m?Number(m[1]):null;
+}
+function activityObjectiveLabels(a){
+  const t=norm(a.objectives);
+  return ACT_OBJECTIVES.filter(([,keys])=>keys.some(k=>t.includes(k))).map(([label])=>label);
+}
+function matchesActFilters(a,f){
+  f=f||actFilters;
+  if(f.obj.length){const labels=activityObjectiveLabels(a);if(!f.obj.some(o=>labels.includes(o)))return false}
+  if(f.age.length){
+    const r=ageRange(a.age);if(!r)return false;
+    if(!f.age.some(label=>{const g=ACT_AGES.find(x=>x[0]===label);return r[0]<=g[2]&&r[1]>=g[1]}))return false;
+  }
+  if(f.dur.length){
+    const d=durationMinutes(a.duration);if(d===null)return false;
+    if(!f.dur.some(label=>{const g=ACT_DURATIONS.find(x=>x[0]===label);return d>=g[1]&&d<=g[2]}))return false;
+  }
+  return true;
+}
+function activitiesOfType(t,f){
+  return activities.filter(a=>norm(a.category)===norm(t.cat)&&matchesActFilters(a,f));
+}
+function activityPhoto(a){
+  const img=String(a.image||"").trim();
+  if(/^https?:\/\//.test(img)||/^images\//.test(img))return img;
+  const t=ACT_TYPES.find(x=>norm(x.cat)===norm(a.category));
+  return t?cssImage(t.img,t.file):cssImage("--image-activites","images/activites.jpg");
+}
+function cap(s){s=String(s||"");return s.charAt(0).toUpperCase()+s.slice(1)}
+function listItems(text){
+  return String(text||"").split(/\n|;|•|,(?![^()]*\))/).map(s=>cap(s.replace(/^[\s\-–*·\d.)]+/,"").trim())).filter(Boolean);
+}
+
+/* ---------- Grille des 4 types ---------- */
+function renderActivities(){
+  const loading=document.getElementById("activityLoading");
+  const grid=document.getElementById("actTypeGrid");
+  if(!grid)return;
+  if(!activities.length&&!activitiesFailed){if(loading)loading.classList.remove("hidden");grid.innerHTML="";return}
+  if(loading)loading.classList.add("hidden");
+  if(activitiesFailed){grid.innerHTML='<div class="empty"><strong>Activités indisponibles</strong>Impossible de charger le contenu Baserow pour le moment.</div>';return}
+  grid.innerHTML=ACT_TYPES.map((t,i)=>{
+    const n=activitiesOfType(t).length;
+    return `<button class="type-card" style="background-image:url('${esc(cssImage(t.img,t.file))}')" onclick="openActivityType(${i})">
+      <span class="pill-count">${n} trouvaille${n>1?"s":""}</span>
+      <h2 class="type-title"><small>${esc(t.kicker)}</small>${esc(t.name)}</h2>
+    </button>`;
+  }).join("");
+  updateActFilterBadge();
+  if(currentActType!==null&&document.getElementById("activityType").classList.contains("active"))renderActivityTypeList();
+}
+
+/* ---------- Filtres ---------- */
+function renderFilterChips(){
+  const d=actFiltersDraft;
+  const group=(key,labels)=>labels.map(l=>`<button class="chip${d[key].includes(l)?" selected":""}" onclick="toggleActFilter('${key}','${l.replace(/'/g,"\\'")}')">${esc(l)}</button>`).join("");
+  document.getElementById("actFilterObj").innerHTML=group("obj",ACT_OBJECTIVES.map(x=>x[0]));
+  document.getElementById("actFilterAge").innerHTML=group("age",ACT_AGES.map(x=>x[0]));
+  document.getElementById("actFilterDur").innerHTML=group("dur",ACT_DURATIONS.map(x=>x[0]));
+  const n=ACT_TYPES.reduce((s,t)=>s+activitiesOfType(t,d).length,0);
+  document.getElementById("actFilterApply").textContent=`Voir ${n} activité${n>1?"s":""}`;
+}
+function openActFilters(){
+  actFiltersDraft=JSON.parse(JSON.stringify(actFilters));
+  renderFilterChips();
+  document.getElementById("actFilterOverlay").hidden=false;
+  document.body.classList.add("sheet-open");
+}
+function closeActFilters(){
+  document.getElementById("actFilterOverlay").hidden=true;
+  document.body.classList.remove("sheet-open");
+}
+function toggleActFilter(key,label){
+  const arr=actFiltersDraft[key],i=arr.indexOf(label);
+  if(i>=0)arr.splice(i,1);else arr.push(label);
+  renderFilterChips();
+}
+function resetActFilters(){actFiltersDraft={obj:[],age:[],dur:[]};renderFilterChips()}
+function applyActFilters(){
+  actFilters=actFiltersDraft;
+  closeActFilters();
+  renderActivities();
+}
+function updateActFilterBadge(){
+  const n=actFilters.obj.length+actFilters.age.length+actFilters.dur.length;
+  document.querySelectorAll(".act-filter-badge").forEach(b=>{b.textContent=n;b.hidden=!n});
+}
+
+/* ---------- Liste d'un type ---------- */
+function openActivityType(i){
+  currentActType=i;
+  go("activityType");
+  renderActivityTypeList();
+}
+function renderActivityTypeList(){
+  const t=ACT_TYPES[currentActType];if(!t)return;
+  const arr=activitiesOfType(t);
+  document.getElementById("activityTypeTitle").textContent=t.name;
+  document.getElementById("activityTypeIntro").textContent=`${arr.length} ${t.sub}`;
+  renderActivityCards(arr);
+  updateActFilterBadge();
+}
+function renderActivityCards(arr){
+  const list=document.getElementById("activityList");
+  if(!arr.length){list.innerHTML='<div class="empty"><strong>Aucune activité trouvée</strong>Change tes filtres ou utilise le générateur.</div>';window.rendered=[];return}
+  window.rendered=arr;
+  list.innerHTML=arr.map((a,i)=>{
+    const pill=[a.age,a.duration].filter(Boolean).join(" · ");
+    const kicker=activityObjectiveLabels(a)[0]||"";
+    const mat=listItems(a.material).join(", ");
+    return `<div class="a-card" role="button" tabindex="0" onclick="openActivity(${i})">
+      <div class="a-photo" style="background-image:url('${esc(activityPhoto(a))}')"></div>
+      ${pill?`<span class="pill-count">${esc(pill)}</span>`:""}
+      <button class="a-menu" aria-label="Actions" onclick="event.stopPropagation();toggleQMenu(${i},this)"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></button>
+      <div class="qmenu" hidden onclick="event.stopPropagation()">
+        <button onclick="qAction('fav',${i})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8z"/></svg>${isFav(a)?"Retirer des favoris":"Ajouter aux favoris"}</button>
+        <button onclick="qAction('edit',${i})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20l1-4.2L15.8 5a1.5 1.5 0 0 1 2.1 0l1.1 1.1a1.5 1.5 0 0 1 0 2.1L8.2 19 4 20z"/></svg>Éditer la fiche d'activité</button>
+        <button onclick="qAction('share',${i})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="m8.2 10.8 7.6-4.4M8.2 13.2l7.6 4.4"/></svg>Partager</button>
+      </div>
+      <div class="a-body">
+        ${kicker?`<small>${esc(kicker)}</small>`:""}
+        <h2>${esc(a.name)}</h2>
+        ${mat?`<div class="a-mat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8h16v12H4zM9 8V5h6v3"/></svg>${esc(mat)}</div>`:""}
+      </div>
+    </div>`;
+  }).join("");
+}
+function closeQMenus(){document.querySelectorAll(".qmenu").forEach(m=>m.hidden=true)}
+function toggleQMenu(i,btn){
+  const menu=btn.parentElement.querySelector(".qmenu");
+  const wasOpen=!menu.hidden;
+  closeQMenus();
+  menu.hidden=wasOpen;
+}
+document.addEventListener("click",closeQMenus);
+function qAction(kind,i){
+  closeQMenus();
+  const a=window.rendered&&window.rendered[i];if(!a)return;
+  if(kind==="fav"){favorite(a);renderActivityTypeList();return}
+  if(kind==="edit"){toast("L'édition des fiches arrive bientôt.");return}
+  if(kind==="share")shareActivity(a);
+}
+function activityText(a){
+  return [a.name,[a.age,a.duration,a.location].filter(Boolean).join(" · "),
+    a.objectives&&("Objectifs : "+a.objectives),a.material&&("Matériel : "+a.material),
+    a.development&&("Déroulement :\n"+a.development),"— Anim Compagnon"].filter(Boolean).join("\n\n");
+}
+async function shareActivity(a){
+  const text=activityText(a);
+  try{
+    if(navigator.share){await navigator.share({title:a.name,text});return}
+    await navigator.clipboard.writeText(text);toast("Fiche copiée, tu peux la coller où tu veux.");
+  }catch(e){if(e&&e.name!=="AbortError")toast("Partage impossible sur cet appareil.")}
+}
+function isFav(a){return getFav().some(x=>x.id===a.id)}
+
+/* ---------- Fiche en verre dépoli ---------- */
+function openGlassSheet(o){
+  const s=document.getElementById("glassSheet");
+  document.getElementById("gsBgImg").src=o.img;
+  document.getElementById("gsHeroImg").src=o.img;
+  document.getElementById("gsTitle").textContent=o.title;
+  document.getElementById("gsMeta").textContent=o.meta||"";
+  const fav=document.getElementById("gsFav");
+  fav.hidden=!o.onFav;
+  fav.classList.toggle("fav-on",!!o.favOn);
+  window.gsFavHandler=o.onFav||null;
+  document.getElementById("gsContent").innerHTML=o.html;
+  s.hidden=false;s.scrollTop=0;
+  document.body.classList.add("sheet-open");
+}
+function closeGlassSheet(){
+  document.getElementById("glassSheet").hidden=true;
+  document.body.classList.remove("sheet-open");
+}
+function gsToggleFav(){if(window.gsFavHandler)window.gsFavHandler()}
+function miniBlock(label,text){
+  if(!text)return "";
+  const items=listItems(text);
+  const asChips=items.length>0&&items.every(x=>x.length<=38);
+  return `<div class="gs-mini"><span class="label">${esc(label)}</span>${asChips
+    ?`<div class="mini-chips">${items.map(x=>`<span class="mini-chip">${esc(x)}</span>`).join("")}</div>`
+    :`<p>${esc(text)}</p>`}</div>`;
+}
+function stepsHTML(text){
+  const lines=String(text||"").split(/\n+/).map(s=>s.trim()).filter(Boolean);
+  const steps=lines.length>1?lines:String(text||"").split(/(?<=[.!?])\s+(?=[A-ZÀÂÉÈÊÎÔÛÇ])/).map(s=>s.trim()).filter(Boolean);
+  return steps.map((line,i)=>{
+    const clean=line.replace(/^(?:étape\s*)?\d+\s*[.)\-–:]\s*|^[\-–*•]\s*/i,"");
+    const m=clean.match(/^([^:]{3,48})\s*:\s*(.+)$/);
+    return `<div class="step"><span class="step-num">${i+1}</span><div class="step-body">${m?`<h3>${esc(cap(m[1]))}</h3><p>${esc(cap(m[2]))}</p>`:`<p>${esc(cap(clean))}</p>`}</div></div>`;
+  }).join("");
+}
+function openActivity(i){
+  const a=window.rendered&&window.rendered[i];if(!a)return;
+  window.currentActivity=a;
+  let html=miniBlock("Objectif pédagogique",a.objectives)+miniBlock("Matériel",a.material);
+  if(a.development)html+=`<div class="gs-panel"><h2>Déroulement</h2>${stepsHTML(a.development)}</div>`;
+  if(a.variants)html+=`<div class="gs-panel small"><h2>Variantes</h2><p>${esc(a.variants)}</p></div>`;
+  if(a.vigilance)html+=`<div class="gs-panel small"><h2>Points de vigilance</h2><p>${esc(a.vigilance)}</p></div>`;
+  openGlassSheet({
+    img:activityPhoto(a),title:a.name,
+    meta:[a.age,a.duration,a.location].filter(Boolean).join(" · "),
+    html,favOn:isFav(a),
+    onFav:()=>{favorite(a);document.getElementById("gsFav").classList.toggle("fav-on",isFav(a));if(currentActType!==null)renderActivityTypeList()}
+  });
+}
+
+/* =========================================================
+   👥 PUBLICS — 3 tranches d'âge
+   ========================================================= */
+const PUBLIC_TRANCHES=[
+  {label:"3-5 ans",min:3,max:5,kicker:"Petite enfance",phrase:"L'âge du jeu symbolique",img:"--image-tranche-3-5",file:"images/publics.jpg"},
+  {label:"6-11 ans",min:6,max:11,kicker:"Enfance",phrase:"L'âge des règles",img:"--image-tranche-6-11",file:"images/activites.jpg"},
+  {label:"12-17 ans",min:12,max:17,kicker:"Adolescence",phrase:"L'âge du groupe",img:"--image-tranche-12-17",file:"images/role-anim.jpg"}
+];
+function trancheOf(resource){
+  const r=ageRange(resource.subcategory)||ageRange(resource.title);
+  if(!r)return -1;
+  return PUBLIC_TRANCHES.findIndex(t=>r[0]>=t.min&&r[0]<=t.max);
+}
+function publicFichesOf(k){
+  return resources.filter(r=>norm(r.category).trim()==="publics"&&trancheOf(r)===k).sort((a,b)=>a.order-b.order);
+}
+function renderPublics(){
+  const list=document.getElementById("publicsList");
+  if(!list)return;
+  list.innerHTML=PUBLIC_TRANCHES.map((t,k)=>{
+    const n=publicFichesOf(k).length;
+    return `<div class="a-card" style="height:196px" role="button" tabindex="0" onclick="openPublicTranche(${k})">
+      <div class="a-photo" style="background-image:url('${esc(cssImage(t.img,t.file))}')"></div>
+      <span class="pill-count">${esc(t.phrase)}</span>
+      <div class="a-body"><small>${esc(t.kicker)}</small><h2 style="font-size:28px">${esc(t.label)}</h2>
+      <div class="a-mat">${n} fiche${n>1?"s":""}</div></div>
+    </div>`;
+  }).join("");
+}
+function openPublicTranche(k){
+  const t=PUBLIC_TRANCHES[k],fiches=publicFichesOf(k);
+  const pdfIcon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4"/></svg>';
+  let html="";
+  const all=f=>[f.characteristics,f.needs].some(Boolean);
+  if(fiches.length===1&&all(fiches[0])){
+    html+=miniBlock("Caractéristiques",fiches[0].characteristics)+miniBlock("Besoins",fiches[0].needs);
+  }
+  html+=`<div class="gs-panel"><h2>Repères pour l'animateur</h2>${fiches.length?fiches.map(f=>`
+    <div class="gs-fiche">
+      ${fiches.length>1||!f.reperes?`<h3>${esc(f.title||"Fiche")}</h3>`:""}
+      ${f.reperes?stepsHTML(f.reperes):(f.summary?`<p style="margin:0 0 14px;font-size:13.5px;line-height:1.6;color:rgba(255,255,255,.84)">${esc(f.summary)}</p>`:"")}
+      ${f.pdf?`<button class="gs-link" onclick="openResourcePDF(${Number(f.id)})">${pdfIcon}Lire la fiche complète</button>`:""}
+    </div>`).join(""):`<p>Aucune fiche pour cette tranche d'âge pour le moment.</p>`}</div>`;
+  openGlassSheet({img:cssImage(t.img,t.file),title:t.label,meta:`${t.kicker} · ${fiches.length} fiche${fiches.length>1?"s":""}`,html});
+}
+
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeGlassSheet();closeActFilters()}});
+
+/* =========================================================
+   🧭 BANDEAU FIXE — recherche + menu latéral
+   ========================================================= */
+function toggleSearch(){
+  const p=document.getElementById("searchPanel");
+  p.hidden=!p.hidden;
+  if(!p.hidden)setTimeout(()=>document.getElementById("searchInput").focus(),50);
+}
+function closeSearch(){const p=document.getElementById("searchPanel");if(p)p.hidden=true}
+function openSideMenu(){
+  const active=document.querySelector(".view.active");
+  const id=active?active.id:"home";
+  document.querySelectorAll(".side-item").forEach(b=>b.classList.toggle("on",
+    b.dataset.side===(id==="home"?"home":(id==="help"||id==="vss")?"help":"")));
+  document.getElementById("sideMenu").hidden=false;
+  document.body.classList.add("sheet-open");
+}
+function closeSideMenu(){
+  document.getElementById("sideMenu").hidden=true;
+  document.body.classList.remove("sheet-open");
+}
+function sideGo(target){
+  closeSideMenu();
+  if(target==="favorites"){goFavorites();return}
+  go(target);
+}
+function goFavorites(){
+  go("account");
+  setTimeout(()=>{const s=document.getElementById("favorites-section");if(s)s.scrollIntoView({behavior:"smooth",block:"start"})},250);
+}
+
+/* ---------- Fenêtre d'information ---------- */
+const CONTACT_MAIL="eliesbendjedou30@gmail.com";
+function openInfo(kind){
+  const t=document.getElementById("infoTitle"),b=document.getElementById("infoBody");
+  if(kind==="privacy"){
+    t.textContent="Politique de confidentialité";
+    b.innerHTML=`<p>Les descriptions et photos envoyées au générateur IA sont traitées par un service d'intelligence artificielle (OpenAI) pour créer des propositions d'activités.</p>
+      <p>Ton profil (nom, prénom, mail) et tes favoris restent uniquement sur ton téléphone.</p>
+      <p>Dans l'outil de signalement, rien de ce que tu écris n'est enregistré ni envoyé : tout reste uniquement sur ton téléphone.</p>
+      <p>Une question ? Écris à <a href="mailto:${CONTACT_MAIL}">${CONTACT_MAIL}</a></p>`;
+  }else if(kind==="about"){
+    t.textContent="À propos";
+    b.innerHTML=`<p>Anim Compagnon est une boîte à outils pensée pour les animateurs en ACM, périscolaire, colonies et formations BAFA : générateur d'activités par IA, fiches pratiques, ressources et un espace Help pour t'accompagner sur le terrain.</p>
+      <p>Version 1.1 — Une idée, un bug ? Écris à <a href="mailto:${CONTACT_MAIL}">${CONTACT_MAIL}</a></p>`;
+  }else{
+    t.textContent="FAQ / Contactez-nous";
+    b.innerHTML=`<p>La FAQ arrive bientôt.</p><p>En attendant, pour toute question, idée ou problème, écris à <a href="mailto:${CONTACT_MAIL}">${CONTACT_MAIL}</a>. On te répond au plus vite.</p>`;
+  }
+  document.getElementById("infoOverlay").hidden=false;
+  document.body.classList.add("sheet-open");
+}
+function closeInfo(){
+  document.getElementById("infoOverlay").hidden=true;
+  document.body.classList.remove("sheet-open");
+}
+function openBugReport(){
+  const body="Décris le problème :\n\n\nSur quel écran ?\n\nTéléphone utilisé :\n";
+  location.href=`mailto:${CONTACT_MAIL}?subject=${encodeURIComponent("Bug Anim Compagnon")}&body=${encodeURIComponent(body)}`;
+}
+
+/* =========================================================
+   🤖 GÉNÉRER — modes et choix en pastilles
+   ========================================================= */
+function openGeneratorMode(mode){
+  if(mode==="ia")mode="ia-text";
+  if(mode==="fiche"){toast("Le générateur de fiche arrive.");return}
+  const proposals=document.getElementById("aiGeneratedProposals");
+  const sheet=document.getElementById("aiGeneratedSheet");
+  if(proposals)proposals.remove();
+  if(sheet)sheet.remove();
+  document.getElementById("generatorIAText").hidden=mode!=="ia-text";
+  document.getElementById("generatorIAPhoto").hidden=mode!=="ia-photo";
+  document.querySelectorAll("#genModes .mode").forEach(b=>b.classList.toggle("on",b.dataset.mode===mode));
+}
+function closeGeneratorModal(){ /* plus de fenêtre : le formulaire est sur la page */ }
+document.querySelectorAll("#generator .chips[data-target]").forEach(group=>{
+  group.addEventListener("click",e=>{
+    const chip=e.target.closest(".chip");if(!chip)return;
+    const multi=group.dataset.multi==="1";
+    if(multi){chip.classList.toggle("selected");}
+    else{
+      const was=chip.classList.contains("selected");
+      group.querySelectorAll(".chip").forEach(c=>c.classList.remove("selected"));
+      if(!was)chip.classList.add("selected");
+    }
+    const sel=document.getElementById(group.dataset.target);
+    if(sel&&sel.tagName==="SELECT"){
+      const on=group.querySelector(".chip.selected");
+      sel.value=on?on.dataset.value:"";
+    }
+  });
+});
+function aiObjectiveValue(){
+  const text=document.getElementById("aiObjective")?.value.trim()||"";
+  const goals=[...document.querySelectorAll('#generator .chips[data-target="aiGoals"] .chip.selected')].map(c=>c.dataset.value);
+  return [text,goals.length?"Objectifs pédagogiques : "+goals.join(", "):""].filter(Boolean).join(". ");
+}
+
+/* =========================================================
+   ⭐ FAVORIS — accueil et compte
+   ========================================================= */
+function favMeta(a){return [a.age,a.duration,a.location].filter(Boolean).join(" · ")}
+function openFavoriteFrom(i){const f=getFav();window.rendered=f;openActivity(i)}
+function renderHomeFavs(){
+  const sec=document.getElementById("homeFavSection"),el=document.getElementById("homeFavs");
+  if(!sec||!el)return;
+  const f=getFav();
+  sec.hidden=!f.length;
+  el.innerHTML=f.slice(0,3).map((a,i)=>`<button class="row-item" onclick="openFavoriteFrom(${i})">
+    <img src="${esc(activityPhoto(a))}" alt=""><div><b>${esc(a.name)}</b><small>${esc(favMeta(a))}</small></div>
+    <span class="st"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8z"/></svg></span></button>`).join("");
+}
+function renderFavorites(){
+  const el=document.getElementById("favorites"),f=getFav();
+  const sf=document.getElementById("statFav"),sa=document.getElementById("statAI");
+  if(sf)sf.textContent=f.length;
+  if(sa){let n=0;try{n=JSON.parse(localStorage.getItem("animCompagnonAIFavorites")||"[]").length}catch{}sa.textContent=n}
+  if(!el)return;
+  if(!f.length){el.className="empty";el.innerHTML="<strong>Aucun favori</strong>Les fiches que tu ajoutes apparaîtront ici.";return}
+  el.className="favs";
+  el.innerHTML=f.map((a,i)=>`<button class="fav-card" style="background-image:url('${esc(activityPhoto(a))}')" onclick="openFavoriteFrom(${i})">
+    <span class="st"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8z"/></svg></span>
+    <div><b>${esc(a.name)}</b><small>${esc(favMeta(a))}</small></div></button>`).join("");
+}
+function renderHomeHello(){
+  const p=getProfile(),el=document.getElementById("homeHello");
+  if(el)el.textContent=p&&p.prenom?`Bonjour ${p.prenom}`:"Bonjour";
+}
+(function(){
+  const favOrig=favorite;
+  favorite=function(a){favOrig(a);renderHomeFavs();renderFavorites()};
+  const saveOrig=saveProfile;
+  saveProfile=function(p){saveOrig(p);renderHomeHello()};
+})();
+renderHomeHello();
+renderHomeFavs();
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeSideMenu();closeInfo();closeSearch()}});
 </script>
 </body>
 </html>
