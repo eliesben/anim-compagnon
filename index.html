@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#14170F">
 <title>Anim Compagnon</title>
+<script>try{if(localStorage.getItem("animTheme")==="light"){document.documentElement.dataset.theme="light";document.querySelector('meta[name="theme-color"]').content="#F3F0E8"}}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
@@ -422,12 +423,12 @@ input[type="file"]{font-size:13px;color:var(--texte-doux)}
    ========================================================= */
 :root{
   --image-type-manuelles:url("images/activites.jpg");
-  --image-type-sportives:url("images/sport.jpg");
-  --image-type-chants:url("images/chants.jpg");
-  --image-type-courte:url("images/acd.jpg");
-  --image-tranche-3-5:url("images/3ans.jpg");
-  --image-tranche-6-11:url("images/7ans.jpg");
-  --image-tranche-12-17:url("images/15ans.jpg");
+  --image-type-sportives:url("images/publics.jpg");
+  --image-type-chants:url("images/vie-quotidienne.jpg");
+  --image-type-courte:url("images/role-anim.jpg");
+  --image-tranche-3-5:url("images/publics.jpg");
+  --image-tranche-6-11:url("images/activites.jpg");
+  --image-tranche-12-17:url("images/role-anim.jpg");
 }
 
 /* =========================================================
@@ -473,7 +474,7 @@ input[type="file"]{font-size:13px;color:var(--texte-doux)}
 .a-menu svg{width:16px;height:16px}
 .a-body{position:absolute;left:15px;right:15px;bottom:13px;z-index:2}
 .a-body small{display:block;font-size:10px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:rgba(255,255,255,.68);margin-bottom:2px}
-.a-body h2{margin:0;font-size:20px;font-weight:800;line-height:1.1;letter-spacing:-.3px;text-shadow:0 2px 12px rgba(0,0,0,.5);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.a-body h2{margin:0;font-size:20px;font-weight:800;line-height:1.1;letter-spacing:-.3px;text-shadow:0 2px 12px rgba(0,0,0,.5);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .a-mat{display:flex;align-items:center;gap:6px;margin-top:4px;font-size:12px;font-weight:600;color:rgba(255,255,255,.8);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .a-mat svg{width:13px;height:13px;flex:none}
 .qmenu{position:absolute;top:48px;right:10px;z-index:20;width:236px;padding:6px;border-radius:18px;background:rgba(30,34,26,.98);border:1px solid rgba(255,255,255,.1);box-shadow:0 18px 40px rgba(0,0,0,.55);animation:in .15s ease}
@@ -519,6 +520,15 @@ input[type="file"]{font-size:13px;color:var(--texte-doux)}
 .gs-fiche + .gs-fiche{border-top:1px solid rgba(255,255,255,.12);padding-top:16px}
 .gs-fiche h3{margin:0 0 6px;font-size:16px;font-weight:800}
 body.sheet-open{overflow:hidden}
+/* Contenu de fiche rédigé dans Baserow (colonne CONTENU) */
+.gs-panel .gs-quote{margin:-10px 0 16px;font-size:15px;font-weight:700;color:#fff;line-height:1.35}
+.gs-sub{margin:4px 0 8px;font-size:10.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--vert)}
+.gs-list{margin:0 0 16px;padding:0;list-style:none}
+.gs-list li{position:relative;padding-left:16px;margin-bottom:7px;font-size:13.5px;line-height:1.5;color:rgba(255,255,255,.86)}
+.gs-list li:before{content:"";position:absolute;left:2px;top:.62em;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.45)}
+.gs-panel .gs-text{margin:0 0 12px;font-size:13.5px;line-height:1.6;color:rgba(255,255,255,.86)}
+.gs-cta{display:flex;align-items:center;justify-content:center;gap:8px;margin:18px 14px 0;height:50px;border:0;border-radius:18px;background:var(--vert);color:#10140C;font-size:14.5px;font-weight:800;width:calc(100% - 28px)}
+.gs-cta svg{width:18px;height:18px}
 .gs-top .icon-btn[hidden]{display:none}
 .toast{z-index:600}
 
@@ -637,6 +647,148 @@ html{scroll-padding-top:84px}
 #aiGeneratedProposals .section-title{font-size:19px;margin-bottom:4px}
 .menu-list .chev{margin-left:auto;width:16px;height:16px;color:rgba(244,243,236,.35)}
 
+
+/* =========================================================
+   ☀️ MODE CLAIR — activé depuis Compte › Préférences
+   Les cartes photo et la fiche en verre dépoli restent
+   identiques : le texte blanc reste posé sur la photo.
+   ========================================================= */
+html[data-theme="light"]{
+  --fond:#F3F0E8;
+  --surface:#FFFFFF;
+  --surface-2:#ECE8DD;
+  --texte-clair:#1A1D15;            /* texte principal (sombre en mode clair) */
+  --texte-doux:rgba(26,29,21,.6);
+  --trait:rgba(20,23,15,.09);
+  --vert-fonce:#4F8257;
+  --ombre:0 12px 28px rgba(40,50,30,.16);
+  --ombre-legere:0 6px 16px rgba(40,50,30,.12);
+  color-scheme:light;
+}
+html[data-theme="light"] ::selection{background:rgba(132,185,138,.4)}
+
+/* Bandeau, recherche, menu latéral */
+html[data-theme="light"] .appbar{background:rgba(243,240,232,.86);border-bottom-color:rgba(20,23,15,.07)}
+html[data-theme="light"] .search-panel{background:rgba(243,240,232,.97);border-bottom-color:rgba(20,23,15,.07)}
+html[data-theme="light"] .icon-btn{background:rgba(20,23,15,.06)}
+html[data-theme="light"] .gs-top .icon-btn{background:rgba(255,255,255,.14);color:#fff}
+html[data-theme="light"] .searchbox{background:#fff;border-color:rgba(20,23,15,.1)}
+html[data-theme="light"] .side{background:#FBFAF6;border-right-color:rgba(20,23,15,.07);box-shadow:20px 0 50px rgba(0,0,0,.15)}
+html[data-theme="light"] .side-sep{background:rgba(20,23,15,.08)}
+html[data-theme="light"] .side-sec-title{color:rgba(26,29,21,.4)}
+html[data-theme="light"] .side-link{color:rgba(26,29,21,.66)}
+html[data-theme="light"] .side-foot{color:rgba(26,29,21,.35)}
+html[data-theme="light"] .modal-overlay,
+html[data-theme="light"] .sheet-overlay,
+html[data-theme="light"] .menu-overlay{background:rgba(30,35,25,.35)}
+
+/* Surfaces et textes */
+html[data-theme="light"] .card{border-color:rgba(20,23,15,.07);box-shadow:0 6px 18px rgba(40,50,30,.06)}
+html[data-theme="light"] .card p,html[data-theme="light"] .card li,
+html[data-theme="light"] .result p,html[data-theme="light"] .result li,
+html[data-theme="light"] .help-level p,html[data-theme="light"] .info-body p,
+html[data-theme="light"] .ai-sheet-section p,html[data-theme="light"] .ai-sheet-section li,
+html[data-theme="light"] .ai-proposal-description{color:rgba(26,29,21,.8)}
+html[data-theme="light"] .info,html[data-theme="light"] .help-level,html[data-theme="light"] .row-item,
+html[data-theme="light"] .stat,html[data-theme="light"] .menu-list,html[data-theme="light"] .gen-form,
+html[data-theme="light"] .call,html[data-theme="light"] .ai-sheet-variant,html[data-theme="light"] #detailBody,
+html[data-theme="light"] .ai-activity-sheet{background:#fff;border-color:rgba(20,23,15,.08)}
+html[data-theme="light"] .empty{background:rgba(255,255,255,.6);border-color:rgba(20,23,15,.15)}
+html[data-theme="light"] .info strong,html[data-theme="light"] #detailBody h2,html[data-theme="light"] .label,
+html[data-theme="light"] .chip-title,html[data-theme="light"] .form-grid label,html[data-theme="light"] .ai-sheet-section h3,
+html[data-theme="light"] .gen-form .field-title{color:rgba(26,29,21,.55)}
+html[data-theme="light"] .gs-mini .label{color:rgba(255,255,255,.5)}
+html[data-theme="light"] #detailIntro{color:rgba(26,29,21,.75)}
+html[data-theme="light"] .profile-card{background:linear-gradient(150deg,rgba(132,185,138,.28),#fff)}
+html[data-theme="light"] .menu-list button + button{border-top-color:rgba(20,23,15,.07)}
+html[data-theme="light"] .menu-list .chev,html[data-theme="light"] .generator-card-arrow{color:rgba(26,29,21,.35)}
+
+/* Boutons, champs, pastilles */
+html[data-theme="light"] .secondary,html[data-theme="light"] .ai-sheet-action{background:rgba(20,23,15,.05);border-color:rgba(20,23,15,.12)}
+html[data-theme="light"] .link.back{background:rgba(20,23,15,.06)}
+html[data-theme="light"] textarea,html[data-theme="light"] select,
+html[data-theme="light"] input[type="text"],html[data-theme="light"] input[type="email"],
+html[data-theme="light"] input[type="number"],html[data-theme="light"] input[type="date"],
+html[data-theme="light"] input[type="time"],html[data-theme="light"] input:not([type]){background-color:#fff;border-color:rgba(20,23,15,.14)}
+html[data-theme="light"] select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231A1D15' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E")}
+html[data-theme="light"] textarea::placeholder,html[data-theme="light"] input::placeholder{color:rgba(26,29,21,.4)}
+html[data-theme="light"] .chip{background:#fff;border-color:rgba(20,23,15,.14);color:rgba(26,29,21,.8)}
+html[data-theme="light"] .chip.selected{background:#1A1D15;border-color:#1A1D15;color:#fff}
+html[data-theme="light"] .modes{background:rgba(20,23,15,.05);border-color:rgba(20,23,15,.08)}
+html[data-theme="light"] .mode{color:rgba(26,29,21,.6)}
+html[data-theme="light"] .mode.on{background:#1A1D15;color:#fff}
+html[data-theme="light"] .photo{border-color:rgba(20,23,15,.2);background:rgba(20,23,15,.02)}
+html[data-theme="light"] .generator-card-icon,html[data-theme="light"] .ai-meta,
+html[data-theme="light"] .ai-material-item{background:rgba(20,23,15,.06);border-color:rgba(20,23,15,.08)}
+
+/* Fenêtres */
+html[data-theme="light"] .modal-box,html[data-theme="light"] .filter-sheet{border-color:rgba(20,23,15,.08);box-shadow:0 -14px 44px rgba(0,0,0,.15)}
+html[data-theme="light"] .modal-close{background:rgba(20,23,15,.07)}
+html[data-theme="light"] .qmenu{background:#fff;border-color:rgba(20,23,15,.08);box-shadow:0 18px 40px rgba(0,0,0,.18)}
+html[data-theme="light"] .qmenu button:active{background:rgba(20,23,15,.05)}
+
+/* Help */
+html[data-theme="light"] .emergency{background:#FBE7E9;border-color:rgba(224,82,92,.45);color:#7E1E27}
+html[data-theme="light"] .emergency strong{color:#5E141C}
+html[data-theme="light"] .help-red{background:#FBE7E9;border-color:rgba(224,82,92,.35)}
+html[data-theme="light"] .call.key{background:#FBE7E9}
+
+/* Barre de navigation et messages */
+html[data-theme="light"] .bottom{background:rgba(255,255,255,.93);border-color:rgba(20,23,15,.07);box-shadow:0 12px 30px rgba(40,50,30,.16)}
+html[data-theme="light"] .nav{color:rgba(26,29,21,.45)}
+html[data-theme="light"] .nav.active .nav-icon{background:rgba(132,185,138,.32)}
+html[data-theme="light"] .toast{background:#1A1D15;color:#fff}
+
+/* =========================================================
+   🔘 INTERRUPTEUR (Préférences)
+   ========================================================= */
+.menu-list .pref-row{cursor:pointer}
+.switch{position:relative;margin-left:auto;width:48px;height:29px;border-radius:99px;background:rgba(255,255,255,.18);transition:background .2s;flex:none}
+.switch:after{content:"";position:absolute;top:3px;left:3px;width:23px;height:23px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.25);transition:transform .2s}
+.pref-row[aria-checked="true"] .switch{background:var(--vert)}
+.pref-row[aria-checked="true"] .switch:after{transform:translateX(19px)}
+html[data-theme="light"] .switch{background:rgba(20,23,15,.15)}
+html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(--vert)}
+
+
+/* =========================================================
+   📖 FICHE INTERACTIVE (onglets · tuiles · conseils)
+   ========================================================= */
+.gs-title .gs-thumb{display:none}
+.glass-sheet.compact .gs-hero{display:none}
+.glass-sheet.compact .gs-title{display:flex;align-items:center;gap:14px;padding-top:6px}
+.glass-sheet.compact .gs-thumb{display:block;width:72px;height:72px;border-radius:20px;object-fit:cover;flex:none;box-shadow:0 10px 24px rgba(0,0,0,.4)}
+.glass-sheet.compact .gs-title h1{font-size:26px}
+.fx-tabs{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:6px;margin:18px 14px 0;padding:5px;border-radius:18px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12)}
+.fx-tabs.many{grid-auto-columns:max-content;overflow-x:auto;scrollbar-width:none}
+.fx-tabs.many::-webkit-scrollbar{display:none}
+.fx-tab{padding:11px 12px;border:0;border-radius:14px;background:none;font-size:14px;font-weight:800;color:rgba(255,255,255,.65);text-align:center;white-space:nowrap}
+.fx-tab.on{background:#fff;color:#14170F}
+.fx-quote{margin:20px 20px 0;font-size:22px;font-weight:900;letter-spacing:-.4px;line-height:1.15;color:#fff}
+.fx-tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 14px 0}
+.fx-tiles.two{grid-template-columns:repeat(2,1fr)}
+.fx-tile{display:flex;flex-direction:column;align-items:center;gap:7px;padding:14px 6px;border-radius:20px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);font-size:12.5px;font-weight:800;color:#fff;text-align:center;line-height:1.2}
+.fx-tile svg{width:24px;height:24px;color:var(--vert)}
+.fx-tile.on{background:rgba(132,185,138,.25);border-color:rgba(132,185,138,.6)}
+.fx-panel{margin:10px 14px 0;padding:16px 18px 6px;border-radius:22px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);animation:in .2s ease}
+.fx-panel ul{margin:0;padding:0;list-style:none}
+.fx-panel li{position:relative;padding-left:18px;margin-bottom:11px;font-size:14.5px;line-height:1.45;color:#fff}
+.fx-panel li:before{content:"";position:absolute;left:3px;top:.55em;width:7px;height:7px;border-radius:50%;background:var(--vert)}
+.fx-panel p{margin:0 0 12px;font-size:14px;line-height:1.55;color:rgba(255,255,255,.88)}
+.fx-tips{margin:14px 14px 0;padding:16px 18px 8px;border-radius:22px;background:linear-gradient(155deg,rgba(132,185,138,.32),rgba(132,185,138,.1));border:1px solid rgba(132,185,138,.45)}
+.fx-tips h2{margin:0 0 12px;font-size:12px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:#CFE7D2}
+.fx-tip{display:flex;gap:11px;align-items:flex-start;margin-bottom:12px;font-size:14.5px;font-weight:700;line-height:1.4;color:#fff}
+.fx-tip svg{width:20px;height:20px;flex:none;color:#CFE7D2;margin-top:1px}
+.fx-chips{margin:14px 14px 0;padding:16px 18px;border-radius:22px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12)}
+.fx-chips h2{margin:0 0 10px;font-size:12px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.fx-chips .mini-chips{gap:6px}
+.fx-chips .mini-chip{padding:7px 12px;font-size:12.5px}
+.fx-list-item{display:flex;align-items:center;gap:12px;width:100%;padding:12px 0;border:0;background:none;color:#fff;text-align:left;border-top:1px solid rgba(255,255,255,.12)}
+.fx-list-item:first-of-type{border-top:0;padding-top:2px}
+.fx-list-item b{display:block;font-size:15px;font-weight:800}
+.fx-list-item small{display:block;margin-top:2px;font-size:12.5px;color:rgba(255,255,255,.7)}
+.fx-list-item svg{margin-left:auto;width:18px;height:18px;flex:none;color:rgba(255,255,255,.5)}
+
 /* =========================================================
    📱 MOBILE
    ========================================================= */
@@ -690,7 +842,7 @@ html{scroll-padding-top:84px}
     <button class="side-link" onclick="closeSideMenu();openInfo('privacy')">Politique de confidentialité</button>
     <button class="side-link" onclick="closeSideMenu();toast('Les CGU arrivent bientôt.')">CGU</button>
     <button class="side-link" onclick="closeSideMenu();openInfo('contact')">FAQ / Contactez-nous</button>
-    <button class="side-link" onclick="sideGo('account')">Préférences</button>
+    <button class="side-link" onclick="sideGo('prefs')">Préférences</button>
     <button class="side-link" onclick="closeSideMenu();toast('La gestion des cookies arrive bientôt.')">Gestion des cookies</button>
     <div class="side-foot">Version 1.1</div>
   </aside>
@@ -1020,6 +1172,12 @@ html{scroll-padding-top:84px}
     <div class="section-head"><h2 class="section-title">Mes favoris</h2></div>
     <div id="favorites" class="empty"><strong>Aucun favori</strong>Les fiches que tu ajoutes apparaîtront ici.</div>
   </section>
+  <section class="section" id="prefs-section">
+    <div class="section-head"><h2 class="section-title">Préférences</h2></div>
+    <div class="menu-list">
+      <button id="themeSwitch" class="pref-row" role="switch" aria-checked="false" onclick="toggleTheme()"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2M12 19.5v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M2.5 12h2M19.5 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg>Mode clair<span class="switch" aria-hidden="true"></span></button>
+    </div>
+  </section>
   <section class="section">
     <div class="section-head"><h2 class="section-title">Aide</h2></div>
     <div class="menu-list">
@@ -1063,7 +1221,7 @@ html{scroll-padding-top:84px}
       <button class="icon-btn" onclick="closeGlassSheet()" aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
     </div>
     <div class="gs-hero"><img id="gsHeroImg" alt=""></div>
-    <div class="gs-title"><h1 id="gsTitle"></h1><div id="gsMeta" class="gs-meta"></div></div>
+    <div class="gs-title"><img id="gsThumb" class="gs-thumb" alt=""><div><h1 id="gsTitle"></h1><div id="gsMeta" class="gs-meta"></div></div></div>
     <div id="gsContent"></div>
   </div>
 </div>
@@ -1699,6 +1857,7 @@ function mapResource(row){
     characteristics:resourceText(resourceField(row,["CARACTÉRISTIQUES","CARACTERISTIQUES","Caractéristiques"])),
     needs:resourceText(resourceField(row,["BESOINS","Besoins"])),
     reperes:resourceText(resourceField(row,["REPÈRES","REPERES","Repères"])),
+    content:resourceText(resourceField(row,["CONTENU","Contenu","contenu"])),
     order:Number(resourceField(row,["ORDRE","Ordre","ordre"])) || 9999,
     active:actif===true || ["true","1","oui","yes","vrai"].includes(String(actif).toLowerCase())
   };
@@ -1713,27 +1872,7 @@ function openPublicSubcategoryAt(i){
 }
 
 /* ===== PAGES SIMPLES ALIMENTÉES PAR BASEROW ===== */
-function renderResourceCategoryPage(listId,categoryValue){
-  const list=document.getElementById(listId);
-  if(!list) return;
 
-  const items=resources.filter(r=>
-    String(r.category).trim().toUpperCase()===categoryValue
-  );
-
-  if(!items.length){
-    list.innerHTML='<div class="empty"><strong>Aucune fiche</strong>Aucune fiche publiée pour le moment.</div>';
-    return;
-  }
-
-  list.innerHTML=items.map(r=>`
-    <article class="card">
-      <h2>${esc(r.title||"Fiche sans titre")}</h2>
-      ${r.summary?`<p>${esc(r.summary)}</p>`:""}
-      ${r.pdf?`<div style="height:10px"></div><button class="btn primary full" onclick="openResourcePDF(${Number(r.id)})">Ouvrir la fiche PDF</button>`:""}
-    </article>
-  `).join("");
-}
 
 function renderResourcesPage(){
   const loading=document.getElementById("resourcesLoading");
@@ -3584,6 +3723,8 @@ function openGlassSheet(o){
   const s=document.getElementById("glassSheet");
   document.getElementById("gsBgImg").src=o.img;
   document.getElementById("gsHeroImg").src=o.img;
+  document.getElementById("gsThumb").src=o.img;
+  s.classList.toggle("compact",!!o.compact);
   document.getElementById("gsTitle").textContent=o.title;
   document.getElementById("gsMeta").textContent=o.meta||"";
   const fav=document.getElementById("gsFav");
@@ -3660,22 +3801,7 @@ function renderPublics(){
     </div>`;
   }).join("");
 }
-function openPublicTranche(k){
-  const t=PUBLIC_TRANCHES[k],fiches=publicFichesOf(k);
-  const pdfIcon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4"/></svg>';
-  let html="";
-  const all=f=>[f.characteristics,f.needs].some(Boolean);
-  if(fiches.length===1&&all(fiches[0])){
-    html+=miniBlock("Caractéristiques",fiches[0].characteristics)+miniBlock("Besoins",fiches[0].needs);
-  }
-  html+=`<div class="gs-panel"><h2>Repères pour l'animateur</h2>${fiches.length?fiches.map(f=>`
-    <div class="gs-fiche">
-      ${fiches.length>1||!f.reperes?`<h3>${esc(f.title||"Fiche")}</h3>`:""}
-      ${f.reperes?stepsHTML(f.reperes):(f.summary?`<p style="margin:0 0 14px;font-size:13.5px;line-height:1.6;color:rgba(255,255,255,.84)">${esc(f.summary)}</p>`:"")}
-      ${f.pdf?`<button class="gs-link" onclick="openResourcePDF(${Number(f.id)})">${pdfIcon}Lire la fiche complète</button>`:""}
-    </div>`).join(""):`<p>Aucune fiche pour cette tranche d'âge pour le moment.</p>`}</div>`;
-  openGlassSheet({img:cssImage(t.img,t.file),title:t.label,meta:`${t.kicker} · ${fiches.length} fiche${fiches.length>1?"s":""}`,html});
-}
+
 
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeGlassSheet();closeActFilters()}});
 
@@ -3703,6 +3829,7 @@ function closeSideMenu(){
 function sideGo(target){
   closeSideMenu();
   if(target==="favorites"){goFavorites();return}
+  if(target==="prefs"){go("account");setTimeout(()=>{const s=document.getElementById("prefs-section");if(s)s.scrollIntoView({behavior:"smooth",block:"start"})},250);return}
   go(target);
 }
 function goFavorites(){
@@ -3817,6 +3944,166 @@ function renderHomeHello(){
 renderHomeHello();
 renderHomeFavs();
 document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeSideMenu();closeInfo();closeSearch()}});
+
+/* =========================================================
+   ☀️ MODE CLAIR / SOMBRE
+   ========================================================= */
+function applyTheme(theme){
+  const light=theme==="light";
+  if(light)document.documentElement.dataset.theme="light";
+  else delete document.documentElement.dataset.theme;
+  const meta=document.querySelector('meta[name="theme-color"]');
+  if(meta)meta.content=light?"#F3F0E8":"#14170F";
+  const sw=document.getElementById("themeSwitch");
+  if(sw)sw.setAttribute("aria-checked",light?"true":"false");
+}
+function toggleTheme(){
+  const next=document.documentElement.dataset.theme==="light"?"dark":"light";
+  try{localStorage.setItem("animTheme",next)}catch(e){}
+  applyTheme(next);
+  toast(next==="light"?"Mode clair activé.":"Mode sombre activé.");
+}
+applyTheme((()=>{try{return localStorage.getItem("animTheme")}catch(e){return null}})());
+
+/* =========================================================
+   📝 CONTENU DE FICHE (colonne CONTENU dans Baserow)
+   ## Titre de bloc   → un grand panneau
+   ### Sous-titre      → petite étiquette verte
+   - point            → liste
+   texte simple       → paragraphe
+   ========================================================= */
+
+function openActivitiesForAge(label){
+  closeGlassSheet();
+  actFilters={obj:[],age:[label],dur:[]};
+  go("activities");
+  toast(`Activités filtrées : ${label}`);
+}
+
+/* =========================================================
+   📖 FICHE INTERACTIVE — lue depuis la colonne CONTENU
+   ## Onglet : « phrase clé »   → un onglet (ex. « 3 ans »)
+   ### Tuile                    → une tuile (ex. « Corps »)
+   - point                      → un point
+   > conseil                    → « Ce que ça change pour toi »
+   + idée                       → pastille « Idées à essayer »
+   texte simple                 → paragraphe
+   ========================================================= */
+function parseFiche(text){
+  const model={tabs:[],chips:[]};
+  let tab=null,tile=null;
+  const newTab=(label,quote)=>{tab={label,quote,tiles:[],points:[],paras:[],tips:[]};model.tabs.push(tab);tile=null};
+  for(const raw of String(text||"").replace(/\r/g,"").split("\n")){
+    const line=raw.trim();if(!line)continue;
+    if(line.startsWith("## ")){
+      const h=line.slice(3).trim();
+      const m=h.match(/^(.+?)\s*:\s*(«.+»|".+")\s*$/);
+      newTab(m?m[1].trim():h,m?m[2].trim():"");continue;
+    }
+    if(line.startsWith("+ ")){model.chips.push(line.slice(2).trim());continue}
+    if(!tab)newTab("","");
+    if(line.startsWith("### ")){tile={label:line.slice(4).trim(),points:[]};tab.tiles.push(tile);continue}
+    if(line.startsWith("> ")){tab.tips.push(line.slice(2).trim());continue}
+    if(/^[-•*]\s+/.test(line)){const pt=line.replace(/^[-•*]\s+/,"");(tile?tile.points:tab.points).push(pt);continue}
+    tab.paras.push(line);
+  }
+  return model;
+}
+const FX_ICONS={
+  corps:'<circle cx="12" cy="4.5" r="2"/><path d="M7 21l3-7 2 2 2-2 3 7M6 10l6-2 6 2"/>',
+  relations:'<circle cx="8.5" cy="8" r="3"/><circle cx="16" cy="9" r="2.5"/><path d="M3 20c.6-3.2 2.7-5 5.5-5s4.9 1.8 5.5 5M14 15.2c.6-.2 1.3-.2 2-.2 2.4 0 4.2 1.6 5 4.5"/>',
+  langage:'<path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/>',
+  emotions:'<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>',
+  securite:'<path d="M12 3 5 6v5c0 4.5 3 8.3 7 10 4-1.7 7-5.5 7-10V6z"/>',
+  defaut:'<path d="M12 3l1.6 4.8L18 9.5l-4.4 1.7L12 16l-1.6-4.8L6 9.5l4.4-1.7z"/>'
+};
+function fxIcon(label){
+  const t=norm(label);
+  const k=/corps|moteur|physique|motric|sante/.test(t)?"corps":/relation|social|affect|groupe|autres|equipe/.test(t)?"relations":
+    /langage|parole|intellect|communi|pensee|cogni/.test(t)?"langage":/emotion|sentiment/.test(t)?"emotions":
+    /securite|vigilance|danger|protection|regle/.test(t)?"securite":"defaut";
+  return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${FX_ICONS[k]}</svg>`;
+}
+let fxState=null;
+function renderFicheHTML(model,opts){
+  fxState={model,tab:0,tile:0,opts:opts||{}};
+  const tabs=model.tabs.filter(t=>t.label);
+  let html="";
+  if(model.tabs.length>1){
+    html+=`<div class="fx-tabs${model.tabs.length>3?" many":""}">${model.tabs.map((t,i)=>`<button class="fx-tab${i?"":" on"}" onclick="fxSetTab(${i})">${esc(t.label||("Partie "+(i+1)))}</button>`).join("")}</div>`;
+  }
+  html+='<div id="fxDyn"></div>';
+  if(model.chips.length)html+=`<div class="fx-chips"><h2>${esc((opts&&opts.chipsTitle)||"Idées à essayer")}</h2><div class="mini-chips">${model.chips.map(c=>`<span class="mini-chip">${esc(c)}</span>`).join("")}</div></div>`;
+  if(opts&&opts.cta)html+=opts.cta;
+  return html;
+}
+function fxDynHTML(){
+  const {model,tab,tile}=fxState;const t=model.tabs[tab];if(!t)return "";
+  let h="";
+  if(t.quote)h+=`<div class="fx-quote">${esc(t.quote)}</div>`;
+  else if(model.tabs.length>1&&t.label)h+=`<div class="fx-quote">${esc(t.label)}</div>`;
+  if(t.paras.length||t.points.length){
+    h+=`<div class="fx-panel">${t.paras.map(p=>`<p>${esc(p)}</p>`).join("")}${t.points.length?`<ul>${t.points.map(p=>`<li>${esc(p)}</li>`).join("")}</ul>`:""}</div>`;
+  }
+  if(t.tiles.length){
+    if(t.tiles.length>1)h+=`<div class="fx-tiles${t.tiles.length===2||t.tiles.length===4?" two":""}">${t.tiles.map((x,i)=>`<button class="fx-tile${i===tile?" on":""}" onclick="fxSetTile(${i})">${fxIcon(x.label)}${esc(x.label)}</button>`).join("")}</div>`;
+    const cur=t.tiles[Math.min(tile,t.tiles.length-1)];
+    h+=`<div class="fx-panel">${t.tiles.length===1?`<div class="gs-sub">${esc(cur.label)}</div>`:""}<ul>${cur.points.map(p=>`<li>${esc(p)}</li>`).join("")}</ul></div>`;
+  }
+  if(t.tips.length){
+    const ok='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 4.5 4.5L19 7"/></svg>';
+    h+=`<div class="fx-tips"><h2>Ce que ça change pour toi</h2>${t.tips.map(x=>`<div class="fx-tip">${ok}${esc(x)}</div>`).join("")}</div>`;
+  }
+  return h;
+}
+function fxRefresh(){
+  const el=document.getElementById("fxDyn");if(el)el.innerHTML=fxDynHTML();
+  document.querySelectorAll(".fx-tab").forEach((b,i)=>b.classList.toggle("on",i===fxState.tab));
+}
+function fxSetTab(i){fxState.tab=i;fxState.tile=0;fxRefresh()}
+function fxSetTile(i){fxState.tile=i;fxRefresh()}
+function openFicheSheet(o){
+  openGlassSheet(Object.assign({},o,{compact:true,html:renderFicheHTML(o.model,o)}));
+  fxRefresh();
+}
+
+/* ---------- Toutes les catégories de fiches ---------- */
+const RESOURCE_IMAGES={PUBLICS:["--image-publics","images/publics.jpg"],ROLE:["--image-role","images/role-anim.jpg"],QUOTIDIEN:["--image-vie-quotidienne","images/vie-quotidienne.jpg"],OUTILS:["--image-boite-outils","images/boite-a-outils.jpg"],RESSOURCES:["--image-ressources","images/ressources.jpg"]};
+function resourceImage(r){const k=String(r.category||"").trim().toUpperCase();const v=RESOURCE_IMAGES[k]||RESOURCE_IMAGES.RESSOURCES;return cssImage(v[0],v[1])}
+function cap1(s){s=String(s||"").toLowerCase();return s.charAt(0).toUpperCase()+s.slice(1)}
+function niceTitle(t){const s=String(t||"");return s===s.toUpperCase()?cap1(s):s}
+function openResourceSheet(id){
+  const r=resources.find(x=>Number(x.id)===Number(id));if(!r){toast("Fiche introuvable.");return}
+  const img=resourceImage(r);
+  if(r.content){openFicheSheet({img,title:niceTitle(r.title),meta:r.summary||"",model:parseFiche(r.content)});return}
+  const pdfIcon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4"/></svg>';
+  openGlassSheet({img,title:niceTitle(r.title),meta:"",html:`<div class="gs-panel">${r.summary?`<p>${esc(r.summary)}</p>`:""}${r.pdf?`<button class="gs-link" onclick="openResourcePDF(${Number(r.id)})">${pdfIcon}Lire la fiche complète</button>`:""}</div>`});
+}
+function renderResourceCategoryPage(listId,categoryValue){
+  const list=document.getElementById(listId);if(!list)return;
+  const items=resources.filter(r=>String(r.category).trim().toUpperCase()===categoryValue);
+  if(!items.length){list.innerHTML='<div class="empty"><strong>Aucune fiche</strong>Aucune fiche publiée pour le moment.</div>';return}
+  list.innerHTML=items.map(r=>`<div class="a-card" role="button" tabindex="0" onclick="openResourceSheet(${Number(r.id)})">
+    <div class="a-photo" style="background-image:url('${esc(resourceImage(r))}')"></div>
+    ${r.subcategory?`<span class="pill-count">${esc(cap1(r.subcategory))}</span>`:""}
+    <div class="a-body"><h2>${esc(niceTitle(r.title||"Fiche sans titre"))}</h2>${r.summary?`<div class="a-mat">${esc(r.summary)}</div>`:""}</div>
+  </div>`).join("");
+}
+
+/* ---------- Publics : une tranche = une fiche ---------- */
+function openPublicTranche(k){
+  const t=PUBLIC_TRANCHES[k],fiches=publicFichesOf(k),img=cssImage(t.img,t.file);
+  const cta=`<button class="gs-cta" onclick="openActivitiesForAge('${t.label}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>Voir les activités ${t.label}</button>`;
+  const meta=`${t.kicker} · ${t.phrase}`;
+  if(fiches.length===1&&fiches[0].content){
+    openFicheSheet({img,title:t.label,meta,model:parseFiche(fiches[0].content),chipsTitle:"Activités qui marchent à cet âge",cta});
+    return;
+  }
+  if(fiches.length===1){openResourceSheet(fiches[0].id);return}
+  const chev='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 6 6 6-6 6"/></svg>';
+  const html=`<div class="gs-panel">${fiches.length?fiches.map(f=>`<button class="fx-list-item" onclick="openResourceSheet(${Number(f.id)})"><div><b>${esc(niceTitle(f.title||"Fiche"))}</b>${f.summary?`<small>${esc(f.summary)}</small>`:""}</div>${chev}</button>`).join(""):`<p>Aucune fiche pour cette tranche d'âge pour le moment.</p>`}</div>`+cta;
+  openGlassSheet({img,title:t.label,meta,html,compact:true});
+}
 </script>
 </body>
 </html>
