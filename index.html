@@ -3908,15 +3908,15 @@ function aiObjectiveValue(){
 /* =========================================================
    ⭐ FAVORIS — accueil et compte
    ========================================================= */
-function favMeta(a){return [a.age,a.duration,a.location].filter(Boolean).join(" · ")}
-function openFavoriteFrom(i){const f=getFav();window.rendered=f;openActivity(i)}
+function favMeta(a){return a&&a.type==="resource"?(a.meta||"Fiche"):[a.age,a.duration,a.location].filter(Boolean).join(" · ")}
+
 function renderHomeFavs(){
   const sec=document.getElementById("homeFavSection"),el=document.getElementById("homeFavs");
   if(!sec||!el)return;
   const f=getFav();
   sec.hidden=!f.length;
   el.innerHTML=f.slice(0,3).map((a,i)=>`<button class="row-item" onclick="openFavoriteFrom(${i})">
-    <img src="${esc(activityPhoto(a))}" alt=""><div><b>${esc(a.name)}</b><small>${esc(favMeta(a))}</small></div>
+    <img src="${esc(favImg(a))}" alt=""><div><b>${esc(a.name)}</b><small>${esc(favMeta(a))}</small></div>
     <span class="st"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8z"/></svg></span></button>`).join("");
 }
 function renderFavorites(){
@@ -3927,7 +3927,7 @@ function renderFavorites(){
   if(!el)return;
   if(!f.length){el.className="empty";el.innerHTML="<strong>Aucun favori</strong>Les fiches que tu ajoutes apparaîtront ici.";return}
   el.className="favs";
-  el.innerHTML=f.map((a,i)=>`<button class="fav-card" style="background-image:url('${esc(activityPhoto(a))}')" onclick="openFavoriteFrom(${i})">
+  el.innerHTML=f.map((a,i)=>`<button class="fav-card" style="background-image:url('${esc(favImg(a))}')" onclick="openFavoriteFrom(${i})">
     <span class="st"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8z"/></svg></span>
     <div><b>${esc(a.name)}</b><small>${esc(favMeta(a))}</small></div></button>`).join("");
 }
@@ -4075,9 +4075,10 @@ function niceTitle(t){const s=String(t||"");return s===s.toUpperCase()?cap1(s):s
 function openResourceSheet(id){
   const r=resources.find(x=>Number(x.id)===Number(id));if(!r){toast("Fiche introuvable.");return}
   const img=resourceImage(r);
-  if(r.content){openFicheSheet({img,title:niceTitle(r.title),meta:r.summary||"",model:parseFiche(r.content)});return}
+  const fav=favSheetOpts(resFavItem(r));
+  if(r.content){openFicheSheet(Object.assign({img,title:niceTitle(r.title),meta:r.summary||"",model:parseFiche(r.content)},fav));return}
   const pdfIcon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4"/></svg>';
-  openGlassSheet({img,title:niceTitle(r.title),meta:"",html:`<div class="gs-panel">${r.summary?`<p>${esc(r.summary)}</p>`:""}${r.pdf?`<button class="gs-link" onclick="openResourcePDF(${Number(r.id)})">${pdfIcon}Lire la fiche complète</button>`:""}</div>`});
+  openGlassSheet({...fav,img,title:niceTitle(r.title),meta:"",html:`<div class="gs-panel">${r.summary?`<p>${esc(r.summary)}</p>`:""}${r.pdf?`<button class="gs-link" onclick="openResourcePDF(${Number(r.id)})">${pdfIcon}Lire la fiche complète</button>`:""}</div>`});
 }
 function renderResourceCategoryPage(listId,categoryValue){
   const list=document.getElementById(listId);if(!list)return;
@@ -4096,13 +4097,35 @@ function openPublicTranche(k){
   const cta=`<button class="gs-cta" onclick="openActivitiesForAge('${t.label}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>Voir les activités ${t.label}</button>`;
   const meta=`${t.kicker} · ${t.phrase}`;
   if(fiches.length===1&&fiches[0].content){
-    openFicheSheet({img,title:t.label,meta,model:parseFiche(fiches[0].content),chipsTitle:"Activités qui marchent à cet âge",cta});
+    const fav=favSheetOpts(resFavItem(fiches[0],{name:"Publics "+t.label,meta:t.kicker,img,tranche:k}));
+    openFicheSheet(Object.assign({img,title:t.label,meta,model:parseFiche(fiches[0].content),chipsTitle:"Activités qui marchent à cet âge",cta},fav));
     return;
   }
   if(fiches.length===1){openResourceSheet(fiches[0].id);return}
   const chev='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 6 6 6-6 6"/></svg>';
   const html=`<div class="gs-panel">${fiches.length?fiches.map(f=>`<button class="fx-list-item" onclick="openResourceSheet(${Number(f.id)})"><div><b>${esc(niceTitle(f.title||"Fiche"))}</b>${f.summary?`<small>${esc(f.summary)}</small>`:""}</div>${chev}</button>`).join(""):`<p>Aucune fiche pour cette tranche d'âge pour le moment.</p>`}</div>`+cta;
   openGlassSheet({img,title:t.label,meta,html,compact:true});
+}
+
+/* =========================================================
+   ⭐ FAVORIS — fiches (Publics, Rôle, Quotidien, Outils, Ressources)
+   ========================================================= */
+function resFavItem(r,extra){
+  return Object.assign({id:"res-"+r.id,type:"resource",resId:Number(r.id),name:niceTitle(r.title||"Fiche"),meta:cap1(r.subcategory||r.category||""),img:resourceImage(r)},extra||{});
+}
+function favSheetOpts(item){
+  return {favOn:isFav(item),onFav:()=>{favorite(item);document.getElementById("gsFav").classList.toggle("fav-on",isFav(item))}};
+}
+function favImg(a){return a&&a.type==="resource"?(a.img||cssImage("--image-ressources","images/ressources.jpg")):activityPhoto(a)}
+function openFavoriteFrom(i){
+  const f=getFav(),a=f[i];if(!a)return;
+  if(a.type==="resource"){
+    if(a.tranche!==undefined&&a.tranche!==null){openPublicTranche(a.tranche);return}
+    if(!resources.find(x=>Number(x.id)===Number(a.resId))){toast("Cette fiche n'est plus disponible.");return}
+    openResourceSheet(a.resId);return;
+  }
+  window.rendered=f.filter(x=>x.type!=="resource");
+  openActivity(window.rendered.findIndex(x=>x.id===a.id));
 }
 </script>
 </body>
