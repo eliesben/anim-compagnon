@@ -839,11 +839,12 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
     <button class="side-item help" data-side="help" onclick="sideGo('help')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.8 9a2.4 2.4 0 1 1 4.4 1.4c-.8 1.1-2.2 1.2-2.2 2.8"/><path d="M12 16.8h.01"/></svg>Help</button>
     <div class="side-sep"></div>
     <p class="side-sec-title">Informations</p>
-    <button class="side-link" onclick="closeSideMenu();openInfo('privacy')">Politique de confidentialité</button>
-    <button class="side-link" onclick="closeSideMenu();toast('Les CGU arrivent bientôt.')">CGU</button>
-    <button class="side-link" onclick="closeSideMenu();openInfo('contact')">FAQ / Contactez-nous</button>
+        <button class="side-link" onclick="closeSideMenu();openInfo('contact')">FAQ / Contactez-nous</button>
     <button class="side-link" onclick="sideGo('prefs')">Préférences</button>
-    <button class="side-link" onclick="closeSideMenu();toast('La gestion des cookies arrive bientôt.')">Gestion des cookies</button>
+    <button class="side-link" onclick="closeSideMenu();openInfo('mentions')">Mentions légales</button>
+    <button class="side-link" onclick="closeSideMenu();openInfo('cgu')">CGU</button>
+    <button class="side-link" onclick="closeSideMenu();openInfo('privacy')">Politique de confidentialité</button>
+    <button class="side-link" onclick="closeSideMenu();openInfo('cookies')">Cookies et stockage</button>
     <div class="side-foot">Version 1.1</div>
   </aside>
 </div>
@@ -3845,12 +3846,42 @@ function goFavorites(){
 const CONTACT_MAIL="eliesbendjedou30@gmail.com";
 function openInfo(kind){
   const t=document.getElementById("infoTitle"),b=document.getElementById("infoBody");
-  if(kind==="privacy"){
+    if(kind==="mentions"){
+    t.textContent="Mentions légales";
+    b.innerHTML=`<p><b>Éditeur</b><br>[À COMPLÉTER : Prénom Nom, ou nom de la structure]<br>[À COMPLÉTER : statut, ex. particulier, association loi 1901, auto-entrepreneur + SIRET si applicable]<br>Contact : <a href="mailto:${CONTACT_MAIL}">${CONTACT_MAIL}</a></p>
+      <p><b>Directeur ou directrice de la publication</b><br>[À COMPLÉTER : Prénom Nom]</p>
+      <p><b>Hébergement de l'application</b><br>GitHub Inc. (GitHub Pages), 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis. github.com</p>
+      <p><b>Services techniques utilisés</b><br>Cloudflare Inc. (relais des données), Baserow (stockage des fiches et activités), OpenAI (intelligence artificielle du générateur et de l'analyse Help).</p>
+      <p><b>Propriété intellectuelle</b><br>Les textes, fiches, visuels et le code d'Anim Compagnon sont protégés. Toute reproduction ou diffusion en dehors d'un usage personnel ou pédagogique, sans autorisation, est interdite.</p>
+      <p>Dernière mise à jour : [À COMPLÉTER : date]</p>`;
+  }else if(kind==="cgu"){
+    t.textContent="Conditions générales d'utilisation";
+    b.innerHTML=`<p><b>1. Objet</b><br>Anim Compagnon est une application gratuite d'aide aux animateurs et animatrices (accueils de loisirs, périscolaire, séjours, formation BAFA). Utiliser l'application, c'est accepter ces conditions.</p>
+      <p><b>2. Accès</b><br>L'application est accessible gratuitement, sans création de compte. Elle s'adresse aux personnes de 16 ans et plus. L'éditeur peut modifier, suspendre ou arrêter tout ou partie de l'application à tout moment.</p>
+      <p><b>3. Contenus et responsabilité</b><br>Les fiches et activités sont des repères pratiques. Elles ne remplacent ni la formation, ni la réglementation, ni les consignes de ta structure et de ta direction. Tu restes responsable de l'adaptation des activités à ton public, ton lieu et aux règles de sécurité.</p>
+      <p><b>4. Intelligence artificielle</b><br>Le générateur d'activités et l'analyse Help utilisent une IA. Ses réponses peuvent être incomplètes ou inexactes : relis-les toujours avant de t'en servir. L'analyse Help ne remplace jamais l'avis de ta direction ni un signalement.</p>
+      <p><b>5. Situations de danger</b><br>En cas de danger pour un enfant, l'application ne se substitue pas aux services compétents : appelle le 17 ou le 112 en urgence, le 119 pour un conseil, et préviens ta direction.</p>
+      <p><b>6. Bon usage</b><br>Tu t'engages à ne saisir aucune donnée permettant d'identifier un enfant ou une famille (nom, prénom, photo, adresse…), et à ne pas utiliser l'application à des fins illégales.</p>
+      <p><b>7. Propriété intellectuelle</b><br>Les contenus d'Anim Compagnon peuvent être utilisés librement pour ton activité d'animation. Leur revente ou leur republication sans autorisation est interdite.</p>
+      <p><b>8. Modification et droit applicable</b><br>Ces conditions peuvent évoluer ; la version en vigueur est celle affichée dans l'application. Elles sont soumises au droit français.</p>
+      <p>Dernière mise à jour : [OCTOBRE 2026 : date]<br>Contact : <a href="mailto:${CONTACT_MAIL}">${CONTACT_MAIL}</a></p>`;
+  }else if(kind==="cookies"){
+    t.textContent="Cookies et stockage";
+    b.innerHTML=`<p>Anim Compagnon n'utilise <b>aucun cookie publicitaire ni de mesure d'audience</b>.</p>
+      <p>L'application enregistre seulement sur ton téléphone ce qui est nécessaire à son fonctionnement : ton profil, tes favoris, tes activités IA enregistrées et ton choix de thème (clair ou sombre). Ces données ne sont jamais envoyées. Elles n'ont pas besoin de ton consentement car elles sont indispensables au service.</p>
+      <p>Pour les effacer, vide les données du site dans les réglages de ton navigateur.</p>
+      <p>Les polices d'écriture sont chargées depuis Google Fonts : ton adresse IP est alors transmise à Google.</p>`;
+  }else if(kind==="privacy"){
     t.textContent="Politique de confidentialité";
-    b.innerHTML=`<p>Les descriptions et photos envoyées au générateur IA sont traitées par un service d'intelligence artificielle (OpenAI) pour créer des propositions d'activités.</p>
-      <p>Ton profil (nom, prénom, mail) et tes favoris restent uniquement sur ton téléphone.</p>
-      <p>Dans l'outil de signalement, rien de ce que tu écris n'est enregistré ni envoyé : tout reste uniquement sur ton téléphone.</p>
-      <p>Une question ? Écris à <a href="mailto:${CONTACT_MAIL}">${CONTACT_MAIL}</a></p>`;
+    b.innerHTML=`<p><b>Responsable du traitement</b><br>ANIM COMPAGNON — <a href="mailto:${CONTACT_MAIL}">${CONTACT_MAIL}</a></p>
+      <p><b>Ce qui reste sur ton téléphone</b><br>Ton profil (nom, prénom, mail), tes favoris, tes activités enregistrées, ton thème et tout ce que tu écris dans l'outil de signalement. Rien de tout cela n'est envoyé ni conservé par l'éditeur.</p>
+      <p><b>Ce qui est envoyé</b><br>• Générateur d'activités : ta description et ta photo éventuelle.<br>• Help, « Analyser une situation » : le texte que tu écris.<br>Ces contenus passent par un relais Cloudflare puis sont traités par OpenAI pour produire une réponse. L'éditeur ne les enregistre pas. OpenAI peut les conserver jusqu'à 30 jours pour la prévention des abus, sans les utiliser pour entraîner ses modèles.</p>
+      <p><b>Ne saisis jamais</b> le nom, la photo ou une information permettant de reconnaître un enfant ou une famille.</p>
+      <p><b>Signaler un bug</b><br>Le bouton ouvre ta messagerie : ton message et ton adresse mail nous parviennent alors, et sont utilisés uniquement pour te répondre.</p>
+      <p><b>Transferts hors Union européenne</b><br>GitHub, Cloudflare, OpenAI et Google sont des entreprises américaines. Les transferts sont encadrés par le cadre de protection des données UE–États-Unis ou par des clauses contractuelles types.</p>
+      <p><b>Base légale</b><br>Ton intérêt à utiliser le service que tu demandes (génération, analyse).</p>
+      <p><b>Tes droits</b><br>Accès, rectification, effacement, opposition : écris à <a href="mailto:${CONTACT_MAIL}">${CONTACT_MAIL}</a>. Tu peux aussi saisir la CNIL (cnil.fr).</p>
+      <p>Dernière mise à jour : OCTOBRE 2026</p>`;
   }else if(kind==="about"){
     t.textContent="À propos";
     b.innerHTML=`<p>Anim Compagnon est une boîte à outils pensée pour les animateurs en ACM, périscolaire, colonies et formations BAFA : générateur d'activités par IA, fiches pratiques, ressources et un espace Help pour t'accompagner sur le terrain.</p>
