@@ -3857,15 +3857,15 @@ function openInfo(kind){
       <p>Version 1.1 — Une idée, un bug ? Écris à <a href="mailto:${CONTACT_MAIL}">${CONTACT_MAIL}</a></p>`;
   }else{
     t.textContent="FAQ / Contactez-nous";
-    b.innerHTML=`<p><b>À qui s'adresse Anim Compagnon ?</b><br>Aux animateurs et animatrices en accueil de loisirs, périscolaire, colonies et formation BAFA : des idées d'activités, des fiches pratiques et un soutien sur le terrain. Elle s'adresse également à toute personne souhaitant se renseigner sur les métiers de l'animation !</p>
-<p><b>Comment installer l'app sur mon téléphone ?</b><br>Sur iPhone, ouvre l'app dans Safari, touche le bouton Partager puis « Sur l'écran d'accueil ». Sur Android, ouvre-la dans Chrome, touche les trois points puis « Ajouter à l'écran d'accueil ».</p>
-<p><b>Faut-il une connexion internet ?</b><br>Oui, les fiches et les activités sont chargées en ligne à chaque ouverture.</p>
-<p><b>Où sont gardés mes favoris et mon profil ?</b><br>Uniquement sur ton téléphone. Si tu changes de téléphone ou effaces les données de ton navigateur, ils disparaissent.</p>
-<p><b>Comment fonctionne le générateur d'activités ?</b><br>Tu décris ton besoin ou tu photographies ton matériel, et Anim Compagnon te propose 3 idées. Ta description et ta photo sont envoyées à un service d'intelligence artificielle pour créer les propositions.</p>
-<p><b>Puis-je utiliser une activité générée telle quelle ?</b><br>Relis-la toujours avant : vérifie qu'elle est adaptée à ton groupe, à ton lieu et aux règles de sécurité de ta structure.</p>
-<p><b>Ce que j'écris dans Help ou dans le signalement est-il envoyé ?</b><br>Dans l'outil de signalement, non : rien n'est enregistré ni envoyé, tout reste sur ton téléphone. Dans « Analyser une situation », oui : le texte est envoyé à une IA pour l'analyse, sans être conservé dans l'appli. N'y écris jamais le nom d'un enfant. En cas de danger immédiat, appelle le 17, le 112 ou le 119.</p><p><b>Comment passer en mode clair ?</b><br>Dans Compte, puis Préférences, active « Mode clair ».</p>
-<p><b>J'ai une idée d'activité ou j'ai trouvé un bug, je fais comment ?</b><br>Écris-nous : c'est grâce à vos retours que l'app s'améliore.</p>
-<p>Pour toute question, écris à <a href="mailto:${CONTACT_MAIL}">${CONTACT_MAIL}</a></p>`;
+        b.innerHTML=`<p>Chargement…</p>`;
+    fetch("https://anim-compagnon-api.eliesbendjedou30.workers.dev/faq")
+      .then(r=>r.json())
+      .then(d=>{
+        const rows=(d.results||[]).filter(x=>x.Actif).sort((a,b)=>(Number(a.ORDRE)||0)-(Number(b.ORDRE)||0));
+        b.innerHTML=rows.map(x=>`<p><b>${x.QUESTION||""}</b><br>${(x["RÉPONSE"]||"").replace(/\n/g,"<br>")}</p>`).join("")
+          +`<p>Pour toute question, écris à <a href="mailto:${CONTACT_MAIL}">${CONTACT_MAIL}</a></p>`;
+      })
+      .catch(()=>{ b.innerHTML=`<p>Impossible de charger la FAQ. Écris à <a href="mailto:${CONTACT_MAIL}">${CONTACT_MAIL}</a></p>`; });
   }
   document.getElementById("infoOverlay").hidden=false;
   document.body.classList.add("sheet-open");
