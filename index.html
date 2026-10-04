@@ -936,6 +936,14 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
 #teamEvent input[type="date"],#teamEvent input[type="time"]{width:100%;min-width:0;-webkit-appearance:none;appearance:none}
 .te-cats button{min-width:0;line-height:1.2;padding:8px 10px}
 .te-del[hidden]{display:none!important}
+   /* ===== ÉQUIPE : courses ===== */
+.ts-sec{display:block;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;padding:6px 0 2px}
+.ts-sec.alim{color:var(--jaune)}.ts-sec.peda{color:#9DC1F0}
+.ts-add-row{display:flex;gap:8px}
+.ts-add-row input{flex:1;min-width:0}
+.ts-plus{width:50px;flex-shrink:0;border:0;border-radius:16px;background:var(--vert);color:#14170F;font-size:24px;font-weight:900}
+#tsClear[hidden]{display:none!important}
+#teamShop .tm-item{align-items:center}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
@@ -1267,8 +1275,7 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
       <button class="th-tile" onclick="openTeamCal()"><span class="th-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><strong>Calendrier</strong><small id="thCalCount">—</small></button>
       <button class="th-tile soon" onclick="toast('Bientôt disponible.')"><span class="th-ic yellow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8z"/></svg></span><strong>Activités favorites</strong><small>Bientôt</small></button>
       <button class="th-tile soon" onclick="toast('Bientôt disponible.')"><span class="th-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></span><strong>Fiches d'activité</strong><small>Bientôt</small></button>
-      <button class="th-tile soon" onclick="toast('Bientôt disponible.')"><span class="th-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6.2"/><circle cx="10" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/></svg></span><strong>Courses</strong><small>Bientôt</small></button>
-      <button class="th-tile soon wide" onclick="toast('Bientôt disponible.')"><span class="th-ic grey"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span><strong>Fiches de sortie</strong><small>Bientôt</small></button>
+      <button class="th-tile" onclick="openTeamShop()"><span class="th-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6.2"/><circle cx="10" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/></svg></span><strong>Courses</strong><small id="thShopCount">—</small></button>      <button class="th-tile soon wide" onclick="toast('Bientôt disponible.')"><span class="th-ic grey"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span><strong>Fiches de sortie</strong><small>Bientôt</small></button>
     </div>
     <p class="gen-note" style="margin-top:14px">N'écris jamais le nom d'un enfant ni d'information sur sa santé ou sa famille : tout est visible par l'équipe.</p>
     <div style="height:10px"></div>
@@ -1329,6 +1336,27 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
     <div style="height:8px"></div>
     <button class="btn secondary full te-del" id="teDel" onclick="teDelete()" hidden>Supprimer ce temps</button>
     <p class="pm-sub" id="teMeta"></p>
+  </section>
+</main>
+<!-- ========================= 🛒 COURSES DE L'ÉQUIPE ========================= -->
+<main id="teamShop" class="view">
+  <header class="page-head"><button class="link back" onclick="openTeam()">← Équipe</button><h1 class="page-title">Courses</h1><p class="page-intro" id="tsIntro"></p></header>
+  <section class="section" style="padding-top:0">
+    <div class="tc-views ts-filter" id="tsFilter" style="grid-template-columns:repeat(3,1fr)">
+      <button data-f="all" onclick="tsFilter('all')">Tout</button><button data-f="alim" onclick="tsFilter('alim')">Alimentaire</button><button data-f="peda" onclick="tsFilter('peda')">Pédagogique</button>
+    </div>
+    <div class="pm-card" id="tsList"></div>
+    <div class="pm-card ts-add">
+      <div class="ts-add-row">
+        <input id="tsName" type="text" maxlength="120" placeholder="Ajouter un article…" onkeydown="if(event.key==='Enter')tsAdd()">
+        <button class="ts-plus" aria-label="Ajouter" onclick="tsAdd()">+</button>
+      </div>
+      <div class="pm-presets" id="tsCat" style="justify-content:flex-start;margin:10px 0 0">
+        <button class="chip selected" data-c="alim" onclick="tsPickCat('alim')">Alimentaire</button><button class="chip" data-c="peda" onclick="tsPickCat('peda')">Pédagogique</button>
+      </div>
+    </div>
+    <div style="height:12px"></div>
+    <button class="btn secondary full" id="tsClear" onclick="tsClear()" hidden>Retirer les articles achetés</button>
   </section>
 </main>
 <!-- ========================= ➕ CRÉER UNE ÉQUIPE ========================= -->
@@ -4460,8 +4488,7 @@ async function tmLoad(){
   try{const r=await fetch(TEAM_API+"?code="+tm.team.code);const d=await r.json();if(!r.ok)throw new Error(d.error);
     tm.items=d.items||[];tm.members=d.members||[];
     if(d.name&&(d.name!==tm.team.name||(d.place||"")!==(tm.team.place||""))){tm.team.name=d.name;tm.team.place=d.place||"";tmSet("animTeam",tm.team);if(!document.getElementById("tmSpace").hidden)tmStep("tmSpace")}
-    tmHubRender();if(document.getElementById("teamCal").classList.contains("active"))tcRender();
-    return true}
+tmHubRender();if(document.getElementById("teamCal").classList.contains("active"))tcRender();if(document.getElementById("teamShop")?.classList.contains("active"))tsRender();    return true}
   catch(e){toast("Impossible de charger l'équipe. Vérifie ta connexion.");return false}
 }
 
@@ -4489,6 +4516,8 @@ function tmHubRender(){
     :`<p>Rien de prévu au calendrier.</p>`);
   const mon=tcMonday(today),sun=tcAdd(mon,6),n=tcEvents().filter(e=>{const d=tcParse(e.DATE);return d>=mon&&d<=sun}).length;
   document.getElementById("thCalCount").textContent=n?n+" temps cette semaine":"Rien cette semaine";
+     const sc=document.getElementById("thShopCount");
+  if(sc){const k=tm.items.filter(x=>x.TYPE==="course"&&!(x.FAIT===true||x.FAIT==="true")).length;sc.textContent=k?k+" à acheter":"Liste vide"}
 }
 
 /* ----- Calendrier : écrans ----- */
@@ -4599,6 +4628,47 @@ async function teDelete(){
   if(!confirm("Supprimer ce temps du calendrier ?"))return;
   try{await tmPost("/delete",{code:tm.team.code,id:tc.editId});tm.items=tm.items.filter(x=>x.id!==tc.editId);tmHubRender();openTeamCal(true);toast("Supprimé.")}
   catch(e){toast("Suppression impossible.")}
+}
+/* ----- Courses ----- */
+const ts={filter:"all",cat:"alim"};
+const tsItems=()=>tm.items.filter(x=>x.TYPE==="course");
+const tsDone=x=>x.FAIT===true||x.FAIT==="true";
+function openTeamShop(){if(!tm.team){openTeam();return}go("teamShop");tsRender()}
+function tsFilter(f){ts.filter=f;tsRender()}
+function tsPickCat(c){ts.cat=c;document.querySelectorAll("#tsCat .chip").forEach(b=>b.classList.toggle("selected",b.dataset.c===c))}
+function tsRender(){
+  document.querySelectorAll("#tsFilter button").forEach(b=>b.classList.toggle("on",b.dataset.f===ts.filter));
+  const all=tsItems(),todo=all.filter(x=>!tsDone(x)).length,done=all.length-todo;
+  document.getElementById("tsIntro").textContent=all.length?`${todo} à acheter · ${done} acheté${done>1?"s":""}`:"La liste est vide.";
+  const row=x=>`<div class="tm-item${tsDone(x)?" done":""}"><button class="tm-check${tsDone(x)?" on":""}" aria-label="${tsDone(x)?"Décocher":"Cocher"} ${esc(x.TITRE||"")}" onclick="tsToggle(${Number(x.id)})"></button><div class="tm-main"><strong>${esc(x.TITRE||"")}</strong>${x.AUTEUR?`<small>Ajouté par ${esc(x.AUTEUR)}</small>`:""}</div><button class="tm-del" aria-label="Supprimer" onclick="tsDelete(${Number(x.id)})">✕</button></div>`;
+  const sort=list=>list.sort((a,b)=>(tsDone(a)-tsDone(b))||String(a.TITRE).localeCompare(String(b.TITRE),"fr"));
+  let h="";
+  [["alim","Alimentaire"],["peda","Pédagogique"]].forEach(([k,label])=>{
+    if(ts.filter!=="all"&&ts.filter!==k)return;
+    const list=sort(all.filter(x=>(x.CATEGORIE||"alim")===k));
+    if(!list.length&&ts.filter==="all")return;
+    h+=`<span class="ts-sec ${k}">${label}</span>`+(list.length?list.map(row).join(""):`<p class="pm-sub">Rien pour l'instant.</p>`);
+  });
+  document.getElementById("tsList").innerHTML=h||`<p class="pm-sub">Rien pour l'instant. Ajoute un premier article ci-dessous.</p>`;
+  document.getElementById("tsClear").hidden=!done;
+}
+async function tsAdd(){
+  const inp=document.getElementById("tsName"),titre=inp.value.trim();
+  if(!titre){inp.focus();return}
+  try{const r=await tmPost("/item",{code:tm.team.code,type:"course",titre,categorie:ts.cat,auteur:tmMyName()});tm.items.push(r);inp.value="";inp.focus();tsRender();tmHubRender()}
+  catch(e){toast("Ajout impossible. Vérifie ta connexion.")}
+}
+async function tsToggle(id){
+  const x=tm.items.find(i=>i.id===id);if(!x)return;const fait=!tsDone(x);x.FAIT=fait;tsRender();tmHubRender();
+  try{await tmPost("/update",{code:tm.team.code,id,fait})}catch(e){x.FAIT=!fait;tsRender();tmHubRender();toast("Modification impossible.")}
+}
+async function tsDelete(id){
+  try{await tmPost("/delete",{code:tm.team.code,id});tm.items=tm.items.filter(i=>i.id!==id);tsRender();tmHubRender()}catch(e){toast("Suppression impossible.")}
+}
+async function tsClear(){
+  if(!confirm("Retirer de la liste tous les articles achetés ?"))return;
+  try{await tmPost("/clear",{code:tm.team.code,type:"course"});tm.items=tm.items.filter(x=>!(x.TYPE==="course"&&tsDone(x)));tsRender();tmHubRender();toast("Articles achetés retirés.")}
+  catch(e){toast("Impossible pour le moment.")}
 }
 /* =========================================================
    🤖 GÉNÉRER — modes et choix en pastilles
