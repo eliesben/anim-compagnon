@@ -968,6 +968,55 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
   .tf-doc{background:#fff!important;border:0!important}
   .tf-doc *{color:#111!important}
 }
+/* ===== ÉQUIPE : fil ===== */
+.th-feed{display:flex;align-items:center;gap:12px;width:100%;margin-top:14px;padding:14px;border-radius:18px;background:var(--surface);border:1px solid var(--trait);color:var(--texte-clair);text-align:left}
+.th-feed strong{font-size:15px;font-weight:800;display:block}
+.th-feed small{font-size:12px;color:var(--texte-doux)}
+.th-feed .th-badge{margin-left:auto;min-width:24px;height:24px;padding:0 7px;border-radius:12px;background:var(--rouge);color:#fff;font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center}
+.th-feed .th-badge[hidden]{display:none}
+.fd-compose{display:grid;gap:10px}
+.fd-compose textarea{min-height:80px}
+.fd-opts{display:flex;gap:8px;align-items:center}
+.fd-opts select{flex:1;min-width:0;font-size:13px;padding:10px}
+.fd-pin{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:800;white-space:nowrap}
+.fd-pin input{width:18px;height:18px;accent-color:var(--jaune)}
+.fd-locked{font-size:13px;color:var(--texte-doux);text-align:center}
+.fd-post{margin-top:12px;padding:14px;border-radius:20px;background:var(--surface);border:1px solid var(--trait);display:flex;flex-direction:column;gap:10px}
+.fd-post.pinned{border:1.5px solid rgba(255,199,64,.6)}
+.fd-pinlabel{font-size:11px;font-weight:900;color:#FFD772}
+.fd-head{display:flex;gap:10px;align-items:center}
+.fd-av{width:38px;height:38px;border-radius:19px;background:var(--surface-2);display:flex;align-items:center;justify-content:center;font-weight:900;flex-shrink:0}
+.fd-who{display:flex;flex-direction:column;flex:1;min-width:0}
+.fd-who strong{font-size:14px;font-weight:800}
+.fd-who strong em{font-style:normal;font-size:11px;color:#FFD772}
+.fd-who small{font-size:12px;color:var(--texte-doux)}
+.fd-more{border:0;background:transparent;color:var(--texte-doux);font-size:20px;padding:4px 8px;font-weight:900}
+.fd-text{font-size:14px;line-height:1.55;white-space:pre-wrap;word-break:break-word;margin:0;color:var(--texte-clair)}
+.fd-link{display:flex;flex-direction:column;gap:1px;width:100%;padding:10px 12px;border-radius:14px;background:var(--surface-2);border:0;border-left:4px solid var(--c);color:var(--texte-clair);text-align:left}
+.fd-link b{font-size:13px}.fd-link small{font-size:11px;color:var(--texte-doux)}
+.fd-actions{display:flex;gap:8px;padding-top:8px;border-top:1px solid var(--trait)}
+.fd-actions button{flex:1;min-height:40px;border-radius:12px;font-weight:800;font-size:13px;border:1px solid var(--trait);background:transparent;color:var(--texte-clair)}
+.fd-actions button.on{background:var(--vert);border-color:var(--vert);color:#14170F}
+.fd-menu{display:flex;gap:8px;flex-wrap:wrap}
+.fd-menu button{padding:8px 12px;border-radius:10px;border:1px solid var(--trait);background:var(--surface-2);color:var(--texte-clair);font-size:12px;font-weight:800}
+.fd-comments{display:flex;flex-direction:column;gap:8px;padding-left:10px;border-left:2px solid var(--trait)}
+.fd-c b{font-size:12px;color:var(--vert-fonce)}.fd-c b span{font-weight:600;color:var(--texte-doux)}
+.fd-c p{font-size:13px;line-height:1.5;margin:2px 0 0;color:var(--texte-clair)}
+.fd-cform{display:flex;gap:8px}
+.fd-cform input{flex:1;min-width:0;padding:10px 12px}
+.fd-cform button{border:0;border-radius:12px;background:var(--vert);color:#14170F;font-weight:800;padding:0 14px}
+.fs-group{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
+.fs-group:last-child{margin-bottom:0}
+.fs-group>span{font-size:14px;font-weight:800}
+.fs-seg{display:flex;gap:4px;padding:4px;border-radius:14px;background:var(--surface-2)}
+.fs-seg button{flex:1;min-height:40px;border:0;border-radius:10px;background:transparent;color:var(--texte-doux);font-weight:800;font-size:12px}
+.fs-seg button.on{background:var(--vert);color:#14170F}
+.fs-seg button:disabled{opacity:.7}
+.fs-row{display:flex;align-items:center;gap:10px;min-height:48px;border-bottom:1px solid var(--trait)}
+.fs-row:last-of-type{border-bottom:0}
+.fs-row span{flex:1;font-weight:700;font-size:14px}
+.fs-tag{font-style:normal;font-size:12px;font-weight:800;padding:5px 10px;border-radius:99px;background:rgba(255,199,64,.18);color:#FFD772}
+.fs-code{font-size:22px;font-weight:900;letter-spacing:.2em;text-align:center;padding:10px;border-radius:14px;background:var(--surface-2);margin:8px 0}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
@@ -1345,6 +1394,7 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
       <button class="pm-btn" onclick="tmShare()">Partager</button>
     </div>
     <div class="th-today" id="thToday"></div>
+       <button class="th-feed" onclick="openTeamFeed()"><span class="th-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/></svg></span><span><strong>Fil de l'équipe</strong><small id="thFeedSub">—</small></span><span class="th-badge" id="thFeedBadge" hidden></span></button>
     <div class="th-tiles">
       <button class="th-tile" onclick="openTeamCal()"><span class="th-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><strong>Calendrier</strong><small id="thCalCount">—</small></button>
       <button class="th-tile soon" onclick="toast('Bientôt disponible.')"><span class="th-ic yellow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8z"/></svg></span><strong>Activités favorites</strong><small id="thFavCount">—</small>
@@ -1469,6 +1519,36 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
     </div>
     <div style="height:8px"></div>
     <button class="btn secondary full te-del tf-actions-del" onclick="tfRemove()">Retirer de l'équipe</button>
+  </section>
+</main>
+<!-- ========================= 📰 FIL DE L'ÉQUIPE ========================= -->
+<main id="teamFeed" class="view">
+  <header class="page-head"><button class="link back" onclick="openTeam()">← Équipe</button>
+    <div class="tc-head"><div><h1 class="page-title">Fil de l'équipe</h1><p class="page-intro" id="tfdIntro"></p></div>
+      <div class="tc-arrows"><button aria-label="Réglages" onclick="openTeamFeedSettings()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg></button></div></div>
+  </header>
+  <section class="section" style="padding-top:0">
+    <div class="pm-card fd-compose" id="fdCompose">
+      <textarea id="fdText" maxlength="1000" placeholder="Quoi de neuf pour l'équipe ?"></textarea>
+      <div class="fd-opts">
+        <select id="fdLink" aria-label="Lier un temps du calendrier"><option value="">Lier un temps du calendrier (facultatif)</option></select>
+        <label class="fd-pin" id="fdPinWrap"><input type="checkbox" id="fdPin"> Épingler</label>
+      </div>
+      <button class="btn primary full" id="fdSend" onclick="fdPublish()">Publier</button>
+      <p class="pm-sub" style="text-align:left;margin:8px 0 0">Jamais de nom d'enfant ni d'info sur sa santé ou sa famille.</p>
+    </div>
+    <div class="pm-card fd-locked" id="fdLocked" hidden>Seuls les responsables peuvent publier dans ce fil.</div>
+    <div id="fdList"></div>
+  </section>
+</main>
+
+<!-- ========================= ⚙️ RÉGLAGES DU FIL ========================= -->
+<main id="teamFeedSettings" class="view">
+  <header class="page-head"><button class="link back" onclick="openTeamFeed()">← Fil de l'équipe</button><h1 class="page-title">Réglages</h1><p class="page-intro" id="fsIntro"></p></header>
+  <section class="section" style="padding-top:0">
+    <div class="pm-card" id="fsGroups"></div>
+    <div class="pm-card" id="fsResps"></div>
+    <div class="pm-card" id="fsAdmin"></div>
   </section>
 </main>
 <!-- ========================= ➕ CRÉER UNE ÉQUIPE ========================= -->
@@ -4521,6 +4601,7 @@ function tmSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 function tmMe(){return (document.getElementById("tmMe")?.value||"").trim()}
 function tmMyName(){return tmGet("animTeamMe","")}
 async function tmPost(path,body){
+  body={admin:(tmGet("animTeamAdmins",{})[body.code]||""),me:tmMyName(),...body};
   const r=await fetch(TEAM_API+path,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
   const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||"Erreur");return d;
 }
@@ -4589,6 +4670,7 @@ async function tmCreate(){
   try{
     const d=await tmPost("/create",{name,place,me,createur:me+(role?" ("+role+")":"")});
     tm.team={code:d.code,name:d.name,place:d.place||place};tmSet("animTeam",tm.team);tmSet("animTeamMe",me);
+       if(d.admin){const m=tmGet("animTeamAdmins",{});m[d.code]=d.admin;tmSet("animTeamAdmins",m)}
     document.getElementById("tcDoneName").textContent=d.name;
     document.getElementById("tcDoneCode").textContent=d.code;
     document.getElementById("tcForm").hidden=true;document.getElementById("tcDone").hidden=false;
@@ -4606,6 +4688,8 @@ async function tmLoad(){
   if(!tm.team)return false;
   try{const r=await fetch(TEAM_API+"?code="+tm.team.code);const d=await r.json();if(!r.ok)throw new Error(d.error);
     tm.items=d.items||[];tm.members=d.members||[];
+       tm.responsables=d.responsables||[];tm.settings=d.settings;tm.hasAdmin=!!d.hasAdmin;
+    if(document.getElementById("teamFeed")?.classList.contains("active"))fdRender();if(document.getElementById("teamFeedSettings")?.classList.contains("active"))fsRender();
     if(d.name&&(d.name!==tm.team.name||(d.place||"")!==(tm.team.place||""))){tm.team.name=d.name;tm.team.place=d.place||"";tmSet("animTeam",tm.team);if(!document.getElementById("tmSpace").hidden)tmStep("tmSpace")}
 tmHubRender();if(document.getElementById("teamCal").classList.contains("active"))tcRender();
       if(document.getElementById("teamShop")?.classList.contains("active"))tsRender();if(document.getElementById("teamFavs")?.classList.contains("active"))tfFavRender();if(document.getElementById("teamFiches")?.classList.contains("active"))tfFicheRender();    return true}
@@ -4639,6 +4723,7 @@ function tmHubRender(){
      const sc=document.getElementById("thShopCount");
   if(sc){const k=tm.items.filter(x=>x.TYPE==="course"&&!(x.FAIT===true||x.FAIT==="true")).length;sc.textContent=k?k+" à acheter":"Liste vide"}
   const fc=document.getElementById("thFavCount");if(fc){const k=tm.items.filter(x=>x.TYPE==="fav").length;fc.textContent=k?k+" activité"+(k>1?"s":""):"Aucune pour l'instant"}
+  const fb=document.getElementById("thFeedBadge");if(fb){const k=fdUnread(),n=tm.items.filter(x=>x.TYPE==="post").length;fb.textContent=k;fb.hidden=!k;document.getElementById("thFeedSub").textContent=k?k+" nouvelle"+(k>1?"s":"")+" publication"+(k>1?"s":""):(n?n+" publication"+(n>1?"s":""):"Aucune publication")}
   const ic=document.getElementById("thFicheCount");if(ic){const k=tm.items.filter(x=>x.TYPE==="fiche").length;ic.textContent=k?k+" fiche"+(k>1?"s":""):"Aucune pour l'instant"}
 }
 
@@ -4890,6 +4975,119 @@ function createManualFiche(){
   const s=document.getElementById("aiGeneratedSheet"),f=document.getElementById("generatorFiche");
   if(s){const back=s.querySelector(".ai-back-button");if(back)back.remove()}
   if(s&&f){f.insertAdjacentElement("afterend",s);s.scrollIntoView({behavior:"smooth",block:"start"})}
+}
+/* ----- Fil de l'équipe ----- */
+const fd={open:{}};
+const fdAdminKey=()=>tm.team?(tmGet("animTeamAdmins",{})[tm.team.code]||""):"";
+const fdIsResp=()=>!!fdAdminKey()&&(tm.responsables||[]).includes(tmMyName());
+const fdPosts=()=>tm.items.filter(x=>x.TYPE==="post").sort((a,b)=>((b.CATEGORIE==="pin")-(a.CATEGORIE==="pin"))||String(b.CREE_LE||"").localeCompare(String(a.CREE_LE||"")));
+const fdComments=id=>tm.items.filter(x=>x.TYPE==="comment"&&String(x.TITRE)===String(id)).sort((a,b)=>String(a.CREE_LE||"").localeCompare(String(b.CREE_LE||"")));
+const fdVus=x=>String(x.VUS||"").split("\n").map(s=>s.trim()).filter(Boolean);
+const fdSt=()=>tm.settings||{write:"all",comment:"all",pin:"resp",keep:"30"};
+const fdCan=k=>{const v=fdSt()[k];return v==="all"||(v==="resp"&&fdIsResp())};
+function fdWhen(iso){
+  const d=iso?new Date(iso):null;if(!d||isNaN(d))return "";
+  const t=d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"}).replace(":","h"),today=new Date(),y=new Date();y.setDate(y.getDate()-1);
+  if(d.toDateString()===today.toDateString())return "Aujourd'hui à "+t;
+  if(d.toDateString()===y.toDateString())return "Hier à "+t;
+  return d.toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"short"})+" à "+t;
+}
+function fdUnread(){const seen=tmGet("animFeedSeen",{})[tm.team?.code]||"";return fdPosts().filter(x=>String(x.CREE_LE||"")>seen&&x.AUTEUR!==tmMyName()).length}
+function openTeamFeed(){
+  if(!tm.team){openTeam();return}
+  go("teamFeed");fdRender();
+  const m=tmGet("animFeedSeen",{});m[tm.team.code]=new Date().toISOString();tmSet("animFeedSeen",m);
+  tmLoad();
+}
+function fdRender(){
+  const drafts={};document.querySelectorAll("#fdList .fd-cform input").forEach(i=>drafts[i.id]=i.value);const foc=document.activeElement?.id;
+  const posts=fdPosts(),me=tmMyName(),resps=tm.responsables||[];
+  document.getElementById("tfdIntro").textContent=tm.team.name+" · "+(tm.members||[]).length+" membre"+((tm.members||[]).length>1?"s":"");
+  document.getElementById("fdCompose").hidden=!fdCan("write");
+  document.getElementById("fdLocked").hidden=fdCan("write");
+  document.getElementById("fdPinWrap").hidden=!fdCan("pin");
+  const sel=document.getElementById("fdLink"),keep=sel.value,today=tcISO(new Date());
+  const evs=tcEvents().filter(e=>e.DATE>=today).sort((a,b)=>(a.DATE+(a.DEBUT||"")).localeCompare(b.DATE+(b.DEBUT||""))).slice(0,30);
+  sel.innerHTML=`<option value="">Lier un temps du calendrier (facultatif)</option>`+evs.map(e=>`<option value="${Number(e.id)}">${esc(tcDayLabel(tcParse(e.DATE))+(e.DEBUT?" "+tcHour(e.DEBUT):"")+" · "+(e.TITRE||""))}</option>`).join("");
+  sel.value=keep;
+  document.getElementById("fdList").innerHTML=posts.length?posts.map(p=>{
+    const vus=fdVus(p),seen=vus.includes(me),coms=fdComments(p.id),c=(()=>{try{return JSON.parse(p.CONTENU||"{}")}catch(e){return {}}})(),ev=c.cal?tm.items.find(x=>x.id===Number(c.cal)):null;
+    const mine=p.AUTEUR===me,canDel=mine||fdIsResp(),canPin=fdCan("pin"),open=fd.open[p.id];
+    return `<article class="fd-post${p.CATEGORIE==="pin"?" pinned":""}">
+      ${p.CATEGORIE==="pin"?`<span class="fd-pinlabel">📌 Épinglé</span>`:""}
+      <div class="fd-head"><span class="fd-av">${esc((p.AUTEUR||"?")[0].toUpperCase())}</span><span class="fd-who"><strong>${esc(p.AUTEUR||"")}${resps.includes(p.AUTEUR)?` <em>· Responsable</em>`:""}</strong><small>${esc(fdWhen(p.CREE_LE))}</small></span>
+      ${canDel||canPin?`<button class="fd-more" aria-label="Options" onclick="fdToggleMenu(${Number(p.id)})">⋯</button>`:""}</div>
+      ${fd.menu===p.id?`<div class="fd-menu">${canPin?`<button onclick="fdPin(${Number(p.id)},${p.CATEGORIE==="pin"?"false":"true"})">${p.CATEGORIE==="pin"?"Désépingler":"Épingler"}</button>`:""}${canDel?`<button onclick="fdDelete(${Number(p.id)})">Supprimer</button>`:""}</div>`:""}
+      <p class="fd-text">${esc(p.DETAIL||"")}</p>
+      ${ev?`<button class="fd-link" style="--c:${tcCol(ev)}" onclick="tc.cursor=tcParse('${esc(ev.DATE)}');tc.view='day';openTeamCal(true)"><b>${esc(ev.TITRE||"")}</b><small>${esc(tcDayLabel(tcParse(ev.DATE))+(ev.DEBUT?" · "+tcHour(ev.DEBUT):""))}</small></button>`:""}
+      <div class="fd-actions"><button class="${seen?"on":""}" onclick="fdSeen(${Number(p.id)})" title="${esc(vus.join(", "))}">${seen?"✓ Vu":"J'ai vu"} · ${vus.length}</button>${fdSt().comment!=="none"?`<button onclick="fdToggleComments(${Number(p.id)})">${coms.length?coms.length+" commentaire"+(coms.length>1?"s":""):"Commenter"}</button>`:""}</div>
+      ${open?`<div class="fd-comments">${coms.map(k=>`<div class="fd-c"><b>${esc(k.AUTEUR||"")} <span>· ${esc(fdWhen(k.CREE_LE))}</span></b><p>${esc(k.DETAIL||"")}</p>${k.AUTEUR===me||fdIsResp()?`<button class="fd-more" style="font-size:12px;padding:0" onclick="fdDelete(${Number(k.id)})">Supprimer</button>`:""}</div>`).join("")}
+        ${fdCan("comment")?`<div class="fd-cform"><input id="fdC${Number(p.id)}" type="text" maxlength="500" placeholder="Écrire un commentaire…" onkeydown="if(event.key==='Enter')fdComment(${Number(p.id)})"><button onclick="fdComment(${Number(p.id)})">Envoyer</button></div>`:""}</div>`:""}
+    </article>`}).join("")
+    :`<div class="tc-empty" style="margin-top:12px">Aucune publication pour l'instant.</div>`;
+  for(const k in drafts){const i=document.getElementById(k);if(i)i.value=drafts[k]}
+  if(foc&&drafts[foc]!==undefined)document.getElementById(foc)?.focus();
+}
+function fdToggleMenu(id){fd.menu=fd.menu===id?null:id;fdRender()}
+function fdToggleComments(id){fd.open[id]=!fd.open[id];fdRender();if(fd.open[id])document.getElementById("fdC"+id)?.focus()}
+async function fdPublish(){
+  const t=document.getElementById("fdText"),txt=t.value.trim();if(!txt){t.focus();return}
+  const cal=document.getElementById("fdLink").value,pin=document.getElementById("fdPin").checked;
+  const btn=document.getElementById("fdSend");btn.disabled=true;
+  try{const r=await tmPost("/item",{code:tm.team.code,type:"post",detail:txt,categorie:pin?"pin":"",contenu:cal?JSON.stringify({cal:Number(cal)}):"",auteur:tmMyName()});
+    tm.items.push(r);t.value="";document.getElementById("fdLink").value="";document.getElementById("fdPin").checked=false;fdRender();toast("Publié.")}
+  catch(e){toast(e.message&&e.message!=="Erreur"?e.message:"Publication impossible.")}
+  finally{btn.disabled=false}
+}
+async function fdComment(id){
+  const inp=document.getElementById("fdC"+id),txt=(inp?.value||"").trim();if(!txt)return;
+  try{const r=await tmPost("/item",{code:tm.team.code,type:"comment",titre:String(id),detail:txt,auteur:tmMyName()});tm.items.push(r);fdRender();document.getElementById("fdC"+id)?.focus()}
+  catch(e){toast(e.message&&e.message!=="Erreur"?e.message:"Commentaire impossible.")}
+}
+async function fdSeen(id){
+  const p=tm.items.find(x=>x.id===id),me=tmMyName();if(!p||fdVus(p).includes(me))return;
+  p.VUS=(p.VUS?p.VUS+"\n":"")+me;fdRender();
+  try{await tmPost("/seen",{code:tm.team.code,id,me})}catch(e){}
+}
+async function fdPin(id,pin){
+  try{await tmPost("/pin",{code:tm.team.code,id,pin});const p=tm.items.find(x=>x.id===id);if(p)p.CATEGORIE=pin?"pin":"";fd.menu=null;fdRender()}
+  catch(e){toast(e.message||"Impossible.")}
+}
+async function fdDelete(id){
+  if(!confirm("Supprimer définitivement ?"))return;
+  try{await tmPost("/delete",{code:tm.team.code,id,auteur:tmMyName()});tm.items=tm.items.filter(x=>x.id!==id&&!(x.TYPE==="comment"&&String(x.TITRE)===String(id)));fd.menu=null;fdRender()}
+  catch(e){toast(e.message&&e.message!=="Erreur"?e.message:"Suppression impossible.")}
+}
+
+/* ----- Réglages du fil ----- */
+function openTeamFeedSettings(){go("teamFeedSettings");fsRender()}
+function fsRender(){
+  const st=fdSt(),resp=fdIsResp(),resps=tm.responsables||[];
+  document.getElementById("fsIntro").textContent=resp?"Tu es responsable : tu peux modifier les réglages.":"Visibles par tous, modifiables par les responsables.";
+  const seg=(k,title,opts)=>`<div class="fs-group"><span>${title}</span><div class="fs-seg">${opts.map(([v,l])=>`<button class="${st[k]===v?"on":""}" ${resp?"":"disabled"} onclick="fsSet('${k}','${v}')">${l}</button>`).join("")}</div></div>`;
+  document.getElementById("fsGroups").innerHTML=
+    seg("write","Qui peut publier ?",[["all","Tout le monde"],["resp","Responsables"]])+
+    seg("comment","Qui peut commenter ?",[["all","Tout le monde"],["resp","Responsables"],["none","Personne"]])+
+    seg("pin","Qui peut épingler ?",[["all","Tout le monde"],["resp","Responsables"]])+
+    seg("keep","Effacer les publications après",[["7","7 jours"],["30","30 jours"],["end","Jamais"]]);
+  document.getElementById("fsResps").innerHTML=`<div class="fs-group" style="margin:0"><span>Responsables</span></div>`+(resps.length?resps.map(n=>`<div class="fs-row"><span>${esc(n)}</span><em class="fs-tag">Responsable</em>${resp&&resps.length>1?`<button class="tm-del" aria-label="Retirer ${esc(n)}" onclick="fsRemove('${esc(n).replace(/&#039;/g,"\\'")}')">✕</button>`:""}</div>`).join(""):`<p class="pm-sub" style="text-align:left">Aucun responsable pour l'instant.</p>`);
+  const key=fdAdminKey();
+  document.getElementById("fsAdmin").innerHTML=resp
+    ?`<div class="fs-group" style="margin:0"><span>Code responsable</span></div><div class="fs-code">${esc(key)}</div><p class="pm-sub" style="text-align:left">Donne ce code à un collègue pour qu'il devienne responsable. Ne le partage pas avec toute l'équipe.</p>`
+    :`<div class="fs-group" style="margin:0"><span>${tm.hasAdmin?"Tu as un code responsable ?":"Aucun responsable : deviens-le"}</span></div>${tm.hasAdmin?`<input id="fsKey" type="text" maxlength="8" placeholder="Code à 8 caractères" style="text-transform:uppercase;letter-spacing:.2em;text-align:center;font-weight:800">`:""}<div style="height:10px"></div><button class="btn primary full" onclick="fsClaim()">${tm.hasAdmin?"Valider":"Devenir responsable"}</button>`;
+}
+async function fsSet(k,v){
+  const n={...fdSt(),[k]:v};
+  try{const r=await tmPost("/settings",{code:tm.team.code,settings:n});tm.settings=r.settings;fsRender()}catch(e){toast(e.message||"Impossible.")}
+}
+async function fsRemove(name){
+  if(!confirm("Retirer "+name+" des responsables ?"))return;
+  try{const r=await tmPost("/resp-remove",{code:tm.team.code,name});tm.responsables=r.responsables;fsRender()}catch(e){toast(e.message||"Impossible.")}
+}
+async function fsClaim(){
+  const key=(document.getElementById("fsKey")?.value||"").trim().toUpperCase();
+  try{const r=await tmPost("/admin",{code:tm.team.code,admin:key,me:tmMyName()});const m=tmGet("animTeamAdmins",{});m[tm.team.code]=r.admin;tmSet("animTeamAdmins",m);tm.responsables=r.responsables;tm.hasAdmin=true;fsRender();toast("Tu es maintenant responsable.")}
+  catch(e){toast(e.message&&e.message!=="Erreur"?e.message:"Code incorrect.")}
 }
 /* =========================================================
    🤖 GÉNÉRER — modes et choix en pastilles
