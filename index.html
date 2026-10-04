@@ -893,8 +893,8 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
     <button class="side-item" data-side="home" onclick="sideGo('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/></svg>Accueil</button>
     <button class="side-item" data-side="favorites" onclick="sideGo('favorites')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8z"/></svg>Favoris</button>
     <button class="side-item help" data-side="help" onclick="sideGo('help')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.8 9a2.4 2.4 0 1 1 4.4 1.4c-.8 1.1-2.2 1.2-2.2 2.8"/><path d="M12 16.8h.01"/></svg>Help</button>
-        <button class="side-link" onclick="closeSideMenu();openPlayMode()">⏱️ Mode activité</button>
-    <button class="side-link" onclick="closeSideMenu();openTeam()">👥 Mon équipe</button>
+           <button class="side-item" data-side="playMode" onclick="closeSideMenu();openPlayMode()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5"/><path d="M10 2h4"/><path d="M12 2v3"/></svg>Mode activité</button>
+    <button class="side-item" data-side="team" onclick="closeSideMenu();openTeam()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M15.5 14.2c3 .2 5.5 2.6 5.5 5.8"/></svg>Mon équipe</button>
      <div class="side-sep"></div>
     <p class="side-sec-title">Informations</p>
         <button class="side-link" onclick="closeSideMenu();openInfo('contact')">FAQ / Contactez-nous</button>
