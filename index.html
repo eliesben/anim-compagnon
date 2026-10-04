@@ -865,6 +865,77 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
 .tm-or{display:flex;align-items:center;gap:12px;margin:22px 0;color:var(--texte-doux);font-size:13px;font-weight:700}
 .tm-or:before,.tm-or:after{content:"";flex:1;height:1px;background:var(--trait)}
 .tm-found{font-size:22px;font-weight:900;margin:6px 0 2px;color:var(--texte-clair)}
+/* ===== ÉQUIPE : accueil + calendrier ===== */
+.th-code{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.th-code-val{font-size:22px;font-weight:900;letter-spacing:.22em;color:var(--texte-clair)}
+.th-code .pm-btn{padding:12px 16px}
+.th-today{margin-top:14px;padding:14px;border-radius:20px;background:var(--vert);color:#14170F;display:flex;flex-direction:column;gap:6px}
+.th-today b{font-size:12px;font-weight:900;letter-spacing:.06em;text-transform:uppercase}
+.th-today div{display:flex;gap:10px;font-size:14px;font-weight:700}
+.th-today div span:first-child{width:52px;flex-shrink:0;font-weight:900}
+.th-today p{font-size:13px;font-weight:700;margin:0}
+.th-tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.th-tile{display:flex;flex-direction:column;align-items:flex-start;gap:8px;min-height:108px;padding:14px;border-radius:18px;background:var(--surface);border:1px solid var(--trait);color:var(--texte-clair);text-align:left}
+.th-tile.wide{grid-column:1/-1;min-height:0;flex-direction:row;align-items:center}
+.th-tile.soon{opacity:.6}
+.th-tile strong{font-size:15px;font-weight:800}
+.th-tile small{font-size:12px;color:var(--texte-doux);margin-top:-4px}
+.th-tile.wide small{margin:0 0 0 auto}
+.th-ic{width:38px;height:38px;border-radius:12px;background:rgba(132,185,138,.16);color:var(--vert);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.th-ic.yellow{background:rgba(255,199,64,.16);color:var(--jaune)}
+.th-ic.grey{background:var(--surface-2);color:var(--texte-doux)}
+.th-ic svg{width:20px;height:20px}
+.tc-head{display:flex;justify-content:space-between;align-items:flex-end;gap:10px}
+.tc-arrows{display:flex;gap:6px}
+.tc-arrows button{min-width:40px;height:40px;border-radius:12px;border:1px solid var(--trait);background:var(--surface);color:var(--texte-clair);font-weight:900;font-size:16px}
+.tc-arrows .tc-todaybtn{font-size:12px;padding:0 8px}
+.tc-views{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:4px;border-radius:99px;background:var(--surface-2)}
+.tc-views button{height:38px;border:0;border-radius:99px;background:transparent;color:var(--texte-doux);font-weight:800;font-size:13px}
+.tc-views button.on{background:var(--vert);color:#14170F}
+.tc-legend{display:flex;flex-wrap:wrap;gap:8px 14px;margin:12px 0 14px;font-size:11px;font-weight:700;color:var(--texte-doux)}
+.tc-legend span{display:inline-flex;align-items:center;gap:6px}
+.tc-legend i,.te-cats i{width:10px;height:10px;border-radius:3px;display:inline-block;flex-shrink:0}
+.tc-daytitle{font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--vert-fonce);margin:4px 0 8px}
+.tc-ev{display:grid;grid-template-columns:52px 1fr;gap:10px;margin-bottom:8px;width:100%;border:0;background:none;padding:0;text-align:left;color:var(--texte-clair)}
+.tc-ev .t{font-size:12px;font-weight:800;color:var(--texte-doux);padding-top:12px}
+.tc-ev .c{padding:10px 12px;border-radius:14px;background:var(--surface);border:1px solid var(--trait);border-left:5px solid var(--c);display:flex;flex-direction:column;gap:3px}
+.tc-ev .c strong{font-size:14px;font-weight:800}
+.tc-ev .c small{font-size:12px;color:var(--texte-doux)}
+.tc-empty{padding:18px;border-radius:16px;background:var(--surface);border:1px dashed var(--trait);text-align:center;font-size:13px;color:var(--texte-doux)}
+.tc-wrow{display:flex;gap:10px;align-items:center;width:100%;padding:10px;margin-bottom:8px;border-radius:16px;background:var(--surface);border:1px solid var(--trait);color:var(--texte-clair);text-align:left}
+.tc-wrow.today{border-color:var(--vert)}
+.tc-wd{width:42px;display:flex;flex-direction:column;align-items:center;flex-shrink:0}
+.tc-wd small{font-size:11px;color:var(--texte-doux)}
+.tc-wd b{font-size:18px;font-weight:900}
+.tc-pills{display:flex;flex-wrap:wrap;gap:6px;flex:1}
+.tc-pill{padding:5px 9px;border-radius:8px;font-size:11px;font-weight:800;background:var(--c);color:#14170F}
+.tc-none{font-size:12px;color:var(--texte-doux)}
+.tc-mhead,.tc-mgrid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;text-align:center}
+.tc-mhead{font-size:11px;font-weight:800;color:var(--texte-doux);margin-bottom:6px}
+.tc-mcell{min-height:46px;border-radius:10px;padding:5px 0;display:flex;flex-direction:column;align-items:center;gap:4px;background:var(--surface);border:1px solid var(--trait);color:var(--texte-clair);font-weight:800;font-size:13px}
+.tc-mcell.today{background:rgba(132,185,138,.22);border-color:var(--vert)}
+.tc-mcell.out{visibility:hidden}
+.tc-dots{display:flex;gap:2px;justify-content:center;flex-wrap:wrap;min-height:6px;padding:0 2px}
+.tc-dots i{width:6px;height:6px;border-radius:99px;background:var(--c)}
+.tc-ygrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.tc-ycell{min-height:80px;padding:10px;border-radius:14px;background:var(--surface);border:1px solid var(--trait);display:flex;flex-direction:column;align-items:flex-start;gap:6px;color:var(--texte-clair);text-align:left}
+.tc-ycell.now{border-color:var(--vert)}
+.tc-ycell strong{font-size:13px;font-weight:800}
+.tc-ycell small{font-size:10px;color:var(--texte-doux)}
+.tc-ycell .tc-dots{justify-content:flex-start;padding:0}
+.tc-ycell .tc-dots i{width:7px;height:7px}
+.te-cats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.te-cats button{min-height:46px;padding:0 12px;border-radius:14px;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;text-align:left;color:var(--texte-clair);background:transparent;border:1px solid var(--trait)}
+.te-cats button.on{font-weight:800;background:var(--surface-2);border:2px solid var(--c)}
+.te-row3{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) minmax(0,1fr);gap:8px}
+.te-row3>div{min-width:0}
+.te-row3 input{padding:12px 8px;min-width:0}
+.te-del{color:#F0A0A6!important;border-color:rgba(224,82,92,.5)!important}
+#teamEvent .tm-form{grid-template-columns:minmax(0,1fr)}
+#teamEvent .tm-form>*{min-width:0}
+#teamEvent input[type="date"],#teamEvent input[type="time"]{width:100%;min-width:0;-webkit-appearance:none;appearance:none}
+.te-cats button{min-width:0;line-height:1.2;padding:8px 10px}
+.te-del[hidden]{display:none!important}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
@@ -1185,24 +1256,19 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
     </div>
   </section>
 
-  <!-- Espace de l'équipe -->
+  <!-- Accueil de l'équipe -->
   <section class="section" id="tmSpace" hidden>
-    <div class="pm-card" style="text-align:center">
-      <small class="pm-sub">Code de l'équipe, à donner à tes collègues</small>
-      <div class="tm-code" id="tmCode">------</div>
-      <div class="pm-row" style="grid-template-columns:1fr 1fr">
-        <button class="pm-btn" onclick="tmShare()">Partager le code</button>
-        <button class="pm-btn" onclick="tmLoad()">Actualiser</button>
-      </div>
+    <div class="pm-card th-code">
+      <div><small class="pm-sub" style="margin:0;text-align:left">Code de l'équipe</small><div class="th-code-val" id="tmCode">------</div></div>
+      <button class="pm-btn" onclick="tmShare()">Partager</button>
     </div>
-    <div class="tm-tabs" id="tmTabs">
-      <button class="on" data-tab="planning" onclick="tmTab('planning')">📅 Planning</button>
-      <button data-tab="activite" onclick="tmTab('activite')">🎯 Activités</button>
-      <button data-tab="info" onclick="tmTab('info')">📢 Infos du jour</button>
-      <button data-tab="materiel" onclick="tmTab('materiel')">🧺 Matériel</button>
-    </div>
-    <div class="pm-card"><div id="tmList"><p class="pm-sub">Chargement…</p></div>
-      <div class="tm-form" id="tmForm"></div>
+    <div class="th-today" id="thToday"></div>
+    <div class="th-tiles">
+      <button class="th-tile" onclick="openTeamCal()"><span class="th-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><strong>Calendrier</strong><small id="thCalCount">—</small></button>
+      <button class="th-tile soon" onclick="toast('Bientôt disponible.')"><span class="th-ic yellow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8z"/></svg></span><strong>Activités favorites</strong><small>Bientôt</small></button>
+      <button class="th-tile soon" onclick="toast('Bientôt disponible.')"><span class="th-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></span><strong>Fiches d'activité</strong><small>Bientôt</small></button>
+      <button class="th-tile soon" onclick="toast('Bientôt disponible.')"><span class="th-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6.2"/><circle cx="10" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/></svg></span><strong>Courses</strong><small>Bientôt</small></button>
+      <button class="th-tile soon wide" onclick="toast('Bientôt disponible.')"><span class="th-ic grey"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span><strong>Fiches de sortie</strong><small>Bientôt</small></button>
     </div>
     <p class="gen-note" style="margin-top:14px">N'écris jamais le nom d'un enfant ni d'information sur sa santé ou sa famille : tout est visible par l'équipe.</p>
     <div style="height:10px"></div>
@@ -1210,6 +1276,61 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
   </section>
 </main>
 
+<!-- ========================= 📅 CALENDRIER DE L'ÉQUIPE ========================= -->
+<main id="teamCal" class="view">
+  <header class="page-head"><button class="link back" onclick="openTeam()">← Équipe</button>
+    <div class="tc-head"><div><h1 class="page-title">Calendrier</h1><p class="page-intro" id="tcPeriod"></p></div>
+      <div class="tc-arrows"><button aria-label="Précédent" onclick="tcMove(-1)">‹</button><button aria-label="Aujourd'hui" onclick="tcToday()" class="tc-todaybtn">Auj.</button><button aria-label="Suivant" onclick="tcMove(1)">›</button></div></div>
+  </header>
+  <section class="section" style="padding-top:0">
+    <div class="tc-views" id="tcViews">
+      <button data-v="day" onclick="tcView('day')">Jour</button><button data-v="week" onclick="tcView('week')">Semaine</button><button data-v="month" onclick="tcView('month')">Mois</button><button data-v="year" onclick="tcView('year')">Année</button>
+    </div>
+    <div class="tc-legend">
+      <span><i style="background:#E0525C"></i>Important / réunion</span><span><i style="background:#4D8FE0"></i>Sortie</span><span><i style="background:#5FB36A"></i>Activité</span><span><i style="background:#FFC740"></i>Temps fort / familles</span>
+    </div>
+    <div id="tcBody"></div>
+    <div style="height:12px"></div>
+    <button class="btn primary full" onclick="tcNew()">+ Ajouter un temps</button>
+  </section>
+</main>
+
+<!-- ========================= ✏️ AJOUTER / MODIFIER UN TEMPS ========================= -->
+<main id="teamEvent" class="view">
+  <header class="page-head"><button class="link back" onclick="openTeamCal(true)">← Calendrier</button><h1 class="page-title" id="teTitle">Ajouter un temps</h1></header>
+  <section class="section" style="padding-top:0">
+    <div class="pm-card tm-form" style="margin-top:0">
+      <span class="field-title">Titre *</span>
+      <input id="teName" type="text" maxlength="120" placeholder="Ex. Grand jeu, Réunion, Piscine">
+      <span class="field-title">Catégorie</span>
+      <div class="te-cats" id="teCats">
+        <button data-c="rouge" onclick="teCat('rouge')"><i style="background:#E0525C"></i>Important / réunion</button>
+        <button data-c="bleu" onclick="teCat('bleu')"><i style="background:#4D8FE0"></i>Sortie</button>
+        <button data-c="vert" onclick="teCat('vert')"><i style="background:#5FB36A"></i>Activité</button>
+        <button data-c="jaune" onclick="teCat('jaune')"><i style="background:#FFC740"></i>Temps fort / familles</button>
+      </div>
+      <div class="te-row3">
+        <div><span class="field-title">Date *</span><input id="teDate" type="date"></div>
+        <div><span class="field-title">Début</span><input id="teStart" type="time"></div>
+        <div><span class="field-title">Fin</span><input id="teEnd" type="time"></div>
+      </div>
+      <span class="field-title">Animateurs</span>
+      <div class="pm-presets" id="teAnims" style="justify-content:flex-start;margin:0"></div>
+      <input id="teAnimOther" type="text" maxlength="80" placeholder="Autre personne (facultatif)">
+      <span class="field-title">Groupe</span>
+      <div class="pm-presets" id="teGroups" style="justify-content:flex-start;margin:0">
+        <button class="chip" data-g="3-5 ans" onclick="teGroup(this)">3-5 ans</button><button class="chip" data-g="6-11 ans" onclick="teGroup(this)">6-11 ans</button><button class="chip" data-g="12-14 ans" onclick="teGroup(this)">12-14 ans</button><button class="chip" data-g="15-17 ans" onclick="teGroup(this)">15-17 ans</button><button class="chip" data-g="Tous" onclick="teGroup(this)">Tous</button>
+      </div>
+      <span class="field-title">Note</span>
+      <textarea id="teNote" maxlength="1000" placeholder="Ex. Prévoir les bonnets de bain"></textarea>
+    </div>
+    <div style="height:14px"></div>
+    <button class="btn primary full" id="teSave" onclick="teSave()">Enregistrer</button>
+    <div style="height:8px"></div>
+    <button class="btn secondary full te-del" id="teDel" onclick="teDelete()" hidden>Supprimer ce temps</button>
+    <p class="pm-sub" id="teMeta"></p>
+  </section>
+</main>
 <!-- ========================= ➕ CRÉER UNE ÉQUIPE ========================= -->
 <main id="teamCreate" class="view">
   <header class="page-head"><button class="link back" onclick="openTeam()">← Retour</button><h1 class="page-title">Créer une équipe</h1><p class="page-intro" id="tcIntro">Tu recevras un code à donner à tes collègues.</p></header>
@@ -4247,12 +4368,11 @@ function openPlayMode(){go("playMode");pmRender();pmButtons();pmKidsRender()}
    👥 MODE ÉQUIPE
    ========================================================= */
 const TEAM_API="https://anim-compagnon-api.eliesbendjedou30.workers.dev/team";
-const TM_DAYS=["Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche"];
-const TM_SLOTS=["Matin","Midi","Après-midi","Soirée"];
-const tm={team:null,items:[],tab:"planning"};
+const tm={team:null,items:[],members:[],pending:null};
 function tmGet(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}}
 function tmSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 function tmMe(){return (document.getElementById("tmMe")?.value||"").trim()}
+function tmMyName(){return tmGet("animTeamMe","")}
 async function tmPost(path,body){
   const r=await fetch(TEAM_API+path,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
   const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||"Erreur");return d;
@@ -4262,18 +4382,18 @@ function tmStep(step){
   const t=document.getElementById("tmTitle"),i=document.getElementById("tmIntro");
   if(step==="tmStepCode"){t.textContent="Rejoindre une équipe";i.textContent="Entre le code que t'a donné ton équipe."}
   if(step==="tmStepName"){t.textContent="Bienvenue !";i.textContent="Plus qu'une étape."}
-  if(step==="tmSpace"){t.textContent=tm.team.name;i.textContent=tm.team.place?tm.team.place:"Planning, activités, infos et matériel de ton équipe."}
+  if(step==="tmSpace"){t.textContent=tm.team.name;i.textContent=tm.team.place||"Ton espace d'équipe"}
 }
 function openTeam(){
   go("team");
-  tm.team=tmGet("animTeam",null);
-  tm.pending=null;
-  if(tm.team){tmStep("tmSpace");document.getElementById("tmCode").textContent=tm.team.code;tmLoad()}
+  tm.team=tmGet("animTeam",null);tm.pending=null;
+  if(tm.team){tmStep("tmSpace");document.getElementById("tmCode").textContent=tm.team.code;tmHubRender();
+    const me=tmMyName();(me?tmPost("/join",{code:tm.team.code,me}).catch(()=>{}):Promise.resolve()).then(()=>tmLoad())}
   else{tmStep("tmStepCode");setTimeout(()=>document.getElementById("tmJoinCode").focus(),300)}
 }
 function tmBack(){
   if(!document.getElementById("tmStepName").hidden){tmStep("tmStepCode");return}
-  back();
+  go("home");
 }
 async function tmJoin(){
   const code=(document.getElementById("tmJoinCode").value||"").trim().toUpperCase();
@@ -4286,17 +4406,18 @@ async function tmJoin(){
     document.getElementById("tmFoundName").textContent=d.name;
     document.getElementById("tmFoundPlace").textContent=d.place||"";
     const me=document.getElementById("tmMe");
-    if(!me.value){const p=tmGet("animProfile",{});me.value=tmGet("animTeamMe","")||p.prenom||p.firstName||""}
+    if(!me.value){const p=tmGet("animProfile",{});me.value=tmMyName()||p.prenom||p.firstName||""}
     tmStep("tmStepName");
   }catch(e){toast(e.message==="Code introuvable"?"Ce code n'existe pas. Vérifie-le avec ton équipe.":"Connexion impossible. Réessaie.")}
   finally{btn.disabled=false;btn.textContent="Rejoindre"}
 }
-function tmEnter(){
+async function tmEnter(){
   const me=tmMe();if(!me){toast("Indique ton prénom.");document.getElementById("tmMe").focus();return}
   tmSet("animTeamMe",me);
   tm.team=tm.pending;tmSet("animTeam",tm.team);
   document.getElementById("tmJoinCode").value="";
-  tmStep("tmSpace");document.getElementById("tmCode").textContent=tm.team.code;tmLoad();
+  tmPost("/join",{code:tm.team.code,me}).catch(()=>{});
+  tmStep("tmSpace");document.getElementById("tmCode").textContent=tm.team.code;tmHubRender();tmLoad();
   toast("Bienvenue dans l'équipe !");
 }
 /* ----- Créer une équipe ----- */
@@ -4304,7 +4425,7 @@ function openTeamCreate(){
   go("teamCreate");
   document.getElementById("tcForm").hidden=false;document.getElementById("tcDone").hidden=true;
   const me=document.getElementById("tcMe");
-  if(!me.value){const p=tmGet("animProfile",{});me.value=tmGet("animTeamMe","")||p.prenom||p.firstName||""}
+  if(!me.value){const p=tmGet("animProfile",{});me.value=tmMyName()||p.prenom||p.firstName||""}
 }
 function tcPickRole(btn){
   const on=btn.classList.contains("selected");
@@ -4319,7 +4440,7 @@ async function tmCreate(){
   if(!me){toast("Indique ton prénom.");document.getElementById("tcMe").focus();return}
   const btn=document.getElementById("tcBtn");btn.disabled=true;btn.textContent="Création…";
   try{
-    const d=await tmPost("/create",{name,place,createur:me+(role?" ("+role+")":"")});
+    const d=await tmPost("/create",{name,place,me,createur:me+(role?" ("+role+")":"")});
     tm.team={code:d.code,name:d.name,place:d.place||place};tmSet("animTeam",tm.team);tmSet("animTeamMe",me);
     document.getElementById("tcDoneName").textContent=d.name;
     document.getElementById("tcDoneCode").textContent=d.code;
@@ -4328,66 +4449,156 @@ async function tmCreate(){
   }catch(e){toast("Impossible de créer l'équipe pour le moment.")}
   finally{btn.disabled=false;btn.textContent="Créer l'équipe"}
 }
-function tmLeave(){tm.team=null;tm.items=[];try{localStorage.removeItem("animTeam")}catch(e){}tmStep("tmStepCode")}
+function tmLeave(){tm.team=null;tm.items=[];tm.members=[];try{localStorage.removeItem("animTeam")}catch(e){}tmStep("tmStepCode")}
 function tmShare(){
   const t=`Rejoins l'équipe « ${tm.team.name} » sur Anim Compagnon : Menu > Mon équipe, code ${tm.team.code}\nhttps://eliesben.github.io/anim-compagnon/`;
   if(navigator.share)navigator.share({text:t}).catch(()=>{});
   else if(navigator.clipboard)navigator.clipboard.writeText(t).then(()=>toast("Message copié."));
 }
 async function tmLoad(){
-  if(!tm.team)return;
-  document.getElementById("tmList").innerHTML=`<p class="pm-sub">Chargement…</p>`;
+  if(!tm.team)return false;
   try{const r=await fetch(TEAM_API+"?code="+tm.team.code);const d=await r.json();if(!r.ok)throw new Error(d.error);
-    tm.items=d.items||[];if(d.name&&(d.name!==tm.team.name||(d.place||"")!==(tm.team.place||""))){tm.team.name=d.name;tm.team.place=d.place||"";tmSet("animTeam",tm.team);tmStep("tmSpace")}tmRender()}
-  catch(e){document.getElementById("tmList").innerHTML=`<p class="pm-sub">Impossible de charger l'équipe. Vérifie ta connexion puis touche Actualiser.</p>`}
+    tm.items=d.items||[];tm.members=d.members||[];
+    if(d.name&&(d.name!==tm.team.name||(d.place||"")!==(tm.team.place||""))){tm.team.name=d.name;tm.team.place=d.place||"";tmSet("animTeam",tm.team);if(!document.getElementById("tmSpace").hidden)tmStep("tmSpace")}
+    tmHubRender();if(document.getElementById("teamCal").classList.contains("active"))tcRender();
+    return true}
+  catch(e){toast("Impossible de charger l'équipe. Vérifie ta connexion.");return false}
 }
-function tmTab(t){tm.tab=t;document.querySelectorAll("#tmTabs button").forEach(b=>b.classList.toggle("on",b.dataset.tab===t));tmRender()}
-const tmDone=x=>x.FAIT===true||x.FAIT==="true";
-function tmItemHTML(x,main,sub){
-  return `<div class="tm-item${tm.tab==="materiel"&&tmDone(x)?" done":""}">
-    ${tm.tab==="materiel"?`<button class="tm-check${tmDone(x)?" on":""}" aria-label="Cocher" onclick="tmToggle(${Number(x.id)})"></button>`:""}
-    <div class="tm-main">${main}${sub?`<small>${sub}</small>`:""}</div>
-    <button class="tm-del" aria-label="Supprimer" onclick="tmDelete(${Number(x.id)})">✕</button></div>`;
+
+/* ----- Calendrier : outils ----- */
+const TC_COLORS={rouge:"#E0525C",bleu:"#4D8FE0",vert:"#5FB36A",jaune:"#FFC740"};
+const TC_DAYS=["Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche"];
+const TC_MONTHS=["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
+const tc={view:"week",cursor:new Date(),editId:null};
+const tcISO=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+const tcParse=s=>{const [y,m,d]=String(s||"").split("-").map(Number);return y?new Date(y,m-1,d):null};
+const tcMonday=d=>{const x=new Date(d.getFullYear(),d.getMonth(),d.getDate());x.setDate(x.getDate()-((x.getDay()+6)%7));return x};
+const tcAdd=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
+const tcEvents=()=>tm.items.filter(x=>x.TYPE==="cal"&&x.DATE);
+const tcOn=iso=>tcEvents().filter(e=>e.DATE===iso).sort((a,b)=>String(a.DEBUT||"99").localeCompare(String(b.DEBUT||"99")));
+const tcCol=e=>TC_COLORS[e.CATEGORIE]||"#84B98A";
+const tcHour=t=>t?String(t).replace(":","h"):"";
+function tcDayLabel(d){return TC_DAYS[(d.getDay()+6)%7]+" "+d.getDate()+" "+TC_MONTHS[d.getMonth()]}
+
+/* ----- Accueil de l'équipe ----- */
+function tmHubRender(){
+  const box=document.getElementById("thToday");if(!box||!tm.team)return;
+  const today=new Date(),list=tcOn(tcISO(today));
+  box.innerHTML=`<b>Aujourd'hui · ${esc(tcDayLabel(today))}</b>`+(list.length
+    ?list.slice(0,4).map(e=>`<div><span>${esc(tcHour(e.DEBUT)||"—")}</span><span>${esc(e.TITRE||"")}</span></div>`).join("")+(list.length>4?`<p>+ ${list.length-4} autre(s)</p>`:"")
+    :`<p>Rien de prévu au calendrier.</p>`);
+  const mon=tcMonday(today),sun=tcAdd(mon,6),n=tcEvents().filter(e=>{const d=tcParse(e.DATE);return d>=mon&&d<=sun}).length;
+  document.getElementById("thCalCount").textContent=n?n+" temps cette semaine":"Rien cette semaine";
 }
-function tmRender(){
-  const list=document.getElementById("tmList"),form=document.getElementById("tmForm");
-  const items=tm.items.filter(x=>x.TYPE===tm.tab);
-  let html="";
-  if(tm.tab==="planning"){
-    const sorted=items.sort((a,b)=>(TM_DAYS.indexOf(a.JOUR)-TM_DAYS.indexOf(b.JOUR))||(TM_SLOTS.indexOf(a.CRENEAU)-TM_SLOTS.indexOf(b.CRENEAU)));
-    let day="";
-    sorted.forEach(x=>{if(x.JOUR!==day){day=x.JOUR;html+=`<div class="tm-day">${esc(day||"Sans jour")}</div>`}
-      html+=tmItemHTML(x,`<strong>${esc(x.CRENEAU||"")}${x.CRENEAU?" · ":""}${esc(x.TITRE||"")}</strong>${x.ANIMATEUR?`<p>${esc(x.ANIMATEUR)}</p>`:""}`,"")});
-    form.innerHTML=`<div class="gen-row"><select id="tmfJour">${TM_DAYS.map(d=>`<option>${d}</option>`).join("")}</select><select id="tmfSlot">${TM_SLOTS.map(d=>`<option>${d}</option>`).join("")}</select></div>
-      <input id="tmfTitre" type="text" placeholder="Activité ou temps (ex. Grand jeu, Piscine)"><input id="tmfAnim" type="text" placeholder="Animateur(s)">
-      <button class="btn primary full" onclick="tmAdd()">Ajouter au planning</button>`;
-  }else if(tm.tab==="activite"){
-    items.sort((a,b)=>String(b.CREE_LE||"").localeCompare(String(a.CREE_LE||""))).forEach(x=>{html+=tmItemHTML(x,`<strong>${esc(x.TITRE||"")}</strong>${x.DETAIL?`<p>${esc(x.DETAIL)}</p>`:""}`,x.AUTEUR?"Proposée par "+esc(x.AUTEUR):"")});
-    form.innerHTML=`<input id="tmfTitre" type="text" placeholder="Nom de l'activité"><textarea id="tmfDetail" placeholder="Âge, matériel, déroulé rapide…"></textarea>
-      <button class="btn primary full" onclick="tmAdd()">Partager l'activité</button>`;
-  }else if(tm.tab==="info"){
-    items.sort((a,b)=>String(b.CREE_LE||"").localeCompare(String(a.CREE_LE||""))).forEach(x=>{const d=x.CREE_LE?new Date(x.CREE_LE):null;
-      html+=tmItemHTML(x,`<p style="color:var(--texte-clair);font-size:14px;margin:0">${esc(x.DETAIL||"")}</p>`,[x.AUTEUR?esc(x.AUTEUR):"",d&&!isNaN(d)?d.toLocaleDateString("fr-FR",{weekday:"short",day:"numeric",month:"short"})+" à "+d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"}):""].filter(Boolean).join(" · "))});
-    form.innerHTML=`<textarea id="tmfDetail" placeholder="Ex. Sortie piscine à 14h, prévoir les bonnets"></textarea>
-      <button class="btn primary full" onclick="tmAdd()">Publier l'info</button>`;
+
+/* ----- Calendrier : écrans ----- */
+function openTeamCal(keep){
+  if(!tm.team){openTeam();return}
+  if(!keep){tc.cursor=new Date()}
+  go("teamCal");tcRender();
+}
+function tcView(v){tc.view=v;tcRender()}
+function tcToday(){tc.cursor=new Date();tcRender()}
+function tcMove(n){
+  const c=new Date(tc.cursor);
+  if(tc.view==="day")c.setDate(c.getDate()+n);
+  else if(tc.view==="week")c.setDate(c.getDate()+7*n);
+  else if(tc.view==="month"){c.setDate(1);c.setMonth(c.getMonth()+n)}
+  else c.setFullYear(c.getFullYear()+n);
+  tc.cursor=c;tcRender();
+}
+function tcGoDay(iso){tc.cursor=tcParse(iso);tc.view="day";tcRender()}
+function tcGoMonth(y,m){tc.cursor=new Date(y,m,1);tc.view="month";tcRender()}
+function tcRender(){
+  document.querySelectorAll("#tcViews button").forEach(b=>b.classList.toggle("on",b.dataset.v===tc.view));
+  const c=tc.cursor,body=document.getElementById("tcBody"),per=document.getElementById("tcPeriod"),todayISO=tcISO(new Date());
+  let h="";
+  if(tc.view==="day"){
+    per.textContent=tcDayLabel(c)+" "+c.getFullYear();
+    const list=tcOn(tcISO(c));
+    h=list.length?list.map(e=>`<button class="tc-ev" style="--c:${tcCol(e)}" onclick="tcEdit(${Number(e.id)})"><span class="t">${esc(tcHour(e.DEBUT))}</span><span class="c"><strong>${esc(e.TITRE||"")}</strong><small>${esc([e.DEBUT&&e.FIN?tcHour(e.DEBUT)+" – "+tcHour(e.FIN):"",e.ANIMATEUR,e.GROUPE].filter(Boolean).join(" · "))}</small></span></button>`).join("")
+      :`<div class="tc-empty">Rien de prévu ce jour-là.</div>`;
+  }else if(tc.view==="week"){
+    const mon=tcMonday(c),sun=tcAdd(mon,6);
+    per.textContent="Semaine du "+mon.getDate()+" "+(mon.getMonth()!==sun.getMonth()?TC_MONTHS[mon.getMonth()]+" ":"")+"au "+sun.getDate()+" "+TC_MONTHS[sun.getMonth()];
+    for(let i=0;i<7;i++){
+      const d=tcAdd(mon,i),iso=tcISO(d),list=tcOn(iso);
+      h+=`<button class="tc-wrow${iso===todayISO?" today":""}" onclick="tcGoDay('${iso}')"><span class="tc-wd"><small>${TC_DAYS[i].slice(0,3)}</small><b>${d.getDate()}</b></span><span class="tc-pills">${list.length?list.map(e=>`<span class="tc-pill" style="--c:${tcCol(e)}">${esc((e.DEBUT?tcHour(e.DEBUT)+" ":"")+(e.TITRE||""))}</span>`).join(""):`<span class="tc-none">—</span>`}</span></button>`;
+    }
+  }else if(tc.view==="month"){
+    per.textContent=TC_MONTHS[c.getMonth()].replace(/^./,x=>x.toUpperCase())+" "+c.getFullYear();
+    const first=new Date(c.getFullYear(),c.getMonth(),1),days=new Date(c.getFullYear(),c.getMonth()+1,0).getDate(),lead=(first.getDay()+6)%7;
+    h=`<div class="tc-mhead"><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span></div><div class="tc-mgrid">`;
+    for(let i=0;i<lead;i++)h+=`<span class="tc-mcell out"></span>`;
+    for(let d=1;d<=days;d++){
+      const iso=tcISO(new Date(c.getFullYear(),c.getMonth(),d)),list=tcOn(iso);
+      h+=`<button class="tc-mcell${iso===todayISO?" today":""}" onclick="tcGoDay('${iso}')" aria-label="${d} ${TC_MONTHS[c.getMonth()]}, ${list.length} temps">${d}<span class="tc-dots">${list.slice(0,4).map(e=>`<i style="--c:${tcCol(e)}"></i>`).join("")}</span></button>`;
+    }
+    h+=`</div>`;
   }else{
-    items.sort((a,b)=>(tmDone(a)-tmDone(b))||String(a.TITRE).localeCompare(String(b.TITRE))).forEach(x=>{html+=tmItemHTML(x,`<strong>${esc(x.TITRE||"")}</strong>`,x.AUTEUR?"Ajouté par "+esc(x.AUTEUR):"")});
-    form.innerHTML=`<input id="tmfTitre" type="text" placeholder="Ex. 2 paquets de feutres"><button class="btn primary full" onclick="tmAdd()">Ajouter à la liste</button>`;
+    const y=c.getFullYear(),now=new Date();per.textContent="Année "+y;
+    h=`<div class="tc-ygrid">`;
+    for(let m=0;m<12;m++){
+      const pre=y+"-"+String(m+1).padStart(2,"0")+"-",list=tcEvents().filter(e=>e.DATE.startsWith(pre));
+      const cats=["rouge","bleu","vert","jaune"].map(k=>({k,n:list.filter(e=>e.CATEGORIE===k).length})).filter(x=>x.n);
+      h+=`<button class="tc-ycell${y===now.getFullYear()&&m===now.getMonth()?" now":""}" onclick="tcGoMonth(${y},${m})"><strong>${TC_MONTHS[m].replace(/^./,x=>x.toUpperCase())}</strong><span class="tc-dots">${cats.map(x=>Array.from({length:Math.min(x.n,4)},()=>`<i style="--c:${TC_COLORS[x.k]}"></i>`).join("")).join("")}</span><small>${list.length?list.length+" temps":""}</small></button>`;
+    }
+    h+=`</div>`;
   }
-  list.innerHTML=html||`<p class="pm-sub">Rien pour l'instant.</p>`;
+  body.innerHTML=h;
 }
-async function tmAdd(){
-  const v=id=>(document.getElementById(id)?.value||"").trim();
-  const body={code:tm.team.code,type:tm.tab,titre:v("tmfTitre"),detail:v("tmfDetail"),jour:v("tmfJour"),creneau:v("tmfSlot"),animateur:v("tmfAnim"),auteur:tmGet("animTeamMe","")};
-  if(tm.tab==="info"?!body.detail:!body.titre){toast("Écris quelque chose avant d'ajouter.");return}
-  try{const item=await tmPost("/item",body);tm.items.push(item);tmRender()}catch(e){toast("Ajout impossible. Vérifie ta connexion.")}
+
+/* ----- Ajouter / modifier un temps ----- */
+let teCatVal="vert";
+function teCat(k){teCatVal=k;document.querySelectorAll("#teCats button").forEach(b=>{b.classList.toggle("on",b.dataset.c===k);b.style.setProperty("--c",TC_COLORS[b.dataset.c])})}
+function teGroup(btn){const on=btn.classList.contains("selected");document.querySelectorAll("#teGroups .chip").forEach(c=>c.classList.remove("selected"));if(!on)btn.classList.add("selected")}
+function teFill(e){
+  const v=(id,x)=>document.getElementById(id).value=x||"";
+  v("teName",e.TITRE);v("teDate",e.DATE);v("teStart",e.DEBUT);v("teEnd",e.FIN);v("teNote",e.DETAIL);
+  teCat(e.CATEGORIE||"vert");
+  document.querySelectorAll("#teGroups .chip").forEach(c=>c.classList.toggle("selected",c.dataset.g===e.GROUPE));
+  const chosen=String(e.ANIMATEUR||"").split(",").map(s=>s.trim()).filter(Boolean);
+  const names=[...new Set([...tm.members,...chosen.filter(n=>tm.members.includes(n))])];
+  document.getElementById("teAnims").innerHTML=names.length?names.map(n=>`<button class="chip${chosen.includes(n)?" selected":""}" data-n="${esc(n)}" onclick="this.classList.toggle('selected')">${esc(n)}</button>`).join(""):`<span class="pm-sub" style="margin:0">Les membres apparaîtront ici quand ils rejoindront l'équipe.</span>`;
+  v("teAnimOther",chosen.filter(n=>!tm.members.includes(n)).join(", "));
 }
-async function tmToggle(id){
-  const x=tm.items.find(i=>i.id===id);if(!x)return;const fait=!tmDone(x);x.FAIT=fait;tmRender();
-  try{await tmPost("/update",{code:tm.team.code,id,fait})}catch(e){x.FAIT=!fait;tmRender();toast("Modification impossible.")}
+function tcNew(){
+  tc.editId=null;
+  teFill({DATE:tcISO(tc.cursor),CATEGORIE:"vert"});
+  document.getElementById("teTitle").textContent="Ajouter un temps";
+  document.getElementById("teDel").hidden=true;document.getElementById("teMeta").textContent="";
+  go("teamEvent");
 }
-async function tmDelete(id){
-  try{await tmPost("/delete",{code:tm.team.code,id});tm.items=tm.items.filter(i=>i.id!==id);tmRender()}catch(e){toast("Suppression impossible.")}
+function tcEdit(id){
+  const e=tm.items.find(x=>x.id===id);if(!e)return;
+  tc.editId=id;teFill(e);
+  document.getElementById("teTitle").textContent="Modifier le temps";
+  document.getElementById("teDel").hidden=false;
+  const d=e.MODIFIE_LE?new Date(e.MODIFIE_LE):null;
+  document.getElementById("teMeta").textContent=e.MODIFIE_PAR?"Modifié par "+e.MODIFIE_PAR+(d&&!isNaN(d)?", le "+d.toLocaleDateString("fr-FR")+" à "+d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"}):""):"";
+  go("teamEvent");
+}
+async function teSave(){
+  const v=id=>(document.getElementById(id).value||"").trim();
+  const titre=v("teName"),date=v("teDate");
+  if(!titre){toast("Donne un titre.");document.getElementById("teName").focus();return}
+  if(!date){toast("Choisis une date.");return}
+  const anims=[...document.querySelectorAll("#teAnims .chip.selected")].map(c=>c.dataset.n);
+  v("teAnimOther").split(",").map(s=>s.trim()).filter(Boolean).forEach(n=>{if(!anims.includes(n))anims.push(n)});
+  const body={code:tm.team.code,titre,date,debut:v("teStart"),fin:v("teEnd"),categorie:teCatVal,animateur:anims.join(", "),groupe:document.querySelector("#teGroups .chip.selected")?.dataset.g||"",detail:v("teNote"),auteur:tmMyName()};
+  const btn=document.getElementById("teSave");btn.disabled=true;btn.textContent="Enregistrement…";
+  try{
+    if(tc.editId){const r=await tmPost("/edit",{...body,id:tc.editId});const i=tm.items.findIndex(x=>x.id===tc.editId);if(i>-1)tm.items[i]=r}
+    else{const r=await tmPost("/item",{...body,type:"cal"});tm.items.push(r)}
+    tc.cursor=tcParse(date);tmHubRender();openTeamCal(true);toast("Enregistré.");
+  }catch(e){toast("Enregistrement impossible. Vérifie ta connexion.")}
+  finally{btn.disabled=false;btn.textContent="Enregistrer"}
+}
+async function teDelete(){
+  if(!tc.editId)return;
+  if(!confirm("Supprimer ce temps du calendrier ?"))return;
+  try{await tmPost("/delete",{code:tm.team.code,id:tc.editId});tm.items=tm.items.filter(x=>x.id!==tc.editId);tmHubRender();openTeamCal(true);toast("Supprimé.")}
+  catch(e){toast("Suppression impossible.")}
 }
 /* =========================================================
    🤖 GÉNÉRER — modes et choix en pastilles
