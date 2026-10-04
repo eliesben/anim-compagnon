@@ -944,6 +944,30 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
 .ts-plus{width:50px;flex-shrink:0;border:0;border-radius:16px;background:var(--vert);color:#14170F;font-size:24px;font-weight:900}
 #tsClear[hidden]{display:none!important}
 #teamShop .tm-item{align-items:center}
+/* ===== ÉQUIPE : favoris + fiches ===== */
+.tf-card{display:flex;gap:12px;align-items:center;width:100%;padding:12px;margin-bottom:10px;border-radius:18px;background:var(--surface);border:1px solid var(--trait);color:var(--texte-clair);text-align:left}
+.tf-card .tf-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.tf-card strong{font-size:15px;font-weight:800}
+.tf-card small{font-size:12px;color:var(--texte-doux)}
+.tf-card .tf-by{font-size:11px;font-weight:700;color:var(--vert-fonce)}
+.tf-badge{flex-shrink:0;font-size:11px;font-weight:800;padding:4px 9px;border-radius:99px}
+.tf-badge.ia{background:rgba(255,199,64,.16);color:#FFD772}
+.tf-badge.maison{background:rgba(132,185,138,.16);color:var(--vert-fonce)}
+.tf-star{flex-shrink:0;color:var(--jaune)}
+.tf-help{font-size:13px;line-height:1.5;color:var(--texte-doux)}
+.tf-help b{color:var(--texte-clair)}
+.tf-gen,.tf-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.tf-actions{grid-template-columns:repeat(3,1fr);margin:14px 0 0}
+.tf-doc h1{font-size:20px;margin:0 0 4px}
+.tf-doc h2{font-size:13px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--vert-fonce);margin:16px 0 6px}
+.tf-doc p,.tf-doc li{font-size:14px;line-height:1.55;color:var(--texte-clair)}
+.tf-doc ul,.tf-doc ol{padding-left:20px;margin:0}
+.team-share-btn{grid-column:1 / -1}
+@media print{
+  .tf-actions,.tf-actions-del,.tf-gen{display:none!important}
+  .tf-doc{background:#fff!important;border:0!important}
+  .tf-doc *{color:#111!important}
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
@@ -1273,8 +1297,8 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
     <div class="th-today" id="thToday"></div>
     <div class="th-tiles">
       <button class="th-tile" onclick="openTeamCal()"><span class="th-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><strong>Calendrier</strong><small id="thCalCount">—</small></button>
-      <button class="th-tile soon" onclick="toast('Bientôt disponible.')"><span class="th-ic yellow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8z"/></svg></span><strong>Activités favorites</strong><small>Bientôt</small></button>
-      <button class="th-tile soon" onclick="toast('Bientôt disponible.')"><span class="th-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></span><strong>Fiches d'activité</strong><small>Bientôt</small></button>
+      <button class="th-tile soon" onclick="toast('Bientôt disponible.')"><span class="th-ic yellow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8z"/></svg></span><strong>Activités favorites</strong><small id="thFavCount">—</small>
+      <button class="th-tile" onclick="openTeamFiches()"><span class="th-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></span><strong>Fiches d'activité</strong><small id="thFicheCount">—</small>
       <button class="th-tile" onclick="openTeamShop()"><span class="th-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6.2"/><circle cx="10" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/></svg></span><strong>Courses</strong><small id="thShopCount">—</small></button>      <button class="th-tile soon wide" onclick="toast('Bientôt disponible.')"><span class="th-ic grey"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span><strong>Fiches de sortie</strong><small>Bientôt</small></button>
     </div>
     <p class="gen-note" style="margin-top:14px">N'écris jamais le nom d'un enfant ni d'information sur sa santé ou sa famille : tout est visible par l'équipe.</p>
@@ -1357,6 +1381,44 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
     </div>
     <div style="height:12px"></div>
     <button class="btn secondary full" id="tsClear" onclick="tsClear()" hidden>Retirer les articles achetés</button>
+  </section>
+</main>
+<!-- ========================= ⭐ FAVORIS DE L'ÉQUIPE ========================= -->
+<main id="teamFavs" class="view">
+  <header class="page-head"><button class="link back" onclick="openTeam()">← Équipe</button><h1 class="page-title">Activités favorites</h1><p class="page-intro">Les activités que l'équipe aime refaire.</p></header>
+  <section class="section" style="padding-top:0">
+    <div id="tfFavList"></div>
+    <div class="pm-card tf-help">Sur n'importe quelle activité de l'appli, touche <b>« Ajouter aux favoris de l'équipe »</b>.</div>
+    <div style="height:10px"></div>
+    <button class="btn primary full" onclick="go('categories')">Parcourir les activités</button>
+  </section>
+</main>
+
+<!-- ========================= 📄 FICHES DE L'ÉQUIPE ========================= -->
+<main id="teamFiches" class="view">
+  <header class="page-head"><button class="link back" onclick="openTeam()">← Équipe</button><h1 class="page-title">Fiches d'activité</h1><p class="page-intro">Les fiches complètes, prêtes à animer.</p></header>
+  <section class="section" style="padding-top:0">
+    <div class="tf-gen">
+      <button class="btn primary" onclick="go('generator');openGeneratorMode('ia-text')">Générer avec l'IA</button>
+      <button class="btn secondary" onclick="go('generator');openGeneratorMode('fiche')">Fiche vierge</button>
+    </div>
+    <div id="tfFicheList"></div>
+    <div class="pm-card tf-help">Sous chaque fiche créée dans Générer, touche <b>« Partager à l'équipe »</b>.</div>
+  </section>
+</main>
+
+<!-- ========================= 📄 UNE FICHE DE L'ÉQUIPE ========================= -->
+<main id="teamFiche" class="view">
+  <header class="page-head"><button class="link back" onclick="openTeamFiches()">← Fiches</button><h1 class="page-title" id="tfTitle">Fiche</h1><p class="page-intro" id="tfMeta"></p></header>
+  <section class="section" style="padding-top:0">
+    <div class="pm-card tf-doc" id="tfDoc"></div>
+    <div class="tf-actions">
+      <button class="btn secondary" onclick="downloadFicheWord()">Word</button>
+      <button class="btn secondary" onclick="downloadFichePDF()">PDF</button>
+      <button class="btn secondary" onclick="window.print()">Imprimer</button>
+    </div>
+    <div style="height:8px"></div>
+    <button class="btn secondary full te-del tf-actions-del" onclick="tfRemove()">Retirer de l'équipe</button>
   </section>
 </main>
 <!-- ========================= ➕ CRÉER UNE ÉQUIPE ========================= -->
@@ -3082,6 +3144,12 @@ setTimeout(() => {
     🖨 Imprimer
   </button>
 
+  <button
+    class="ai-sheet-action team-share-btn"
+    onclick="teamShareFiche()"
+  >
+    👥 Partager à l'équipe
+  </button>
 </div>
 
       <!-- OBJECTIFS -->
@@ -4118,6 +4186,7 @@ function openActivity(i){
   if(a.development)html+=`<div class="gs-panel"><h2>Déroulement</h2>${stepsHTML(a.development)}</div>`;
   if(a.variants)html+=`<div class="gs-panel small"><h2>Variantes</h2><p>${esc(a.variants)}</p></div>`;
   if(a.vigilance)html+=`<div class="gs-panel small"><h2>Points de vigilance</h2><p>${esc(a.vigilance)}</p></div>`;
+  if(tmGet("animTeam",null))html+=`<button class="gs-link" onclick="teamShareFav()">👥 Ajouter aux favoris de l'équipe</button>`;
   openGlassSheet({
     img:activityPhoto(a),title:a.name,
     meta:[a.age,a.duration,a.location].filter(Boolean).join(" · "),
@@ -4488,7 +4557,8 @@ async function tmLoad(){
   try{const r=await fetch(TEAM_API+"?code="+tm.team.code);const d=await r.json();if(!r.ok)throw new Error(d.error);
     tm.items=d.items||[];tm.members=d.members||[];
     if(d.name&&(d.name!==tm.team.name||(d.place||"")!==(tm.team.place||""))){tm.team.name=d.name;tm.team.place=d.place||"";tmSet("animTeam",tm.team);if(!document.getElementById("tmSpace").hidden)tmStep("tmSpace")}
-tmHubRender();if(document.getElementById("teamCal").classList.contains("active"))tcRender();if(document.getElementById("teamShop")?.classList.contains("active"))tsRender();    return true}
+tmHubRender();if(document.getElementById("teamCal").classList.contains("active"))tcRender();
+      if(document.getElementById("teamShop")?.classList.contains("active"))tsRender();if(document.getElementById("teamFavs")?.classList.contains("active"))tfFavRender();if(document.getElementById("teamFiches")?.classList.contains("active"))tfFicheRender();    return true}
   catch(e){toast("Impossible de charger l'équipe. Vérifie ta connexion.");return false}
 }
 
@@ -4518,6 +4588,8 @@ function tmHubRender(){
   document.getElementById("thCalCount").textContent=n?n+" temps cette semaine":"Rien cette semaine";
      const sc=document.getElementById("thShopCount");
   if(sc){const k=tm.items.filter(x=>x.TYPE==="course"&&!(x.FAIT===true||x.FAIT==="true")).length;sc.textContent=k?k+" à acheter":"Liste vide"}
+  const fc=document.getElementById("thFavCount");if(fc){const k=tm.items.filter(x=>x.TYPE==="fav").length;fc.textContent=k?k+" activité"+(k>1?"s":""):"Aucune pour l'instant"}
+  const ic=document.getElementById("thFicheCount");if(ic){const k=tm.items.filter(x=>x.TYPE==="fiche").length;ic.textContent=k?k+" fiche"+(k>1?"s":""):"Aucune pour l'instant"}
 }
 
 /* ----- Calendrier : écrans ----- */
@@ -4669,6 +4741,72 @@ async function tsClear(){
   if(!confirm("Retirer de la liste tous les articles achetés ?"))return;
   try{await tmPost("/clear",{code:tm.team.code,type:"course"});tm.items=tm.items.filter(x=>!(x.TYPE==="course"&&tsDone(x)));tsRender();tmHubRender();toast("Articles achetés retirés.")}
   catch(e){toast("Impossible pour le moment.")}
+}
+/* ----- Favoris et fiches de l'équipe ----- */
+const tfFavs=()=>tm.items.filter(x=>x.TYPE==="fav").sort((a,b)=>String(b.CREE_LE||"").localeCompare(String(a.CREE_LE||"")));
+const tfFiches=()=>tm.items.filter(x=>x.TYPE==="fiche").sort((a,b)=>String(b.CREE_LE||"").localeCompare(String(a.CREE_LE||"")));
+const tfJSON=s=>{try{return JSON.parse(s||"{}")}catch(e){return {}}};
+const tfWhen=iso=>{const d=iso?new Date(iso):null;return d&&!isNaN(d)?d.toLocaleDateString("fr-FR",{day:"numeric",month:"short"}):""};
+async function tfEnsureTeam(){
+  if(!tm.team)tm.team=tmGet("animTeam",null);
+  if(!tm.team){toast("Rejoins d'abord une équipe : Menu > Mon équipe.");return false}
+  if(!tm.items.length)await tmLoad();
+  return true;
+}
+
+/* Partager une activité de l'appli */
+async function teamShareFav(){
+  const a=window.currentActivity;if(!a)return;
+  if(!(await tfEnsureTeam()))return;
+  if(tfFavs().some(x=>String(tfJSON(x.CONTENU).id)===String(a.id))){toast("Déjà dans les favoris de l'équipe.");return}
+  try{
+    const r=await tmPost("/item",{code:tm.team.code,type:"fav",titre:a.name,contenu:JSON.stringify({id:a.id,meta:[a.category,a.age,a.duration].filter(Boolean).join(" · ")}),auteur:tmMyName()});
+    tm.items.push(r);tmHubRender();toast("Ajoutée aux favoris de l'équipe.");
+  }catch(e){toast("Partage impossible. Vérifie ta connexion.")}
+}
+function openTeamFavs(){if(!tm.team){openTeam();return}go("teamFavs");tfFavRender()}
+function tfFavRender(){
+  const list=tfFavs();
+  document.getElementById("tfFavList").innerHTML=list.length?list.map(x=>{const c=tfJSON(x.CONTENU);return `<div class="tf-card"><svg class="tf-star" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8z"/></svg><button class="tf-main" style="border:0;background:none;padding:0;text-align:left;color:inherit" onclick="tfOpenFav(${Number(x.id)})"><strong>${esc(x.TITRE||"")}</strong>${c.meta?`<small>${esc(c.meta)}</small>`:""}${x.AUTEUR?`<span class="tf-by">Ajoutée par ${esc(x.AUTEUR)}</span>`:""}</button><button class="tm-del" aria-label="Retirer" onclick="tfDelete(${Number(x.id)},'fav')">✕</button></div>`}).join("")
+    :`<div class="tc-empty">Aucune activité favorite pour l'instant.</div>`;
+}
+function tfOpenFav(id){
+  const x=tm.items.find(i=>i.id===id);if(!x)return;
+  const a=activities.find(v=>String(v.id)===String(tfJSON(x.CONTENU).id));
+  if(!a){toast("Cette activité n'est plus disponible.");return}
+  window.rendered=[a];openActivity(0);
+}
+
+/* Partager une fiche (IA ou fiche vierge) */
+async function teamShareFiche(){
+  const s=window.currentAISheet;if(!s){toast("Aucune fiche à partager.");return}
+  if(!(await tfEnsureTeam()))return;
+  if(tfFiches().some(x=>x.TITRE===s.titre&&x.CONTENU===JSON.stringify(s))){toast("Déjà partagée avec l'équipe.");return}
+  try{
+    const r=await tmPost("/item",{code:tm.team.code,type:"fiche",titre:s.titre||"Fiche d'activité",categorie:s.source==="maison"?"maison":"ia",groupe:s.age||"",contenu:JSON.stringify(s),auteur:tmMyName()});
+    tm.items.push(r);tmHubRender();toast("Fiche partagée avec l'équipe.");
+  }catch(e){toast("Partage impossible. Vérifie ta connexion.")}
+}
+function openTeamFiches(){if(!tm.team){openTeam();return}go("teamFiches");tfFicheRender()}
+function tfFicheRender(){
+  const list=tfFiches();
+  document.getElementById("tfFicheList").innerHTML=list.length?list.map(x=>{const s=tfJSON(x.CONTENU),m=x.CATEGORIE==="maison";return `<button class="tf-card" onclick="tfOpenFiche(${Number(x.id)})"><span class="tf-main"><strong>${esc(x.TITRE||"")}</strong><small>${esc([s.age,s.duree,s.lieu].filter(Boolean).join(" · "))}</small>${x.AUTEUR?`<span class="tf-by">Partagée par ${esc(x.AUTEUR)}${tfWhen(x.CREE_LE)?" · "+tfWhen(x.CREE_LE):""}</span>`:""}</span><span class="tf-badge ${m?"maison":"ia"}">${m?"Maison":"IA"}</span></button>`}).join("")
+    :`<div class="tc-empty">Aucune fiche partagée pour l'instant.</div>`;
+}
+let tfCurrent=null;
+function tfOpenFiche(id){
+  const x=tm.items.find(i=>i.id===id);if(!x)return;
+  const s=tfJSON(x.CONTENU);tfCurrent=id;window.currentAISheet=s;
+  document.getElementById("tfTitle").textContent=s.titre||x.TITRE||"Fiche";
+  document.getElementById("tfMeta").textContent=[x.CATEGORIE==="maison"?"Fiche maison":"Fiche IA",x.AUTEUR?"partagée par "+x.AUTEUR:""].filter(Boolean).join(" · ");
+  document.getElementById("tfDoc").innerHTML=ficheToHTML(s);
+  go("teamFiche");
+}
+async function tfRemove(){if(tfCurrent&&await tfDelete(tfCurrent,"fiche"))openTeamFiches()}
+async function tfDelete(id,kind){
+  if(!confirm(kind==="fav"?"Retirer cette activité des favoris de l'équipe ?":"Retirer cette fiche de l'équipe ?"))return false;
+  try{await tmPost("/delete",{code:tm.team.code,id});tm.items=tm.items.filter(i=>i.id!==id);tmHubRender();if(kind==="fav")tfFavRender();return true}
+  catch(e){toast("Suppression impossible.");return false}
 }
 /* =========================================================
    🤖 GÉNÉRER — modes et choix en pastilles
