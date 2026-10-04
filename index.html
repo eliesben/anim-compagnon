@@ -809,6 +809,41 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
   .ai-activity-sheet{background:#fff!important;border:0;box-shadow:none;backdrop-filter:none;color:#111}
   .ai-activity-sheet *{color:#111!important}
 }
+/* ===== MODE ACTIVITÉ + MODE ÉQUIPE ===== */
+.pm-card{background:var(--surface);border:1px solid var(--trait);border-radius:22px;padding:18px;margin-top:14px}
+.pm-time{font-size:min(22vw,96px);font-weight:900;text-align:center;letter-spacing:-2px;font-variant-numeric:tabular-nums;line-height:1;margin:6px 0 14px;color:var(--texte-clair)}
+.pm-time.done{color:var(--rouge);animation:pmFlash .5s steps(2) infinite}
+@keyframes pmFlash{50%{opacity:.25}}
+.pm-switch{display:flex;gap:6px;background:var(--surface-2);border-radius:99px;padding:4px;margin-bottom:12px}
+.pm-switch button{flex:1;border:0;border-radius:99px;padding:9px;font-weight:800;font-size:13px;background:transparent;color:var(--texte-doux)}
+.pm-switch button.on{background:var(--vert);color:#14170F}
+.pm-presets{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:14px}
+.pm-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.pm-btn{border:1px solid var(--trait);background:var(--surface-2);color:var(--texte-clair);border-radius:16px;padding:14px 6px;font-weight:800;font-size:15px}
+.pm-btn.go{background:var(--vert);color:#14170F;border-color:transparent}
+.pm-big{width:100%;border:0;border-radius:20px;padding:20px;font-size:18px;font-weight:900;background:var(--jaune);color:#14170F}
+.pm-count{display:grid;grid-template-columns:64px 1fr 64px;gap:10px;align-items:center;text-align:center}
+.pm-count b{font-size:56px;font-weight:900;font-variant-numeric:tabular-nums}
+.pm-count .pm-btn{font-size:28px;padding:10px 0}
+.pm-sub{font-size:13px;color:var(--texte-doux);text-align:center;margin-top:6px}
+.pm-sub.ok{color:var(--vert-fonce)}.pm-sub.ko{color:var(--rouge)}
+.tm-tabs{display:flex;gap:6px;overflow-x:auto;margin-top:14px;padding-bottom:2px}
+.tm-tabs button{flex:0 0 auto;border:1px solid var(--trait);background:var(--surface-2);color:var(--texte-doux);border-radius:99px;padding:9px 14px;font-weight:800;font-size:13px}
+.tm-tabs button.on{background:var(--vert);color:#14170F;border-color:transparent}
+.tm-item{display:flex;gap:10px;align-items:flex-start;padding:12px 0;border-top:1px solid var(--trait)}
+.tm-item:first-child{border-top:0}
+.tm-item .tm-main{flex:1;min-width:0}
+.tm-item strong{display:block;font-size:14px;color:var(--texte-clair)}
+.tm-item p{font-size:13px;color:var(--texte-doux);margin-top:2px;white-space:pre-wrap;word-break:break-word}
+.tm-item small{font-size:11px;color:var(--texte-doux)}
+.tm-item.done strong{text-decoration:line-through;opacity:.55}
+.tm-del{border:0;background:transparent;color:var(--texte-doux);font-size:18px;padding:0 4px}
+.tm-check{width:24px;height:24px;flex:0 0 24px;border-radius:8px;border:2px solid var(--vert);background:transparent;margin-top:1px}
+.tm-check.on{background:var(--vert)}
+.tm-day{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;color:var(--vert-fonce);margin:16px 0 4px}
+.tm-form{display:grid;gap:8px;margin-top:14px}
+.tm-form .gen-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tm-code{font-size:26px;font-weight:900;letter-spacing:.2em;text-align:center;padding:10px;border-radius:14px;background:var(--surface-2);margin:8px 0}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
@@ -837,7 +872,9 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
     <button class="side-item" data-side="home" onclick="sideGo('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/></svg>Accueil</button>
     <button class="side-item" data-side="favorites" onclick="sideGo('favorites')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8z"/></svg>Favoris</button>
     <button class="side-item help" data-side="help" onclick="sideGo('help')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.8 9a2.4 2.4 0 1 1 4.4 1.4c-.8 1.1-2.2 1.2-2.2 2.8"/><path d="M12 16.8h.01"/></svg>Help</button>
-    <div class="side-sep"></div>
+        <button class="side-link" onclick="closeSideMenu();openPlayMode()">⏱️ Mode activité</button>
+    <button class="side-link" onclick="closeSideMenu();openTeam()">👥 Mon équipe</button>
+     <div class="side-sep"></div>
     <p class="side-sec-title">Informations</p>
         <button class="side-link" onclick="closeSideMenu();openInfo('contact')">FAQ / Contactez-nous</button>
     <button class="side-link" onclick="sideGo('prefs')">Préférences</button>
@@ -1049,7 +1086,83 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
   <div id="photoPreview" class="photo-preview" hidden></div>
 </section>
 </main>
+<!-- ========================= ⏱️ MODE ACTIVITÉ ========================= -->
+<main id="playMode" class="view">
+  <header class="page-head"><button class="link back" onclick="back()">← Retour</button><h1 class="page-title">Mode activité</h1><p class="page-intro" id="pmIntro">Tes outils de terrain. Ils marchent même sans réseau.</p></header>
+  <section class="section">
+    <div class="pm-card">
+      <div class="pm-switch"><button id="pmModeDown" class="on" onclick="pmSetMode('down')">Compte à rebours</button><button id="pmModeUp" onclick="pmSetMode('up')">Chronomètre</button></div>
+      <div id="pmTime" class="pm-time">05:00</div>
+      <div class="pm-presets" id="pmPresets">
+        <button class="chip" onclick="pmPreset(1)">1 min</button><button class="chip" onclick="pmPreset(3)">3 min</button><button class="chip selected" onclick="pmPreset(5)">5 min</button><button class="chip" onclick="pmPreset(10)">10 min</button><button class="chip" onclick="pmPreset(15)">15 min</button><button class="chip" onclick="pmPreset(30)">30 min</button>
+      </div>
+      <div class="pm-row">
+        <button class="pm-btn go" id="pmStart" onclick="pmToggle()">Démarrer</button>
+        <button class="pm-btn" id="pmPlus" onclick="pmAdd(60)">+1 min</button>
+        <button class="pm-btn" onclick="pmReset()">Remettre</button>
+      </div>
+    </div>
+    <div class="pm-card">
+      <button class="pm-big" onpointerdown="pmWhistle(true)" onpointerup="pmWhistle(false)" onpointerleave="pmWhistle(false)" oncontextmenu="return false">📣 Sifflet (reste appuyé)</button>
+    </div>
+    <div class="pm-card">
+      <span class="field-title">Enfants attendus</span>
+      <input id="pmExpected" type="number" inputmode="numeric" min="0" placeholder="Ex. 14" oninput="pmCountRender()">
+      <div style="height:12px"></div>
+      <span class="field-title">Je compte</span>
+      <div class="pm-count"><button class="pm-btn" onclick="pmCount(-1)">−</button><b id="pmCountNb">0</b><button class="pm-btn" onclick="pmCount(1)">+</button></div>
+      <p id="pmCountMsg" class="pm-sub">Appuie sur + pour chaque enfant.</p>
+      <div style="height:10px"></div>
+      <button class="btn secondary full" onclick="pmCount(0)">Recompter (remettre à 0)</button>
+    </div>
+  </section>
+</main>
 
+<!-- ========================= 👥 MODE ÉQUIPE ========================= -->
+<main id="team" class="view">
+  <header class="page-head"><button class="link back" onclick="back()">← Retour</button><h1 class="page-title" id="tmTitle">Mon équipe</h1><p class="page-intro" id="tmIntro">Partage le planning, les activités, les infos et le matériel avec ton équipe d'animation.</p></header>
+  <section class="section" id="tmJoin">
+    <div class="pm-card">
+      <span class="field-title">Ton prénom</span>
+      <input id="tmMe" type="text" placeholder="Il s'affichera à côté de ce que tu ajoutes">
+    </div>
+    <div class="pm-card">
+      <h2 class="section-title" style="margin:0 0 10px">Rejoindre une équipe</h2>
+      <input id="tmJoinCode" type="text" maxlength="6" placeholder="Code à 6 lettres" style="text-transform:uppercase;letter-spacing:.2em;text-align:center;font-weight:800">
+      <div style="height:10px"></div>
+      <button class="btn primary full" onclick="tmJoin()">Rejoindre</button>
+    </div>
+    <div class="pm-card">
+      <h2 class="section-title" style="margin:0 0 10px">Créer une équipe</h2>
+      <input id="tmNewName" type="text" placeholder="Ex. Centre de loisirs Les Pins, été 2027">
+      <div style="height:10px"></div>
+      <button class="btn secondary full" onclick="tmCreate()">Créer et obtenir un code</button>
+    </div>
+    <p class="gen-note" style="margin-top:14px">Tout ce que tu ajoutes est visible par les personnes qui ont le code. N'écris jamais le nom d'un enfant ni d'information sur sa santé ou sa famille.</p>
+  </section>
+  <section class="section" id="tmSpace" hidden>
+    <div class="pm-card" style="text-align:center">
+      <small class="pm-sub">Code de l'équipe, à donner à tes collègues</small>
+      <div class="tm-code" id="tmCode">------</div>
+      <div class="pm-row" style="grid-template-columns:1fr 1fr">
+        <button class="pm-btn" onclick="tmShare()">Partager le code</button>
+        <button class="pm-btn" onclick="tmLoad()">Actualiser</button>
+      </div>
+    </div>
+    <div class="tm-tabs" id="tmTabs">
+      <button class="on" data-tab="planning" onclick="tmTab('planning')">📅 Planning</button>
+      <button data-tab="activite" onclick="tmTab('activite')">🎯 Activités</button>
+      <button data-tab="info" onclick="tmTab('info')">📢 Infos du jour</button>
+      <button data-tab="materiel" onclick="tmTab('materiel')">🧺 Matériel</button>
+    </div>
+    <div class="pm-card"><div id="tmList"><p class="pm-sub">Chargement…</p></div>
+      <div class="tm-form" id="tmForm"></div>
+    </div>
+    <p class="gen-note" style="margin-top:14px">N'écris jamais le nom d'un enfant ni d'information sur sa santé ou sa famille : tout est visible par l'équipe.</p>
+    <div style="height:10px"></div>
+    <button class="btn secondary full" onclick="tmLeave()">Quitter cette équipe sur ce téléphone</button>
+  </section>
+</main>
 <!-- ========================= 🆘 HELP ========================= -->
 <main id="help" class="view">
   <header class="page-head"><h1 class="page-title">Help</h1><p class="page-intro">Décris la situation. Help t'oriente vers les ressources adaptées.</p></header>
@@ -3915,7 +4028,174 @@ function openBugReport(){
   const body="Décris le problème :\n\n\nSur quel écran ?\n\nTéléphone utilisé :\n";
   location.href=`mailto:${CONTACT_MAIL}?subject=${encodeURIComponent("Bug Anim Compagnon")}&body=${encodeURIComponent(body)}`;
 }
+/* =========================================================
+   ⏱️ MODE ACTIVITÉ
+   ========================================================= */
+const pm={mode:"down",dur:5*60000,left:5*60000,up:0,running:false,t0:0,timer:null,lock:null,ctx:null,osc:null,count:0};
+function pmFmt(ms){const s=Math.max(0,Math.ceil(ms/1000));const h=Math.floor(s/3600),m=Math.floor(s%3600/60),r=s%60;return (h?h+":"+String(m).padStart(2,"0"):String(m).padStart(2,"0"))+":"+String(r).padStart(2,"0")}
+function pmNow(){return pm.mode==="down"?(pm.running?pm.left-(Date.now()-pm.t0):pm.left):(pm.running?pm.up+(Date.now()-pm.t0):pm.up)}
+function pmRender(){
+  const v=pmNow(),el=document.getElementById("pmTime");if(!el)return;
+  el.textContent=pmFmt(pm.mode==="up"?Math.floor(v/1000)*1000:v);
+  if(pm.mode==="down"&&pm.running&&v<=0)pmEnd();
+}
+function pmAudio(){if(!pm.ctx){const A=window.AudioContext||window.webkitAudioContext;if(A)pm.ctx=new A()}if(pm.ctx&&pm.ctx.state==="suspended")pm.ctx.resume();return pm.ctx}
+function pmBeep(times){const c=pmAudio();if(!c)return;for(let i=0;i<times;i++){const o=c.createOscillator(),g=c.createGain();o.frequency.value=880;o.connect(g);g.connect(c.destination);const t=c.currentTime+i*0.45;g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(0.6,t+0.02);g.gain.exponentialRampToValueAtTime(0.0001,t+0.35);o.start(t);o.stop(t+0.4)}}
+async function pmWake(on){
+  try{if(on&&"wakeLock" in navigator&&!pm.lock){pm.lock=await navigator.wakeLock.request("screen");pm.lock.addEventListener("release",()=>{pm.lock=null})}
+  if(!on&&pm.lock){await pm.lock.release();pm.lock=null}}catch(e){}
+}
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"){if(pm.running)pmWake(true);pmRender()}});
+function pmButtons(){document.getElementById("pmStart").textContent=pm.running?"Pause":(pmNow()!==(pm.mode==="down"?pm.dur:0)?"Reprendre":"Démarrer");document.getElementById("pmPlus").disabled=pm.mode==="up"}
+function pmToggle(){
+  pmAudio();
+  if(pm.running){if(pm.mode==="down")pm.left=pmNow();else pm.up=pmNow();pm.running=false;clearInterval(pm.timer);pmWake(false)}
+  else{if(pm.mode==="down"&&pm.left<=0)pm.left=pm.dur;document.getElementById("pmTime").classList.remove("done");pm.t0=Date.now();pm.running=true;pm.timer=setInterval(pmRender,250);pmWake(true)}
+  pmRender();pmButtons();
+}
+function pmEnd(){
+  pm.running=false;pm.left=0;clearInterval(pm.timer);pmWake(false);
+  document.getElementById("pmTime").classList.add("done");
+  if(navigator.vibrate)navigator.vibrate([400,200,400,200,800]);
+  pmBeep(4);pmButtons();
+  setTimeout(()=>document.getElementById("pmTime")?.classList.remove("done"),6000);
+}
+function pmReset(){pm.running=false;clearInterval(pm.timer);pmWake(false);pm.left=pm.dur;pm.up=0;document.getElementById("pmTime").classList.remove("done");pmRender();pmButtons()}
+function pmPreset(min,btn){
+  pm.dur=min*60000;
+  document.querySelectorAll("#pmPresets .chip").forEach(c=>c.classList.toggle("selected",c.textContent===min+" min"));
+  if(pm.mode!=="down")pmSetMode("down");
+  pmReset();
+}
+function pmAdd(ms){if(pm.mode!=="down")return;if(pm.running)pm.left+=ms;else{pm.left=Math.max(0,pm.left)+ms}document.getElementById("pmTime").classList.remove("done");pmRender();pmButtons()}
+function pmSetMode(m){pm.mode=m;document.getElementById("pmModeDown").classList.toggle("on",m==="down");document.getElementById("pmModeUp").classList.toggle("on",m==="up");document.getElementById("pmPresets").style.display=m==="down"?"":"none";pmReset()}
+function pmWhistle(on){
+  const c=pmAudio();if(!c)return;
+  if(on&&!pm.osc){
+    const o=c.createOscillator(),lfo=c.createOscillator(),lg=c.createGain(),g=c.createGain();
+    o.type="square";o.frequency.value=2600;lfo.frequency.value=28;lg.gain.value=180;
+    lfo.connect(lg);lg.connect(o.frequency);o.connect(g);g.connect(c.destination);g.gain.value=0.25;
+    o.start();lfo.start();pm.osc={o,lfo};if(navigator.vibrate)navigator.vibrate(60);
+  }else if(!on&&pm.osc){try{pm.osc.o.stop();pm.osc.lfo.stop()}catch(e){}pm.osc=null}
+}
+function pmCount(n){pm.count=n===0?0:Math.max(0,pm.count+n);if(n>0&&navigator.vibrate)navigator.vibrate(20);pmCountRender()}
+function pmCountRender(){
+  document.getElementById("pmCountNb").textContent=pm.count;
+  const exp=parseInt(document.getElementById("pmExpected").value,10),msg=document.getElementById("pmCountMsg");
+  msg.className="pm-sub";
+  if(!exp){msg.textContent="Appuie sur + pour chaque enfant.";return}
+  if(pm.count===exp){msg.textContent="✅ Tout le monde est là ("+exp+").";msg.className="pm-sub ok"}
+  else if(pm.count<exp){const d=exp-pm.count;msg.textContent="Il manque "+d+" enfant"+(d>1?"s":"")+".";msg.className="pm-sub ko"}
+  else{const d=pm.count-exp;msg.textContent=d+" de trop : recompte.";msg.className="pm-sub ko"}
+}
+function openPlayMode(){go("playMode");pmRender();pmButtons()}
 
+/* =========================================================
+   👥 MODE ÉQUIPE
+   ========================================================= */
+const TEAM_API="https://anim-compagnon-api.eliesbendjedou30.workers.dev/team";
+const TM_DAYS=["Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche"];
+const TM_SLOTS=["Matin","Midi","Après-midi","Soirée"];
+const tm={team:null,items:[],tab:"planning"};
+function tmGet(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}}
+function tmSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function tmMe(){return (document.getElementById("tmMe")?.value||tmGet("animTeamMe","")||"").trim()}
+async function tmPost(path,body){
+  const r=await fetch(TEAM_API+path,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+  const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||"Erreur");return d;
+}
+function openTeam(){
+  go("team");
+  tm.team=tmGet("animTeam",null);
+  const me=document.getElementById("tmMe");
+  if(me&&!me.value){const p=tmGet("animProfile",{});me.value=tmGet("animTeamMe","")||p.prenom||p.firstName||""}
+  tmShow();
+}
+function tmShow(){
+  const inTeam=!!tm.team;
+  document.getElementById("tmJoin").hidden=inTeam;
+  document.getElementById("tmSpace").hidden=!inTeam;
+  document.getElementById("tmTitle").textContent=inTeam?tm.team.name:"Mon équipe";
+  document.getElementById("tmIntro").textContent=inTeam?"Planning, activités, infos et matériel de ton équipe.":"Partage le planning, les activités, les infos et le matériel avec ton équipe d'animation.";
+  if(inTeam){document.getElementById("tmCode").textContent=tm.team.code;tmLoad()}
+}
+function tmNeedMe(){const me=tmMe();if(!me){toast("Indique ton prénom.");document.getElementById("tmMe").focus();return null}tmSet("animTeamMe",me);return me}
+async function tmJoin(){
+  if(!tmNeedMe())return;
+  const code=(document.getElementById("tmJoinCode").value||"").trim().toUpperCase();
+  if(!/^[A-Z0-9]{6}$/.test(code)){toast("Le code fait 6 caractères.");return}
+  try{const r=await fetch(TEAM_API+"?code="+code);const d=await r.json();if(!r.ok)throw new Error(d.error||"Code introuvable");
+    tm.team={code,name:d.name};tmSet("animTeam",tm.team);tm.items=d.items||[];tmShow();toast("Bienvenue dans l'équipe !");}
+  catch(e){toast(e.message||"Code introuvable.")}
+}
+async function tmCreate(){
+  if(!tmNeedMe())return;
+  const name=(document.getElementById("tmNewName").value||"").trim();
+  if(!name){toast("Donne un nom à ton équipe.");return}
+  try{const d=await tmPost("/create",{name});tm.team={code:d.code,name:d.name};tmSet("animTeam",tm.team);tmShow();toast("Équipe créée : donne le code à tes collègues.")}
+  catch(e){toast("Impossible de créer l'équipe pour le moment.")}
+}
+function tmLeave(){tm.team=null;tm.items=[];try{localStorage.removeItem("animTeam")}catch(e){}tmShow()}
+function tmShare(){
+  const t=`Rejoins l'équipe « ${tm.team.name} » sur Anim Compagnon : Menu > Mon équipe, code ${tm.team.code}\nhttps://eliesben.github.io/anim-compagnon/`;
+  if(navigator.share)navigator.share({text:t}).catch(()=>{});
+  else if(navigator.clipboard)navigator.clipboard.writeText(t).then(()=>toast("Message copié."));
+}
+async function tmLoad(){
+  if(!tm.team)return;
+  document.getElementById("tmList").innerHTML=`<p class="pm-sub">Chargement…</p>`;
+  try{const r=await fetch(TEAM_API+"?code="+tm.team.code);const d=await r.json();if(!r.ok)throw new Error(d.error);
+    tm.items=d.items||[];if(d.name&&d.name!==tm.team.name){tm.team.name=d.name;tmSet("animTeam",tm.team)}tmRender()}
+  catch(e){document.getElementById("tmList").innerHTML=`<p class="pm-sub">Impossible de charger l'équipe. Vérifie ta connexion puis touche Actualiser.</p>`}
+}
+function tmTab(t){tm.tab=t;document.querySelectorAll("#tmTabs button").forEach(b=>b.classList.toggle("on",b.dataset.tab===t));tmRender()}
+const tmDone=x=>x.FAIT===true||x.FAIT==="true";
+function tmItemHTML(x,main,sub){
+  return `<div class="tm-item${tm.tab==="materiel"&&tmDone(x)?" done":""}">
+    ${tm.tab==="materiel"?`<button class="tm-check${tmDone(x)?" on":""}" aria-label="Cocher" onclick="tmToggle(${Number(x.id)})"></button>`:""}
+    <div class="tm-main">${main}${sub?`<small>${sub}</small>`:""}</div>
+    <button class="tm-del" aria-label="Supprimer" onclick="tmDelete(${Number(x.id)})">✕</button></div>`;
+}
+function tmRender(){
+  const list=document.getElementById("tmList"),form=document.getElementById("tmForm");
+  const items=tm.items.filter(x=>x.TYPE===tm.tab);
+  let html="";
+  if(tm.tab==="planning"){
+    const sorted=items.sort((a,b)=>(TM_DAYS.indexOf(a.JOUR)-TM_DAYS.indexOf(b.JOUR))||(TM_SLOTS.indexOf(a.CRENEAU)-TM_SLOTS.indexOf(b.CRENEAU)));
+    let day="";
+    sorted.forEach(x=>{if(x.JOUR!==day){day=x.JOUR;html+=`<div class="tm-day">${esc(day||"Sans jour")}</div>`}
+      html+=tmItemHTML(x,`<strong>${esc(x.CRENEAU||"")}${x.CRENEAU?" · ":""}${esc(x.TITRE||"")}</strong>${x.ANIMATEUR?`<p>${esc(x.ANIMATEUR)}</p>`:""}`,"")});
+    form.innerHTML=`<div class="gen-row"><select id="tmfJour">${TM_DAYS.map(d=>`<option>${d}</option>`).join("")}</select><select id="tmfSlot">${TM_SLOTS.map(d=>`<option>${d}</option>`).join("")}</select></div>
+      <input id="tmfTitre" type="text" placeholder="Activité ou temps (ex. Grand jeu, Piscine)"><input id="tmfAnim" type="text" placeholder="Animateur(s)">
+      <button class="btn primary full" onclick="tmAdd()">Ajouter au planning</button>`;
+  }else if(tm.tab==="activite"){
+    items.sort((a,b)=>String(b.CREE_LE||"").localeCompare(String(a.CREE_LE||""))).forEach(x=>{html+=tmItemHTML(x,`<strong>${esc(x.TITRE||"")}</strong>${x.DETAIL?`<p>${esc(x.DETAIL)}</p>`:""}`,x.AUTEUR?"Proposée par "+esc(x.AUTEUR):"")});
+    form.innerHTML=`<input id="tmfTitre" type="text" placeholder="Nom de l'activité"><textarea id="tmfDetail" placeholder="Âge, matériel, déroulé rapide…"></textarea>
+      <button class="btn primary full" onclick="tmAdd()">Partager l'activité</button>`;
+  }else if(tm.tab==="info"){
+    items.sort((a,b)=>String(b.CREE_LE||"").localeCompare(String(a.CREE_LE||""))).forEach(x=>{const d=x.CREE_LE?new Date(x.CREE_LE):null;
+      html+=tmItemHTML(x,`<p style="color:var(--texte-clair);font-size:14px;margin:0">${esc(x.DETAIL||"")}</p>`,[x.AUTEUR?esc(x.AUTEUR):"",d&&!isNaN(d)?d.toLocaleDateString("fr-FR",{weekday:"short",day:"numeric",month:"short"})+" à "+d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"}):""].filter(Boolean).join(" · "))});
+    form.innerHTML=`<textarea id="tmfDetail" placeholder="Ex. Sortie piscine à 14h, prévoir les bonnets"></textarea>
+      <button class="btn primary full" onclick="tmAdd()">Publier l'info</button>`;
+  }else{
+    items.sort((a,b)=>(tmDone(a)-tmDone(b))||String(a.TITRE).localeCompare(String(b.TITRE))).forEach(x=>{html+=tmItemHTML(x,`<strong>${esc(x.TITRE||"")}</strong>`,x.AUTEUR?"Ajouté par "+esc(x.AUTEUR):"")});
+    form.innerHTML=`<input id="tmfTitre" type="text" placeholder="Ex. 2 paquets de feutres"><button class="btn primary full" onclick="tmAdd()">Ajouter à la liste</button>`;
+  }
+  list.innerHTML=html||`<p class="pm-sub">Rien pour l'instant.</p>`;
+}
+async function tmAdd(){
+  const v=id=>(document.getElementById(id)?.value||"").trim();
+  const body={code:tm.team.code,type:tm.tab,titre:v("tmfTitre"),detail:v("tmfDetail"),jour:v("tmfJour"),creneau:v("tmfSlot"),animateur:v("tmfAnim"),auteur:tmGet("animTeamMe","")};
+  if(tm.tab==="info"?!body.detail:!body.titre){toast("Écris quelque chose avant d'ajouter.");return}
+  try{const item=await tmPost("/item",body);tm.items.push(item);tmRender()}catch(e){toast("Ajout impossible. Vérifie ta connexion.")}
+}
+async function tmToggle(id){
+  const x=tm.items.find(i=>i.id===id);if(!x)return;const fait=!tmDone(x);x.FAIT=fait;tmRender();
+  try{await tmPost("/update",{code:tm.team.code,id,fait})}catch(e){x.FAIT=!fait;tmRender();toast("Modification impossible.")}
+}
+async function tmDelete(id){
+  try{await tmPost("/delete",{code:tm.team.code,id});tm.items=tm.items.filter(i=>i.id!==id);tmRender()}catch(e){toast("Suppression impossible.")}
+}
 /* =========================================================
    🤖 GÉNÉRER — modes et choix en pastilles
    ========================================================= */
