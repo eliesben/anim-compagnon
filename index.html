@@ -1198,7 +1198,57 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
   <button class="primary-btn" onclick="generateAIActivity()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="width:19px;height:19px;vertical-align:-4px;margin-right:6px"><path d="M12 3l1.6 4.8L18 9.5l-4.4 1.7L12 16l-1.6-4.8L6 9.5l4.4-1.7z"/><path d="M19 15l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/></svg>Générer 3 idées</button>
   <p class="gen-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v5h1"/></svg>L'IA te fait gagner du temps, mais relis toujours les propositions pour t'imprégner de leur préparation et de leur déroulement avant de les proposer aux enfants.</p>
 </section>
+<!-- FICHE VIERGE -->
+<section id="generatorFiche" class="section generator-panel" style="margin-top:0;padding-top:4px" hidden>
+  <div class="gen-form">
+    <div><span class="field-title">Nom de l'activité *</span>
+      <input id="fvTitre" type="text" placeholder="Ex. Le relais des couleurs"></div>
 
+    <div><span class="field-title">Tranche d'âge</span>
+      <div class="chips" data-target="fvAge"><button type="button" class="chip" data-value="3-5 ans">3-5 ans</button><button type="button" class="chip" data-value="6-11 ans">6-11 ans</button><button type="button" class="chip" data-value="12-14 ans">12-14 ans</button><button type="button" class="chip" data-value="15-17 ans">15-17 ans</button></div></div>
+
+    <div><span class="field-title">Durée</span>
+      <div class="chips" data-target="fvDuree"><button type="button" class="chip" data-value="15 minutes">15 min</button><button type="button" class="chip" data-value="30 minutes">30 min</button><button type="button" class="chip" data-value="45 minutes">45 min</button><button type="button" class="chip" data-value="1 heure">1 h</button><button type="button" class="chip" data-value="1h30">1h30</button><button type="button" class="chip" data-value="Demi-journée">½ journée</button></div></div>
+
+    <div class="gen-row">
+      <div><span class="field-title">Enfants</span><input id="fvEnfants" type="number" inputmode="numeric" min="1" placeholder="Ex. 14"></div>
+      <div><span class="field-title">Préparation</span><input id="fvPrepTemps" type="text" placeholder="Ex. 10 min"></div>
+    </div>
+
+    <div><span class="field-title">Lieu</span>
+      <div class="chips" data-target="fvLieu"><button type="button" class="chip" data-value="Intérieur">Intérieur</button><button type="button" class="chip" data-value="Extérieur">Extérieur</button><button type="button" class="chip" data-value="Intérieur ou extérieur">Les deux</button></div></div>
+
+    <div><span class="field-title">Énergie</span>
+      <div class="chips" data-target="fvEnergie"><button type="button" class="chip" data-value="Calme">Calme</button><button type="button" class="chip" data-value="Modérée">Modérée</button><button type="button" class="chip" data-value="Intense">Intense</button></div></div>
+
+    <div><span class="field-title">Objectifs <small>(un par ligne)</small></span>
+      <textarea id="fvObjectifs" placeholder="Coopérer en équipe&#10;Développer la motricité"></textarea></div>
+
+    <div><span class="field-title">Matériel <small>(un par ligne)</small></span>
+      <textarea id="fvMateriel" placeholder="4 plots&#10;2 ballons"></textarea></div>
+
+    <div><span class="field-title">Mise en place</span>
+      <textarea id="fvPreparation" placeholder="Ce qu'il faut installer avant l'arrivée des enfants"></textarea></div>
+
+    <div><span class="field-title">Déroulement <small>(une étape par ligne)</small></span>
+      <textarea id="fvDeroulement" style="min-height:130px" placeholder="Former 2 équipes&#10;Expliquer la règle&#10;Lancer une manche d'essai"></textarea></div>
+
+    <div><span class="field-title">Variantes <small>(une par ligne)</small></span>
+      <textarea id="fvVariantes" placeholder="Jouer en binômes"></textarea></div>
+
+    <div><span class="field-title">Adaptations <small>(une par ligne)</small></span>
+      <textarea id="fvAdaptations" placeholder="Pour les plus jeunes : réduire la distance"></textarea></div>
+
+    <div><span class="field-title">Points de vigilance <small>(un par ligne)</small></span>
+      <textarea id="fvVigilance" placeholder="Délimiter clairement la zone de jeu"></textarea></div>
+
+    <div><span class="field-title">Posture de l'animateur</span>
+      <textarea id="fvPosture" placeholder="Ton rôle pendant l'activité"></textarea></div>
+  </div>
+
+  <button class="primary-btn" onclick="createManualFiche()">Créer ma fiche</button>
+  <p class="gen-note">Seul le nom est obligatoire. Ta fiche reste sur ton téléphone : tu peux l'ajouter aux favoris, la télécharger en Word ou PDF, l'imprimer ou la partager à ton équipe.</p>
+</section>
 <!-- PHOTO -->
 <section id="generatorIAPhoto" class="section generator-panel" style="margin-top:0;padding-top:4px" hidden>
   <div class="gen-form">
@@ -4808,18 +4858,51 @@ async function tfDelete(id,kind){
   try{await tmPost("/delete",{code:tm.team.code,id});tm.items=tm.items.filter(i=>i.id!==id);tmHubRender();if(kind==="fav")tfFavRender();return true}
   catch(e){toast("Suppression impossible.");return false}
 }
+/* ===== FICHE VIERGE ===== */
+function fvChip(id){
+  const c=document.querySelector('#generatorFiche .chips[data-target="'+id+'"] .chip.selected');
+  return c?c.dataset.value:"";
+}
+function fvVal(id){return (document.getElementById(id)?.value||"").trim()}
+function fvLines(id){return fvVal(id).split("\n").map(l=>l.replace(/^\s*([-•*]|\d+[.)])\s*/,"").trim()).filter(Boolean)}
+function createManualFiche(){
+  const titre=fvVal("fvTitre");
+  if(!titre){toast("Donne un nom à ton activité.");document.getElementById("fvTitre").focus();return}
+  const sheet={
+    titre,
+    source:"maison",
+    age:fvChip("fvAge"),
+    nombre_enfants:fvVal("fvEnfants"),
+    duree:fvChip("fvDuree"),
+    temps_preparation:fvVal("fvPrepTemps"),
+    lieu:fvChip("fvLieu"),
+    energie:fvChip("fvEnergie"),
+    objectifs:fvLines("fvObjectifs"),
+    materiel:fvLines("fvMateriel"),
+    preparation:fvVal("fvPreparation"),
+    deroulement:fvLines("fvDeroulement"),
+    variantes:fvLines("fvVariantes"),
+    adaptations:fvLines("fvAdaptations"),
+    points_vigilance:fvLines("fvVigilance"),
+    posture_animateur:fvVal("fvPosture")
+  };
+  showActivitySheet(sheet);
+  const s=document.getElementById("aiGeneratedSheet"),f=document.getElementById("generatorFiche");
+  if(s){const back=s.querySelector(".ai-back-button");if(back)back.remove()}
+  if(s&&f){f.insertAdjacentElement("afterend",s);s.scrollIntoView({behavior:"smooth",block:"start"})}
+}
 /* =========================================================
    🤖 GÉNÉRER — modes et choix en pastilles
    ========================================================= */
 function openGeneratorMode(mode){
   if(mode==="ia")mode="ia-text";
-  if(mode==="fiche"){toast("Le générateur de fiche arrive.");return}
   const proposals=document.getElementById("aiGeneratedProposals");
   const sheet=document.getElementById("aiGeneratedSheet");
   if(proposals)proposals.remove();
   if(sheet)sheet.remove();
   document.getElementById("generatorIAText").hidden=mode!=="ia-text";
   document.getElementById("generatorIAPhoto").hidden=mode!=="ia-photo";
+  document.getElementById("generatorFiche").hidden=mode!=="fiche";
   document.querySelectorAll("#genModes .mode").forEach(b=>b.classList.toggle("on",b.dataset.mode===mode));
 }
 function closeGeneratorModal(){ /* plus de fenêtre : le formulaire est sur la page */ }
