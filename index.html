@@ -861,6 +861,10 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
 .pm-team.target{outline:2px dashed var(--c);outline-offset:2px}
 .pm-team li{cursor:pointer;border-radius:8px;padding:4px 6px!important;margin:0 -6px}
 .pm-team li.picked{background:var(--c);color:#14170F;font-weight:800}
+.tm-code-input{font-size:30px!important;font-weight:900;letter-spacing:.3em;text-align:center;text-transform:uppercase;padding:16px!important}
+.tm-or{display:flex;align-items:center;gap:12px;margin:22px 0;color:var(--texte-doux);font-size:13px;font-weight:700}
+.tm-or:before,.tm-or:after{content:"";flex:1;height:1px;background:var(--trait)}
+.tm-found{font-size:22px;font-weight:900;margin:6px 0 2px;color:var(--texte-clair)}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
@@ -1152,26 +1156,36 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
 </main>
 <!-- ========================= 👥 MODE ÉQUIPE ========================= -->
 <main id="team" class="view">
-  <header class="page-head"><button class="link back" onclick="back()">← Retour</button><h1 class="page-title" id="tmTitle">Mon équipe</h1><p class="page-intro" id="tmIntro">Partage le planning, les activités, les infos et le matériel avec ton équipe d'animation.</p></header>
-  <section class="section" id="tmJoin">
+  <header class="page-head"><button class="link back" onclick="tmBack()">← Retour</button><h1 class="page-title" id="tmTitle">Rejoindre une équipe</h1><p class="page-intro" id="tmIntro">Entre le code que t'a donné ton équipe.</p></header>
+
+  <!-- Étape 1 : le code -->
+  <section class="section" id="tmStepCode">
     <div class="pm-card">
-      <span class="field-title">Ton prénom</span>
-      <input id="tmMe" type="text" placeholder="Il s'affichera à côté de ce que tu ajoutes">
+      <input id="tmJoinCode" type="text" maxlength="6" autocomplete="off" autocapitalize="characters" placeholder="CODE" class="tm-code-input" oninput="this.value=this.value.toUpperCase().replace(/[^A-Z0-9]/g,'')" onkeydown="if(event.key==='Enter')tmJoin()">
+      <div style="height:12px"></div>
+      <button class="btn primary full" id="tmJoinBtn" onclick="tmJoin()">Rejoindre</button>
     </div>
-    <div class="pm-card">
-      <h2 class="section-title" style="margin:0 0 10px">Rejoindre une équipe</h2>
-      <input id="tmJoinCode" type="text" maxlength="6" placeholder="Code à 6 lettres" style="text-transform:uppercase;letter-spacing:.2em;text-align:center;font-weight:800">
-      <div style="height:10px"></div>
-      <button class="btn primary full" onclick="tmJoin()">Rejoindre</button>
-    </div>
-    <div class="pm-card">
-      <h2 class="section-title" style="margin:0 0 10px">Créer une équipe</h2>
-      <input id="tmNewName" type="text" placeholder="Ex. Centre de loisirs Les Pins, été 2027">
-      <div style="height:10px"></div>
-      <button class="btn secondary full" onclick="tmCreate()">Créer et obtenir un code</button>
-    </div>
-    <p class="gen-note" style="margin-top:14px">Tout ce que tu ajoutes est visible par les personnes qui ont le code. N'écris jamais le nom d'un enfant ni d'information sur sa santé ou sa famille.</p>
+    <div class="tm-or"><span>ou</span></div>
+    <button class="btn secondary full" onclick="openTeamCreate()">Créer une équipe →</button>
   </section>
+
+  <!-- Étape 2 : le prénom -->
+  <section class="section" id="tmStepName" hidden>
+    <div class="pm-card" style="text-align:center">
+      <small class="pm-sub">Équipe trouvée</small>
+      <h2 class="tm-found" id="tmFoundName"></h2>
+      <p class="pm-sub" id="tmFoundPlace"></p>
+    </div>
+    <div class="pm-card">
+      <span class="field-title">Comment tu t'appelles ?</span>
+      <input id="tmMe" type="text" placeholder="Ton prénom" onkeydown="if(event.key==='Enter')tmEnter()">
+      <p class="pm-sub" style="text-align:left">Il s'affichera à côté de ce que tu ajoutes.</p>
+      <div style="height:12px"></div>
+      <button class="btn primary full" onclick="tmEnter()">Entrer dans l'équipe</button>
+    </div>
+  </section>
+
+  <!-- Espace de l'équipe -->
   <section class="section" id="tmSpace" hidden>
     <div class="pm-card" style="text-align:center">
       <small class="pm-sub">Code de l'équipe, à donner à tes collègues</small>
@@ -1193,6 +1207,41 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
     <p class="gen-note" style="margin-top:14px">N'écris jamais le nom d'un enfant ni d'information sur sa santé ou sa famille : tout est visible par l'équipe.</p>
     <div style="height:10px"></div>
     <button class="btn secondary full" onclick="tmLeave()">Quitter cette équipe sur ce téléphone</button>
+  </section>
+</main>
+
+<!-- ========================= ➕ CRÉER UNE ÉQUIPE ========================= -->
+<main id="teamCreate" class="view">
+  <header class="page-head"><button class="link back" onclick="openTeam()">← Retour</button><h1 class="page-title">Créer une équipe</h1><p class="page-intro" id="tcIntro">Tu recevras un code à donner à tes collègues.</p></header>
+  <section class="section" id="tcForm">
+    <div class="pm-card tm-form" style="margin-top:0">
+      <span class="field-title">Nom de l'équipe *</span>
+      <input id="tcName" type="text" maxlength="80" placeholder="Ex. Les Pins, été 2027">
+      <span class="field-title">Structure / lieu</span>
+      <input id="tcPlace" type="text" maxlength="80" placeholder="Ex. ALSH Les Pins, Bordeaux">
+      <span class="field-title">Ton prénom *</span>
+      <input id="tcMe" type="text" maxlength="40" placeholder="Ex. Léa">
+      <span class="field-title">Ton rôle</span>
+      <div class="pm-presets" id="tcRole" style="justify-content:flex-start;margin:0">
+        <button class="chip" data-r="Directeur·rice" onclick="tcPickRole(this)">Directeur·rice</button><button class="chip" data-r="Adjoint·e" onclick="tcPickRole(this)">Adjoint·e</button><button class="chip" data-r="Animateur·rice" onclick="tcPickRole(this)">Animateur·rice</button><button class="chip" data-r="Autre" onclick="tcPickRole(this)">Autre</button>
+      </div>
+    </div>
+    <div style="height:14px"></div>
+    <button class="btn primary full" id="tcBtn" onclick="tmCreate()">Créer l'équipe</button>
+    <p class="gen-note" style="margin-top:14px">Toute personne qui a le code pourra voir et modifier le contenu de l'équipe.</p>
+  </section>
+  <section class="section" id="tcDone" hidden>
+    <div class="pm-card" style="text-align:center;margin-top:0">
+      <div style="font-size:42px">🎉</div>
+      <h2 class="tm-found" id="tcDoneName"></h2>
+      <p class="pm-sub">Voici le code de ton équipe :</p>
+      <div class="tm-code" id="tcDoneCode"></div>
+      <p class="pm-sub">Donne-le à tes collègues : ils l'écriront dans « Rejoindre une équipe ».</p>
+      <div style="height:12px"></div>
+      <button class="btn secondary full" onclick="tmShare()">Partager le code</button>
+      <div style="height:8px"></div>
+      <button class="btn primary full" onclick="openTeam()">Entrer dans l'équipe</button>
+    </div>
   </section>
 </main>
 <!-- ========================= 🆘 HELP ========================= -->
@@ -4203,43 +4252,83 @@ const TM_SLOTS=["Matin","Midi","Après-midi","Soirée"];
 const tm={team:null,items:[],tab:"planning"};
 function tmGet(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}}
 function tmSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
-function tmMe(){return (document.getElementById("tmMe")?.value||tmGet("animTeamMe","")||"").trim()}
+function tmMe(){return (document.getElementById("tmMe")?.value||"").trim()}
 async function tmPost(path,body){
   const r=await fetch(TEAM_API+path,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
   const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||"Erreur");return d;
 }
+function tmStep(step){
+  ["tmStepCode","tmStepName","tmSpace"].forEach(id=>document.getElementById(id).hidden=id!==step);
+  const t=document.getElementById("tmTitle"),i=document.getElementById("tmIntro");
+  if(step==="tmStepCode"){t.textContent="Rejoindre une équipe";i.textContent="Entre le code que t'a donné ton équipe."}
+  if(step==="tmStepName"){t.textContent="Bienvenue !";i.textContent="Plus qu'une étape."}
+  if(step==="tmSpace"){t.textContent=tm.team.name;i.textContent=tm.team.place?tm.team.place:"Planning, activités, infos et matériel de ton équipe."}
+}
 function openTeam(){
   go("team");
   tm.team=tmGet("animTeam",null);
-  const me=document.getElementById("tmMe");
-  if(me&&!me.value){const p=tmGet("animProfile",{});me.value=tmGet("animTeamMe","")||p.prenom||p.firstName||""}
-  tmShow();
+  tm.pending=null;
+  if(tm.team){tmStep("tmSpace");document.getElementById("tmCode").textContent=tm.team.code;tmLoad()}
+  else{tmStep("tmStepCode");setTimeout(()=>document.getElementById("tmJoinCode").focus(),300)}
 }
-function tmShow(){
-  const inTeam=!!tm.team;
-  document.getElementById("tmJoin").hidden=inTeam;
-  document.getElementById("tmSpace").hidden=!inTeam;
-  document.getElementById("tmTitle").textContent=inTeam?tm.team.name:"Mon équipe";
-  document.getElementById("tmIntro").textContent=inTeam?"Planning, activités, infos et matériel de ton équipe.":"Partage le planning, les activités, les infos et le matériel avec ton équipe d'animation.";
-  if(inTeam){document.getElementById("tmCode").textContent=tm.team.code;tmLoad()}
+function tmBack(){
+  if(!document.getElementById("tmStepName").hidden){tmStep("tmStepCode");return}
+  back();
 }
-function tmNeedMe(){const me=tmMe();if(!me){toast("Indique ton prénom.");document.getElementById("tmMe").focus();return null}tmSet("animTeamMe",me);return me}
 async function tmJoin(){
-  if(!tmNeedMe())return;
   const code=(document.getElementById("tmJoinCode").value||"").trim().toUpperCase();
   if(!/^[A-Z0-9]{6}$/.test(code)){toast("Le code fait 6 caractères.");return}
-  try{const r=await fetch(TEAM_API+"?code="+code);const d=await r.json();if(!r.ok)throw new Error(d.error||"Code introuvable");
-    tm.team={code,name:d.name};tmSet("animTeam",tm.team);tm.items=d.items||[];tmShow();toast("Bienvenue dans l'équipe !");}
-  catch(e){toast(e.message||"Code introuvable.")}
+  const btn=document.getElementById("tmJoinBtn");btn.disabled=true;btn.textContent="Vérification…";
+  try{
+    const r=await fetch(TEAM_API+"?code="+code);const d=await r.json();
+    if(!r.ok)throw new Error(d.error||"Code introuvable");
+    tm.pending={code,name:d.name,place:d.place||""};
+    document.getElementById("tmFoundName").textContent=d.name;
+    document.getElementById("tmFoundPlace").textContent=d.place||"";
+    const me=document.getElementById("tmMe");
+    if(!me.value){const p=tmGet("animProfile",{});me.value=tmGet("animTeamMe","")||p.prenom||p.firstName||""}
+    tmStep("tmStepName");
+  }catch(e){toast(e.message==="Code introuvable"?"Ce code n'existe pas. Vérifie-le avec ton équipe.":"Connexion impossible. Réessaie.")}
+  finally{btn.disabled=false;btn.textContent="Rejoindre"}
+}
+function tmEnter(){
+  const me=tmMe();if(!me){toast("Indique ton prénom.");document.getElementById("tmMe").focus();return}
+  tmSet("animTeamMe",me);
+  tm.team=tm.pending;tmSet("animTeam",tm.team);
+  document.getElementById("tmJoinCode").value="";
+  tmStep("tmSpace");document.getElementById("tmCode").textContent=tm.team.code;tmLoad();
+  toast("Bienvenue dans l'équipe !");
+}
+/* ----- Créer une équipe ----- */
+function openTeamCreate(){
+  go("teamCreate");
+  document.getElementById("tcForm").hidden=false;document.getElementById("tcDone").hidden=true;
+  const me=document.getElementById("tcMe");
+  if(!me.value){const p=tmGet("animProfile",{});me.value=tmGet("animTeamMe","")||p.prenom||p.firstName||""}
+}
+function tcPickRole(btn){
+  const on=btn.classList.contains("selected");
+  document.querySelectorAll("#tcRole .chip").forEach(c=>c.classList.remove("selected"));
+  if(!on)btn.classList.add("selected");
 }
 async function tmCreate(){
-  if(!tmNeedMe())return;
-  const name=(document.getElementById("tmNewName").value||"").trim();
-  if(!name){toast("Donne un nom à ton équipe.");return}
-  try{const d=await tmPost("/create",{name});tm.team={code:d.code,name:d.name};tmSet("animTeam",tm.team);tmShow();toast("Équipe créée : donne le code à tes collègues.")}
-  catch(e){toast("Impossible de créer l'équipe pour le moment.")}
+  const v=id=>(document.getElementById(id).value||"").trim();
+  const name=v("tcName"),place=v("tcPlace"),me=v("tcMe");
+  const role=document.querySelector("#tcRole .chip.selected")?.dataset.r||"";
+  if(!name){toast("Donne un nom à ton équipe.");document.getElementById("tcName").focus();return}
+  if(!me){toast("Indique ton prénom.");document.getElementById("tcMe").focus();return}
+  const btn=document.getElementById("tcBtn");btn.disabled=true;btn.textContent="Création…";
+  try{
+    const d=await tmPost("/create",{name,place,createur:me+(role?" ("+role+")":"")});
+    tm.team={code:d.code,name:d.name,place:d.place||place};tmSet("animTeam",tm.team);tmSet("animTeamMe",me);
+    document.getElementById("tcDoneName").textContent=d.name;
+    document.getElementById("tcDoneCode").textContent=d.code;
+    document.getElementById("tcForm").hidden=true;document.getElementById("tcDone").hidden=false;
+    ["tcName","tcPlace"].forEach(id=>document.getElementById(id).value="");
+  }catch(e){toast("Impossible de créer l'équipe pour le moment.")}
+  finally{btn.disabled=false;btn.textContent="Créer l'équipe"}
 }
-function tmLeave(){tm.team=null;tm.items=[];try{localStorage.removeItem("animTeam")}catch(e){}tmShow()}
+function tmLeave(){tm.team=null;tm.items=[];try{localStorage.removeItem("animTeam")}catch(e){}tmStep("tmStepCode")}
 function tmShare(){
   const t=`Rejoins l'équipe « ${tm.team.name} » sur Anim Compagnon : Menu > Mon équipe, code ${tm.team.code}\nhttps://eliesben.github.io/anim-compagnon/`;
   if(navigator.share)navigator.share({text:t}).catch(()=>{});
@@ -4249,7 +4338,7 @@ async function tmLoad(){
   if(!tm.team)return;
   document.getElementById("tmList").innerHTML=`<p class="pm-sub">Chargement…</p>`;
   try{const r=await fetch(TEAM_API+"?code="+tm.team.code);const d=await r.json();if(!r.ok)throw new Error(d.error);
-    tm.items=d.items||[];if(d.name&&d.name!==tm.team.name){tm.team.name=d.name;tmSet("animTeam",tm.team)}tmRender()}
+    tm.items=d.items||[];if(d.name&&(d.name!==tm.team.name||(d.place||"")!==(tm.team.place||""))){tm.team.name=d.name;tm.team.place=d.place||"";tmSet("animTeam",tm.team);tmStep("tmSpace")}tmRender()}
   catch(e){document.getElementById("tmList").innerHTML=`<p class="pm-sub">Impossible de charger l'équipe. Vérifie ta connexion puis touche Actualiser.</p>`}
 }
 function tmTab(t){tm.tab=t;document.querySelectorAll("#tmTabs button").forEach(b=>b.classList.toggle("on",b.dataset.tab===t));tmRender()}
