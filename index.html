@@ -857,6 +857,10 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
 .pm-kid input{padding:10px 12px}
 .pm-kid-ok{height:44px;border-radius:14px;border:2px solid var(--trait);background:transparent;color:transparent;font-size:20px;font-weight:900}
 .pm-kid-ok.on{background:var(--vert);border-color:var(--vert);color:#14170F}
+.pm-team{cursor:pointer;transition:outline .15s}
+.pm-team.target{outline:2px dashed var(--c);outline-offset:2px}
+.pm-team li{cursor:pointer;border-radius:8px;padding:4px 6px!important;margin:0 -6px}
+.pm-team li.picked{background:var(--c);color:#14170F;font-weight:800}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
@@ -1099,7 +1103,7 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
   <div id="photoPreview" class="photo-preview" hidden></div>
 </section>
 </main>
-<!-- =========<!-- ========================= ⏱️ MODE ACTIVITÉ ========================= -->
+<!-- ========================= ⏱️ MODE ACTIVITÉ ========================= -->
 <main id="playMode" class="view">
   <header class="page-head"><button class="link back" onclick="back()">← Retour</button><h1 class="page-title">Mode activité</h1><p class="page-intro">Tes outils de terrain. Ils marchent même sans réseau.</p></header>
   <section class="section">
@@ -1112,10 +1116,14 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
           <button class="chip" data-s="30" onclick="pmPreset(30)">30 s</button><button class="chip" data-s="60" onclick="pmPreset(60)">1 min</button><button class="chip" data-s="120" onclick="pmPreset(120)">2 min</button><button class="chip" data-s="180" onclick="pmPreset(180)">3 min</button><button class="chip selected" data-s="300" onclick="pmPreset(300)">5 min</button><button class="chip" data-s="600" onclick="pmPreset(600)">10 min</button><button class="chip" data-s="900" onclick="pmPreset(900)">15 min</button>
         </div>
       </div>
-      <div class="pm-row">
+      <div class="pm-row" style="grid-template-columns:2fr 1fr">
         <button class="pm-btn go" id="pmStart" onclick="pmToggle()">Démarrer</button>
-        <button class="pm-btn" id="pmPlus" onclick="pmAdd(60)">+1 min</button>
         <button class="pm-btn" onclick="pmReset()">Remettre</button>
+      </div>
+      <div class="pm-row" style="margin-top:8px">
+        <button class="pm-btn" onclick="pmAdd(10)">+10 s</button>
+        <button class="pm-btn" onclick="pmAdd(30)">+30 s</button>
+        <button class="pm-btn" id="pmPlus" onclick="pmAdd(60)">+1 min</button>
       </div>
     </div>
 
@@ -1123,7 +1131,7 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
       <button class="pm-big" onpointerdown="pmWhistle(true)" onpointerup="pmWhistle(false)" onpointerleave="pmWhistle(false)" oncontextmenu="return false">📣 Sifflet (reste appuyé)</button>
     </div>
 
-       <div class="pm-card">
+    <div class="pm-card">
       <h2 class="section-title" style="margin:0 0 4px">Mon groupe</h2>
       <p class="pm-sub" style="text-align:left;margin:0 0 12px">Écris un prénom par case. Touche ✓ quand l'enfant est là.</p>
       <div id="pmKids"></div>
@@ -4073,7 +4081,6 @@ document.addEventListener("visibilitychange",()=>{if(document.visibilityState===
 function pmButtons(){
   const fresh=pmNow()===(pm.mode==="down"?pm.dur:0);
   document.getElementById("pmStart").textContent=pm.running?"Pause":(fresh?"Démarrer":"Reprendre");
-  document.getElementById("pmPlus").disabled=pm.mode==="up";
   document.getElementById("pmSetup").style.display=(pm.mode==="down"&&!pm.running&&fresh)?"":"none";
 }
 function pmToggle(){
@@ -4107,10 +4114,13 @@ function pmCustom(){
   pmSetDur(m*60+s);
 }
 function pmAdd(sec){
-  if(pm.mode!=="down")return;
-  if(!pm.running&&pm.left===pm.dur){pmPreset(pm.dur/1000+sec);return}
-  if(pm.running)pm.left+=sec*1000;else pm.left=Math.max(0,pm.left)+sec*1000;
+  const ms=sec*1000;
+  if(pm.mode==="up"){if(pm.running)pm.up+=ms;else pm.up=pm.up+ms}
+  else if(!pm.running&&pm.left===pm.dur){pmPreset(pm.dur/1000+sec);return}
+  else pm.left=Math.max(0,pm.left)+ms;
+  if(navigator.vibrate)navigator.vibrate(30);
   document.getElementById("pmTime").classList.remove("done");pmRender();pmButtons();
+  toast("+"+(sec>=60?(sec/60)+" min":sec+" s"));
 }
 function pmSetMode(m){pm.mode=m;document.getElementById("pmModeDown").classList.toggle("on",m==="down");document.getElementById("pmModeUp").classList.toggle("on",m==="up");pmReset()}
 function pmWhistle(on){
@@ -4152,7 +4162,7 @@ function pmKidAdd(){
   pm.kids.push({name:"",here:false});pmKidsSave();pmKidsRender();
   const inputs=document.querySelectorAll("#pmKids input");inputs[inputs.length-1].focus();
 }
-function pmKidsClear(){pm.kids=[];pmKidsSave();document.getElementById("pmTeams").innerHTML="";pmKidsRender()}
+function pmKidsClear(){pm.kids=[];pm.teamList=null;pm.pick=null;pmKidsSave();pmTeamsRender();pmKidsRender()}
 function pmTeamsPick(n){pm.teams=n;document.querySelectorAll("#pmTeamsNb .chip").forEach(c=>c.classList.toggle("selected",Number(c.dataset.n)===n))}
 function pmMakeTeams(){
   const named=pm.kids.filter(k=>k.name.trim()),here=named.filter(k=>k.here);
@@ -4160,13 +4170,30 @@ function pmMakeTeams(){
   if(names.length<n){toast("Il faut au moins "+n+" prénoms.");return}
   if(!here.length)toast("Aucun enfant pointé : tirage avec tout le groupe.");
   for(let i=names.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[names[i],names[j]]=[names[j],names[i]]}
-  const teams=Array.from({length:n},()=>[]);
-  names.forEach((name,i)=>teams[i%n].push(name));
-  document.getElementById("pmTeams").innerHTML=teams.map((t,i)=>`<div class="pm-team" style="--c:${PM_TEAMS[i][1]}"><strong>${PM_TEAMS[i][0]} (${t.length})</strong><ul>${t.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`).join("");
+  pm.teamList=Array.from({length:n},()=>[]);
+  names.forEach((name,i)=>pm.teamList[i%n].push(name));
+  pm.pick=null;pmTeamsRender();
   if(navigator.vibrate)navigator.vibrate(40);
 }
+function pmTeamsRender(){
+  const el=document.getElementById("pmTeams");if(!pm.teamList){el.innerHTML="";return}
+  el.innerHTML=`<p class="pm-sub" style="grid-column:1/-1;text-align:left;margin:0">${pm.pick?"Touche un enfant pour échanger, ou une autre équipe pour l'y déplacer.":"Pour ajuster : touche un enfant, puis l'équipe ou l'enfant avec qui l'échanger."}</p>`+
+    pm.teamList.map((t,i)=>`<div class="pm-team${pm.pick&&pm.pick[0]!==i?" target":""}" style="--c:${PM_TEAMS[i][1]}" onclick="pmTeamTap(${i})"><strong>${PM_TEAMS[i][0]} (${t.length})</strong><ul>${t.map((x,j)=>`<li class="${pm.pick&&pm.pick[0]===i&&pm.pick[1]===j?"picked":""}" onclick="event.stopPropagation();pmKidTap(${i},${j})">${esc(x)}</li>`).join("")}</ul></div>`).join("");
+}
+function pmKidTap(t,k){
+  if(!pm.pick){pm.pick=[t,k];return pmTeamsRender()}
+  const [pt,pk]=pm.pick;
+  if(pt===t&&pk===k){pm.pick=null;return pmTeamsRender()}
+  if(pt===t){pm.pick=[t,k];return pmTeamsRender()}
+  const a=pm.teamList[pt][pk];pm.teamList[pt][pk]=pm.teamList[t][k];pm.teamList[t][k]=a;
+  pm.pick=null;if(navigator.vibrate)navigator.vibrate(30);pmTeamsRender();
+}
+function pmTeamTap(t){
+  if(!pm.pick||pm.pick[0]===t)return;
+  const [pt,pk]=pm.pick;const kid=pm.teamList[pt].splice(pk,1)[0];pm.teamList[t].push(kid);
+  pm.pick=null;if(navigator.vibrate)navigator.vibrate(30);pmTeamsRender();
+}
 function openPlayMode(){go("playMode");pmRender();pmButtons();pmKidsRender()}
-function openPlayMode(){go("playMode");pmRender();pmButtons()}
 /* =========================================================
    👥 MODE ÉQUIPE
    ========================================================= */
