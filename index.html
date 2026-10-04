@@ -852,6 +852,11 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
 .pm-team strong{display:block;font-size:14px;font-weight:900;margin-bottom:6px;color:var(--c)}
 .pm-team ul{padding:0;margin:0}
 .pm-team li{list-style:none;font-size:14px;padding:2px 0;color:var(--texte-clair)}
+.pm-kid{display:grid;grid-template-columns:28px 1fr 44px 28px;gap:8px;align-items:center;margin-bottom:8px}
+.pm-kid-n{font-weight:900;color:var(--texte-doux);text-align:right;font-variant-numeric:tabular-nums}
+.pm-kid input{padding:10px 12px}
+.pm-kid-ok{height:44px;border-radius:14px;border:2px solid var(--trait);background:transparent;color:transparent;font-size:20px;font-weight:900}
+.pm-kid-ok.on{background:var(--vert);border-color:var(--vert);color:#14170F}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
@@ -1118,19 +1123,22 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
       <button class="pm-big" onpointerdown="pmWhistle(true)" onpointerup="pmWhistle(false)" onpointerleave="pmWhistle(false)" oncontextmenu="return false">📣 Sifflet (reste appuyé)</button>
     </div>
 
-    <div class="pm-card">
-      <h2 class="section-title" style="margin:0 0 10px">Faire des équipes</h2>
-      <span class="field-title">Prénoms <small>(un par ligne ou séparés par des virgules)</small></span>
-      <textarea id="pmNames" style="min-height:120px" placeholder="Inès&#10;Lucas&#10;Sofia&#10;…" oninput="pmNamesCount()"></textarea>
-      <p id="pmNamesNb" class="pm-sub" style="text-align:left">0 prénom</p>
-      <div style="height:8px"></div>
-      <span class="field-title">Nombre d'équipes</span>
+       <div class="pm-card">
+      <h2 class="section-title" style="margin:0 0 4px">Mon groupe</h2>
+      <p class="pm-sub" style="text-align:left;margin:0 0 12px">Écris un prénom par case. Touche ✓ quand l'enfant est là.</p>
+      <div id="pmKids"></div>
+      <button class="btn secondary full" style="margin-top:8px" onclick="pmKidAdd()">+ Ajouter un enfant</button>
+      <p id="pmKidsSum" class="pm-sub" style="text-align:left;margin-top:10px"></p>
+      <div style="height:14px"></div>
+      <span class="field-title">Faire des équipes</span>
       <div class="pm-presets" id="pmTeamsNb" style="justify-content:flex-start">
         <button class="chip selected" data-n="2" onclick="pmTeamsPick(2)">2</button><button class="chip" data-n="3" onclick="pmTeamsPick(3)">3</button><button class="chip" data-n="4" onclick="pmTeamsPick(4)">4</button><button class="chip" data-n="5" onclick="pmTeamsPick(5)">5</button><button class="chip" data-n="6" onclick="pmTeamsPick(6)">6</button>
       </div>
       <button class="btn primary full" onclick="pmMakeTeams()">🎲 Tirer au sort</button>
       <div id="pmTeams" class="pm-teams"></div>
-      <p class="pm-sub" style="margin-top:10px">Les prénoms restent sur ton téléphone : ils ne sont ni enregistrés ni envoyés.</p>
+      <div style="height:12px"></div>
+      <button class="btn secondary full" onclick="pmKidsClear()">Effacer le groupe</button>
+      <p class="pm-sub" style="margin-top:10px">Les prénoms restent sur ce téléphone, jusqu'à la fermeture de l'appli. Ils ne sont jamais envoyés.</p>
     </div>
   </section>
 </main>
@@ -4114,20 +4122,50 @@ function pmWhistle(on){
     o.start();lfo.start();pm.osc={o,lfo};if(navigator.vibrate)navigator.vibrate(60);
   }else if(!on&&pm.osc){try{pm.osc.o.stop();pm.osc.lfo.stop()}catch(e){}pm.osc=null}
 }
-/* ----- Faire des équipes ----- */
+/* ----- Mon groupe : pointage + équipes ----- */
 const PM_TEAMS=[["Rouges","#E0525C"],["Bleus","#4D8FE0"],["Verts","#5FB36A"],["Jaunes","#E8B630"],["Violets","#9B6AD8"],["Oranges","#EE8A3C"]];
-function pmNames(){return (document.getElementById("pmNames").value||"").split(/[\n,;]+/).map(n=>n.trim()).filter(Boolean)}
-function pmNamesCount(){const n=pmNames().length;document.getElementById("pmNamesNb").textContent=n+" prénom"+(n>1?"s":"")}
+pm.kids=(()=>{try{return JSON.parse(sessionStorage.getItem("animKids"))||[]}catch(e){return []}})();
+function pmKidsSave(){try{sessionStorage.setItem("animKids",JSON.stringify(pm.kids))}catch(e){}}
+function pmKidsRender(){
+  if(!pm.kids.length)pm.kids.push({name:"",here:false});
+  document.getElementById("pmKids").innerHTML=pm.kids.map((k,i)=>`<div class="pm-kid">
+    <span class="pm-kid-n">${i+1}</span>
+    <input type="text" value="${esc(k.name)}" placeholder="Prénom" enterkeyhint="next" oninput="pmKidName(${i},this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();pmKidAdd()}">
+    <button class="pm-kid-ok${k.here?" on":""}" aria-label="Présent" onclick="pmKidHere(${i})">✓</button>
+    <button class="tm-del" aria-label="Retirer" onclick="pmKidDel(${i})">✕</button></div>`).join("");
+  pmKidsSum();
+}
+function pmKidsSum(){
+  const named=pm.kids.filter(k=>k.name.trim()),here=named.filter(k=>k.here),miss=named.filter(k=>!k.here);
+  const el=document.getElementById("pmKidsSum");if(!el)return;
+  if(!named.length){el.textContent="";el.className="pm-sub";return}
+  el.className="pm-sub "+(miss.length?"ko":"ok");
+  el.style.textAlign="left";
+  el.textContent=miss.length
+    ?`${here.length} présent${here.length>1?"s":""} sur ${named.length}. Pas encore pointé${miss.length>1?"s":""} : ${miss.map(k=>k.name.trim()).join(", ")}`
+    :`✅ Tout le monde est là (${named.length}).`;
+}
+function pmKidName(i,v){pm.kids[i].name=v;pmKidsSave();pmKidsSum()}
+function pmKidHere(i){pm.kids[i].here=!pm.kids[i].here;if(navigator.vibrate)navigator.vibrate(20);pmKidsSave();pmKidsRender()}
+function pmKidDel(i){pm.kids.splice(i,1);pmKidsSave();pmKidsRender()}
+function pmKidAdd(){
+  pm.kids.push({name:"",here:false});pmKidsSave();pmKidsRender();
+  const inputs=document.querySelectorAll("#pmKids input");inputs[inputs.length-1].focus();
+}
+function pmKidsClear(){pm.kids=[];pmKidsSave();document.getElementById("pmTeams").innerHTML="";pmKidsRender()}
 function pmTeamsPick(n){pm.teams=n;document.querySelectorAll("#pmTeamsNb .chip").forEach(c=>c.classList.toggle("selected",Number(c.dataset.n)===n))}
 function pmMakeTeams(){
-  const names=pmNames(),n=pm.teams;
+  const named=pm.kids.filter(k=>k.name.trim()),here=named.filter(k=>k.here);
+  const names=(here.length?here:named).map(k=>k.name.trim()),n=pm.teams;
   if(names.length<n){toast("Il faut au moins "+n+" prénoms.");return}
+  if(!here.length)toast("Aucun enfant pointé : tirage avec tout le groupe.");
   for(let i=names.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[names[i],names[j]]=[names[j],names[i]]}
   const teams=Array.from({length:n},()=>[]);
   names.forEach((name,i)=>teams[i%n].push(name));
   document.getElementById("pmTeams").innerHTML=teams.map((t,i)=>`<div class="pm-team" style="--c:${PM_TEAMS[i][1]}"><strong>${PM_TEAMS[i][0]} (${t.length})</strong><ul>${t.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`).join("");
   if(navigator.vibrate)navigator.vibrate(40);
 }
+function openPlayMode(){go("playMode");pmRender();pmButtons();pmKidsRender()}
 function openPlayMode(){go("playMode");pmRender();pmButtons()}
 /* =========================================================
    👥 MODE ÉQUIPE
