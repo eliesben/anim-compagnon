@@ -844,6 +844,14 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
 .tm-form{display:grid;gap:8px;margin-top:14px}
 .tm-form .gen-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .tm-code{font-size:26px;font-weight:900;letter-spacing:.2em;text-align:center;padding:10px;border-radius:14px;background:var(--surface-2);margin:8px 0}
+.pm-input{display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:10px}
+.pm-input input{width:76px;text-align:center;font-size:20px;font-weight:800;padding:10px 6px}
+.pm-input span{font-weight:800;color:var(--texte-doux);margin-right:6px}
+.pm-teams{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.pm-team{border-radius:16px;padding:12px;background:var(--surface-2);border-top:5px solid var(--c)}
+.pm-team strong{display:block;font-size:14px;font-weight:900;margin-bottom:6px;color:var(--c)}
+.pm-team ul{padding:0;margin:0}
+.pm-team li{list-style:none;font-size:14px;padding:2px 0;color:var(--texte-clair)}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
@@ -1086,15 +1094,18 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
   <div id="photoPreview" class="photo-preview" hidden></div>
 </section>
 </main>
-<!-- ========================= ⏱️ MODE ACTIVITÉ ========================= -->
+<!-- =========<!-- ========================= ⏱️ MODE ACTIVITÉ ========================= -->
 <main id="playMode" class="view">
-  <header class="page-head"><button class="link back" onclick="back()">← Retour</button><h1 class="page-title">Mode activité</h1><p class="page-intro" id="pmIntro">Tes outils de terrain. Ils marchent même sans réseau.</p></header>
+  <header class="page-head"><button class="link back" onclick="back()">← Retour</button><h1 class="page-title">Mode activité</h1><p class="page-intro">Tes outils de terrain. Ils marchent même sans réseau.</p></header>
   <section class="section">
     <div class="pm-card">
       <div class="pm-switch"><button id="pmModeDown" class="on" onclick="pmSetMode('down')">Compte à rebours</button><button id="pmModeUp" onclick="pmSetMode('up')">Chronomètre</button></div>
       <div id="pmTime" class="pm-time">05:00</div>
-      <div class="pm-presets" id="pmPresets">
-        <button class="chip" onclick="pmPreset(1)">1 min</button><button class="chip" onclick="pmPreset(3)">3 min</button><button class="chip selected" onclick="pmPreset(5)">5 min</button><button class="chip" onclick="pmPreset(10)">10 min</button><button class="chip" onclick="pmPreset(15)">15 min</button><button class="chip" onclick="pmPreset(30)">30 min</button>
+      <div id="pmSetup">
+        <div class="pm-input"><input id="pmMin" type="number" inputmode="numeric" min="0" max="180" value="5" oninput="pmCustom()"><span>min</span><input id="pmSec" type="number" inputmode="numeric" min="0" max="59" value="0" oninput="pmCustom()"><span>s</span></div>
+        <div class="pm-presets" id="pmPresets">
+          <button class="chip" data-s="30" onclick="pmPreset(30)">30 s</button><button class="chip" data-s="60" onclick="pmPreset(60)">1 min</button><button class="chip" data-s="120" onclick="pmPreset(120)">2 min</button><button class="chip" data-s="180" onclick="pmPreset(180)">3 min</button><button class="chip selected" data-s="300" onclick="pmPreset(300)">5 min</button><button class="chip" data-s="600" onclick="pmPreset(600)">10 min</button><button class="chip" data-s="900" onclick="pmPreset(900)">15 min</button>
+        </div>
       </div>
       <div class="pm-row">
         <button class="pm-btn go" id="pmStart" onclick="pmToggle()">Démarrer</button>
@@ -1102,22 +1113,27 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
         <button class="pm-btn" onclick="pmReset()">Remettre</button>
       </div>
     </div>
+
     <div class="pm-card">
       <button class="pm-big" onpointerdown="pmWhistle(true)" onpointerup="pmWhistle(false)" onpointerleave="pmWhistle(false)" oncontextmenu="return false">📣 Sifflet (reste appuyé)</button>
     </div>
+
     <div class="pm-card">
-      <span class="field-title">Enfants attendus</span>
-      <input id="pmExpected" type="number" inputmode="numeric" min="0" placeholder="Ex. 14" oninput="pmCountRender()">
-      <div style="height:12px"></div>
-      <span class="field-title">Je compte</span>
-      <div class="pm-count"><button class="pm-btn" onclick="pmCount(-1)">−</button><b id="pmCountNb">0</b><button class="pm-btn" onclick="pmCount(1)">+</button></div>
-      <p id="pmCountMsg" class="pm-sub">Appuie sur + pour chaque enfant.</p>
-      <div style="height:10px"></div>
-      <button class="btn secondary full" onclick="pmCount(0)">Recompter (remettre à 0)</button>
+      <h2 class="section-title" style="margin:0 0 10px">Faire des équipes</h2>
+      <span class="field-title">Prénoms <small>(un par ligne ou séparés par des virgules)</small></span>
+      <textarea id="pmNames" style="min-height:120px" placeholder="Inès&#10;Lucas&#10;Sofia&#10;…" oninput="pmNamesCount()"></textarea>
+      <p id="pmNamesNb" class="pm-sub" style="text-align:left">0 prénom</p>
+      <div style="height:8px"></div>
+      <span class="field-title">Nombre d'équipes</span>
+      <div class="pm-presets" id="pmTeamsNb" style="justify-content:flex-start">
+        <button class="chip selected" data-n="2" onclick="pmTeamsPick(2)">2</button><button class="chip" data-n="3" onclick="pmTeamsPick(3)">3</button><button class="chip" data-n="4" onclick="pmTeamsPick(4)">4</button><button class="chip" data-n="5" onclick="pmTeamsPick(5)">5</button><button class="chip" data-n="6" onclick="pmTeamsPick(6)">6</button>
+      </div>
+      <button class="btn primary full" onclick="pmMakeTeams()">🎲 Tirer au sort</button>
+      <div id="pmTeams" class="pm-teams"></div>
+      <p class="pm-sub" style="margin-top:10px">Les prénoms restent sur ton téléphone : ils ne sont ni enregistrés ni envoyés.</p>
     </div>
   </section>
 </main>
-
 <!-- ========================= 👥 MODE ÉQUIPE ========================= -->
 <main id="team" class="view">
   <header class="page-head"><button class="link back" onclick="back()">← Retour</button><h1 class="page-title" id="tmTitle">Mon équipe</h1><p class="page-intro" id="tmIntro">Partage le planning, les activités, les infos et le matériel avec ton équipe d'animation.</p></header>
@@ -1290,17 +1306,17 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
     <div class="stats"><div class="stat"><b id="statFav">0</b><span>Favoris</span></div><div class="stat"><b id="statAI">0</b><span>Fiches IA gardées</span></div></div>
   </section>
   <section class="section" id="favorites-section">
-    <div class="section-head"><h2 class="section-title">Mes favoris</h2></div>
+    <div class="section-head"><h2 class="e">Mes favoris</h2></div>
     <div id="favorites" class="empty"><strong>Aucun favori</strong>Les fiches que tu ajoutes apparaîtront ici.</div>
   </section>
   <section class="section" id="prefs-section">
-    <div class="section-head"><h2 class="section-title">Préférences</h2></div>
+    <div class="section-head"><h2 class="e">Préférences</h2></div>
     <div class="menu-list">
       <button id="themeSwitch" class="pref-row" role="switch" aria-checked="false" onclick="toggleTheme()"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2M12 19.5v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M2.5 12h2M19.5 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg>Mode clair<span class="switch" aria-hidden="true"></span></button>
     </div>
   </section>
   <section class="section">
-    <div class="section-head"><h2 class="section-title">Aide</h2></div>
+    <div class="section-head"><h2 class="e">Aide</h2></div>
     <div class="menu-list">
       <button onclick="openBugReport()"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="7" width="8" height="11" rx="4"/><path d="M8 10H4M8 14H4M16 10h4M16 14h4M10 7V5a2 2 0 0 1 4 0v2"/></svg>Signaler un bug<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 6 6 6-6 6"/></svg></button>
       <button onclick="openInfo('about')"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v5h1"/></svg>À propos d'Anim Compagnon<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 6 6 6-6 6"/></svg></button>
@@ -4031,7 +4047,7 @@ function openBugReport(){
 /* =========================================================
    ⏱️ MODE ACTIVITÉ
    ========================================================= */
-const pm={mode:"down",dur:5*60000,left:5*60000,up:0,running:false,t0:0,timer:null,lock:null,ctx:null,osc:null,count:0};
+const pm={mode:"down",dur:300000,left:300000,up:0,running:false,t0:0,timer:null,lock:null,ctx:null,osc:null,teams:2};
 function pmFmt(ms){const s=Math.max(0,Math.ceil(ms/1000));const h=Math.floor(s/3600),m=Math.floor(s%3600/60),r=s%60;return (h?h+":"+String(m).padStart(2,"0"):String(m).padStart(2,"0"))+":"+String(r).padStart(2,"0")}
 function pmNow(){return pm.mode==="down"?(pm.running?pm.left-(Date.now()-pm.t0):pm.left):(pm.running?pm.up+(Date.now()-pm.t0):pm.up)}
 function pmRender(){
@@ -4046,11 +4062,17 @@ async function pmWake(on){
   if(!on&&pm.lock){await pm.lock.release();pm.lock=null}}catch(e){}
 }
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"){if(pm.running)pmWake(true);pmRender()}});
-function pmButtons(){document.getElementById("pmStart").textContent=pm.running?"Pause":(pmNow()!==(pm.mode==="down"?pm.dur:0)?"Reprendre":"Démarrer");document.getElementById("pmPlus").disabled=pm.mode==="up"}
+function pmButtons(){
+  const fresh=pmNow()===(pm.mode==="down"?pm.dur:0);
+  document.getElementById("pmStart").textContent=pm.running?"Pause":(fresh?"Démarrer":"Reprendre");
+  document.getElementById("pmPlus").disabled=pm.mode==="up";
+  document.getElementById("pmSetup").style.display=(pm.mode==="down"&&!pm.running&&fresh)?"":"none";
+}
 function pmToggle(){
   pmAudio();
   if(pm.running){if(pm.mode==="down")pm.left=pmNow();else pm.up=pmNow();pm.running=false;clearInterval(pm.timer);pmWake(false)}
-  else{if(pm.mode==="down"&&pm.left<=0)pm.left=pm.dur;document.getElementById("pmTime").classList.remove("done");pm.t0=Date.now();pm.running=true;pm.timer=setInterval(pmRender,250);pmWake(true)}
+  else{if(pm.mode==="down"&&pm.left<=0)pm.left=pm.dur;if(pm.mode==="down"&&pm.left<=0){toast("Choisis une durée.");return}
+    document.getElementById("pmTime").classList.remove("done");pm.t0=Date.now();pm.running=true;pm.timer=setInterval(pmRender,250);pmWake(true)}
   pmRender();pmButtons();
 }
 function pmEnd(){
@@ -4061,14 +4083,28 @@ function pmEnd(){
   setTimeout(()=>document.getElementById("pmTime")?.classList.remove("done"),6000);
 }
 function pmReset(){pm.running=false;clearInterval(pm.timer);pmWake(false);pm.left=pm.dur;pm.up=0;document.getElementById("pmTime").classList.remove("done");pmRender();pmButtons()}
-function pmPreset(min,btn){
-  pm.dur=min*60000;
-  document.querySelectorAll("#pmPresets .chip").forEach(c=>c.classList.toggle("selected",c.textContent===min+" min"));
-  if(pm.mode!=="down")pmSetMode("down");
+function pmSetDur(sec){
+  pm.dur=Math.max(0,sec)*1000;
+  document.querySelectorAll("#pmPresets .chip").forEach(c=>c.classList.toggle("selected",Number(c.dataset.s)===sec));
   pmReset();
 }
-function pmAdd(ms){if(pm.mode!=="down")return;if(pm.running)pm.left+=ms;else{pm.left=Math.max(0,pm.left)+ms}document.getElementById("pmTime").classList.remove("done");pmRender();pmButtons()}
-function pmSetMode(m){pm.mode=m;document.getElementById("pmModeDown").classList.toggle("on",m==="down");document.getElementById("pmModeUp").classList.toggle("on",m==="up");document.getElementById("pmPresets").style.display=m==="down"?"":"none";pmReset()}
+function pmPreset(sec){
+  document.getElementById("pmMin").value=Math.floor(sec/60);
+  document.getElementById("pmSec").value=sec%60;
+  pmSetDur(sec);
+}
+function pmCustom(){
+  const m=Math.max(0,parseInt(document.getElementById("pmMin").value,10)||0);
+  const s=Math.min(59,Math.max(0,parseInt(document.getElementById("pmSec").value,10)||0));
+  pmSetDur(m*60+s);
+}
+function pmAdd(sec){
+  if(pm.mode!=="down")return;
+  if(!pm.running&&pm.left===pm.dur){pmPreset(pm.dur/1000+sec);return}
+  if(pm.running)pm.left+=sec*1000;else pm.left=Math.max(0,pm.left)+sec*1000;
+  document.getElementById("pmTime").classList.remove("done");pmRender();pmButtons();
+}
+function pmSetMode(m){pm.mode=m;document.getElementById("pmModeDown").classList.toggle("on",m==="down");document.getElementById("pmModeUp").classList.toggle("on",m==="up");pmReset()}
 function pmWhistle(on){
   const c=pmAudio();if(!c)return;
   if(on&&!pm.osc){
@@ -4078,18 +4114,21 @@ function pmWhistle(on){
     o.start();lfo.start();pm.osc={o,lfo};if(navigator.vibrate)navigator.vibrate(60);
   }else if(!on&&pm.osc){try{pm.osc.o.stop();pm.osc.lfo.stop()}catch(e){}pm.osc=null}
 }
-function pmCount(n){pm.count=n===0?0:Math.max(0,pm.count+n);if(n>0&&navigator.vibrate)navigator.vibrate(20);pmCountRender()}
-function pmCountRender(){
-  document.getElementById("pmCountNb").textContent=pm.count;
-  const exp=parseInt(document.getElementById("pmExpected").value,10),msg=document.getElementById("pmCountMsg");
-  msg.className="pm-sub";
-  if(!exp){msg.textContent="Appuie sur + pour chaque enfant.";return}
-  if(pm.count===exp){msg.textContent="✅ Tout le monde est là ("+exp+").";msg.className="pm-sub ok"}
-  else if(pm.count<exp){const d=exp-pm.count;msg.textContent="Il manque "+d+" enfant"+(d>1?"s":"")+".";msg.className="pm-sub ko"}
-  else{const d=pm.count-exp;msg.textContent=d+" de trop : recompte.";msg.className="pm-sub ko"}
+/* ----- Faire des équipes ----- */
+const PM_TEAMS=[["Rouges","#E0525C"],["Bleus","#4D8FE0"],["Verts","#5FB36A"],["Jaunes","#E8B630"],["Violets","#9B6AD8"],["Oranges","#EE8A3C"]];
+function pmNames(){return (document.getElementById("pmNames").value||"").split(/[\n,;]+/).map(n=>n.trim()).filter(Boolean)}
+function pmNamesCount(){const n=pmNames().length;document.getElementById("pmNamesNb").textContent=n+" prénom"+(n>1?"s":"")}
+function pmTeamsPick(n){pm.teams=n;document.querySelectorAll("#pmTeamsNb .chip").forEach(c=>c.classList.toggle("selected",Number(c.dataset.n)===n))}
+function pmMakeTeams(){
+  const names=pmNames(),n=pm.teams;
+  if(names.length<n){toast("Il faut au moins "+n+" prénoms.");return}
+  for(let i=names.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[names[i],names[j]]=[names[j],names[i]]}
+  const teams=Array.from({length:n},()=>[]);
+  names.forEach((name,i)=>teams[i%n].push(name));
+  document.getElementById("pmTeams").innerHTML=teams.map((t,i)=>`<div class="pm-team" style="--c:${PM_TEAMS[i][1]}"><strong>${PM_TEAMS[i][0]} (${t.length})</strong><ul>${t.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`).join("");
+  if(navigator.vibrate)navigator.vibrate(40);
 }
 function openPlayMode(){go("playMode");pmRender();pmButtons()}
-
 /* =========================================================
    👥 MODE ÉQUIPE
    ========================================================= */
