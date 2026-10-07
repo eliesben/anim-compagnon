@@ -1017,6 +1017,66 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
 .fs-row span{flex:1;font-weight:700;font-size:14px}
 .fs-tag{font-style:normal;font-size:12px;font-weight:800;padding:5px 10px;border-radius:99px;background:rgba(255,199,64,.18);color:#FFD772}
 .fs-code{font-size:22px;font-weight:900;letter-spacing:.2em;text-align:center;padding:10px;border-radius:14px;background:var(--surface-2);margin:8px 0}
+/* ===== ÉQUIPE : fiches de sortie ===== */
+.so-h{font-size:15px;font-weight:800;color:var(--texte-clair)}
+.so-hrow{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.so-count{font-size:12px;font-weight:800;padding:5px 10px;border-radius:99px;background:rgba(132,185,138,.16);color:var(--vert-fonce)}
+.so-row2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
+.so-row2 input{min-width:0;width:100%}
+.so-lock{font-size:12px;line-height:1.45;color:var(--texte-doux);margin:2px 0 0}
+.so-kids{min-height:140px;line-height:1.5}
+.so-add{display:flex;gap:8px}
+.so-add input{flex:1;min-width:0}
+.so-add button{width:46px;flex:0 0 46px;border:0;border-radius:14px;background:var(--surface-2);color:var(--texte-clair);font-size:22px;font-weight:800}
+.so-tr{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.so-tr button{min-height:50px;border-radius:14px;border:1px solid var(--trait);background:var(--surface-2);color:var(--texte-clair);font-weight:700;font-size:13px;padding:0 4px}
+.so-tr button.on{background:var(--vert);border-color:var(--vert);color:#14170F;font-weight:800}
+.so-chk{display:flex;align-items:center;gap:12px;width:100%;min-height:56px;padding:6px 0;border:0;border-top:1px solid var(--trait);background:transparent;color:var(--texte-clair);text-align:left}
+.so-chk:first-child{border-top:0}
+.so-chk i{width:28px;height:28px;flex:0 0 28px;border-radius:9px;border:2px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;font-style:normal;font-weight:900;color:transparent}
+.so-chk.on i{background:var(--vert);border-color:var(--vert);color:#14170F}
+.so-chk b{display:block;font-size:14px}.so-chk small{font-size:12px;color:var(--texte-doux)}
+.so-memo ul{margin:8px 0 0;padding-left:18px;display:grid;gap:6px;font-size:13px;line-height:1.45;color:var(--texte-clair)}
+.so-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.so-item{display:flex;flex-direction:column;gap:3px;width:100%;margin-top:12px;padding:14px;border-radius:18px;background:var(--surface);border:1px solid var(--trait);border-left:4px solid #4D8FE0;color:var(--texte-clair);text-align:left}
+.so-item b{font-size:15px}.so-item small{font-size:12px;color:var(--texte-doux)}
+.so-item.past{opacity:.6}
+.so-sep{margin:20px 0 0;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--texte-doux)}
+.te-sortie{display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%;padding:12px 14px;border-radius:14px;background:rgba(77,143,224,.16);border:1px solid rgba(77,143,224,.45);color:var(--texte-clair);text-align:left}
+.te-sortie[hidden]{display:none}
+.te-sortie b{display:block;font-size:14px}.te-sortie small{font-size:12px;color:var(--texte-doux)}
+.te-sortie em{font-style:normal;font-weight:800;color:#9DC1F0;white-space:nowrap}
+/* Exemplaire imprimé (A4) : invisible à l'écran */
+#soPrint{display:none}
+@media print{
+  body.so-printing>*:not(#soPrint){display:none!important}
+  body.so-printing #soPrint{display:block!important}
+  @page{size:A4;margin:14mm}
+}
+#soPrint .sp-page{font-family:Arial,Helvetica,sans-serif;color:#111;font-size:12px;line-height:1.4;break-after:page;page-break-after:always}
+#soPrint .sp-page:last-child{break-after:auto;page-break-after:auto}
+#soPrint .sp-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;border-bottom:2px solid #111;padding-bottom:8px;margin-bottom:10px}
+#soPrint .sp-top small{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#444}
+#soPrint h1{font-size:22px;margin:2px 0}
+#soPrint .sp-ex{font-size:12px;font-weight:700;border:2px solid #111;padding:6px 10px;border-radius:6px;text-align:center;white-space:nowrap}
+#soPrint .sp-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid #999;border-bottom:0}
+#soPrint .sp-grid.two{grid-template-columns:1fr 1fr}
+#soPrint .sp-grid>div{padding:6px 8px;border-bottom:1px solid #999;border-right:1px solid #999}
+#soPrint .sp-grid>div:last-child{border-right:0}
+#soPrint .sp-grid span{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:#555}
+#soPrint .sp-grid strong{font-size:13px}
+#soPrint .sp-block{border:1px solid #999;border-top:0;padding:6px 8px}
+#soPrint .sp-block>span{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:#555;margin-bottom:3px}
+#soPrint .sp-checks{display:flex;flex-wrap:wrap;gap:4px 18px}
+#soPrint table{width:100%;border-collapse:collapse;margin-top:10px}
+#soPrint th,#soPrint td{border:1px solid #999;padding:3px 6px;text-align:left;font-size:11px}
+#soPrint th{background:#eee;font-size:9px;text-transform:uppercase;letter-spacing:.05em}
+#soPrint td.c{width:16%;text-align:center}
+#soPrint td.n{width:6%;text-align:center;color:#555}
+#soPrint tr{break-inside:avoid;page-break-inside:avoid}
+#soPrint ul{margin:2px 0 0;padding-left:16px}
+#soPrint .sp-sign{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+#soPrint .sp-sign div{border:1px solid #999;height:62px;padding:6px 8px;font-size:10px;color:#444}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
@@ -1399,7 +1459,7 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
       <button class="th-tile" onclick="openTeamCal()"><span class="th-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><strong>Calendrier</strong><small id="thCalCount">—</small></button>
       <button class="th-tile soon" onclick="toast('Bientôt disponible.')"><span class="th-ic yellow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8z"/></svg></span><strong>Activités favorites</strong><small id="thFavCount">—</small>
       <button class="th-tile" onclick="openTeamFiches()"><span class="th-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></span><strong>Fiches d'activité</strong><small id="thFicheCount">—</small>
-      <button class="th-tile" onclick="openTeamShop()"><span class="th-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6.2"/><circle cx="10" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/></svg></span><strong>Courses</strong><small id="thShopCount">—</small></button>      <button class="th-tile soon wide" onclick="toast('Bientôt disponible.')"><span class="th-ic grey"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span><strong>Fiches de sortie</strong><small>Bientôt</small></button>
+      <button class="th-tile" onclick="openTeamShop()"><span class="th-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6.2"/><circle cx="10" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/></svg></span><strong>Courses</strong><small id="thShopCount">—</small></button>            <button class="th-tile wide" onclick="openTeamSorties()"><span class="th-ic" style="background:rgba(77,143,224,.16);color:#4D8FE0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span><strong>Fiches de sortie</strong><small id="thSortieCount">—</small></button>
     </div>
     <p class="gen-note" style="margin-top:14px">N'écris jamais le nom d'un enfant ni d'information sur sa santé ou sa famille : tout est visible par l'équipe.</p>
     <div style="height:10px"></div>
@@ -1454,6 +1514,7 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
       </div>
       <span class="field-title">Note</span>
       <textarea id="teNote" maxlength="1000" placeholder="Ex. Prévoir les bonnets de bain"></textarea>
+             <button class="te-sortie" id="teSortie" onclick="teOpenSortie()" hidden></button>
     </div>
     <div style="height:14px"></div>
     <button class="btn primary full" id="teSave" onclick="teSave()">Enregistrer</button>
@@ -1549,6 +1610,86 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
     <div class="pm-card" id="fsGroups"></div>
     <div class="pm-card" id="fsResps"></div>
     <div class="pm-card" id="fsAdmin"></div>
+  </section>
+</main>
+<!-- ========================= 🚌 FICHES DE SORTIE (liste) ========================= -->
+<main id="teamSorties" class="view">
+  <header class="page-head"><button class="link back" onclick="openTeam()">← Équipe</button><h1 class="page-title">Fiches de sortie</h1><p class="page-intro">Préparez vos sorties à plusieurs, imprimez l'exemplaire pour la structure.</p></header>
+  <section class="section" style="padding-top:0">
+    <button class="btn primary full" onclick="soNew()">+ Nouvelle fiche de sortie</button>
+    <div id="soList"></div>
+  </section>
+</main>
+
+<!-- ========================= 🚌 FICHE DE SORTIE (formulaire) ========================= -->
+<main id="teamSortie" class="view">
+  <header class="page-head"><button class="link back" onclick="openTeamSorties()">← Fiches de sortie</button><h1 class="page-title" id="soHead">Nouvelle fiche</h1><p class="page-intro" id="soSub"></p></header>
+  <section class="section" style="padding-top:0">
+
+    <div class="pm-card tm-form" style="margin-top:0">
+      <span class="so-h">Où et quand</span>
+      <span class="field-title">Nom de la sortie *</span>
+      <input id="soTitre" type="text" maxlength="120" placeholder="Ex. Sortie piscine">
+      <span class="field-title">Lieu de la sortie *</span>
+      <input id="soLieu" type="text" maxlength="300" placeholder="Ex. Piscine municipale, 12 rue des Lilas">
+      <div class="te-row3">
+        <div><span class="field-title">Date *</span><input id="soDate" type="date"></div>
+        <div><span class="field-title">Départ</span><input id="soDep" type="time"></div>
+        <div><span class="field-title">Retour</span><input id="soRet" type="time"></div>
+      </div>
+    </div>
+
+    <div class="pm-card tm-form">
+      <span class="so-h">Animateur responsable et contact</span>
+      <div class="so-row2">
+        <div><span class="field-title">Responsable *</span><input id="soResp" type="text" maxlength="40" list="soMembers" placeholder="Prénom"></div>
+        <div><span class="field-title">Téléphone</span><input id="soTel" type="text" inputmode="tel" maxlength="20" placeholder="06 …" oninput="soPrivSave()"></div>
+      </div>
+      <datalist id="soMembers"></datalist>
+      <p class="so-lock">🔒 Le téléphone reste sur ce téléphone : il n'est jamais envoyé à l'équipe.</p>
+    </div>
+
+    <div class="pm-card tm-form">
+      <div class="so-hrow"><span class="so-h">Enfants</span><span class="so-count" id="soKidsCount"></span></div>
+      <span class="field-title">Nombre d'enfants *</span>
+      <input id="soNb" type="number" inputmode="numeric" min="1" max="300" placeholder="Ex. 18">
+      <span class="field-title">Liste des enfants (nom et prénom)</span>
+      <textarea id="soKids" class="so-kids" placeholder="Un enfant par ligne&#10;Tu peux coller la liste de la structure" oninput="soKidsInput()"></textarea>
+      <p class="so-lock">🔒 La liste reste sur ce téléphone : elle n'est jamais envoyée à l'équipe ni enregistrée en ligne. Elle apparaît seulement sur l'exemplaire imprimé et dans le mail, et s'efface d'elle-même 7 jours après la sortie.</p>
+    </div>
+
+    <div class="pm-card tm-form">
+      <div class="so-hrow"><span class="so-h">Encadrement</span><span class="so-count" id="soEncCount"></span></div>
+      <span class="pm-sub" style="text-align:left;margin:0">Touche les membres de l'équipe qui partent :</span>
+      <div class="pm-presets" id="soEnc" style="justify-content:flex-start;margin:0"></div>
+      <div class="pm-presets" id="soExt" style="justify-content:flex-start;margin:0"></div>
+      <div class="so-add"><input id="soExtIn" type="text" maxlength="60" placeholder="Ajouter un nom (parent, intervenant…)" onkeydown="if(event.key==='Enter')soExtAdd()"><button aria-label="Ajouter" onclick="soExtAdd()">+</button></div>
+    </div>
+
+    <div class="pm-card tm-form">
+      <span class="so-h">Transport</span>
+      <div class="so-tr" id="soTr"></div>
+    </div>
+
+    <div class="pm-card tm-form">
+      <div class="so-hrow"><span class="so-h">À emporter</span><span class="so-count" id="soChkCount"></span></div>
+      <div id="soChk"></div>
+    </div>
+
+    <div class="pm-card so-memo">
+      <span class="so-h">Pense-bête</span>
+      <ul id="soMemo"></ul>
+    </div>
+
+    <div style="height:14px"></div>
+    <button class="btn primary full" id="soSave" onclick="soSave()">Enregistrer dans l'équipe</button>
+    <div class="so-actions">
+      <button class="btn secondary" onclick="soMail()">Envoyer par mail</button>
+      <button class="btn secondary" onclick="soPrint()">Imprimer / PDF</button>
+    </div>
+    <div style="height:8px"></div>
+    <button class="btn secondary full te-del" id="soDel" onclick="soDelete()" hidden>Supprimer cette fiche</button>
+    <p class="pm-sub" id="soMeta"></p>
   </section>
 </main>
 <!-- ========================= ➕ CRÉER UNE ÉQUIPE ========================= -->
@@ -4423,6 +4564,8 @@ function openInfo(kind){
     t.textContent="Politique de confidentialité";
     b.innerHTML=`<p><b>Responsable du traitement</b><br>ANIM COMPAGNON — <a href="mailto:${CONTACT_MAIL}">${CONTACT_MAIL}</a></p>
       <p><b>Ce qui reste sur ton téléphone</b><br>Ton profil (nom, prénom, mail), tes favoris, tes activités enregistrées, ton thème et tout ce que tu écris dans l'outil de signalement. Rien de tout cela n'est envoyé ni conservé par l'éditeur.</p>
+            <p>En mode équipe, ce que tu partages (ton prénom, le calendrier, les courses, les activités et fiches, les publications du fil) est enregistré en ligne et visible par les personnes qui ont le code de l'équipe. Les publications du fil s'effacent automatiquement selon le réglage choisi par les responsables.</p>
+      <p>Dans la fiche de sortie, le numéro de téléphone et la liste des enfants ne sont jamais envoyés à l'équipe ni enregistrés en ligne : ils restent sur ton téléphone, apparaissent seulement sur l'exemplaire imprimé et dans le mail que tu envoies toi-même, et s'effacent automatiquement 7 jours après la sortie.</p>
       <p><b>Ce qui est envoyé</b><br>• Générateur d'activités : ta description et ta photo éventuelle.<br>• Help, « Analyser une situation » : le texte que tu écris.<br>Ces contenus passent par un relais Cloudflare puis sont traités par OpenAI pour produire une réponse. L'éditeur ne les enregistre pas. OpenAI peut les conserver jusqu'à 30 jours pour la prévention des abus, sans les utiliser pour entraîner ses modèles.</p>
       <p><b>Ne saisis jamais</b> le nom, la photo ou une information permettant de reconnaître un enfant ou une famille.</p>
       <p><b>Signaler un bug</b><br>Le bouton ouvre ta messagerie : ton message et ton adresse mail nous parviennent alors, et sont utilisés uniquement pour te répondre.</p>
@@ -4688,7 +4831,8 @@ async function tmLoad(){
   if(!tm.team)return false;
   try{const r=await fetch(TEAM_API+"?code="+tm.team.code);const d=await r.json();if(!r.ok)throw new Error(d.error);
     tm.items=d.items||[];tm.members=d.members||[];
-       tm.responsables=d.responsables||[];tm.settings=d.settings;tm.hasAdmin=!!d.hasAdmin;
+          if(document.getElementById("teamSorties")?.classList.contains("active"))soListRender(); 
+      tm.responsables=d.responsables||[];tm.settings=d.settings;tm.hasAdmin=!!d.hasAdmin;
     if(document.getElementById("teamFeed")?.classList.contains("active"))fdRender();if(document.getElementById("teamFeedSettings")?.classList.contains("active"))fsRender();
     if(d.name&&(d.name!==tm.team.name||(d.place||"")!==(tm.team.place||""))){tm.team.name=d.name;tm.team.place=d.place||"";tmSet("animTeam",tm.team);if(!document.getElementById("tmSpace").hidden)tmStep("tmSpace")}
 tmHubRender();if(document.getElementById("teamCal").classList.contains("active"))tcRender();
@@ -4724,7 +4868,8 @@ function tmHubRender(){
   if(sc){const k=tm.items.filter(x=>x.TYPE==="course"&&!(x.FAIT===true||x.FAIT==="true")).length;sc.textContent=k?k+" à acheter":"Liste vide"}
   const fc=document.getElementById("thFavCount");if(fc){const k=tm.items.filter(x=>x.TYPE==="fav").length;fc.textContent=k?k+" activité"+(k>1?"s":""):"Aucune pour l'instant"}
   const fb=document.getElementById("thFeedBadge");if(fb){const k=fdUnread(),n=tm.items.filter(x=>x.TYPE==="post").length;fb.textContent=k;fb.hidden=!k;document.getElementById("thFeedSub").textContent=k?k+" nouvelle"+(k>1?"s":"")+" publication"+(k>1?"s":""):(n?n+" publication"+(n>1?"s":""):"Aucune publication")}
-  const ic=document.getElementById("thFicheCount");if(ic){const k=tm.items.filter(x=>x.TYPE==="fiche").length;ic.textContent=k?k+" fiche"+(k>1?"s":""):"Aucune pour l'instant"}
+    const sc2=document.getElementById("thSortieCount");if(sc2){const t=tcISO(new Date()),nx=tm.items.filter(x=>x.TYPE==="sortie"&&(x.DATE||"")>=t).sort((a,b)=>String(a.DATE).localeCompare(String(b.DATE)))[0];sc2.textContent=nx?"Prochaine : "+tcDayLabel(tcParse(nx.DATE))+" · "+(nx.TITRE||""):"Aucune sortie à venir"}
+   const ic=document.getElementById("thFicheCount");if(ic){const k=tm.items.filter(x=>x.TYPE==="fiche").length;ic.textContent=k?k+" fiche"+(k>1?"s":""):"Aucune pour l'instant"}
 }
 
 /* ----- Calendrier : écrans ----- */
@@ -4786,8 +4931,7 @@ function tcRender(){
 
 /* ----- Ajouter / modifier un temps ----- */
 let teCatVal="vert";
-function teCat(k){teCatVal=k;document.querySelectorAll("#teCats button").forEach(b=>{b.classList.toggle("on",b.dataset.c===k);b.style.setProperty("--c",TC_COLORS[b.dataset.c])})}
-function teGroup(btn){const on=btn.classList.contains("selected");document.querySelectorAll("#teGroups .chip").forEach(c=>c.classList.remove("selected"));if(!on)btn.classList.add("selected")}
+function teCat(k){teCatVal=k;document.querySelectorAll("#teCats button").forEach(b=>{b.classList.toggle("on",b.dataset.c===k);b.style.setProperty("--c",TC_COLORS[b.dataset.c])});teSortieRender()}function teGroup(btn){const on=btn.classList.contains("selected");document.querySelectorAll("#teGroups .chip").forEach(c=>c.classList.remove("selected"));if(!on)btn.classList.add("selected")}
 function teFill(e){
   const v=(id,x)=>document.getElementById(id).value=x||"";
   v("teName",e.TITRE);v("teDate",e.DATE);v("teStart",e.DEBUT);v("teEnd",e.FIN);v("teNote",e.DETAIL);
@@ -5088,6 +5232,187 @@ async function fsClaim(){
   const key=(document.getElementById("fsKey")?.value||"").trim().toUpperCase();
   try{const r=await tmPost("/admin",{code:tm.team.code,admin:key,me:tmMyName()});const m=tmGet("animTeamAdmins",{});m[tm.team.code]=r.admin;tmSet("animTeamAdmins",m);tm.responsables=r.responsables;tm.hasAdmin=true;fsRender();toast("Tu es maintenant responsable.")}
   catch(e){toast(e.message&&e.message!=="Erreur"?e.message:"Code incorrect.")}
+}
+   /* ----- Fiches de sortie ----- */
+const SO_TR=["À pied","Vélo","Bus","Train"];
+const SO_CHK=[["trousse","Trousse de secours","Vérifiée et complète"],["gouter","Goûter","Pour tout le groupe"],["pai","PAI","Traitements des enfants concernés"],["eau","Eau","Bouteilles ou gourdes"],["gilets","Gilets jaunes","Un par enfant et par adulte"]];
+const SO_MEMO=["Je regarde la météo","Je m'assure que les enfants ont toutes leurs affaires","Je m'assure que le goûter est transportable","Je n'oublie pas de partager la fiche de sortie","Un exemplaire de la fiche part avec les animateurs, un autre reste à la structure"];
+const so={id:null,cal:null,enc:[],ext:[],tr:"",chk:{}};
+const soItems=()=>tm.items.filter(x=>x.TYPE==="sortie");
+const soC=x=>{try{return JSON.parse(x.CONTENU||"{}")}catch(e){return {}}};
+const soVal=id=>(document.getElementById(id).value||"").trim();
+const soKidsList=()=>soVal("soKids").split("\n").map(s=>s.trim()).filter(Boolean);
+const soDateLabel=iso=>{const d=tcParse(iso);return d?tcDayLabel(d)+" "+d.getFullYear():""};
+
+/* Téléphone et liste des enfants : uniquement sur ce téléphone, jamais envoyés */
+const soPrivKey=()=>tm.team.code+":"+(so.id||"new");
+function soPrivSave(){const m=tmGet("animSortiePriv",{});m[soPrivKey()]={tel:soVal("soTel"),kids:soVal("soKids"),date:soVal("soDate")};tmSet("animSortiePriv",m)}
+function soPrivDel(key){const m=tmGet("animSortiePriv",{});delete m[key];tmSet("animSortiePriv",m)}
+function soPrivPurge(){
+  const m=tmGet("animSortiePriv",{}),lim=tcISO(tcAdd(new Date(),-7));let ch=false;
+  for(const k in m){if(m[k].date&&m[k].date<lim){delete m[k];ch=true}}
+  if(ch)tmSet("animSortiePriv",m);
+}
+
+/* Liste */
+function openTeamSorties(){if(!tm.team){openTeam();return}soPrivPurge();go("teamSorties");soListRender()}
+function soListRender(){
+  const today=tcISO(new Date()),all=soItems();
+  const next=all.filter(x=>(x.DATE||"")>=today).sort((a,b)=>(a.DATE+(a.DEBUT||"")).localeCompare(b.DATE+(b.DEBUT||"")));
+  const past=all.filter(x=>(x.DATE||"")<today).sort((a,b)=>String(b.DATE).localeCompare(String(a.DATE)));
+  const card=x=>{const c=soC(x),n=(c.enc||[]).length+(c.ext||[]).length;
+    return `<button class="so-item${(x.DATE||"")<today?" past":""}" onclick="soOpen(${Number(x.id)})"><b>${esc(x.TITRE||"Sortie")}</b><small>${esc(soDateLabel(x.DATE)+(x.DEBUT?" · "+tcHour(x.DEBUT)+(x.FIN?" → "+tcHour(x.FIN):""):""))}</small><small>${esc(x.DETAIL||"")}</small><small>${n} adulte${n>1?"s":""} · ${Number(c.nb)||0} enfant${Number(c.nb)>1?"s":""}</small></button>`};
+  document.getElementById("soList").innerHTML=(next.length?next.map(card).join(""):`<div class="tc-empty" style="margin-top:12px">Aucune sortie à venir.</div>`)+(past.length?`<p class="so-sep">Passées</p>`+past.map(card).join(""):"");
+}
+
+/* Formulaire */
+function soFill(d){
+  const v=(id,x)=>document.getElementById(id).value=x||"";
+  v("soTitre",d.titre);v("soLieu",d.lieu);v("soDate",d.date);v("soDep",d.dep);v("soRet",d.ret);v("soResp",d.resp);v("soNb",d.nb);
+  const p=tmGet("animSortiePriv",{})[soPrivKey()]||{};v("soTel",p.tel);v("soKids",p.kids);
+  document.getElementById("soMembers").innerHTML=(tm.members||[]).map(n=>`<option value="${esc(n)}">`).join("");
+  document.getElementById("soDel").hidden=!so.id;
+  document.getElementById("soHead").textContent=so.id?"Fiche de sortie":"Nouvelle fiche";
+  const ev=so.cal?tm.items.find(x=>x.id===Number(so.cal)):null;
+  document.getElementById("soSub").textContent=ev?"Liée au calendrier · "+soDateLabel(ev.DATE):"Elle sera ajoutée au calendrier en bleu.";
+  soRender();
+}
+function soNew(pre={}){
+  so.id=null;so.cal=pre.cal||null;so.enc=pre.enc||[];so.ext=[];so.tr="";so.chk={};
+  soPrivDel(tm.team.code+":new");
+  soFill({titre:pre.titre,lieu:pre.lieu,date:pre.date||tcISO(new Date()),dep:pre.dep,ret:pre.ret,resp:pre.resp||tmMyName()});
+  document.getElementById("soMeta").textContent="";
+  go("teamSortie");
+}
+function soOpen(id){
+  const x=tm.items.find(i=>i.id===id);if(!x)return;
+  const c=soC(x);
+  so.id=x.id;so.cal=c.cal||null;so.enc=c.enc||[];so.ext=c.ext||[];so.tr=c.tr||"";so.chk=c.chk||{};
+  soFill({titre:x.TITRE,lieu:x.DETAIL,date:x.DATE,dep:x.DEBUT,ret:x.FIN,resp:x.ANIMATEUR,nb:c.nb});
+  const d=x.MODIFIE_LE?new Date(x.MODIFIE_LE):null;
+  document.getElementById("soMeta").textContent=x.MODIFIE_PAR?"Modifiée par "+x.MODIFIE_PAR+(d&&!isNaN(d)?", le "+d.toLocaleDateString("fr-FR"):""):"";
+  go("teamSortie");
+}
+function soRender(){
+  const names=[...new Set([...(tm.members||[]),...so.enc])];
+  document.getElementById("soEnc").innerHTML=names.length?names.map(n=>`<button class="chip${so.enc.includes(n)?" selected":""}" onclick="soToggleEnc(this.dataset.n)" data-n="${esc(n)}">${so.enc.includes(n)?"✓ ":""}${esc(n)}</button>`).join(""):`<span class="pm-sub" style="margin:0">Les membres apparaîtront ici quand ils rejoindront l'équipe.</span>`;
+  document.getElementById("soExt").innerHTML=so.ext.map((n,i)=>`<button class="chip selected" onclick="soExtDel(${i})">${esc(n)} · hors équipe ✕</button>`).join("");
+  const n=so.enc.length+so.ext.length;
+  document.getElementById("soEncCount").textContent=n+" adulte"+(n>1?"s":"");
+  document.getElementById("soTr").innerHTML=SO_TR.map(t=>`<button class="${so.tr===t?"on":""}" onclick="soTrPick('${t}')">${t}</button>`).join("");
+  document.getElementById("soChk").innerHTML=SO_CHK.map(([k,l,h])=>`<button class="so-chk${so.chk[k]?" on":""}" onclick="soChkToggle('${k}')"><i>✓</i><span><b>${l}</b><small>${h}</small></span></button>`).join("");
+  const done=SO_CHK.filter(([k])=>so.chk[k]).length;
+  document.getElementById("soChkCount").textContent=done+" / "+SO_CHK.length+" pris";
+  document.getElementById("soMemo").innerHTML=SO_MEMO.map(m=>`<li>${esc(m)}</li>`).join("");
+  soKidsCount();
+}
+function soKidsCount(){const k=soKidsList().length;document.getElementById("soKidsCount").textContent=k?k+" sur la liste":"Liste vide"}
+function soKidsInput(){const k=soKidsList().length;if(k)document.getElementById("soNb").value=k;soKidsCount();soPrivSave()}
+function soToggleEnc(n){so.enc=so.enc.includes(n)?so.enc.filter(x=>x!==n):[...so.enc,n];soRender()}
+function soExtAdd(){const i=document.getElementById("soExtIn"),v=i.value.trim();if(!v)return;if(!so.ext.includes(v))so.ext.push(v);i.value="";soRender();i.focus()}
+function soExtDel(i){so.ext.splice(i,1);soRender()}
+function soTrPick(t){so.tr=so.tr===t?"":t;soRender()}
+function soChkToggle(k){so.chk[k]=!so.chk[k];soRender()}
+
+function soData(){
+  return {titre:soVal("soTitre"),lieu:soVal("soLieu"),date:soVal("soDate"),dep:soVal("soDep"),ret:soVal("soRet"),resp:soVal("soResp"),tel:soVal("soTel"),nb:Number(soVal("soNb"))||0,kids:soKidsList(),enc:[...so.enc],ext:[...so.ext],tr:so.tr,chk:{...so.chk}};
+}
+function soCheck(d){
+  const miss=[["titre","soTitre","Donne un nom à la sortie."],["lieu","soLieu","Indique le lieu de la sortie."],["date","soDate","Choisis une date."],["resp","soResp","Indique l'animateur responsable."]].find(([k])=>!d[k]);
+  if(miss){toast(miss[2]);document.getElementById(miss[1]).focus();return false}
+  if(!d.nb){toast("Indique le nombre d'enfants.");document.getElementById("soNb").focus();return false}
+  return true;
+}
+async function soSave(){
+  const d=soData();if(!soCheck(d))return;
+  const btn=document.getElementById("soSave");btn.disabled=true;btn.textContent="Enregistrement…";
+  const code=tm.team.code,me=tmMyName(),oldKey=soPrivKey();
+  try{
+    // 1. Le temps du calendrier (créé s'il n'existe pas encore)
+    const ev=so.cal?tm.items.find(x=>x.id===Number(so.cal)):null;
+    const cal={code,titre:d.titre,date:d.date,debut:d.dep,fin:d.ret,auteur:me};
+    if(ev){const r=await tmPost("/edit",{...cal,id:ev.id});Object.assign(ev,r)}
+    else{const r=await tmPost("/item",{...cal,type:"cal",categorie:"bleu",animateur:[...d.enc,...d.ext].join(", "),detail:"Lieu : "+d.lieu});tm.items.push(r);so.cal=r.id}
+    // 2. La fiche : jamais le téléphone ni les noms des enfants
+    const body={code,titre:d.titre,detail:d.lieu,date:d.date,debut:d.dep,fin:d.ret,animateur:d.resp,auteur:me,
+      contenu:JSON.stringify({cal:so.cal,nb:d.nb,enc:d.enc,ext:d.ext,tr:d.tr,chk:d.chk})};
+    if(so.id){const r=await tmPost("/edit",{...body,id:so.id});const i=tm.items.findIndex(x=>x.id===so.id);if(i>-1)tm.items[i]=r}
+    else{const r=await tmPost("/item",{...body,type:"sortie"});tm.items.push(r);so.id=r.id}
+    soPrivDel(oldKey);soPrivSave();
+    tmHubRender();soOpen(so.id);toast("Fiche enregistrée dans l'équipe.");
+  }catch(e){toast(e.message&&e.message!=="Erreur"?e.message:"Enregistrement impossible. Vérifie ta connexion.")}
+  finally{btn.disabled=false;btn.textContent="Enregistrer dans l'équipe"}
+}
+async function soDelete(){
+  if(!so.id||!confirm("Supprimer cette fiche de sortie ? Le temps reste dans le calendrier."))return;
+  try{await tmPost("/delete",{code:tm.team.code,id:so.id});soPrivDel(soPrivKey());tm.items=tm.items.filter(x=>x.id!==so.id);tmHubRender();openTeamSorties();toast("Fiche supprimée.")}
+  catch(e){toast("Suppression impossible.")}
+}
+
+/* Mail et impression : les seuls endroits où apparaissent téléphone et enfants */
+function soText(d){
+  const enc=[...d.enc,...d.ext],L=[];
+  L.push("FICHE DE SORTIE – "+d.titre.toUpperCase(),"");
+  L.push("Équipe : "+tm.team.name+(tm.team.place?" ("+tm.team.place+")":""));
+  L.push("Date : "+soDateLabel(d.date));
+  L.push("Départ : "+(tcHour(d.dep)||"—")+" · Retour prévu : "+(tcHour(d.ret)||"—"));
+  L.push("Lieu : "+d.lieu);
+  L.push("Transport : "+(d.tr||"—"));
+  L.push("Animateur responsable : "+d.resp+(d.tel?" – "+d.tel:""));
+  L.push("Nombre d'enfants : "+d.nb);
+  L.push("Encadrement ("+enc.length+") : "+(enc.join(", ")||"—"));
+  L.push("À emporter : "+SO_CHK.map(([k,l])=>(d.chk[k]?"✓ ":"✗ ")+l).join(", "));
+  if(d.kids.length){L.push("","Liste des enfants ("+d.kids.length+") :");d.kids.forEach((k,i)=>L.push((i+1)+". "+k))}
+  L.push("","Rappel : un exemplaire de la fiche part avec les animateurs, un autre reste à la structure.","","Préparé avec Anim Compagnon");
+  return L.join("\n");
+}
+function soMail(){
+  const d=soData();if(!soCheck(d))return;soPrivSave();
+  location.href="mailto:?subject="+encodeURIComponent("Fiche de sortie – "+d.titre+" – "+soDateLabel(d.date))+"&body="+encodeURIComponent(soText(d));
+}
+function soPage(d,ex){
+  const enc=[...d.enc,...d.ext],rows=d.kids.length?d.kids:Array(Math.min(d.nb,60)).fill("");
+  const box=k=>(d.chk[k]?"☑ ":"☐ ");
+  return `<div class="sp-page">
+    <div class="sp-top"><div><small>Fiche de sortie</small><h1>${esc(d.titre)}</h1><div>${esc(tm.team.name+(tm.team.place?" · "+tm.team.place:""))}</div></div><div class="sp-ex">Exemplaire<br>${ex}</div></div>
+    <div class="sp-grid"><div><span>Date</span><strong>${esc(soDateLabel(d.date))}</strong></div><div><span>Départ</span><strong>${esc(tcHour(d.dep)||"—")}</strong></div><div><span>Retour prévu</span><strong>${esc(tcHour(d.ret)||"—")}</strong></div></div>
+    <div class="sp-grid two"><div><span>Lieu de la sortie</span><strong>${esc(d.lieu)}</strong></div><div><span>Transport</span><strong>${esc(d.tr||"—")}</strong></div></div>
+    <div class="sp-grid two"><div><span>Nombre d'enfants</span><strong>${d.nb}</strong></div><div><span>Animateur responsable et contact</span><strong>${esc(d.resp+(d.tel?" · "+d.tel:""))}</strong></div></div>
+    <div class="sp-block"><span>Encadrement : ${enc.length} adulte${enc.length>1?"s":""}</span>${esc(enc.join(", ")||"—")}</div>
+    <div class="sp-block"><span>À emporter</span><div class="sp-checks">${SO_CHK.map(([k,l])=>`<span>${box(k)}${esc(l)}</span>`).join("")}</div></div>
+    <div class="sp-block"><span>Pense-bête</span><ul>${SO_MEMO.map(m=>`<li>${esc(m)}</li>`).join("")}</ul></div>
+    <table><thead><tr><th>N°</th><th>Nom et prénom de l'enfant</th><th>Départ</th><th>Retour</th></tr></thead>
+    <tbody>${rows.map((k,i)=>`<tr><td class="n">${i+1}</td><td>${esc(k)}</td><td class="c">☐</td><td class="c">☐</td></tr>`).join("")}</tbody></table>
+    <div class="sp-sign"><div>Signature du directeur / de la directrice</div><div>Retour effectif à : ______ h ______</div></div>
+  </div>`;
+}
+function soPrint(){
+  const d=soData();if(!soCheck(d))return;soPrivSave();
+  let el=document.getElementById("soPrint");
+  if(!el){el=document.createElement("div");el.id="soPrint";document.body.appendChild(el)}
+  el.innerHTML=soPage(d,"Animateurs")+soPage(d,"Structure");
+  document.body.classList.add("so-printing");
+  const end=()=>{document.body.classList.remove("so-printing");el.innerHTML=""};
+  window.addEventListener("afterprint",end,{once:true});
+  window.print();
+}
+
+/* Lien depuis le calendrier (temps « Sortie » en bleu) */
+function teSortieRender(){
+  const b=document.getElementById("teSortie");if(!b)return;
+  b.hidden=teCatVal!=="bleu";if(b.hidden)return;
+  const s=tc.editId?soItems().find(x=>Number(soC(x).cal)===tc.editId):null;
+  if(!tc.editId){b.innerHTML=`<span><b>Fiche de sortie</b><small>Enregistre d'abord ce temps pour créer sa fiche.</small></span>`;return}
+  if(s){const c=soC(s),n=(c.enc||[]).length+(c.ext||[]).length;b.innerHTML=`<span><b>Fiche de sortie</b><small>Remplie · ${n} encadrant${n>1?"s":""} · ${Number(c.nb)||0} enfants</small></span><em>Ouvrir →</em>`}
+  else b.innerHTML=`<span><b>Fiche de sortie</b><small>Pas encore remplie</small></span><em>Créer →</em>`;
+}
+function teOpenSortie(){
+  if(!tc.editId){toast("Enregistre d'abord ce temps.");return}
+  const s=soItems().find(x=>Number(soC(x).cal)===tc.editId);
+  if(s){soOpen(s.id);return}
+  const e=tm.items.find(x=>x.id===tc.editId)||{};
+  const anims=String(e.ANIMATEUR||"").split(",").map(x=>x.trim()).filter(Boolean);
+  soNew({cal:e.id,titre:e.TITRE,date:e.DATE,dep:e.DEBUT,ret:e.FIN,enc:anims.filter(n=>(tm.members||[]).includes(n)),resp:anims[0]});
 }
 /* =========================================================
    🤖 GÉNÉRER — modes et choix en pastilles
