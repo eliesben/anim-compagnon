@@ -1024,8 +1024,9 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
 .so-row2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
 .so-row2 input{min-width:0;width:100%}
 .so-lock{font-size:12px;line-height:1.45;color:var(--texte-doux);margin:2px 0 0}
-.so-kids{min-height:140px;line-height:1.5}
-.so-add{display:flex;gap:8px}
+.so-kid{display:grid;grid-template-columns:28px minmax(0,1fr) 28px;gap:8px;align-items:center;margin-bottom:8px}
+.so-kid input{padding:10px 12px;min-width:0}
+#soPrint table.sp-kids{margin-top:4px}.so-add{display:flex;gap:8px}
 .so-add input{flex:1;min-width:0}
 .so-add button{width:46px;flex:0 0 46px;border:0;border-radius:14px;background:var(--surface-2);color:var(--texte-clair);font-size:22px;font-weight:800}
 .so-tr{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
@@ -1654,8 +1655,8 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
       <span class="field-title">Nombre d'enfants *</span>
       <input id="soNb" type="number" inputmode="numeric" min="1" max="300" placeholder="Ex. 18">
       <span class="field-title">Liste des enfants (nom et prénom)</span>
-      <textarea id="soKids" class="so-kids" placeholder="Un enfant par ligne&#10;Tu peux coller la liste de la structure" oninput="soKidsInput()"></textarea>
-      <p class="so-lock">🔒 La liste reste sur ce téléphone : elle n'est jamais envoyée à l'équipe ni enregistrée en ligne. Elle apparaît seulement sur l'exemplaire imprimé et dans le mail, et s'efface d'elle-même 7 jours après la sortie.</p>
+      <div id="soKids"></div>
+      <button class="btn secondary full" onclick="soKidAdd()">+ Ajouter un enfant</button>      <p class="so-lock">🔒 La liste reste sur ce téléphone : elle n'est jamais envoyée à l'équipe ni enregistrée en ligne. Elle apparaît seulement sur l'exemplaire imprimé et dans le mail, et s'efface d'elle-même 7 jours après la sortie.</p>
     </div>
 
     <div class="pm-card tm-form">
@@ -5237,17 +5238,22 @@ async function fsClaim(){
 const SO_TR=["À pied","Vélo","Bus","Train"];
 const SO_CHK=[["trousse","Trousse de secours","Vérifiée et complète"],["gouter","Goûter","Pour tout le groupe"],["pai","PAI","Traitements des enfants concernés"],["eau","Eau","Bouteilles ou gourdes"],["gilets","Gilets jaunes","Un par enfant et par adulte"]];
 const SO_MEMO=["Je regarde la météo","Je m'assure que les enfants ont toutes leurs affaires","Je m'assure que le goûter est transportable","Je n'oublie pas de partager la fiche de sortie","Un exemplaire de la fiche part avec les animateurs, un autre reste à la structure"];
-const so={id:null,cal:null,enc:[],ext:[],tr:"",chk:{}};
+const so={id:null,cal:null,enc:[],ext:[],tr:"",chk:{},kids:[]};
 const soItems=()=>tm.items.filter(x=>x.TYPE==="sortie");
 const soC=x=>{try{return JSON.parse(x.CONTENU||"{}")}catch(e){return {}}};
 const soVal=id=>(document.getElementById(id).value||"").trim();
-const soKidsList=()=>soVal("soKids").split("\n").map(s=>s.trim()).filter(Boolean);
+const soKidsList=()=>so.kids.map(s=>String(s).trim()).filter(Boolean);
 const soDateLabel=iso=>{const d=tcParse(iso);return d?tcDayLabel(d)+" "+d.getFullYear():""};
 
 /* Téléphone et liste des enfants : uniquement sur ce téléphone, jamais envoyés */
 const soPrivKey=()=>tm.team.code+":"+(so.id||"new");
-function soPrivSave(){const m=tmGet("animSortiePriv",{});m[soPrivKey()]={tel:soVal("soTel"),kids:soVal("soKids"),date:soVal("soDate")};tmSet("animSortiePriv",m)}
-function soPrivDel(key){const m=tmGet("animSortiePriv",{});delete m[key];tmSet("animSortiePriv",m)}
+const soMem={};let soWarned=false;
+function soPrivSave(){
+  const k=soPrivKey(),o={tel:soVal("soTel"),kids:soKidsList().join("\n"),date:soVal("soDate")};soMem[k]=o;
+  try{const m=tmGet("animSortiePriv",{});m[k]=o;localStorage.setItem("animSortiePriv",JSON.stringify(m))}
+  catch(e){if(!soWarned&&(o.kids||o.tel)){soWarned=true;toast("Ce téléphone ne garde pas la liste en mémoire : imprime ou envoie la fiche avant de quitter.")}}
+}
+function soPrivDel(key){delete soMem[key];const m=tmGet("animSortiePriv",{});delete m[key];tmSet("animSortiePriv",m)}
 function soPrivPurge(){
   const m=tmGet("animSortiePriv",{}),lim=tcISO(tcAdd(new Date(),-7));let ch=false;
   for(const k in m){if(m[k].date&&m[k].date<lim){delete m[k];ch=true}}
@@ -5269,7 +5275,7 @@ function soListRender(){
 function soFill(d){
   const v=(id,x)=>document.getElementById(id).value=x||"";
   v("soTitre",d.titre);v("soLieu",d.lieu);v("soDate",d.date);v("soDep",d.dep);v("soRet",d.ret);v("soResp",d.resp);v("soNb",d.nb);
-  const p=tmGet("animSortiePriv",{})[soPrivKey()]||{};v("soTel",p.tel);v("soKids",p.kids);
+  const p=soMem[soPrivKey()]||tmGet("animSortiePriv",{})[soPrivKey()]||{};v("soTel",p.tel);so.kids=String(p.kids||"").split("\n").filter(s=>s.trim());
   document.getElementById("soMembers").innerHTML=(tm.members||[]).map(n=>`<option value="${esc(n)}">`).join("");
   document.getElementById("soDel").hidden=!so.id;
   document.getElementById("soHead").textContent=so.id?"Fiche de sortie":"Nouvelle fiche";
@@ -5304,10 +5310,25 @@ function soRender(){
   const done=SO_CHK.filter(([k])=>so.chk[k]).length;
   document.getElementById("soChkCount").textContent=done+" / "+SO_CHK.length+" pris";
   document.getElementById("soMemo").innerHTML=SO_MEMO.map(m=>`<li>${esc(m)}</li>`).join("");
+  soKidsRender();
+}
+function soKidsRender(){
+  if(!so.kids.length)so.kids.push("");
+  document.getElementById("soKids").innerHTML=so.kids.map((k,i)=>`<div class="so-kid">
+    <span class="pm-kid-n">${i+1}</span>
+    <input type="text" maxlength="80" value="${esc(k)}" placeholder="Nom et prénom" enterkeyhint="next" oninput="soKidName(${i},this.value)" onpaste="soKidPaste(event,${i})" onkeydown="if(event.key==='Enter'){event.preventDefault();soKidAdd()}">
+    <button class="tm-del" aria-label="Retirer" onclick="soKidDel(${i})">✕</button></div>`).join("");
   soKidsCount();
 }
-function soKidsCount(){const k=soKidsList().length;document.getElementById("soKidsCount").textContent=k?k+" sur la liste":"Liste vide"}
-function soKidsInput(){const k=soKidsList().length;if(k)document.getElementById("soNb").value=k;soKidsCount();soPrivSave()}
+function soKidsCount(){const k=soKidsList().length;document.getElementById("soKidsCount").textContent=k?k+" enfant"+(k>1?"s":"")+" sur la liste":"Liste vide";if(k)document.getElementById("soNb").value=k}
+function soKidName(i,v){so.kids[i]=v;soKidsCount();soPrivSave()}
+function soKidAdd(){so.kids.push("");soKidsRender();const ins=document.querySelectorAll("#soKids input");ins[ins.length-1].focus()}
+function soKidDel(i){so.kids.splice(i,1);soKidsRender();soPrivSave()}
+function soKidPaste(e,i){
+  const t=(e.clipboardData||window.clipboardData)?.getData("text")||"",lines=t.split(/\r?\n/).map(s=>s.trim()).filter(Boolean);
+  if(lines.length<2)return;
+  e.preventDefault();so.kids.splice(i,1,...lines);soKidsRender();soPrivSave();
+}
 function soToggleEnc(n){so.enc=so.enc.includes(n)?so.enc.filter(x=>x!==n):[...so.enc,n];soRender()}
 function soExtAdd(){const i=document.getElementById("soExtIn"),v=i.value.trim();if(!v)return;if(!so.ext.includes(v))so.ext.push(v);i.value="";soRender();i.focus()}
 function soExtDel(i){so.ext.splice(i,1);soRender()}
@@ -5370,6 +5391,10 @@ function soMail(){
   const d=soData();if(!soCheck(d))return;soPrivSave();
   location.href="mailto:?subject="+encodeURIComponent("Fiche de sortie – "+d.titre+" – "+soDateLabel(d.date))+"&body="+encodeURIComponent(soText(d));
 }
+function soRows(rows){
+  const half=Math.ceil(rows.length/2),cell=i=>i<rows.length?`<td class="n">${i+1}</td><td>${esc(rows[i])}</td>`:`<td class="n"></td><td></td>`;
+  let h="";for(let i=0;i<half;i++)h+=`<tr>${cell(i)}${cell(i+half)}</tr>`;return h;
+}
 function soPage(d,ex){
   const enc=[...d.enc,...d.ext],rows=d.kids.length?d.kids:Array(Math.min(d.nb,60)).fill("");
   const box=k=>(d.chk[k]?"☑ ":"☐ ");
@@ -5379,10 +5404,9 @@ function soPage(d,ex){
     <div class="sp-grid two"><div><span>Lieu de la sortie</span><strong>${esc(d.lieu)}</strong></div><div><span>Transport</span><strong>${esc(d.tr||"—")}</strong></div></div>
     <div class="sp-grid two"><div><span>Nombre d'enfants</span><strong>${d.nb}</strong></div><div><span>Animateur responsable et contact</span><strong>${esc(d.resp+(d.tel?" · "+d.tel:""))}</strong></div></div>
     <div class="sp-block"><span>Encadrement : ${enc.length} adulte${enc.length>1?"s":""}</span>${esc(enc.join(", ")||"—")}</div>
+    <div class="sp-block"><span>Liste des enfants : ${rows.length}</span><table class="sp-kids"><tbody>${soRows(rows)}</tbody></table></div>
     <div class="sp-block"><span>À emporter</span><div class="sp-checks">${SO_CHK.map(([k,l])=>`<span>${box(k)}${esc(l)}</span>`).join("")}</div></div>
     <div class="sp-block"><span>Pense-bête</span><ul>${SO_MEMO.map(m=>`<li>${esc(m)}</li>`).join("")}</ul></div>
-    <table><thead><tr><th>N°</th><th>Nom et prénom de l'enfant</th><th>Départ</th><th>Retour</th></tr></thead>
-    <tbody>${rows.map((k,i)=>`<tr><td class="n">${i+1}</td><td>${esc(k)}</td><td class="c">☐</td><td class="c">☐</td></tr>`).join("")}</tbody></table>
     <div class="sp-sign"><div>Signature du directeur / de la directrice</div><div>Retour effectif à : ______ h ______</div></div>
   </div>`;
 }
@@ -5392,7 +5416,7 @@ function soPrint(){
   if(!el){el=document.createElement("div");el.id="soPrint";document.body.appendChild(el)}
   el.innerHTML=soPage(d,"Animateurs")+soPage(d,"Structure");
   document.body.classList.add("so-printing");
-  const end=()=>{document.body.classList.remove("so-printing");el.innerHTML=""};
+  const end=()=>document.body.classList.remove("so-printing");
   window.addEventListener("afterprint",end,{once:true});
   window.print();
 }
