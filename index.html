@@ -1082,6 +1082,9 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
 .fs-cat{margin:4px 0 12px;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--vert-fonce)}
 .fs-cat:not(:first-child){margin-top:22px;padding-top:16px;border-top:1px solid var(--trait)}
 .fs-mini{flex-shrink:0;padding:6px 10px;border-radius:10px;border:1px solid var(--trait);background:var(--surface-2);color:var(--texte-clair);font-size:12px;font-weight:800}
+/* ===== HORS-LIGNE ===== */
+.net-banner{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(96px + env(safe-area-inset-bottom));z-index:60;max-width:calc(100% - 32px);padding:9px 14px;border-radius:99px;background:#3A3214;border:1px solid rgba(255,199,64,.45);color:#FFD772;font-size:12px;font-weight:800;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+.net-banner[hidden]{display:none}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
@@ -1924,7 +1927,7 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
     <div id="infoBody" class="info-body" style="margin-top:12px"></div>
   </div>
 </div>
-
+<div id="netBanner" class="net-banner" hidden>Hors connexion · dernières infos enregistrées</div>
 <!-- ========================= 📱 NAVIGATION ========================= -->
 <nav class="bottom"><div class="bottom-inner">
   <button class="nav active" data-nav="home" onclick="go('home')"><span class="nav-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M9 21v-7h6v7"/></svg></span>Accueil</button>
@@ -5465,6 +5468,14 @@ function teOpenSortie(){
   const anims=String(e.ANIMATEUR||"").split(",").map(x=>x.trim()).filter(Boolean);
   soNew({cal:e.id,titre:e.TITRE,date:e.DATE,dep:e.DEBUT,ret:e.FIN,enc:anims.filter(n=>(tm.members||[]).includes(n)),resp:anims[0]});
 }
+/* ----- Mode hors-ligne ----- */
+if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}));
+function netRender(){const b=document.getElementById("netBanner");if(b)b.hidden=navigator.onLine}
+window.addEventListener("offline",netRender);
+window.addEventListener("online",()=>{netRender();toast("Connexion retrouvée.");if(tm.team)tmLoad()});
+netRender();
+["generateAIActivity","analyzeMaterialPhoto","generateActivitySheet"].forEach(n=>{const f=window[n];if(typeof f!=="function")return;
+  window[n]=function(...a){if(!navigator.onLine){toast("Pas de connexion : le générateur IA a besoin d'internet.");return}return f.apply(this,a)}});
 /* =========================================================
    🤖 GÉNÉRER — modes et choix en pastilles
    ========================================================= */
