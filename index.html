@@ -1078,6 +1078,10 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
 #soPrint ul{margin:2px 0 0;padding-left:16px}
 #soPrint .sp-sign{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
 #soPrint .sp-sign div{border:1px solid #999;height:62px;padding:6px 8px;font-size:10px;color:#444}
+/* ===== ÉQUIPE : réglages ===== */
+.fs-cat{margin:4px 0 12px;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--vert-fonce)}
+.fs-cat:not(:first-child){margin-top:22px;padding-top:16px;border-top:1px solid var(--trait)}
+.fs-mini{flex-shrink:0;padding:6px 10px;border-radius:10px;border:1px solid var(--trait);background:var(--surface-2);color:var(--texte-clair);font-size:12px;font-weight:800}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
@@ -1464,6 +1468,8 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
     </div>
     <p class="gen-note" style="margin-top:14px">N'écris jamais le nom d'un enfant ni d'information sur sa santé ou sa famille : tout est visible par l'équipe.</p>
     <div style="height:10px"></div>
+    <button class="btn secondary full" onclick="openTeamSettings()">⚙️ Réglages de l'équipe</button>
+    <div style="height:8px"></div
     <button class="btn secondary full" onclick="tmLeave()">Quitter cette équipe sur ce téléphone</button>
   </section>
 </main>
@@ -4760,7 +4766,7 @@ function openTeam(){
   go("team");
   tm.team=tmGet("animTeam",null);tm.pending=null;
   if(tm.team){tmStep("tmSpace");document.getElementById("tmCode").textContent=tm.team.code;tmHubRender();
-    const me=tmMyName();(me?tmPost("/join",{code:tm.team.code,me}).catch(()=>{}):Promise.resolve()).then(()=>tmLoad())}
+    const me=tmMyName();(me?tmPost("/join",{code:tm.team.code,me}).catch(tmRemovedCheck):Promise.resolve()).then(()=>tmLoad())}
   else{tmStep("tmStepCode");setTimeout(()=>document.getElementById("tmJoinCode").focus(),300)}
 }
 function tmBack(){
@@ -4788,7 +4794,7 @@ async function tmEnter(){
   tmSet("animTeamMe",me);
   tm.team=tm.pending;tmSet("animTeam",tm.team);
   document.getElementById("tmJoinCode").value="";
-  tmPost("/join",{code:tm.team.code,me}).catch(()=>{});
+  tmPost("/join",{code:tm.team.code,me}).catch(tmRemovedCheck);
   tmStep("tmSpace");document.getElementById("tmCode").textContent=tm.team.code;tmHubRender();tmLoad();
   toast("Bienvenue dans l'équipe !");
 }
@@ -5207,15 +5213,29 @@ async function fdDelete(id){
 /* ----- Réglages du fil ----- */
 function openTeamFeedSettings(){go("teamFeedSettings");fsRender()}
 function fsRender(){
-  const st=fdSt(),resp=fdIsResp(),resps=tm.responsables||[];
+  const st=fdSt(),resp=fdIsResp(),resps=tm.responsables||[],me=tmMyName(),q=n=>esc(n).replace(/&#039;/g,"\\'");
+  document.querySelector("#teamFeedSettings .page-title").textContent="Réglages de l'équipe";
   document.getElementById("fsIntro").textContent=resp?"Tu es responsable : tu peux modifier les réglages.":"Visibles par tous, modifiables par les responsables.";
-  const seg=(k,title,opts)=>`<div class="fs-group"><span>${title}</span><div class="fs-seg">${opts.map(([v,l])=>`<button class="${st[k]===v?"on":""}" ${resp?"":"disabled"} onclick="fsSet('${k}','${v}')">${l}</button>`).join("")}</div></div>`;
+  const seg=(k,title,opts)=>`<div class="fs-group"><span>${title}</span><div class="fs-seg">${opts.map(([v,l])=>`<button class="${(st[k]||"all")===v?"on":""}" ${resp?"":"disabled"} onclick="fsSet('${k}','${v}')">${l}</button>`).join("")}</div></div>`;
+  const TR=[["all","Tout le monde"],["resp","Responsables"]];
   document.getElementById("fsGroups").innerHTML=
-    seg("write","Qui peut publier ?",[["all","Tout le monde"],["resp","Responsables"]])+
+    `<p class="fs-cat">Fil de l'équipe</p>`+
+    seg("write","Qui peut publier ?",TR)+
     seg("comment","Qui peut commenter ?",[["all","Tout le monde"],["resp","Responsables"],["none","Personne"]])+
-    seg("pin","Qui peut épingler ?",[["all","Tout le monde"],["resp","Responsables"]])+
-    seg("keep","Effacer les publications après",[["7","7 jours"],["30","30 jours"],["end","Jamais"]]);
-  document.getElementById("fsResps").innerHTML=`<div class="fs-group" style="margin:0"><span>Responsables</span></div>`+(resps.length?resps.map(n=>`<div class="fs-row"><span>${esc(n)}</span><em class="fs-tag">Responsable</em>${resp&&resps.length>1?`<button class="tm-del" aria-label="Retirer ${esc(n)}" onclick="fsRemove('${esc(n).replace(/&#039;/g,"\\'")}')">✕</button>`:""}</div>`).join(""):`<p class="pm-sub" style="text-align:left">Aucun responsable pour l'instant.</p>`);
+    seg("pin","Qui peut épingler ?",TR)+
+    seg("keep","Effacer les publications après",[["7","7 jours"],["30","30 jours"],["end","Jamais"]])+
+    `<p class="fs-cat">Organisation</p>`+
+    seg("cal","Qui peut modifier le calendrier ?",TR)+
+    seg("sortie","Qui gère les fiches de sortie ?",TR)+
+    seg("code","Qui voit le code de l'équipe ?",TR);
+  const members=tm.members||[],ex=Array.isArray(st.exclus)?st.exclus:[];
+  document.getElementById("fsResps").innerHTML=
+    `<div class="fs-group" style="margin:0"><span>Membres · ${members.length}</span></div>`+
+    members.map(n=>{const r=resps.includes(n);return `<div class="fs-row"><span>${esc(n)}${n===me?" (toi)":""}</span>${r?`<em class="fs-tag">Responsable</em>`:""}
+      ${resp&&r&&resps.length>1?`<button class="fs-mini" onclick="fsRemove('${q(n)}')">Retirer le rôle</button>`:""}
+      ${resp&&n!==me?`<button class="tm-del" aria-label="Retirer ${esc(n)} de l'équipe" onclick="fsMemberRemove('${q(n)}')">✕</button>`:""}</div>`}).join("")+
+    (ex.length?`<div class="fs-group" style="margin:14px 0 0"><span>Retirés de l'équipe</span></div>`+ex.map(n=>`<div class="fs-row"><span>${esc(n)}</span>${resp?`<button class="fs-mini" onclick="fsMemberRestore('${q(n)}')">Réintégrer</button>`:""}</div>`).join(""):"")+
+    (resp?`<p class="pm-sub" style="text-align:left;margin-top:10px">Pour nommer un responsable, donne-lui le code responsable ci-dessous.</p>`:"");
   const key=fdAdminKey();
   document.getElementById("fsAdmin").innerHTML=resp
     ?`<div class="fs-group" style="margin:0"><span>Code responsable</span></div><div class="fs-code">${esc(key)}</div><p class="pm-sub" style="text-align:left">Donne ce code à un collègue pour qu'il devienne responsable. Ne le partage pas avec toute l'équipe.</p>`
@@ -5351,7 +5371,7 @@ async function soSave(){
   try{
     // 1. Le temps du calendrier (créé s'il n'existe pas encore)
     const ev=so.cal?tm.items.find(x=>x.id===Number(so.cal)):null;
-    const cal={code,titre:d.titre,date:d.date,debut:d.dep,fin:d.ret,auteur:me};
+    const cal={code,titre:d.titre,date:d.date,debut:d.dep,fin:d.ret,auteur:me,via:"sortie"};
     if(ev){const r=await tmPost("/edit",{...cal,id:ev.id});Object.assign(ev,r)}
     else{const r=await tmPost("/item",{...cal,type:"cal",categorie:"bleu",animateur:[...d.enc,...d.ext].join(", "),detail:"Lieu : "+d.lieu});tm.items.push(r);so.cal=r.id}
     // 2. La fiche : jamais le téléphone ni les noms des enfants
