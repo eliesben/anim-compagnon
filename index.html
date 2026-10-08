@@ -1085,6 +1085,16 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
 /* ===== HORS-LIGNE ===== */
 .net-banner{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(96px + env(safe-area-inset-bottom));z-index:60;max-width:calc(100% - 32px);padding:9px 14px;border-radius:99px;background:#3A3214;border:1px solid rgba(255,199,64,.45);color:#FFD772;font-size:12px;font-weight:800;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,.35)}
 .net-banner[hidden]{display:none}
+/* ===== ÉQUIPE : demandes ===== */
+#tmSpace.tm-waiting>*:not(.tm-wait){display:none!important}
+.tm-wait:empty{display:none}
+.tm-wait b{display:block;font-size:17px;color:var(--texte-clair)}
+.tm-wait p{margin:8px 0 14px;font-size:14px;line-height:1.5;color:var(--texte-doux)}
+.tm-reqs{display:flex;align-items:center;gap:12px;width:100%;margin-top:14px;padding:14px;border-radius:18px;background:rgba(255,199,64,.12);border:1px solid rgba(255,199,64,.45);color:var(--texte-clair);text-align:left}
+.tm-reqs[hidden]{display:none}
+.tm-reqs b{display:block;font-size:15px}.tm-reqs small{font-size:12px;color:var(--texte-doux)}
+.tm-reqs .th-badge{flex-shrink:0;min-width:28px;height:28px;padding:0 8px;border-radius:14px;background:var(--rouge);color:#fff;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center}
+.fs-ok{background:var(--vert)!important;border-color:var(--vert)!important;color:#14170F!important}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
@@ -5476,6 +5486,47 @@ window.addEventListener("online",()=>{netRender();toast("Connexion retrouvée.")
 netRender();
 ["generateAIActivity","analyzeMaterialPhoto","generateActivitySheet"].forEach(n=>{const f=window[n];if(typeof f!=="function")return;
   window[n]=function(...a){if(!navigator.onLine){toast("Pas de connexion : le générateur IA a besoin d'internet.");return}return f.apply(this,a)}});
+
+ /* ----- Demandes pour rejoindre l'équipe ----- */
+const TM_TOK=(()=>{try{let t=localStorage.getItem("animDeviceTok");if(!t){t=Array.from(crypto.getRandomValues(new Uint8Array(16)),b=>b.toString(16).padStart(2,"0")).join("");localStorage.setItem("animDeviceTok",t)}return t}catch(e){return ""}})();
+(()=>{const f=window.fetch.bind(window);
+  window.fetch=async(u,o)=>{
+    if(typeof u!=="string"||!u.startsWith(TEAM_API))return f(u,o);
+    if(!o||!o.method||o.method==="GET")u+=(u.includes("?")?"&":"?")+"t="+TM_TOK;
+    else if(o.body){try{const b=JSON.parse(o.body);b.tok=TM_TOK;o={...o,body:JSON.stringify(b)}}catch(e){}}
+    const r=await f(u,o);
+    try{const d=await r.clone().json();
+      if(u.startsWith(TEAM_API+"?")&&d.acces){tm.acces=d.acces;tm.demandes=d.demandes||[]}
+      if(u.endsWith("/join")){
+        if(d.status==="wait"){tm.acces="wait";setTimeout(()=>{tmHubRender();toast("Demande envoyée : un responsable doit l'accepter.")},60)}
+        else if(d.code==="refused"){tm.acces="refuse";setTimeout(tmHubRender,60)}
+        else if(d.status==="ok")tm.acces="ok";
+      }
+    }catch(e){}
+    return r;
+  };
+})();
+tmWrapAfter("tmHubRender",()=>{
+  const sp=document.getElementById("tmSpace");if(!sp||!tm.team)return;
+  let w=sp.querySelector(".tm-wait");if(!w){w=document.createElement("div");w.className="pm-card tm-wait";sp.prepend(w)}
+  const a=tm.acces||"ok";sp.classList.toggle("tm-waiting",a!=="ok");
+  w.innerHTML=a==="wait"||a==="new"
+    ?`<b>Demande envoyée</b><p>Un responsable de « ${esc(tm.team.name)} » doit accepter ta demande. Tu auras accès à l'équipe dès qu'elle sera acceptée.</p><button class="btn primary full" onclick="tmLoad()">Actualiser</button><div style="height:8px"></div><button class="btn secondary full" onclick="tmLeave()">Annuler ma demande</button>`
+    :a==="refuse"?`<b>Demande refusée</b><p>Un responsable n'a pas accepté ta demande pour rejoindre « ${esc(tm.team.name)} ».</p><button class="btn secondary full" onclick="tmLeave()">Retour</button>`:"";
+  let q=sp.querySelector(".tm-reqs");if(!q){q=document.createElement("button");q.className="tm-reqs";q.onclick=()=>openTeamSettings();w.after(q)}
+  const n=(tm.demandes||[]).length;q.hidden=!(a==="ok"&&n&&fdIsResp());
+  q.innerHTML=`<span class="th-badge">${n}</span><span><b>${n} demande${n>1?"s":""} pour rejoindre l'équipe</b><small>Touche pour accepter ou refuser</small></span>`;
+});
+tmWrapAfter("fsRender",()=>{
+  const st=fdSt(),resp=fdIsResp(),d=tm.demandes||[];
+  document.getElementById("fsGroups").insertAdjacentHTML("beforeend",`<div class="fs-group"><span>Valider les nouveaux membres ?</span><div class="fs-seg">${[["oui","Oui, j'accepte chaque demande"],["non","Non, le code suffit"]].map(([v,l])=>`<button class="${(st.valid||"non")===v?"on":""}" ${resp?"":"disabled"} onclick="fsSet('valid','${v}')">${l}</button>`).join("")}</div></div>`);
+  if(resp&&d.length)document.getElementById("fsResps").insertAdjacentHTML("afterbegin",`<div class="fs-group" style="margin:0 0 4px"><span>Demandes en attente · ${d.length}</span></div>`+d.map(x=>`<div class="fs-row"><span>${esc(x.n)}</span><button class="fs-mini fs-ok" onclick="fsAccept('${esc(x.id)}',true)">Accepter</button><button class="tm-del" aria-label="Refuser ${esc(x.n)}" onclick="fsAccept('${esc(x.id)}',false)">✕</button></div>`).join("")+`<div style="height:16px"></div>`);
+});
+async function fsAccept(id,ok){
+  if(!ok&&!confirm("Refuser cette demande ? Cette personne ne pourra plus redemander depuis ce téléphone."))return;
+  try{const r=await tmPost("/accept",{code:tm.team.code,id,ok});tm.demandes=r.demandes;tm.members=r.members;tmHubRender();fsRender();toast(ok?"Demande acceptée.":"Demande refusée.")}
+  catch(e){toast(e.message||"Impossible.")}
+}  
 /* =========================================================
    🤖 GÉNÉRER — modes et choix en pastilles
    ========================================================= */
