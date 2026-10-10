@@ -1,9 +1,17 @@
 {
-  "name":"Anim Compagnon",
-  "short_name":"Anim Compagnon",
-  "start_url":"./",
-  "display":"standalone",
-  "background_color":"#f7f7f3",
-  "theme_color":"#5f8f55",
-  "icons":[]
+  "name": "Anim Compagnon",
+  "short_name": "Anim Compagnon",
+  "description": "La boîte à outils des animateurs : activités, générateur, mode équipe et Help.",
+  "lang": "fr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#14170F",
+  "theme_color": "#14170F",
+  "icons": [
+    { "src": "images/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "images/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "images/icon-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
 }
