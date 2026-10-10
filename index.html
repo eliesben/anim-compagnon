@@ -1130,19 +1130,6 @@ html{scroll-padding-top:calc(84px + env(safe-area-inset-top))}
 /* ===== FIL : heures calmes ===== */
 .fd-calme{margin:0;padding:10px 12px;border-radius:12px;background:rgba(130,150,255,.13);border:1px solid rgba(130,150,255,.35);color:#CBD3FF;font-size:13px;font-weight:700;line-height:1.4}
 .fd-calme[hidden]{display:none}
-/* ===== ÉQUIPE : boutons Réglages et Quitter ===== */
-#team .page-head{position:relative}
-.th-tools{position:absolute;top:18px;right:var(--marge);display:flex;gap:8px}
-.th-tools[hidden],.th-tool[hidden]{display:none}
-.th-tool{width:40px;height:40px;padding:0;border-radius:20px;border:1px solid var(--trait);background:var(--surface);color:var(--texte-clair);display:flex;align-items:center;justify-content:center}
-.th-tool svg{width:19px;height:19px}
-.th-tool.danger{color:#F0A0A6}
-.leave-sheet{text-align:center}
-.leave-ic{width:56px;height:56px;margin:4px auto 12px;border-radius:28px;background:rgba(224,82,92,.14);color:#F0A0A6;display:flex;align-items:center;justify-content:center}
-.leave-ic svg{width:26px;height:26px}
-.leave-sheet h2{margin:0 0 8px;font-size:20px;color:var(--texte-clair)}
-.leave-sheet p{margin:0 0 18px;font-size:14px;line-height:1.5;color:var(--texte-doux)}
-.leave-yes{background:var(--rouge)!important;color:#fff!important;border:0!important}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
@@ -4523,7 +4510,6 @@ function openActivity(i){
   if(a.development)html+=`<div class="gs-panel"><h2>Déroulement</h2>${stepsHTML(a.development)}</div>`;
   if(a.variants)html+=`<div class="gs-panel small"><h2>Variantes</h2><p>${esc(a.variants)}</p></div>`;
   if(a.vigilance)html+=`<div class="gs-panel small"><h2>Points de vigilance</h2><p>${esc(a.vigilance)}</p></div>`;
-  if(tmGet("animTeam",null))html+=`<button class="gs-link" onclick="teamShareFav()">👥 Ajouter aux favoris de l'équipe</button>`;
   openGlassSheet({
     img:activityPhoto(a),title:a.name,
     meta:[a.age,a.duration,a.location].filter(Boolean).join(" · "),
@@ -5533,7 +5519,45 @@ netRender();
 ["generateAIActivity","analyzeMaterialPhoto","generateActivitySheet"].forEach(n=>{const f=window[n];if(typeof f!=="function")return;
   window[n]=function(...a){if(!navigator.onLine){toast("Pas de connexion : le générateur IA a besoin d'internet.");return}return f.apply(this,a)}});
 
- /* ----- Demandes pour rejoindre l'équipe ----- */
+ /* ----- Réglages de l'équipe : effets dans l'app ----- */
+function tmRemovedCheck(e){if(e&&/retiré/.test(e.message||"")){tmLeave();toast("Tu as été retiré de cette équipe par un responsable.")}}
+function openTeamSettings(){openTeamFeedSettings();const b=document.querySelector("#teamFeedSettings .back");b.textContent="← Équipe";b.onclick=()=>openTeam()}
+function tmWrapAfter(name,after){const f=window[name];if(typeof f!=="function")return;window[name]=function(...a){const r=f.apply(this,a);after(...a);return r}}
+function tmWrapBefore(name,check){const f=window[name];if(typeof f!=="function")return;window[name]=function(...a){if(!check(...a))return;return f.apply(this,a)}}
+const tmShow=(el,on)=>{if(el)el.style.display=on?"":"none"};
+
+/* Calendrier : lecture seule si réservé aux responsables */
+function teLock(locked){
+  document.querySelectorAll("#teamEvent input,#teamEvent textarea,#teamEvent .te-cats button,#teamEvent .pm-presets .chip").forEach(x=>x.disabled=locked);
+  tmShow(document.getElementById("teSave"),!locked);
+  if(locked){document.getElementById("teDel").hidden=true;document.getElementById("teTitle").textContent="Détail du temps"}
+}
+tmWrapBefore("tcNew",()=>{if(fdCan("cal"))return true;toast("Seuls les responsables peuvent modifier le calendrier.");return false});
+tmWrapAfter("tcNew",()=>teLock(false));
+tmWrapAfter("tcEdit",()=>teLock(!fdCan("cal")));
+tmWrapAfter("tcRender",()=>tmShow(document.querySelector('#teamCal button[onclick="tcNew()"]'),fdCan("cal")));
+
+/* Fiches de sortie : lecture seule si réservé aux responsables */
+tmWrapAfter("soListRender",()=>tmShow(document.querySelector('#teamSorties button[onclick="soNew()"]'),fdCan("sortie")));
+tmWrapAfter("soFill",()=>{const ok=fdCan("sortie");tmShow(document.getElementById("soSave"),ok);if(!ok){document.getElementById("soDel").hidden=true;document.getElementById("soSub").textContent="Lecture seule : seuls les responsables modifient les fiches. Tu peux l'imprimer ou l'envoyer."}});
+tmWrapBefore("teOpenSortie",()=>{if(fdCan("sortie")||soItems().some(x=>Number(soC(x).cal)===tc.editId))return true;toast("Seuls les responsables peuvent créer une fiche de sortie.");return false});
+
+/* Code de l'équipe visible seulement par les responsables (si choisi) */
+tmWrapAfter("tmHubRender",()=>tmShow(document.querySelector("#tmSpace .th-code"),fdCan("code")));
+
+/* Membres retirés / réintégrés */
+async function fsMemberRemove(name){
+  if(!confirm("Retirer "+name+" de l'équipe ? Cette personne ne pourra plus y entrer avec ce prénom."))return;
+  try{const r=await tmPost("/member-remove",{code:tm.team.code,name});tm.members=r.members;tm.responsables=r.responsables;tm.settings=r.settings;fsRender();toast(name+" a été retiré de l'équipe.")}
+  catch(e){toast(e.message||"Impossible.")}
+}
+async function fsMemberRestore(name){
+  try{const r=await tmPost("/member-restore",{code:tm.team.code,name});tm.settings=r.settings;fsRender();toast(name+" peut de nouveau rejoindre l'équipe.")}
+  catch(e){toast(e.message||"Impossible.")}
+}
+tmWrapAfter("openTeamFeedSettings",()=>{const b=document.querySelector("#teamFeedSettings .back");b.textContent="← Fil de l'équipe";b.onclick=()=>openTeamFeed()});
+
+/* ----- Demandes pour rejoindre l'équipe ----- */
 const TM_TOK=(()=>{try{let t=localStorage.getItem("animDeviceTok");if(!t){t=Array.from(crypto.getRandomValues(new Uint8Array(16)),b=>b.toString(16).padStart(2,"0")).join("");localStorage.setItem("animDeviceTok",t)}return t}catch(e){return ""}})();
 (()=>{const f=window.fetch.bind(window);
   window.fetch=async(u,o)=>{
@@ -5648,25 +5672,25 @@ tmWrapAfter("fsRender",()=>{
     +`<p class="pm-sub" style="text-align:left;margin:-6px 0 14px">Pendant les heures calmes, les messages du fil sont programmés : ils n'arrivent chez les autres qu'à la fin. En cas d'urgence, on appelle.</p>`;
   if(org)org.insertAdjacentHTML("beforebegin",html);else document.getElementById("fsGroups").insertAdjacentHTML("beforeend",html);
 });
-/* ----- Équipe : boutons Réglages et Quitter ----- */
-const TM_SVG_GEAR=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>`;
-const TM_SVG_DOOR=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>`;
-(()=>{
-  const h=document.querySelector("#team .page-head");if(!h)return;
-  h.insertAdjacentHTML("beforeend",`<div class="th-tools" id="thTools" hidden><button class="th-tool" id="thGear" aria-label="Réglages de l'équipe" title="Réglages de l'équipe" onclick="openTeamSettings()">${TM_SVG_GEAR}</button><button class="th-tool danger" aria-label="Quitter l'équipe" title="Quitter l'équipe" onclick="tmLeaveAsk()">${TM_SVG_DOOR}</button></div>`);
-  document.body.insertAdjacentHTML("beforeend",`<div id="leaveOverlay" class="sheet-overlay" hidden onclick="if(event.target===this)tmLeaveClose()"><div class="filter-sheet leave-sheet" role="dialog" aria-labelledby="leaveTitle"><div class="leave-ic">${TM_SVG_DOOR}</div><h2 id="leaveTitle">Quitter l'équipe ?</h2><p id="leaveText"></p><button class="btn full leave-yes" onclick="tmLeaveYes()">Quitter l'équipe</button><div style="height:8px"></div><button class="btn secondary full" onclick="tmLeaveClose()">Annuler</button></div></div>`);
-})();
-function tmLeaveAsk(){
-  document.getElementById("leaveText").textContent=`Tu ne verras plus « ${tm.team?.name||"cette équipe"} » sur ce téléphone. L'équipe et son contenu restent pour les autres membres, et tu pourras revenir avec le code.`;
-  document.getElementById("leaveOverlay").hidden=false;document.body.classList.add("sheet-open");
-}
-function tmLeaveClose(){document.getElementById("leaveOverlay").hidden=true;document.body.classList.remove("sheet-open")}
-function tmLeaveYes(){tmLeaveClose();tmLeave();toast("Tu as quitté l'équipe.")}
-tmWrapAfter("tmStep",s=>{const t=document.getElementById("thTools");if(t)t.hidden=s!=="tmSpace"});
-tmWrapAfter("tmHubRender",()=>{const g=document.getElementById("thGear");if(g)g.hidden=!!tm.acces&&tm.acces!=="ok"});
-   /* =========================================================
+/* =========================================================
    🤖 GÉNÉRER — modes et choix en pastilles
    ========================================================= */
+/* ----- Menu ⋯ des cartes d'activité : favoris de l'équipe ----- */
+const TM_SVG_TEAM=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/><circle cx="17.5" cy="9" r="2.4"/><path d="M16.5 14.6c2.6.2 4.5 2.1 4.5 4.9"/></svg>`;
+function qTeamLabel(a){return typeof tfFavs==="function"&&tfFavs().some(x=>String(tfJSON(x.CONTENU).id)===String(a.id))?"✓ Dans les favoris de l'équipe":"Ajouter aux favoris de l'équipe"}
+tmWrapAfter("toggleQMenu",(i,btn)=>{
+  const menu=btn&&btn.parentElement.querySelector(".qmenu"),a=window.rendered&&window.rendered[i];
+  if(!menu||menu.hidden||!a||!tmGet("animTeam",null))return;
+  let b=menu.querySelector(".q-team");
+  if(!b){b=document.createElement("button");b.className="q-team";b.onclick=()=>qTeamFav(i);menu.querySelector("button").after(b)}
+  b.innerHTML=TM_SVG_TEAM+qTeamLabel(a);
+});
+async function qTeamFav(i){
+  const a=window.rendered&&window.rendered[i];if(!a)return;
+  closeQMenus();
+  if(qTeamLabel(a).startsWith("✓")){toast("Déjà dans les favoris de l'équipe.");return}
+  window.currentActivity=a;await teamShareFav();
+}
 function openGeneratorMode(mode){
   if(mode==="ia")mode="ia-text";
   const proposals=document.getElementById("aiGeneratedProposals");
