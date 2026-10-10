@@ -5544,7 +5544,25 @@ async function fsAccept(id,ok){
 }
 /* ----- iPhone : remettre l'écran en place après la fermeture du clavier ----- */
 document.addEventListener("focusout",()=>setTimeout(()=>{const a=document.activeElement;if(!a||!/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName))window.scrollTo(window.scrollX,window.scrollY)},120));
-/* =========================================================
+/* ----- Menu latéral : glisser le doigt depuis le bord gauche ----- */
+(()=>{let x0=0,y0=0,mode="";
+  const ouvert=()=>!document.getElementById("sideMenu").hidden;
+  const autreFenetre=()=>[...document.querySelectorAll(".sheet-overlay,.glass-sheet,.modal-overlay")].some(e=>!e.hidden&&getComputedStyle(e).display!=="none");
+  document.addEventListener("touchstart",e=>{
+    const t=e.touches[0];x0=t.clientX;y0=t.clientY;
+    mode=ouvert()?"fermer":(x0<28&&!autreFenetre()?"ouvrir":"");
+  },{passive:true});
+  document.addEventListener("touchend",e=>{
+    if(!mode)return;
+    const t=e.changedTouches[0],dx=t.clientX-x0,dy=Math.abs(t.clientY-y0);
+    if(dy<60){
+      if(mode==="ouvrir"&&dx>60)openSideMenu();
+      if(mode==="fermer"&&dx<-60)closeSideMenu();
+    }
+    mode="";
+  },{passive:true});
+})();
+   /* =========================================================
    🤖 GÉNÉRER — modes et choix en pastilles
    ========================================================= */
 function openGeneratorMode(mode){
