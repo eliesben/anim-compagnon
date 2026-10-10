@@ -11,7 +11,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Anim Compagnon">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
 <script>try{if(localStorage.getItem("animTheme")==="light"){document.documentElement.dataset.theme="light";document.querySelector('meta[name="theme-color"]').content="#F3F0E8"}}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1103,8 +1103,10 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
 .tm-reqs .th-badge{flex-shrink:0;min-width:28px;height:28px;padding:0 8px;border-radius:14px;background:var(--rouge);color:#fff;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center}
 .fs-ok{background:var(--vert)!important;border-color:var(--vert)!important;color:#14170F!important}
 /* ===== iPhone : écran stable ===== */
-html,body{overscroll-behavior-y:none}
 body,.app{min-height:100dvh}
+.app{padding-top:calc(70px + env(safe-area-inset-top))}
+html{scroll-padding-top:calc(84px + env(safe-area-inset-top))}
+.bottom{bottom:calc(14px + env(safe-area-inset-bottom))}
 @supports (-webkit-touch-callout:none){
   textarea,select,input[type="text"],input[type="email"],input[type="number"],input[type="date"],input[type="time"],input[type="tel"],input:not([type]){font-size:16px!important}
 }
