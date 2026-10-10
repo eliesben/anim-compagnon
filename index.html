@@ -1102,6 +1102,12 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
 .tm-reqs b{display:block;font-size:15px}.tm-reqs small{font-size:12px;color:var(--texte-doux)}
 .tm-reqs .th-badge{flex-shrink:0;min-width:28px;height:28px;padding:0 8px;border-radius:14px;background:var(--rouge);color:#fff;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center}
 .fs-ok{background:var(--vert)!important;border-color:var(--vert)!important;color:#14170F!important}
+/* ===== iPhone : écran stable ===== */
+html,body{overscroll-behavior-y:none}
+body,.app{min-height:100dvh}
+@supports (-webkit-touch-callout:none){
+  textarea,select,input[type="text"],input[type="email"],input[type="number"],input[type="date"],input[type="time"],input[type="tel"],input:not([type]){font-size:16px!important}
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
@@ -5533,7 +5539,9 @@ async function fsAccept(id,ok){
   if(!ok&&!confirm("Refuser cette demande ? Cette personne ne pourra plus redemander depuis ce téléphone."))return;
   try{const r=await tmPost("/accept",{code:tm.team.code,id,ok});tm.demandes=r.demandes;tm.members=r.members;tmHubRender();fsRender();toast(ok?"Demande acceptée.":"Demande refusée.")}
   catch(e){toast(e.message||"Impossible.")}
-}  
+}
+/* ----- iPhone : remettre l'écran en place après la fermeture du clavier ----- */
+document.addEventListener("focusout",()=>setTimeout(()=>{const a=document.activeElement;if(!a||!/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName))window.scrollTo(window.scrollX,window.scrollY)},120));
 /* =========================================================
    🤖 GÉNÉRER — modes et choix en pastilles
    ========================================================= */
