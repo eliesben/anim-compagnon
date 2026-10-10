@@ -1127,6 +1127,9 @@ html{scroll-padding-top:calc(84px + env(safe-area-inset-top))}
 .toast{z-index:1000}
 .gs-link[onclick="teamShareFav()"]{display:flex;justify-content:center;width:calc(100% - 36px);min-height:48px;margin:16px 18px 0;border-radius:16px;font-size:14px}
 .gs-link[onclick="teamShareFav()"]:disabled{background:rgba(132,185,138,.22);border-color:rgba(132,185,138,.5);opacity:1}
+/* ===== FIL : heures calmes ===== */
+.fd-calme{margin:0;padding:10px 12px;border-radius:12px;background:rgba(130,150,255,.13);border:1px solid rgba(130,150,255,.35);color:#CBD3FF;font-size:13px;font-weight:700;line-height:1.4}
+.fd-calme[hidden]{display:none}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
@@ -5605,6 +5608,35 @@ tmWrapAfter("tmHubRender",()=>{const g=document.getElementById("thGear");if(g)g.
     if(b){b.disabled=ok;b.textContent=ok?"✓ Dans les favoris de l'équipe":"👥 Ajouter aux favoris de l'équipe"}
   };
 })();
+/* ----- Heures calmes du fil (droit à la déconnexion) ----- */
+function tmQuand(iso){
+  const d=new Date(iso),t=d.toLocaleTimeString("fr-FR",{hour:"2-digit",minute:"2-digit"}).replace(":","h"),j=new Date(),dm=new Date();dm.setDate(j.getDate()+1);
+  return d.toDateString()===j.toDateString()?"aujourd'hui à "+t:d.toDateString()===dm.toDateString()?"demain à "+t:d.toLocaleDateString("fr-FR",{weekday:"long"})+" à "+t;
+}
+const tmCalme=()=>!!tm.calme&&new Date(tm.calme)>new Date();
+(()=>{const f=window.fetch.bind(window);
+  window.fetch=async(u,o)=>{const r=await f(u,o);
+    if(typeof u==="string"&&u.startsWith(TEAM_API+"?")){try{const d=await r.clone().json();if(d.items)tm.calme=d.calme||""}catch(e){}}
+    return r};
+})();
+(()=>{const f=window.fdWhen;if(typeof f==="function")window.fdWhen=iso=>iso&&new Date(iso)>new Date()?"🌙 Programmé · publié "+tmQuand(iso):f(iso)})();
+tmWrapAfter("fdRender",()=>{
+  const c=document.getElementById("fdCompose");if(!c)return;
+  let b=document.getElementById("fdCalme");if(!b){b=document.createElement("p");b.id="fdCalme";b.className="fd-calme";c.prepend(b)}
+  const on=tmCalme();b.hidden=!on;if(on)b.textContent="🌙 Heures calmes : ton message sera publié "+tmQuand(tm.calme)+".";
+  const s=document.getElementById("fdSend");if(s&&!s.disabled)s.textContent=on?"Programmer":"Publier";
+});
+(()=>{const f=window.fdPublish;if(typeof f==="function")window.fdPublish=async(...a)=>{const on=tmCalme();await f(...a);if(on)toast("Programmé : ton message sera publié "+tmQuand(tm.calme)+".")}})();
+(()=>{const f=window.fdComment;if(typeof f==="function")window.fdComment=async(...a)=>{const on=tmCalme();await f(...a);if(on)toast("Commentaire programmé : visible "+tmQuand(tm.calme)+".")}})();
+(()=>{const f=window.fsSet;if(typeof f==="function")window.fsSet=async(k,v)=>{await f(k,v);if(k==="calme"||k==="weekend")tmLoad()}})();
+tmWrapAfter("fsRender",()=>{
+  const st=fdSt(),resp=fdIsResp(),org=document.querySelectorAll("#fsGroups .fs-cat")[1];
+  const seg=(k,title,opts,def)=>`<div class="fs-group"><span>${title}</span><div class="fs-seg">${opts.map(([v,l])=>`<button class="${(st[k]||def)===v?"on":""}" ${resp?"":"disabled"} onclick="fsSet('${k}','${v}')">${l}</button>`).join("")}</div></div>`;
+  const html=seg("calme","Heures calmes (droit à la déconnexion)",[["off","Aucune"],["20-8","20h → 8h"],["21-7","21h → 7h"]],"off")
+    +((st.calme||"off")!=="off"?seg("weekend","Week-end calme aussi ?",[["non","Non"],["oui","Oui, du vendredi soir au lundi matin"]],"non"):"")
+    +`<p class="pm-sub" style="text-align:left;margin:-6px 0 14px">Pendant les heures calmes, les messages du fil sont programmés : ils n'arrivent chez les autres qu'à la fin. En cas d'urgence, on appelle.</p>`;
+  if(org)org.insertAdjacentHTML("beforebegin",html);else document.getElementById("fsGroups").insertAdjacentHTML("beforeend",html);
+});
    /* =========================================================
    🤖 GÉNÉRER — modes et choix en pastilles
    ========================================================= */
