@@ -1130,6 +1130,19 @@ html{scroll-padding-top:calc(84px + env(safe-area-inset-top))}
 /* ===== FIL : heures calmes ===== */
 .fd-calme{margin:0;padding:10px 12px;border-radius:12px;background:rgba(130,150,255,.13);border:1px solid rgba(130,150,255,.35);color:#CBD3FF;font-size:13px;font-weight:700;line-height:1.4}
 .fd-calme[hidden]{display:none}
+/* ===== ÉQUIPE : boutons Réglages et Quitter ===== */
+#team .page-head{position:relative}
+.th-tools{position:absolute;top:18px;right:var(--marge);display:flex;gap:8px}
+.th-tools[hidden],.th-tool[hidden]{display:none}
+.th-tool{width:40px;height:40px;padding:0;border-radius:20px;border:1px solid var(--trait);background:var(--surface);color:var(--texte-clair);display:flex;align-items:center;justify-content:center}
+.th-tool svg{width:19px;height:19px}
+.th-tool.danger{color:#F0A0A6}
+.leave-sheet{text-align:center}
+.leave-ic{width:56px;height:56px;margin:4px auto 12px;border-radius:28px;background:rgba(224,82,92,.14);color:#F0A0A6;display:flex;align-items:center;justify-content:center}
+.leave-ic svg{width:26px;height:26px}
+.leave-sheet h2{margin:0 0 8px;font-size:20px;color:var(--texte-clair)}
+.leave-sheet p{margin:0 0 18px;font-size:14px;line-height:1.5;color:var(--texte-doux)}
+.leave-yes{background:var(--rouge)!important;color:#fff!important;border:0!important}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
@@ -1516,9 +1529,7 @@ html{scroll-padding-top:calc(84px + env(safe-area-inset-top))}
     </div>
     <p class="gen-note" style="margin-top:14px">N'écris jamais le nom d'un enfant ni d'information sur sa santé ou sa famille : tout est visible par l'équipe.</p>
     <div style="height:10px"></div>
-    <button class="btn secondary full" onclick="openTeamSettings()">⚙️ Réglages de l'équipe</button>
-    <div style="height:8px"></div
-    <button class="btn secondary full" onclick="tmLeave()">Quitter cette équipe sur ce téléphone</button>
+
   </section>
 </main>
 
@@ -5637,6 +5648,22 @@ tmWrapAfter("fsRender",()=>{
     +`<p class="pm-sub" style="text-align:left;margin:-6px 0 14px">Pendant les heures calmes, les messages du fil sont programmés : ils n'arrivent chez les autres qu'à la fin. En cas d'urgence, on appelle.</p>`;
   if(org)org.insertAdjacentHTML("beforebegin",html);else document.getElementById("fsGroups").insertAdjacentHTML("beforeend",html);
 });
+/* ----- Équipe : boutons Réglages et Quitter ----- */
+const TM_SVG_GEAR=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>`;
+const TM_SVG_DOOR=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>`;
+(()=>{
+  const h=document.querySelector("#team .page-head");if(!h)return;
+  h.insertAdjacentHTML("beforeend",`<div class="th-tools" id="thTools" hidden><button class="th-tool" id="thGear" aria-label="Réglages de l'équipe" title="Réglages de l'équipe" onclick="openTeamSettings()">${TM_SVG_GEAR}</button><button class="th-tool danger" aria-label="Quitter l'équipe" title="Quitter l'équipe" onclick="tmLeaveAsk()">${TM_SVG_DOOR}</button></div>`);
+  document.body.insertAdjacentHTML("beforeend",`<div id="leaveOverlay" class="sheet-overlay" hidden onclick="if(event.target===this)tmLeaveClose()"><div class="filter-sheet leave-sheet" role="dialog" aria-labelledby="leaveTitle"><div class="leave-ic">${TM_SVG_DOOR}</div><h2 id="leaveTitle">Quitter l'équipe ?</h2><p id="leaveText"></p><button class="btn full leave-yes" onclick="tmLeaveYes()">Quitter l'équipe</button><div style="height:8px"></div><button class="btn secondary full" onclick="tmLeaveClose()">Annuler</button></div></div>`);
+})();
+function tmLeaveAsk(){
+  document.getElementById("leaveText").textContent=`Tu ne verras plus « ${tm.team?.name||"cette équipe"} » sur ce téléphone. L'équipe et son contenu restent pour les autres membres, et tu pourras revenir avec le code.`;
+  document.getElementById("leaveOverlay").hidden=false;document.body.classList.add("sheet-open");
+}
+function tmLeaveClose(){document.getElementById("leaveOverlay").hidden=true;document.body.classList.remove("sheet-open")}
+function tmLeaveYes(){tmLeaveClose();tmLeave();toast("Tu as quitté l'équipe.")}
+tmWrapAfter("tmStep",s=>{const t=document.getElementById("thTools");if(t)t.hidden=s!=="tmSpace"});
+tmWrapAfter("tmHubRender",()=>{const g=document.getElementById("thGear");if(g)g.hidden=!!tm.acces&&tm.acces!=="ok"});
    /* =========================================================
    🤖 GÉNÉRER — modes et choix en pastilles
    ========================================================= */
