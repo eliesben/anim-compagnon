@@ -1,6 +1,6 @@
 /* Anim Compagnon — mode hors-ligne
    Change le numéro de VERSION à chaque fois que tu modifies CE fichier. */
-const VERSION = "v1";
+const VERSION = "v2";
 const APP = "anim-app-" + VERSION;      // l'app elle-même (page, logo, images)
 const DATA = "anim-data";               // dernières données reçues du Worker
 const API = "anim-compagnon-api.eliesbendjedou30.workers.dev";
@@ -66,4 +66,39 @@ self.addEventListener("fetch", e => {
     e.respondWith(rep);
     e.waitUntil(rep.then(() => alleger("anim-img", 200)));
   }
+});
+
+// =========================================================
+// 🔔 Notifications : reçues même quand l'appli est fermée
+// =========================================================
+self.addEventListener("push", e => {
+  let d = {};
+  try { d = e.data ? e.data.json() : {}; } catch (err) { d = { body: e.data ? e.data.text() : "" }; }
+  const titre = d.title || "Anim Compagnon";
+  e.waitUntil(self.registration.showNotification(titre, {
+    body: d.body || "",
+    icon: "images/icon-192.png",
+    badge: "images/icon-192.png",
+    tag: d.tag || undefined,
+    renotify: !!d.tag,
+    data: { url: d.url || "./" }
+  }));
+});
+
+// Toucher la notification : ouvre l'appli au bon endroit
+self.addEventListener("notificationclick", e => {
+  e.notification.close();
+  const cible = new URL((e.notification.data && e.notification.data.url) || "./", self.registration.scope);
+  const go = cible.searchParams.get("go");
+  e.waitUntil((async () => {
+    const fenetres = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
+    for (const c of fenetres) {
+      if (c.url.startsWith(self.registration.scope)) {
+        await c.focus();
+        if (go) c.postMessage({ go });
+        return;
+      }
+    }
+    await self.clients.openWindow(cible.href);
+  })());
 });
