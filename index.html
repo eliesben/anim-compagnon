@@ -1307,6 +1307,14 @@ button.stat{border:0;font:inherit;color:inherit;text-align:left;cursor:pointer}
 .fs-sec[hidden]{display:none}
 .fs-sec-h:not(:first-child){margin-top:12px;padding-top:16px;border-top:1px solid var(--trait)}
 html[data-theme="light"] .fs-tag{background:#FFF1C9;color:#7A5600}
+/* ===== Notifications ===== */
+.th-tool.bell-on{background:var(--vert);border-color:var(--vert);color:#10140C}
+.tm-push-cta{display:flex;align-items:center;gap:12px;width:100%;margin-top:14px;padding:14px;border-radius:18px;background:var(--surface);border:1px dashed var(--vert);color:var(--texte-clair);text-align:left}
+.tm-push-cta[hidden]{display:none}
+.tm-push-cta .pc-ico{flex:none;width:40px;height:40px;border-radius:50%;background:rgba(132,185,138,.2);color:var(--vert-fonce);display:grid;place-items:center}
+.tm-push-cta .pc-ico svg{width:20px;height:20px}
+.tm-push-cta b{display:block;font-size:15px}.tm-push-cta small{display:block;font-size:12.5px;color:var(--texte-doux);margin-top:2px}
+.tm-push-cta .pc-x{flex:none;margin-left:auto;border:0;background:none;color:var(--texte-doux);font-size:16px;padding:6px}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
@@ -6822,6 +6830,70 @@ tmWrapAfter("fsRender",()=>{
 
 /* ----- Menu latéral : libellé Compte ----- */
 tmWrapAfter("openSideMenu",()=>{const l=document.getElementById("sideAccLabel");if(l)l.textContent=typeof authOn==="function"&&authOn()?"Mon compte":"Se connecter"});
+/* =========================================================
+   🔔 NOTIFICATIONS (même appli fermée)
+   ========================================================= */
+const VAPID_PUBLIC="BN4jNp34P-agmq5N-z-BJqBxhCKhi7mtiM6V86x3XtrXEFnSufvPPO1bWcGvpZYKKeOtf5jGxw6FfMXef0tIdDc";
+const BELL_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>';
+const BELL_OFF_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8.7 3A6 6 0 0 1 18 8a21.3 21.3 0 0 0 .6 5"/><path d="M17 17H3s3-2 3-9a4.67 4.67 0 0 1 .3-1.7"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/><path d="m2 2 20 20"/></svg>';
+const pushOk=()=>"serviceWorker" in navigator&&"PushManager" in window&&"Notification" in window;
+const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);
+const isStandalone=()=>window.matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;
+const pushMap=()=>tmGet("animPush",{});
+const pushIsOn=()=>!!(tm.team&&pushMap()[tm.team.code]&&pushOk()&&Notification.permission==="granted");
+function pushSetOn(on){const m=pushMap();if(on)m[tm.team.code]=1;else delete m[tm.team.code];tmSet("animPush",m)}
+function u8(b){b=b.replace(/-/g,"+").replace(/_/g,"/");while(b.length%4)b+="=";return Uint8Array.from(atob(b),c=>c.charCodeAt(0))}
+async function pushToggle(){
+  if(!tm.team)return;
+  if(!pushOk()){
+    toast(isIOS&&!isStandalone()?"Sur iPhone : installe d'abord l'appli (Partager → Sur l'écran d'accueil), puis active les notifications depuis l'appli.":"Ce navigateur ne permet pas les notifications.");return}
+  const code=tm.team.code;
+  try{
+    const reg=await navigator.serviceWorker.ready;
+    if(pushIsOn()){
+      const sub=await reg.pushManager.getSubscription();
+      if(sub)await tmPost("/push",{code,sub:sub.toJSON(),on:false,me:tmMyName()}).catch(()=>{});
+      pushSetOn(false);pushRender();toast("Notifications coupées pour cette équipe.");return;
+    }
+    const perm=await Notification.requestPermission();
+    if(perm!=="granted"){toast(perm==="denied"?"Notifications bloquées : autorise-les dans les réglages du téléphone pour Anim Compagnon.":"Notifications non activées.");return}
+    let sub=await reg.pushManager.getSubscription();
+    if(!sub)sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:u8(VAPID_PUBLIC)});
+    await tmPost("/push",{code,sub:sub.toJSON(),me:tmMyName(),test:true});
+    pushSetOn(true);pushRender();toast("Notifications activées ✅ Tu vas recevoir un message de test.");
+  }catch(e){toast(e&&e.message?e.message:"Impossible d'activer les notifications.")}
+}
+function pushRender(){
+  const tools=document.getElementById("thTools");
+  if(tools&&!document.getElementById("thBell")){const b=document.createElement("button");b.className="th-tool";b.id="thBell";b.onclick=pushToggle;tools.prepend(b)}
+  const b=document.getElementById("thBell");
+  if(b){const on=pushIsOn();b.classList.toggle("bell-on",on);b.innerHTML=on?BELL_SVG:BELL_OFF_SVG;b.setAttribute("aria-label",on?"Notifications activées (toucher pour couper)":"Activer les notifications");b.title=b.getAttribute("aria-label")}
+  // Suggestion dans l'espace d'équipe
+  const sp=document.getElementById("tmSpace");if(!sp||!tm.team)return;
+  let c=sp.querySelector(".tm-push-cta");
+  if(!c){c=document.createElement("div");c.className="tm-push-cta";c.innerHTML=`<span class="pc-ico">${BELL_SVG}</span><span style="flex:1"><b>Active les notifications</b><small>Les nouveautés de l'équipe, même appli fermée.</small></span><button class="btn primary" style="flex:none;padding:10px 14px" onclick="pushToggle()">Activer</button><button class="pc-x" aria-label="Plus tard" onclick="pushLater()">✕</button>`;const ref=sp.querySelector(".tm-reqs")||sp.querySelector(".tm-wait");if(ref)ref.after(c);else sp.prepend(c)}
+  const later=tmGet("animPushLater",{})[tm.team.code];
+  c.hidden=pushIsOn()||!!later||(tm.acces&&tm.acces!=="ok");
+}
+function pushLater(){const m=tmGet("animPushLater",{});m[tm.team.code]=Date.now();tmSet("animPushLater",m);pushRender();toast("Tu pourras les activer avec la cloche 🔔 en haut.")}
+tmWrapAfter("tmHubRender",pushRender);
+tmWrapAfter("tmStep",pushRender);
+/* Une fois par ouverture : on renvoie l'abonnement au serveur (au cas où le téléphone l'aurait renouvelé) */
+let pushSynced="";
+tmWrapAfter("tmHubRender",()=>{
+  if(!tm.team||pushSynced===tm.team.code||!pushIsOn()||tm.acces!=="ok")return;pushSynced=tm.team.code;
+  navigator.serviceWorker.ready.then(r=>r.pushManager.getSubscription()).then(sub=>{
+    if(sub)tmPost("/push",{code:tm.team.code,sub:sub.toJSON(),me:tmMyName()}).catch(()=>{});else{pushSetOn(false);pushRender()}
+  }).catch(()=>{});
+});
+/* Ouvrir le bon écran quand on touche une notification */
+function pushGo(go){
+  if(!go||!authOn()||!tmGet("animTeam",null))return;
+  openTeam();
+  setTimeout(()=>{if(go==="feed")openTeamFeed();else if(go==="cal")openTeamCal();else if(go==="sorties")openTeamSorties()},500);
+}
+(()=>{const g=new URLSearchParams(location.search).get("go");if(g){history.replaceState(null,"",location.pathname);setTimeout(()=>pushGo(g),900)}})();
+if("serviceWorker" in navigator)navigator.serviceWorker.addEventListener("message",e=>{if(e.data&&e.data.go)pushGo(e.data.go)});
 </script>
 </body>
 </html>
