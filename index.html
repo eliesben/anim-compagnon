@@ -96,7 +96,7 @@ button,input,textarea,select{font:inherit;color:inherit}
 button{cursor:pointer;-webkit-tap-highlight-color:transparent}
 button:active{transform:scale(.985)}
 a{color:var(--vert-fonce)}
-.app{width:min(100%,560px);min-height:100vh;margin:auto;padding-bottom:110px}
+.app{width:min(100%,560px);min-height:100vh;margin:auto;padding-bottom:calc(140px + env(safe-area-inset-bottom))}
 .view{display:none;animation:in .22s ease}.view.active{display:block}
 @keyframes in{from{opacity:.4;transform:translateY(6px)}to{opacity:1;transform:none}}
 .hidden{display:none!important}
@@ -859,11 +859,11 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
 .pm-team strong{display:block;font-size:14px;font-weight:900;margin-bottom:6px;color:var(--c)}
 .pm-team ul{padding:0;margin:0}
 .pm-team li{list-style:none;font-size:14px;padding:2px 0;color:var(--texte-clair)}
-.pm-kid{display:grid;grid-template-columns:28px 1fr 44px 28px;gap:8px;align-items:center;margin-bottom:8px}
+.pm-kid{display:grid;grid-template-columns:24px 1fr 86px 28px;gap:8px;align-items:center;margin-bottom:8px}
 .pm-kid-n{font-weight:900;color:var(--texte-doux);text-align:right;font-variant-numeric:tabular-nums}
 .pm-kid input{padding:10px 12px}
-.pm-kid-ok{height:44px;border-radius:14px;border:2px solid var(--trait);background:transparent;color:transparent;font-size:20px;font-weight:900}
-.pm-kid-ok.on{background:var(--vert);border-color:var(--vert);color:#14170F}
+.pm-kid-ok{height:44px;border-radius:14px;border:2px dashed var(--trait);background:transparent;color:var(--texte-doux);font-size:12.5px;font-weight:800;padding:0 4px}
+.pm-kid-ok.on{background:var(--vert);border:2px solid var(--vert);color:#14170F;font-size:14px}
 .pm-team{cursor:pointer;transition:outline .15s}
 .pm-team.target{outline:2px dashed var(--c);outline-offset:2px}
 .pm-team li{cursor:pointer;border-radius:8px;padding:4px 6px!important;margin:0 -6px}
@@ -1097,8 +1097,14 @@ html[data-theme="light"] .pref-row[aria-checked="true"] .switch{background:var(-
 .tm-wait:empty{display:none}
 .tm-wait b{display:block;font-size:17px;color:var(--texte-clair)}
 .tm-wait p{margin:8px 0 14px;font-size:14px;line-height:1.5;color:var(--texte-doux)}
-.tm-reqs{display:flex;align-items:center;gap:12px;width:100%;margin-top:14px;padding:14px;border-radius:18px;background:rgba(255,199,64,.12);border:1px solid rgba(255,199,64,.45);color:var(--texte-clair);text-align:left}
+.tm-reqs{display:block;gap:12px;width:100%;margin-top:14px;padding:14px;border-radius:18px;background:rgba(255,199,64,.12);border:1px solid rgba(255,199,64,.45);color:var(--texte-clair);text-align:left}
 .tm-reqs[hidden]{display:none}
+.tm-reqs-head{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.tm-req{display:flex;align-items:center;gap:8px;padding:10px 0 0;margin-top:10px;border-top:1px solid rgba(224,170,40,.3)}
+.tm-req>span{flex:1;min-width:0}.tm-req>span b{display:block;font-size:15px}.tm-req>span small{font-size:12px;color:var(--texte-doux)}
+.tm-req button{border:0;border-radius:12px;padding:10px 14px;font:800 13.5px var(--font)}
+.tm-req-ok{background:var(--vert);color:#10140C}
+.tm-req-no{background:transparent;color:var(--texte-doux);border:1px solid var(--trait)!important}
 .tm-reqs b{display:block;font-size:15px}.tm-reqs small{font-size:12px;color:var(--texte-doux)}
 .tm-reqs .th-badge{flex-shrink:0;min-width:28px;height:28px;padding:0 8px;border-radius:14px;background:var(--rouge);color:#fff;font-size:13px;font-weight:900;display:flex;align-items:center;justify-content:center}
 .fs-ok{background:var(--vert)!important;border-color:var(--vert)!important;color:#14170F!important}
@@ -1201,6 +1207,106 @@ html{scroll-padding-top:calc(84px + env(safe-area-inset-top))}
 @keyframes onbLogo{0%{opacity:0;transform:translateY(40px) scale(1.25)}25%{opacity:1;transform:translateY(40px) scale(1.25)}100%{opacity:1;transform:translateY(-10px) scale(.62)}}
 @keyframes onbTxt{to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.onb-intro img,.onb-intro h1,.onb-intro p{animation-duration:.01s;animation-delay:0s}}
+/* ===== Accueil : demandes pour les responsables ===== */
+.home-reqs{margin:4px 18px 18px;padding:16px;border-radius:22px;background:#FFF4D6;border:1.5px solid #F0C44C;box-shadow:0 8px 22px rgba(160,120,20,.14);color:#1A1D15}
+.home-reqs[hidden]{display:none}
+.home-reqs-head{display:flex;align-items:center;gap:12px}
+.home-reqs-head .hr-ico{position:relative;flex:none;width:44px;height:44px;border-radius:50%;background:#F0C44C;display:grid;place-items:center;color:#1A1D15}
+.home-reqs-head .hr-ico svg{width:22px;height:22px}
+.home-reqs-head .hr-ico i{position:absolute;top:-4px;right:-4px;min-width:20px;height:20px;padding:0 5px;border-radius:10px;background:var(--rouge);color:#fff;font:900 11.5px/20px var(--font);font-style:normal;text-align:center;border:2px solid #FFF4D6}
+.home-reqs-head b{display:block;font-size:16px;line-height:1.25}
+.home-reqs-head small{display:block;margin-top:2px;font-size:12.5px;color:rgba(26,29,21,.65)}
+.home-reqs .tm-req{border-top-color:rgba(200,150,30,.3)}
+.home-reqs .tm-req-no{color:rgba(26,29,21,.7);border-color:rgba(26,29,21,.18)!important;background:#fff}
+.home-reqs .tm-req-ok{background:#3F7A48;color:#fff}
+.home-reqs-more{display:block;width:100%;margin-top:12px;border:0;background:none;color:#3F7A48;font:800 13.5px var(--font);text-align:center}
+/* ===== COMPTE : inscription / connexion ===== */
+.auth{position:fixed;inset:0;z-index:2100;overflow-y:auto;-webkit-overflow-scrolling:touch;background:radial-gradient(120% 60% at 50% 0%,rgba(132,185,138,.28),transparent 60%),#F7F5EE;color:#1A1D15;color-scheme:light}
+.auth[hidden]{display:none}
+.auth-in{position:relative;max-width:440px;margin:0 auto;padding:calc(26px + env(safe-area-inset-top)) 22px calc(26px + env(safe-area-inset-bottom));text-align:center}
+.auth-x{position:absolute;top:calc(14px + env(safe-area-inset-top));right:14px;width:40px;height:40px;border:0;border-radius:50%;background:rgba(26,29,21,.07);color:#1A1D15;font-size:16px}
+.auth-logo{width:64px;height:64px;object-fit:contain;margin:8px auto 14px;display:block}
+.auth h2{margin:0 0 8px;font-size:24px;line-height:1.2;font-weight:800;letter-spacing:-.01em}
+.auth-sub{margin:0 auto 20px;max-width:340px;font-size:14.5px;line-height:1.5;color:rgba(26,29,21,.65)}
+#authGoogle{display:flex;justify-content:center;min-height:44px}
+.auth-or{display:flex;align-items:center;gap:10px;margin:16px 0;font-size:12.5px;color:rgba(26,29,21,.5)}
+.auth-or::before,.auth-or::after{content:"";flex:1;height:1px;background:rgba(26,29,21,.12)}
+.auth-tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;border-radius:16px;background:#ECE8DD;margin-bottom:16px}
+.auth-tabs button{border:0;border-radius:12px;padding:11px 6px;background:none;color:rgba(26,29,21,.6);font:800 14px var(--font)}
+.auth-tabs button.on{background:#fff;color:#1A1D15;box-shadow:0 2px 8px rgba(40,50,30,.1)}
+.auth form{display:grid;gap:10px;text-align:left}
+.auth form[hidden]{display:none}
+.auth-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.auth label{display:grid;gap:5px;font-size:12.5px;font-weight:800;color:rgba(26,29,21,.7)}
+.auth input[type=text],.auth input[type=email],.auth input[type=password]{width:100%;box-sizing:border-box;border:1.5px solid rgba(26,29,21,.14);border-radius:14px;padding:13px 14px;background:#fff;color:#1A1D15;font:600 16px var(--font);outline:none}
+.auth input:focus{border-color:#3F7A48;box-shadow:0 0 0 3px rgba(63,122,72,.15)}
+.auth-cgu{display:flex!important;grid-template-columns:none!important;align-items:flex-start;gap:10px!important;font-weight:600!important;font-size:13px!important;line-height:1.45;color:rgba(26,29,21,.7)!important}
+.auth-cgu input{width:20px;height:20px;flex:none;margin:0;accent-color:#3F7A48}
+.auth-cgu a,.auth-link{color:#3F7A48;font-weight:800}
+.auth-go{margin-top:4px;border:0;border-radius:16px;padding:16px;background:#3F7A48;color:#fff;font:800 16px var(--font);box-shadow:0 8px 22px rgba(63,122,72,.25)}
+.auth-go[disabled]{opacity:.6}
+.auth-link{border:0;background:none;padding:6px;font:800 13.5px var(--font);justify-self:center}
+.auth-err{min-height:20px;margin:12px 0 0;font-size:13.5px;font-weight:700;color:#C0392B}
+.auth-skip{margin-top:6px;border:0;background:none;color:rgba(26,29,21,.55);font:800 15px var(--font);padding:12px}
+.auth-note{margin:10px auto 0;max-width:330px;font-size:12px;line-height:1.5;color:rgba(26,29,21,.5)}
+/* Carte compte */
+.acc-box h2{margin:0 0 6px}.acc-box p{margin:0;color:var(--texte-doux);font-size:14px;line-height:1.5}
+.acc-gen{margin-top:12px;padding:10px 12px;border-radius:14px;background:var(--surface-2);font-size:13px;font-weight:700;color:var(--texte-doux)}
+.acc-actions{display:grid;gap:8px;margin-top:14px}
+.acc-danger{border:0;background:none;color:var(--rouge);font:800 13.5px var(--font);padding:8px}
+.acc-edit{display:grid;gap:8px;margin-top:12px}
+.acc-edit[hidden],#accEditBtn[hidden],#authGoogleWrap[hidden]{display:none!important}
+.acc-edit input{width:100%;box-sizing:border-box;border:1px solid var(--trait);border-radius:12px;padding:11px 12px;background:var(--surface-2);color:var(--texte-clair);font:600 16px var(--font)}
+/* ===== AMÉLIORATIONS VISUELLES ===== */
+/* Fiche vierge : blocs repliables + listes */
+.fv-form{gap:12px;background:none!important;border:0!important;box-shadow:none!important;padding:0!important;backdrop-filter:none!important}
+.fv-sec{border:1px solid var(--trait);border-radius:18px;background:var(--surface);overflow:hidden}
+.fv-sec>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:15px 16px;font-size:15px;font-weight:800;color:var(--texte-clair)}
+.fv-sec>summary::-webkit-details-marker{display:none}
+.fv-sec>summary::after{content:"";width:9px;height:9px;border-right:2.5px solid var(--texte-doux);border-bottom:2.5px solid var(--texte-doux);transform:rotate(45deg);margin:-4px 4px 0 0;transition:transform .2s}
+.fv-sec[open]>summary::after{transform:rotate(-135deg);margin-top:4px}
+.fv-sec>summary small{font-weight:700;color:var(--texte-doux);font-size:12px;margin-left:auto;margin-right:12px}
+.fv-body{display:grid;gap:16px;padding:2px 16px 18px}
+.fv-list{display:grid;gap:8px}
+.fv-item{display:flex;align-items:flex-start;gap:6px}
+.fv-item textarea{flex:1;min-width:0;min-height:46px!important;height:46px;resize:none;overflow:hidden;line-height:1.4;padding-top:12px;padding-bottom:10px}
+.fv-item .fv-n{margin-top:10px}
+.fv-move{display:flex;flex-direction:column;gap:3px;flex:none}
+.fv-move button{width:30px!important;height:21px!important;border-radius:7px!important;font-size:11px!important}
+.fv-item>button{margin-top:7px}
+.fv-item .fv-n{flex:none;width:26px;height:26px;border-radius:50%;background:var(--vert);color:#10140C;display:grid;place-items:center;font-size:12.5px;font-weight:900}
+.fv-item input{flex:1;min-width:0}
+.fv-item button{flex:none;width:32px;height:32px;border:0;border-radius:10px;background:var(--surface-2);color:var(--texte-doux);font-size:14px;font-weight:900;display:grid;place-items:center}
+.fv-item button:disabled{opacity:.3}
+.fv-add{justify-self:start;border:1.5px dashed var(--trait);background:transparent;color:var(--vert-fonce);border-radius:12px;padding:9px 14px;font:800 13.5px var(--font)}
+/* Images manquantes : dégradé + motif à la place du bloc noir */
+.no-img{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 24 24' fill='none' stroke='white' stroke-opacity='.16' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z'/%3E%3C/svg%3E"),linear-gradient(150deg,#6FA877 0%,#3F7A48 55%,#2C4F33 100%)!important;background-size:96px 96px,cover!important;background-position:right -18px top -14px,center!important;background-repeat:no-repeat!important}
+/* Pages vides plus vivantes */
+.empty-cta{display:grid;gap:4px;text-align:center;padding:26px 18px;border-radius:22px;background:var(--surface);border:1px solid var(--trait)}
+.empty-cta .ec-ico{width:52px;height:52px;margin:0 auto 8px;border-radius:50%;background:rgba(132,185,138,.18);color:var(--vert-fonce);display:grid;place-items:center}
+.empty-cta .ec-ico svg{width:24px;height:24px}
+.empty-cta strong{font-size:16px}
+.empty-cta p{margin:2px 0 12px;font-size:14px;line-height:1.5;color:var(--texte-doux)}
+.empty-cta .row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+/* Compte : statistique cliquable */
+button.stat{border:0;font:inherit;color:inherit;text-align:left;cursor:pointer}
+/* Calendrier semaine compact */
+.tc-wrow.empty{padding:7px 10px;margin-bottom:6px;background:transparent;border-style:dashed}
+.tc-wrow.empty .tc-wd b{font-size:15px}
+.tc-wrow.empty .tc-none{font-size:12.5px;color:var(--texte-doux)}
+.tc-wrow.today:not(.empty){box-shadow:0 0 0 2px var(--vert) inset}
+.tc-weekempty{margin:0 0 10px;padding:12px 14px;border-radius:14px;background:var(--surface-2);font-size:14px;color:var(--texte-doux)}
+/* Fil : lien calendrier en petit bouton */
+#fdLink{width:auto;max-width:62%;border-radius:99px;padding:9px 14px;font-size:13.5px;font-weight:700}
+#fdLink[hidden]{display:none}
+/* Réglages de l'équipe en blocs repliables */
+.fs-sec-h{display:flex;align-items:center;justify-content:space-between;width:100%;border:0;background:none;padding:6px 0;margin:0;color:var(--vert-fonce);font:900 12px var(--font);letter-spacing:.08em;text-transform:uppercase;text-align:left}
+.fs-sec-h::after{content:"";width:8px;height:8px;border-right:2.5px solid currentColor;border-bottom:2.5px solid currentColor;transform:rotate(45deg);margin:-4px 4px 0 0;transition:transform .2s}
+.fs-sec-h.open::after{transform:rotate(-135deg);margin-top:4px}
+.fs-sec{padding-top:10px}
+.fs-sec[hidden]{display:none}
+.fs-sec-h:not(:first-child){margin-top:12px;padding-top:16px;border-top:1px solid var(--trait)}
+html[data-theme="light"] .fs-tag{background:#FFF1C9;color:#7A5600}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
@@ -1227,10 +1333,12 @@ html{scroll-padding-top:calc(84px + env(safe-area-inset-top))}
       <button class="icon-btn" onclick="closeSideMenu()" aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
     </div>
     <button class="side-item" data-side="home" onclick="sideGo('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/></svg>Accueil</button>
+    <button class="side-item" data-side="generator" onclick="sideGo('generator')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/></svg>Générer</button>
     <button class="side-item" data-side="favorites" onclick="sideGo('favorites')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8l-5.4 2.9 1.1-6.1-4.5-4.2 6.1-.8z"/></svg>Favoris</button>
     <button class="side-item help" data-side="help" onclick="sideGo('help')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.8 9a2.4 2.4 0 1 1 4.4 1.4c-.8 1.1-2.2 1.2-2.2 2.8"/><path d="M12 16.8h.01"/></svg>Help</button>
            <button class="side-item" data-side="playMode" onclick="closeSideMenu();openPlayMode()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5"/><path d="M10 2h4"/><path d="M12 2v3"/></svg>Mode activité</button>
     <button class="side-item" data-side="team" onclick="closeSideMenu();openTeam()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M15.5 14.2c3 .2 5.5 2.6 5.5 5.8"/></svg>Mon équipe</button>
+    <button class="side-item" data-side="account" onclick="sideGo('account')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg><span id="sideAccLabel">Mon compte</span></button>
      <div class="side-sep"></div>
     <p class="side-sec-title">Informations</p>
         <button class="side-link" onclick="closeSideMenu();openInfo('contact')">FAQ / Contactez-nous</button>
@@ -1296,11 +1404,42 @@ html{scroll-padding-top:calc(84px + env(safe-area-inset-top))}
     <p class="onb-small">En continuant, tu acceptes les <a href="#" onclick="event.preventDefault();onbClose();openInfo('cgu')">conditions d'utilisation</a>.</p>
   </div>
 </div>
+<!-- ========================= 👤 COMPTE : inscription / connexion ========================= -->
+<div id="auth" class="auth" hidden role="dialog" aria-modal="true" aria-labelledby="authTitle">
+  <div class="auth-in">
+    <button class="auth-x" onclick="authCancel()" aria-label="Fermer">✕</button>
+    <img class="auth-logo" src="images/logo.png" alt="">
+    <h2 id="authTitle">Crée ton compte</h2>
+    <p class="auth-sub" id="authSub"></p>
+    <div id="authGoogleWrap" hidden><div id="authGoogle"></div><div class="auth-or">ou avec ton e-mail</div></div>
+    <div class="auth-tabs"><button type="button" data-t="signup" class="on" onclick="authTab('signup')">Créer un compte</button><button type="button" data-t="login" onclick="authTab('login')">J'ai un compte</button></div>
+    <form id="authSignup" onsubmit="authSignup(event)" novalidate>
+      <div class="auth-row">
+        <label>Prénom<input id="auPrenom" type="text" autocomplete="given-name" maxlength="40" required></label>
+        <label>Nom<input id="auNom" type="text" autocomplete="family-name" maxlength="60" required></label>
+      </div>
+      <label>Adresse e-mail<input id="auEmail" type="email" autocomplete="email" inputmode="email" maxlength="120" placeholder="ton.adresse@exemple.fr" required></label>
+      <label>Mot de passe<input id="auMdp" type="password" autocomplete="new-password" minlength="8" placeholder="8 caractères minimum" required></label>
+      <label class="auth-cgu"><input id="auCgu" type="checkbox"><span>J'accepte les <a href="#" onclick="event.preventDefault();authCancel();openInfo('cgu')">conditions d'utilisation</a> et la <a href="#" onclick="event.preventDefault();authCancel();openInfo('privacy')">politique de confidentialité</a>.</span></label>
+      <button class="auth-go" type="submit">Créer mon compte</button>
+    </form>
+    <form id="authLogin" onsubmit="authLogin(event)" novalidate hidden>
+      <label>Adresse e-mail<input id="alEmail" type="email" autocomplete="email" inputmode="email" maxlength="120" required></label>
+      <label>Mot de passe<input id="alMdp" type="password" autocomplete="current-password" required></label>
+      <button class="auth-go" type="submit">Me connecter</button>
+      <button class="auth-link" type="button" onclick="authForgot()">Mot de passe oublié ?</button>
+    </form>
+    <p class="auth-err" id="authErr" role="alert"></p>
+    <button class="auth-skip" id="authSkip" type="button" onclick="authCancel()">Passer pour l'instant</button>
+    <p class="auth-note">Ton compte sauvegarde ton équipe, ton rôle de responsable et tes favoris. Les noms des enfants restent uniquement sur ton téléphone.</p>
+  </div>
+</div>
 <div class="app">
 
 <!-- ========================= 🏠 ACCUEIL ========================= -->
 <main id="home" class="view active">
 <div class="hello"><small id="homeHello">Bienvenue sur Anim Compagnon</small><h1>Ton compagnon au quotidien !</h1></div>
+<div id="homeReqs" class="home-reqs" hidden></div>
 
 <section class="section">
   <div class="scroll">
@@ -1329,7 +1468,7 @@ html{scroll-padding-top:calc(84px + env(safe-area-inset-top))}
 
 <!-- ========================= 🗂️ CATÉGORIES ========================= -->
 <main id="categories" class="view">
-  <header class="page-head"><h1 class="page-title">Catégories</h1><p class="page-intro">Tout le matériel de l'expédition</p></header>
+  <header class="page-head"><h1 class="page-title">Catégories</h1><p class="page-intro">Toutes les ressources de l'appli</p></header>
   <section class="section">
   <div class="grid" id="allCategories">
   <div class="empty">
@@ -1344,7 +1483,7 @@ html{scroll-padding-top:calc(84px + env(safe-area-inset-top))}
 <main id="activities" class="view">
   <header class="page-head">
     <div class="head-row">
-      <div><h1 class="page-title">Activités</h1><p class="page-intro">La forêt remplie de trouvailles prêtes à l'emploi</p></div>
+      <div><h1 class="page-title">Activités</h1><p class="page-intro">Des activités prêtes à animer</p></div>
       <button class="icon-btn filter-btn" onclick="openActFilters()" aria-label="Filtrer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 6h16M7 12h10M10 18h4"/></svg><span class="filter-badge act-filter-badge" hidden></span></button>
     </div>
   </header>
@@ -1365,7 +1504,7 @@ html{scroll-padding-top:calc(84px + env(safe-area-inset-top))}
 
 <!-- ========================= 👥 PUBLICS ========================= -->
 <main id="publics" class="view">
-  <header class="page-head"><button class="link back" onclick="go('categories')">← Retour</button><h1 class="page-title">Publics</h1><p class="page-intro">Les mondes que tu accueilles sous ta tente</p></header>
+  <header class="page-head"><button class="link back" onclick="go('categories')">← Retour</button><h1 class="page-title">Publics</h1><p class="page-intro">Repères par tranche d'âge</p></header>
   <section class="section">
     <div id="publicsList" class="simple-list">
       <div class="empty">
@@ -1444,7 +1583,7 @@ html{scroll-padding-top:calc(84px + env(safe-area-inset-top))}
 </main>
 <!-- ========================= 🤖 GÉNÉRATEUR ========================= -->
 <main id="generator" class="view">
-<header class="page-head"><h1 class="page-title">Générer</h1><p class="page-intro">L'atelier où naissent les nouvelles idées</p></header>
+<header class="page-head"><h1 class="page-title">Générer</h1><p class="page-intro">Crée une activité sur mesure</p></header>
 
 <section class="section" style="padding-top:4px">
   <div class="modes" id="genModes">
@@ -1487,50 +1626,42 @@ html{scroll-padding-top:calc(84px + env(safe-area-inset-top))}
 </section>
 <!-- FICHE VIERGE -->
 <section id="generatorFiche" class="section generator-panel" style="margin-top:0;padding-top:4px" hidden>
-  <div class="gen-form">
+  <div class="gen-form fv-form">
+    <details class="fv-sec" open><summary>L'essentiel</summary><div class="fv-body">
     <div><span class="field-title">Nom de l'activité *</span>
       <input id="fvTitre" type="text" placeholder="Ex. Le relais des couleurs"></div>
-
     <div><span class="field-title">Tranche d'âge</span>
       <div class="chips" data-target="fvAge"><button type="button" class="chip" data-value="3-5 ans">3-5 ans</button><button type="button" class="chip" data-value="6-11 ans">6-11 ans</button><button type="button" class="chip" data-value="12-14 ans">12-14 ans</button><button type="button" class="chip" data-value="15-17 ans">15-17 ans</button></div></div>
-
     <div><span class="field-title">Durée</span>
       <div class="chips" data-target="fvDuree"><button type="button" class="chip" data-value="15 minutes">15 min</button><button type="button" class="chip" data-value="30 minutes">30 min</button><button type="button" class="chip" data-value="45 minutes">45 min</button><button type="button" class="chip" data-value="1 heure">1 h</button><button type="button" class="chip" data-value="1h30">1h30</button><button type="button" class="chip" data-value="Demi-journée">½ journée</button></div></div>
-
     <div class="gen-row">
       <div><span class="field-title">Enfants</span><input id="fvEnfants" type="number" inputmode="numeric" min="1" placeholder="Ex. 14"></div>
       <div><span class="field-title">Préparation</span><input id="fvPrepTemps" type="text" placeholder="Ex. 10 min"></div>
     </div>
-
     <div><span class="field-title">Lieu</span>
       <div class="chips" data-target="fvLieu"><button type="button" class="chip" data-value="Intérieur">Intérieur</button><button type="button" class="chip" data-value="Extérieur">Extérieur</button><button type="button" class="chip" data-value="Intérieur ou extérieur">Les deux</button></div></div>
-
     <div><span class="field-title">Énergie</span>
       <div class="chips" data-target="fvEnergie"><button type="button" class="chip" data-value="Calme">Calme</button><button type="button" class="chip" data-value="Modérée">Modérée</button><button type="button" class="chip" data-value="Intense">Intense</button></div></div>
+    </div></details>
 
-    <div><span class="field-title">Objectifs <small>(un par ligne)</small></span>
-      <textarea id="fvObjectifs" placeholder="Coopérer en équipe&#10;Développer la motricité"></textarea></div>
+    <details class="fv-sec"><summary>Objectifs et matériel</summary><div class="fv-body">
+    <div><span class="field-title">Objectifs</span><div class="fv-list" data-for="fvObjectifs" data-ph="Ex. Coopérer en équipe"></div><textarea id="fvObjectifs" hidden></textarea></div>
+    <div><span class="field-title">Matériel</span><div class="fv-list" data-for="fvMateriel" data-ph="Ex. 4 plots"></div><textarea id="fvMateriel" hidden></textarea></div>
+    </div></details>
 
-    <div><span class="field-title">Matériel <small>(un par ligne)</small></span>
-      <textarea id="fvMateriel" placeholder="4 plots&#10;2 ballons"></textarea></div>
-
+    <details class="fv-sec"><summary>Déroulement</summary><div class="fv-body">
     <div><span class="field-title">Mise en place</span>
       <textarea id="fvPreparation" placeholder="Ce qu'il faut installer avant l'arrivée des enfants"></textarea></div>
+    <div><span class="field-title">Étapes</span><div class="fv-list fv-num" data-for="fvDeroulement" data-ph="Décris l'étape"></div><textarea id="fvDeroulement" hidden></textarea></div>
+    </div></details>
 
-    <div><span class="field-title">Déroulement <small>(une étape par ligne)</small></span>
-      <textarea id="fvDeroulement" style="min-height:130px" placeholder="Former 2 équipes&#10;Expliquer la règle&#10;Lancer une manche d'essai"></textarea></div>
-
-    <div><span class="field-title">Variantes <small>(une par ligne)</small></span>
-      <textarea id="fvVariantes" placeholder="Jouer en binômes"></textarea></div>
-
-    <div><span class="field-title">Adaptations <small>(une par ligne)</small></span>
-      <textarea id="fvAdaptations" placeholder="Pour les plus jeunes : réduire la distance"></textarea></div>
-
-    <div><span class="field-title">Points de vigilance <small>(un par ligne)</small></span>
-      <textarea id="fvVigilance" placeholder="Délimiter clairement la zone de jeu"></textarea></div>
-
+    <details class="fv-sec"><summary>Pour aller plus loin</summary><div class="fv-body">
+    <div><span class="field-title">Variantes</span><div class="fv-list" data-for="fvVariantes" data-ph="Ex. Jouer en binômes"></div><textarea id="fvVariantes" hidden></textarea></div>
+    <div><span class="field-title">Adaptations</span><div class="fv-list" data-for="fvAdaptations" data-ph="Ex. Pour les plus jeunes : réduire la distance"></div><textarea id="fvAdaptations" hidden></textarea></div>
+    <div><span class="field-title">Points de vigilance</span><div class="fv-list" data-for="fvVigilance" data-ph="Ex. Délimiter clairement la zone de jeu"></div><textarea id="fvVigilance" hidden></textarea></div>
     <div><span class="field-title">Posture de l'animateur</span>
       <textarea id="fvPosture" placeholder="Ton rôle pendant l'activité"></textarea></div>
+    </div></details>
   </div>
 
   <button class="primary-btn" onclick="createManualFiche()">Créer ma fiche</button>
@@ -1577,7 +1708,7 @@ html{scroll-padding-top:calc(84px + env(safe-area-inset-top))}
 
     <div class="pm-card">
       <h2 class="section-title" style="margin:0 0 4px">Mon groupe</h2>
-      <p class="pm-sub" style="text-align:left;margin:0 0 12px">Écris un prénom par case. Touche ✓ quand l'enfant est là.</p>
+      <p class="pm-sub" style="text-align:left;margin:0 0 12px">Écris un prénom par case. Touche « Présent ? » quand l'enfant est là.</p>
       <div id="pmKids"></div>
       <button class="btn secondary full" style="margin-top:8px" onclick="pmKidAdd()">+ Ajouter un enfant</button>
       <p id="pmKidsSum" class="pm-sub" style="text-align:left;margin-top:10px"></p>
@@ -1754,7 +1885,7 @@ html{scroll-padding-top:calc(84px + env(safe-area-inset-top))}
     <div class="tf-actions">
       <button class="btn secondary" onclick="downloadFicheWord()">Word</button>
       <button class="btn secondary" onclick="downloadFichePDF()">PDF</button>
-      <button class="btn secondary" onclick="window.print()">Imprimer</button>
+      <button class="btn secondary" onclick="printAIFiche()">Imprimer</button>
     </div>
     <div style="height:8px"></div>
     <button class="btn secondary full te-del tf-actions-del" onclick="tfRemove()">Retirer de l'équipe</button>
@@ -1770,7 +1901,7 @@ html{scroll-padding-top:calc(84px + env(safe-area-inset-top))}
     <div class="pm-card fd-compose" id="fdCompose">
       <textarea id="fdText" maxlength="1000" placeholder="Quoi de neuf pour l'équipe ?"></textarea>
       <div class="fd-opts">
-        <select id="fdLink" aria-label="Lier un temps du calendrier"><option value="">Lier un temps du calendrier (facultatif)</option></select>
+        <select id="fdLink" aria-label="Lier un temps du calendrier"><option value="">📅 Lier au calendrier</option></select>
         <label class="fd-pin" id="fdPinWrap"><input type="checkbox" id="fdPin"> Épingler</label>
       </div>
       <button class="btn primary full" id="fdSend" onclick="fdPublish()">Publier</button>
@@ -2025,14 +2156,10 @@ html{scroll-padding-top:calc(84px + env(safe-area-inset-top))}
 </main>
 <!-- ========================= 👤 COMPTE ========================= -->
 <main id="account" class="view">
-  <header class="page-head"><h1 class="page-title">Compte</h1><p class="page-intro">Ton carnet de bord</p></header>
+  <header class="page-head"><h1 class="page-title">Compte</h1><p class="page-intro">Ton profil et tes réglages</p></header>
   <section class="section">
     <div class="card profile-card"><div id="accountProfile"></div></div>
-    <div class="stats"><div class="stat"><b id="statFav">0</b><span>Favoris</span></div><div class="stat"><b id="statAI">0</b><span>Fiches IA gardées</span></div></div>
-  </section>
-  <section class="section" id="favorites-section">
-    <div class="section-head"><h2 class="e">Mes favoris</h2></div>
-    <div id="favorites" class="empty"><strong>Aucun favori</strong>Les fiches que tu ajoutes apparaîtront ici.</div>
+    <div class="stats"><button class="stat" onclick="goFavorites()"><b id="statFav">0</b><span>Favoris ›</span></button><div class="stat"><b id="statAI">0</b><span>Fiches IA gardées</span></div></div>
   </section>
   <section class="section" id="prefs-section">
     <div class="section-head"><h2 class="e">Préférences</h2></div>
@@ -2048,6 +2175,14 @@ html{scroll-padding-top:calc(84px + env(safe-area-inset-top))}
       <button onclick="openInfo('about')"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v5h1"/></svg>À propos d'Anim Compagnon<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 6 6 6-6 6"/></svg></button>
       <button onclick="openInfo('privacy')"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5 6v5c0 4.5 3 8.3 7 10 4-1.7 7-5.5 7-10V6z"/></svg>Politique de confidentialité<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m9 6 6 6-6 6"/></svg></button>
     </div>
+  </section>
+</main>
+
+<!-- ========================= ⭐ FAVORIS ========================= -->
+<main id="favoritesView" class="view">
+  <header class="page-head"><button class="link back" onclick="go('account')">← Compte</button><h1 class="page-title">Mes favoris</h1><p class="page-intro">Les fiches que tu as mises de côté</p></header>
+  <section class="section" id="favorites-section">
+        <div id="favorites" class="empty"><strong>Aucun favori</strong>Les fiches que tu ajoutes apparaîtront ici.</div>
   </section>
 </main>
 
@@ -2131,7 +2266,7 @@ function go(id){
   target.classList.add("active");
     const main=["home","categories","generator","help","account"].includes(id)?id:
     id==="detail"?(previous.startsWith("category")?"categories":previous):(id==="activities"||id==="activityType")?"categories":
-    id==="vss"?"help":
+    id==="vss"?"help":id==="favoritesView"?"account":
     ["publics","publicSubcategory","role","daily","toolbox","resources"].includes(id)?"categories":"home";
   document.querySelectorAll(".nav").forEach(n=>n.classList.toggle("active",n.dataset.nav===main));
   window.scrollTo({top:0,behavior:"smooth"});
@@ -4389,7 +4524,7 @@ function downloadFichePDF(){
    🎲 ACTIVITÉS — grille des 4 types, filtres, liste, fiche
    ========================================================= */
 const ACT_TYPES=[
-  {cat:"Activités manuelles",name:"Manuelles",kicker:"Créatif",img:"--image-type-manuelles",file:"images/activites.jpg",sub:"trouvailles pour créer de ses mains"},
+  {cat:"Activités manuelles",name:"Manuelles",kicker:"Créatif",img:"--image-type-manuelles",file:"images/activites.jpg",sub:"activités pour créer de ses mains"},
   {cat:"Jeux sportifs extérieurs",name:"Sportives",kicker:"Extérieur",img:"--image-type-sportives",file:"images/publics.jpg",sub:"jeux pour bouger dehors"},
   {cat:"Chants",name:"Chants",kicker:"Musique",img:"--image-type-chants",file:"images/vie-quotidienne.jpg",sub:"chants pour rassembler le groupe"},
   {cat:"Animation de courte durée",name:"Courte durée",kicker:"Express",img:"--image-type-courte",file:"images/role-anim.jpg",sub:"idées express pour les temps courts"}
@@ -4478,7 +4613,7 @@ function renderActivities(){
   grid.innerHTML=ACT_TYPES.map((t,i)=>{
     const n=activitiesOfType(t).length;
     return `<button class="type-card" style="background-image:url('${esc(cssImage(t.img,t.file))}')" onclick="openActivityType(${i})">
-      <span class="pill-count">${n} trouvaille${n>1?"s":""}</span>
+      <span class="pill-count">${n} activité${n>1?"s":""}</span>
       <h2 class="type-title"><small>${esc(t.kicker)}</small>${esc(t.name)}</h2>
     </button>`;
   }).join("");
@@ -4704,13 +4839,10 @@ function sideGo(target){
   if(target==="prefs"){go("account");setTimeout(()=>{const s=document.getElementById("prefs-section");if(s)s.scrollIntoView({behavior:"smooth",block:"start"})},250);return}
   go(target);
 }
-function goFavorites(){
-  go("account");
-  setTimeout(()=>{const s=document.getElementById("favorites-section");if(s)s.scrollIntoView({behavior:"smooth",block:"start"})},250);
-}
+function goFavorites(){go("favoritesView");renderFavorites()}
 
 /* ---------- Fenêtre d'information ---------- */
-const CONTACT_MAIL="eliesbendjedou30@gmail.com";
+const CONTACT_MAIL="animcompagnon@gmail.com";
 function openInfo(kind){
   const t=document.getElementById("infoTitle"),b=document.getElementById("infoBody");
     if(kind==="mentions"){
@@ -4737,7 +4869,7 @@ function openInfo(kind){
 <p><b>Fil de l'équipe</b><br>Les publications et leurs commentaires sont effacés automatiquement selon la durée choisie par les responsables de l'équipe. Ne conserve pas dans le fil d'informations dont tu aurais besoin plus tard.</p>
 <p><b>Fiches de sortie</b><br>La fiche de sortie est un outil d'aide à l'organisation. Elle ne remplace ni les obligations réglementaires de la structure ni les procédures fixées par sa direction. L'animateur vérifie l'exactitude des informations avant chaque sortie. La liste des enfants et le numéro de téléphone saisis dans la fiche restent sur le téléphone de la personne qui les a saisis : ils ne sont jamais envoyés à l'équipe ni enregistrés en ligne, et s'effacent automatiquement 7 jours après la date de la sortie.</p>
 <p><b>Disponibilité du service</b><br>Anim Compagnon est fourni en l'état, sans garantie de disponibilité permanente. Pour une sortie, imprime ou enregistre la fiche à l'avance plutôt que de dépendre d'une connexion internet sur place.</p>
-<p><b>Signaler un contenu</b><br>Pour signaler un contenu inapproprié dans une équipe, écris à eliesbendjedou30@gmail.com en précisant le nom de l'équipe.</p>
+<p><b>Signaler un contenu</b><br>Pour signaler un contenu inapproprié dans une équipe, écris à animcompagnon@gmail.com en précisant le nom de l'équipe.</p>
       <p>Dernière mise à jour :OCTOBRE 2026<br>Contact : <a href="mailto:${CONTACT_MAIL}">${CONTACT_MAIL}</a></p>`;
   }else if(kind==="cookies"){
     t.textContent="Cookies et stockage";
@@ -4748,14 +4880,16 @@ function openInfo(kind){
   }else if(kind==="privacy"){
     t.textContent="Politique de confidentialité";
     b.innerHTML=`<p><b>Responsable du traitement</b><br>ANIM COMPAGNON — <a href="mailto:${CONTACT_MAIL}">${CONTACT_MAIL}</a></p>
-      <p><b>Ce qui reste sur ton téléphone</b><br>Ton profil (nom, prénom, mail), tes favoris, tes activités enregistrées, ton thème et tout ce que tu écris dans l'outil de signalement. Rien de tout cela n'est envoyé ni conservé par l'éditeur.</p>
+      <p><b>Ton compte</b><br>Facultatif pour découvrir l'appli, nécessaire pour le mode équipe et au-delà de 3 activités générées. Nous enregistrons ton prénom, ton nom, ton e-mail, ton mot de passe (uniquement chiffré, illisible même pour nous) et, si tu utilises Google, l'identifiant de ton compte Google. Nous sauvegardons aussi ton équipe, ton prénom dans l'équipe, tes codes responsable et tes favoris pour que tu les retrouves sur un autre téléphone. Tu peux supprimer ton compte à tout moment dans Compte : tout est alors effacé.</p>
             <p>En mode équipe, ce que tu partages (ton prénom, le calendrier, les courses, les activités et fiches, les publications du fil) est enregistré en ligne et visible par les personnes qui ont le code de l'équipe. Les publications du fil s'effacent automatiquement selon le réglage choisi par les responsables.</p>
       <p>Dans la fiche de sortie, le numéro de téléphone et la liste des enfants ne sont jamais envoyés à l'équipe ni enregistrés en ligne : ils restent sur ton téléphone, apparaissent seulement sur l'exemplaire imprimé et dans le mail que tu envoies toi-même, et s'effacent automatiquement 7 jours après la sortie.</p>
       <p><b>Ce qui est envoyé</b><br>• Générateur d'activités : ta description et ta photo éventuelle.<br>• Help, « Analyser une situation » : le texte que tu écris.<br>Ces contenus passent par un relais Cloudflare puis sont traités par OpenAI pour produire une réponse. L'éditeur ne les enregistre pas. OpenAI peut les conserver jusqu'à 30 jours pour la prévention des abus, sans les utiliser pour entraîner ses modèles.</p>
       <p><b>Ne saisis jamais</b> le nom, la photo ou une information permettant de reconnaître un enfant ou une famille.</p>
       <p><b>Signaler un bug</b><br>Le bouton ouvre ta messagerie : ton message et ton adresse mail nous parviennent alors, et sont utilisés uniquement pour te répondre.</p>
+      <p><b>Où sont les données ?</b><br>Comptes et équipes : Baserow (Pays-Bas, Union européenne). Application : GitHub Pages. Serveur : Cloudflare. Génération : OpenAI.</p>
       <p><b>Transferts hors Union européenne</b><br>GitHub, Cloudflare, OpenAI et Google sont des entreprises américaines. Les transferts sont encadrés par le cadre de protection des données UE–États-Unis ou par des clauses contractuelles types.</p>
-      <p><b>Base légale</b><br>Ton intérêt à utiliser le service que tu demandes (génération, analyse).</p>
+      <p><b>Base légale</b><br>L'exécution du service que tu demandes : compte, sauvegarde, génération, mode équipe.</p>
+      <p>Version complète : <a href="confidentialite.html" target="_blank" rel="noopener">page de confidentialité</a>.</p>
       <p><b>Tes droits</b><br>Accès, rectification, effacement, opposition : écris à <a href="mailto:${CONTACT_MAIL}">${CONTACT_MAIL}</a>. Tu peux aussi saisir la CNIL (cnil.fr).</p>
       <p>Dernière mise à jour : OCTOBRE 2026</p>`;
   }else if(kind==="about"){
@@ -4866,7 +5000,7 @@ function pmKidsRender(){
   document.getElementById("pmKids").innerHTML=pm.kids.map((k,i)=>`<div class="pm-kid">
     <span class="pm-kid-n">${i+1}</span>
     <input type="text" value="${esc(k.name)}" placeholder="Prénom" enterkeyhint="next" oninput="pmKidName(${i},this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();pmKidAdd()}">
-    <button class="pm-kid-ok${k.here?" on":""}" aria-label="Présent" onclick="pmKidHere(${i})">✓</button>
+    <button class="pm-kid-ok${k.here?" on":""}" aria-pressed="${k.here?"true":"false"}" onclick="pmKidHere(${i})">${k.here?"✓ Là":"Présent ?"}</button>
     <button class="tm-del" aria-label="Retirer" onclick="pmKidDel(${i})">✕</button></div>`).join("");
   pmKidsSum();
 }
@@ -5085,12 +5219,14 @@ function tcRender(){
     h=list.length?list.map(e=>`<button class="tc-ev" style="--c:${tcCol(e)}" onclick="tcEdit(${Number(e.id)})"><span class="t">${esc(tcHour(e.DEBUT))}</span><span class="c"><strong>${esc(e.TITRE||"")}</strong><small>${esc([e.DEBUT&&e.FIN?tcHour(e.DEBUT)+" – "+tcHour(e.FIN):"",e.ANIMATEUR,e.GROUPE].filter(Boolean).join(" · "))}</small></span></button>`).join("")
       :`<div class="tc-empty">Rien de prévu ce jour-là.</div>`;
   }else if(tc.view==="week"){
-    const mon=tcMonday(c),sun=tcAdd(mon,6);
+    const mon=tcMonday(c),sun=tcAdd(mon,6);let wk=0;
     per.textContent="Semaine du "+mon.getDate()+" "+(mon.getMonth()!==sun.getMonth()?TC_MONTHS[mon.getMonth()]+" ":"")+"au "+sun.getDate()+" "+TC_MONTHS[sun.getMonth()];
     for(let i=0;i<7;i++){
       const d=tcAdd(mon,i),iso=tcISO(d),list=tcOn(iso);
-      h+=`<button class="tc-wrow${iso===todayISO?" today":""}" onclick="tcGoDay('${iso}')"><span class="tc-wd"><small>${TC_DAYS[i].slice(0,3)}</small><b>${d.getDate()}</b></span><span class="tc-pills">${list.length?list.map(e=>`<span class="tc-pill" style="--c:${tcCol(e)}">${esc((e.DEBUT?tcHour(e.DEBUT)+" ":"")+(e.TITRE||""))}</span>`).join(""):`<span class="tc-none">—</span>`}</span></button>`;
+      h+=`<button class="tc-wrow${iso===todayISO?" today":""}${list.length?"":" empty"}" onclick="tcGoDay('${iso}')"><span class="tc-wd"><small>${TC_DAYS[i].slice(0,3)}</small><b>${d.getDate()}</b></span><span class="tc-pills">${list.length?list.map(e=>`<span class="tc-pill" style="--c:${tcCol(e)}">${esc((e.DEBUT?tcHour(e.DEBUT)+" ":"")+(e.TITRE||""))}</span>`).join(""):`<span class="tc-none">${iso===todayISO?"Aujourd'hui · rien de prévu":"Rien de prévu"}</span>`}</span></button>`;
+      if(list.length)wk++;
     }
+  if(!wk)h=`<div class="tc-weekempty">Rien de prévu cette semaine.${fdCan("cal")?` <button class="link" onclick="tcNew()">+ Ajouter un temps</button>`:""}</div>`+h;
   }else if(tc.view==="month"){
     per.textContent=TC_MONTHS[c.getMonth()].replace(/^./,x=>x.toUpperCase())+" "+c.getFullYear();
     const first=new Date(c.getFullYear(),c.getMonth(),1),days=new Date(c.getFullYear(),c.getMonth()+1,0).getDate(),lead=(first.getDay()+6)%7;
@@ -5337,7 +5473,7 @@ function fdRender(){
   document.getElementById("fdPinWrap").hidden=!fdCan("pin");
   const sel=document.getElementById("fdLink"),keep=sel.value,today=tcISO(new Date());
   const evs=tcEvents().filter(e=>e.DATE>=today).sort((a,b)=>(a.DATE+(a.DEBUT||"")).localeCompare(b.DATE+(b.DEBUT||""))).slice(0,30);
-  sel.innerHTML=`<option value="">Lier un temps du calendrier (facultatif)</option>`+evs.map(e=>`<option value="${Number(e.id)}">${esc(tcDayLabel(tcParse(e.DATE))+(e.DEBUT?" "+tcHour(e.DEBUT):"")+" · "+(e.TITRE||""))}</option>`).join("");
+  sel.hidden=!evs.length;sel.innerHTML=`<option value="">📅 Lier au calendrier</option>`+evs.map(e=>`<option value="${Number(e.id)}">${esc(tcDayLabel(tcParse(e.DATE))+(e.DEBUT?" "+tcHour(e.DEBUT):"")+" · "+(e.TITRE||""))}</option>`).join("");
   sel.value=keep;
   document.getElementById("fdList").innerHTML=posts.length?posts.map(p=>{
     const vus=fdVus(p),seen=vus.includes(me),coms=fdComments(p.id),c=(()=>{try{return JSON.parse(p.CONTENU||"{}")}catch(e){return {}}})(),ev=c.cal?tm.items.find(x=>x.id===Number(c.cal)):null;
@@ -5709,9 +5845,10 @@ tmWrapAfter("tmHubRender",()=>{
   w.innerHTML=a==="wait"||a==="new"
     ?`<b>Demande envoyée</b><p>Un responsable de « ${esc(tm.team.name)} » doit accepter ta demande. Tu auras accès à l'équipe dès qu'elle sera acceptée.</p><button class="btn primary full" onclick="tmLoad()">Actualiser</button><div style="height:8px"></div><button class="btn secondary full" onclick="tmLeave()">Annuler ma demande</button>`
     :a==="refuse"?`<b>Demande refusée</b><p>Un responsable n'a pas accepté ta demande pour rejoindre « ${esc(tm.team.name)} ».</p><button class="btn secondary full" onclick="tmLeave()">Retour</button>`:"";
-  let q=sp.querySelector(".tm-reqs");if(!q){q=document.createElement("button");q.className="tm-reqs";q.onclick=()=>openTeamSettings();w.after(q)}
-  const n=(tm.demandes||[]).length;q.hidden=!(a==="ok"&&n&&fdIsResp());
-  q.innerHTML=`<span class="th-badge">${n}</span><span><b>${n} demande${n>1?"s":""} pour rejoindre l'équipe</b><small>Touche pour accepter ou refuser</small></span>`;
+  let q=sp.querySelector(".tm-reqs");if(!q){q=document.createElement("div");q.className="tm-reqs";w.after(q)}
+  const d=tm.demandes||[],n=d.length;q.hidden=!(a==="ok"&&n&&fdIsResp());
+  q.innerHTML=`<div class="tm-reqs-head"><span class="th-badge">${n}</span><b>${n} demande${n>1?"s":""} pour rejoindre l'équipe</b></div>`+
+    d.map(x=>`<div class="tm-req"><span><b>${esc(x.n)}</b>${x.d?`<small>${esc(String(x.d).slice(0,10).split("-").reverse().join("/"))}</small>`:""}</span><button class="tm-req-no" onclick="fsAccept('${esc(x.id)}',false)">Refuser</button><button class="tm-req-ok" onclick="fsAccept('${esc(x.id)}',true)">Accepter</button></div>`).join("");
 });
 tmWrapAfter("fsRender",()=>{
   const st=fdSt(),resp=fdIsResp(),d=tm.demandes||[];
@@ -5874,6 +6011,32 @@ tmWrapAfter("openSideMenu",()=>{tmBadgeCalc();tmBadgeRefresh()});
 document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")tmBadgeRefresh()});
 setInterval(()=>{if(document.visibilityState==="visible")tmBadgeRefresh()},180000);
 tmBadgeRefresh();
+
+/* ----- Accueil : demandes pour rejoindre l'équipe (responsables) ----- */
+function homeReqsRender(){
+  const box=document.getElementById("homeReqs");if(!box)return;
+  const d=tm.team&&fdIsResp()?(tm.demandes||[]):[],n=d.length;
+  box.hidden=!n;if(!n){box.innerHTML="";return}
+  const nom=esc((tm.team&&tm.team.name)||"ton équipe");
+  box.innerHTML=`<div class="home-reqs-head"><span class="hr-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M19 8v6M16 11h6"/></svg><i>${n>9?"9+":n}</i></span><span><b>${n} demande${n>1?"s":""} pour rejoindre ${nom}</b><small>Tu es responsable : accepte ou refuse ${n>1?"ces personnes":"cette personne"}.</small></span></div>`+
+    d.slice(0,3).map(x=>`<div class="tm-req"><span><b>${esc(x.n)}</b>${x.d?`<small>Demande du ${esc(String(x.d).slice(0,10).split("-").reverse().join("/"))}</small>`:""}</span><button class="tm-req-no" onclick="fsAccept('${esc(x.id)}',false)">Refuser</button><button class="tm-req-ok" onclick="fsAccept('${esc(x.id)}',true)">Accepter</button></div>`).join("")+
+    (n>3?`<button class="home-reqs-more" onclick="openTeam()">Voir les ${n} demandes →</button>`:"");
+}
+/* Notification dans l'appli quand une nouvelle demande arrive */
+function homeReqsNotify(){
+  if(!tm.team||!fdIsResp())return;
+  const d=tm.demandes||[],k="animReqSeen",vu=tmGet(k,{}),code=tm.team.code,deja=vu[code]||[];
+  const nouv=d.filter(x=>!deja.includes(x.id));
+  if(nouv.length){
+    toast(nouv.length===1?`🔔 ${nouv[0].n} demande à rejoindre l'équipe`:`🔔 ${nouv.length} nouvelles demandes pour rejoindre l'équipe`);
+    try{if(navigator.vibrate)navigator.vibrate(120)}catch(e){}
+  }
+  vu[code]=d.map(x=>x.id);tmSet(k,vu);
+}
+tmWrapAfter("tmBadgeCalc",()=>{homeReqsRender();homeReqsNotify()});
+tmWrapAfter("tmLeave",homeReqsRender);
+tmWrapAfter("tmHubRender",homeReqsRender);
+homeReqsRender();
 function openGeneratorMode(mode){
   if(mode==="ia")mode="ia-text";
   const proposals=document.getElementById("aiGeneratedProposals");
@@ -6152,9 +6315,11 @@ function onbOpen(){
   clearTimeout(onbT);onbT=setTimeout(onbIntroEnd,3600);
 }
 function onbClose(){
+  let premier=true;try{premier=localStorage.getItem("animOnboarded")!=="1"}catch(e){}
   document.getElementById("onb").hidden=true;document.body.style.overflow="";
   try{localStorage.setItem("animOnboarded","1")}catch(e){}
   window.scrollTo(0,0);
+  if(premier&&typeof authOn==="function"&&!authOn())setTimeout(()=>authOpen("welcome"),350);
 }
 (()=>{const o=document.getElementById("onb");if(!o)return;
   let x0=0,y0=0;
@@ -6169,6 +6334,464 @@ function onbClose(){
   let deja=false;try{deja=localStorage.getItem("animOnboarded")==="1"}catch(e){deja=true}
   if(!deja)onbOpen();
 })();
+/* =========================================================
+   👤 COMPTE : inscription, connexion, sauvegarde
+   ========================================================= */
+const GOOGLE_CLIENT_ID_APP="115637113674-ti3stso2m2e4kod5io40i2g4jh8afs98.apps.googleusercontent.com";
+const AUTH_API=AI_API+"auth";
+const AUTH_SYNC=["animTeam","animTeamMe","animTeamAdmins","animDeviceTok","animFav","animCompagnonAIFavorites","animFeedSeen"];
+const GEN_FREE=3;
+const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
+let authApplying=false;
+const lsSet=(k,v)=>{authApplying=true;try{v==null?localStorage.removeItem(k):localStorage.setItem(k,v)}catch(e){}authApplying=false};
+const authSess=()=>lsGet("animSession")||"";
+const authOn=()=>!!authSess();
+const genUsed=()=>Number(lsGet("animGenCount"))||0;
+let authCtx="welcome",authNext=null;
+const AUTH_TXT={
+  welcome:["Crée ton compte","Retrouve ton équipe, ton rôle de responsable et tes favoris sur n'importe quel téléphone. C'est gratuit."],
+  team:["Connecte-toi pour le mode équipe","Le mode équipe demande un compte : ton équipe et tes codes responsable y seront sauvegardés."],
+  gen:["Tes 3 générations offertes sont utilisées","Crée ton compte gratuit pour continuer à générer des activités."],
+  account:["Ton compte Anim Compagnon","Connecte-toi pour sauvegarder tes données et les retrouver partout."]
+};
+
+function authOpen(ctx,next){
+  authCtx=ctx||"account";authNext=next||null;
+  const [t,s]=AUTH_TXT[authCtx]||AUTH_TXT.account;
+  document.getElementById("authTitle").textContent=t;
+  document.getElementById("authSub").textContent=s;
+  document.getElementById("authSkip").textContent=authCtx==="welcome"?"Passer pour l'instant":"Plus tard";
+  document.getElementById("authErr").textContent="";
+  try{closeSideMenu()}catch(e){}
+  const a=document.getElementById("auth");a.hidden=false;a.scrollTop=0;document.body.style.overflow="hidden";
+  authTab("signup");authGoogleInit();
+}
+function authHide(){document.getElementById("auth").hidden=true;document.body.style.overflow=""}
+function authCancel(){
+  authHide();authNext=null;
+  if(authCtx==="team")toast("Le mode équipe demande un compte.");
+  if(authCtx==="gen")toast("Crée ton compte gratuit pour continuer à générer.");
+}
+function authTab(t){
+  document.querySelectorAll(".auth-tabs button").forEach(b=>b.classList.toggle("on",b.dataset.t===t));
+  document.getElementById("authSignup").hidden=t!=="signup";
+  document.getElementById("authLogin").hidden=t!=="login";
+  document.getElementById("authErr").textContent="";
+}
+function authErr(m){document.getElementById("authErr").textContent=m||""}
+function authForgot(){authErr("");toast("Écris-nous depuis « FAQ / Contactez-nous » avec ton adresse e-mail : on réinitialise ton mot de passe.")}
+async function authPost(path,body){
+  let r,d={};
+  try{r=await fetch(AUTH_API+path,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)})}
+  catch(e){throw new Error("Pas de connexion internet. Réessaie dans un instant.")}
+  try{d=await r.json()}catch(e){}
+  if(!r.ok)throw new Error(d.error||"Impossible pour le moment. Réessaie.");
+  return d;
+}
+async function authRun(form,fn){
+  const b=form.querySelector(".auth-go"),txt=b.textContent;b.disabled=true;b.textContent="Un instant…";authErr("");
+  try{authDone(await fn())}catch(e){authErr(e.message)}
+  b.disabled=false;b.textContent=txt;
+}
+function authSignup(e){
+  e.preventDefault();
+  const v=id=>document.getElementById(id).value.trim();
+  const prenom=v("auPrenom"),nom=v("auNom"),email=v("auEmail"),mdp=document.getElementById("auMdp").value;
+  if(!prenom||!nom)return authErr("Indique ton prénom et ton nom.");
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email))return authErr("Vérifie ton adresse e-mail.");
+  if(mdp.length<8)return authErr("Le mot de passe doit faire au moins 8 caractères.");
+  if(!document.getElementById("auCgu").checked)return authErr("Accepte les conditions pour créer ton compte.");
+  authRun(e.target,()=>authPost("/signup",{prenom,nom,email,mdp}));
+}
+function authLogin(e){
+  e.preventDefault();
+  const email=document.getElementById("alEmail").value.trim(),mdp=document.getElementById("alMdp").value;
+  if(!email||!mdp)return authErr("Indique ton e-mail et ton mot de passe.");
+  authRun(e.target,()=>authPost("/login",{email,mdp}));
+}
+async function authGoogleCb(resp){
+  authErr("");
+  try{authDone(await authPost("/google",{credential:resp.credential}))}catch(e){authErr(e.message)}
+}
+function authGoogleInit(){
+  const w=document.getElementById("authGoogleWrap");
+  if(!GOOGLE_CLIENT_ID_APP){w.hidden=true;return}
+  const draw=()=>{try{
+    google.accounts.id.initialize({client_id:GOOGLE_CLIENT_ID_APP,callback:authGoogleCb,ux_mode:"popup"});
+    const el=document.getElementById("authGoogle");el.innerHTML="";w.hidden=false;
+    google.accounts.id.renderButton(el,{theme:"outline",size:"large",shape:"pill",text:"continue_with",locale:"fr",width:Math.min(340,(el.clientWidth||320))});
+  }catch(e){w.hidden=true}};
+  if(window.google&&google.accounts&&google.accounts.id)return draw();
+  if(document.getElementById("gsiScript"))return;
+  const s=document.createElement("script");s.id="gsiScript";s.src="https://accounts.google.com/gsi/client";s.async=true;s.onload=draw;s.onerror=()=>{w.hidden=true};
+  document.head.appendChild(s);
+}
+
+/* Fusion des données du compte avec celles du téléphone. Renvoie true s'il faut recharger l'appli. */
+function authMerge(srv){
+  srv=srv||{};let reload=false;
+  const P=v=>{try{return JSON.parse(v)}catch(e){return null}};
+  const put=(k,v)=>{if(v!=null&&v!==lsGet(k))lsSet(k,v)};
+  // codes responsable : on garde tout
+  const ad={...(P(srv.animTeamAdmins)||{}),...(P(lsGet("animTeamAdmins"))||{})};
+  if(Object.keys(ad).length)put("animTeamAdmins",JSON.stringify(ad));
+  // favoris : réunion des deux listes
+  ["animFav","animCompagnonAIFavorites"].forEach(k=>{
+    const a=P(lsGet(k)),b=P(srv[k]);if(!Array.isArray(b)||!b.length)return;
+    const out=Array.isArray(a)?[...a]:[],keys=new Set(out.map(x=>x&&x.id!=null?"i"+x.id:JSON.stringify(x)));
+    b.forEach(x=>{const key=x&&x.id!=null?"i"+x.id:JSON.stringify(x);if(!keys.has(key)){keys.add(key);out.push(x)}});
+    put(k,JSON.stringify(out));
+  });
+  const fs={...(P(srv.animFeedSeen)||{})},fl=P(lsGet("animFeedSeen"))||{};
+  Object.keys(fl).forEach(c=>{if(!fs[c]||fl[c]>fs[c])fs[c]=fl[c]});
+  if(Object.keys(fs).length)put("animFeedSeen",JSON.stringify(fs));
+  // équipe et prénom : ceux du téléphone d'abord, sinon ceux du compte
+  const tLoc=P(lsGet("animTeam")),tSrv=P(srv.animTeam);
+  if(!tLoc&&tSrv){put("animTeam",srv.animTeam);reload=true}
+  if(!lsGet("animTeamMe")&&srv.animTeamMe)put("animTeamMe",srv.animTeamMe);
+  // identifiant du téléphone : celui du compte, pour rester membre accepté de l'équipe
+  const team=P(lsGet("animTeam"));
+  if(srv.animDeviceTok&&srv.animDeviceTok!==lsGet("animDeviceTok")&&(!tLoc||!tSrv||(team&&tSrv&&team.code===tSrv.code))){put("animDeviceTok",srv.animDeviceTok);reload=true}
+  return reload;
+}
+function authCollect(){const o={};AUTH_SYNC.forEach(k=>{const v=lsGet(k);if(v!=null)o[k]=v});return o}
+let authSaveT=0;
+async function authSaveNow(){
+  clearTimeout(authSaveT);if(!authOn())return;
+  try{
+    const r=await fetch(AUTH_API+"/save",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({s:authSess(),donnees:authCollect()})});
+    if(r.status===401)authExpired();
+  }catch(e){}
+}
+function authExpired(){lsSet("animSession",null);renderAccountProfile();toast("Ta session a expiré : reconnecte-toi depuis Compte.")}
+/* Sauvegarde automatique quand une donnée du compte change */
+(()=>{try{
+  const S=Storage.prototype.setItem,R=Storage.prototype.removeItem;
+  const touch=(st,k)=>{if(authApplying||st!==window.localStorage||!AUTH_SYNC.includes(k)||!authOn())return;clearTimeout(authSaveT);authSaveT=setTimeout(authSaveNow,1500)};
+  Storage.prototype.setItem=function(k,v){S.call(this,k,v);touch(this,k)};
+  Storage.prototype.removeItem=function(k){R.call(this,k);touch(this,k)};
+}catch(e){}})();
+
+function authDone(d){
+  if(!d||!d.session)return authErr("Connexion impossible. Réessaie.");
+  lsSet("animSession",d.session);
+  const p=d.profil||{};
+  try{const old=getProfile()||{};saveProfile({...old,prenom:p.prenom,nom:p.nom,mail:p.email,google:!!p.google})}catch(e){}
+  const reload=authMerge(d.donnees);
+  authSaveNow();
+  authHide();
+  toast(`Bienvenue ${p.prenom||""} ! Ton compte est prêt.`.replace("  "," "));
+  renderAccountProfile();
+  const next=authNext;authNext=null;
+  if(reload){try{sessionStorage.setItem("animAfterAuth",authCtx)}catch(e){}setTimeout(()=>location.reload(),700);return}
+  if(next)setTimeout(next,250);
+}
+async function authLogout(){
+  if(!confirm("Te déconnecter ? Tes données restent sauvegardées sur ton compte."))return;
+  await authSaveNow();
+  lsSet("animSession",null);
+  AUTH_SYNC.forEach(k=>lsSet(k,null));
+  try{localStorage.removeItem("animProfile")}catch(e){}
+  toast("Tu es déconnecté.");
+  setTimeout(()=>location.reload(),600);
+}
+async function authDelete(){
+  if(!confirm("Supprimer définitivement ton compte ? Ton prénom, ton nom, ton e-mail et tes données sauvegardées seront effacés."))return;
+  try{await authPost("/delete",{s:authSess()});lsSet("animSession",null);try{localStorage.removeItem("animProfile")}catch(e){}renderAccountProfile();toast("Ton compte a été supprimé.")}
+  catch(e){toast(e.message)}
+}
+function accEditOpen(){document.getElementById("accEdit").hidden=false;document.getElementById("accEditBtn").hidden=true}
+async function accEditSave(){
+  const prenom=document.getElementById("accPrenom").value.trim(),nom=document.getElementById("accNom").value.trim();
+  try{const r=await authPost("/profil",{s:authSess(),prenom,nom});const p=getProfile()||{};saveProfile({...p,prenom:r.profil.prenom,nom:r.profil.nom});renderAccountProfile();toast("Informations enregistrées.")}
+  catch(e){toast(e.message)}
+}
+/* Carte « Compte » */
+window.renderAccountProfile=function(){
+  const el=document.getElementById("accountProfile");if(!el)return;
+  const p=getProfile()||{};
+  if(authOn()){
+    el.innerHTML=`<div class="profile"><div class="avatar">${esc(profileInitial(p))}</div><div><strong>${esc(p.prenom||"")} ${esc(p.nom||"")}</strong><p>${esc(p.mail||"")}</p></div></div>
+      <p class="pm-sub" style="text-align:left;margin:10px 0 0">${p.google?"Connecté avec Google":"Connecté avec ton e-mail"} · tes données sont sauvegardées.</p>
+      <div class="acc-actions">
+        <button class="btn secondary full" id="accEditBtn" onclick="accEditOpen()">Modifier mon prénom / nom</button>
+        <div class="acc-edit" id="accEdit" hidden><input id="accPrenom" value="${esc(p.prenom||"")}" placeholder="Prénom" maxlength="40"><input id="accNom" value="${esc(p.nom||"")}" placeholder="Nom" maxlength="60"><button class="btn primary full" onclick="accEditSave()">Enregistrer</button></div>
+        <button class="btn secondary full" onclick="authLogout()">Se déconnecter</button>
+        <button class="acc-danger" onclick="authDelete()">Supprimer mon compte</button>
+      </div>`;
+  }else{
+    const reste=Math.max(0,GEN_FREE-genUsed());
+    el.innerHTML=`<div class="acc-box"><h2>Ton compte</h2><p>Crée ton compte gratuit pour sauvegarder ton équipe, ton rôle de responsable et tes favoris, et les retrouver sur n'importe quel téléphone.</p>
+      <div class="acc-gen">Générations offertes sans compte : ${reste} sur ${GEN_FREE}</div>
+      <div class="acc-actions"><button class="btn primary full" onclick="authOpen('account')">Créer mon compte</button><button class="btn secondary full" onclick="authOpen('account');authTab('login')">Me connecter</button></div></div>`;
+  }
+};
+
+/* Mode équipe : compte obligatoire */
+tmWrapBefore("openTeam",()=>{if(authOn())return true;authOpen("team",()=>openTeam());return false});
+
+/* Générateur : 3 générations offertes sans compte */
+let genHit=false;
+(()=>{const f=window.fetch;window.fetch=async(u,o)=>{const r=await f(u,o);try{if(u===AI_API&&o&&o.method==="POST"&&r.ok)genHit=true}catch(e){}return r}})();
+["generateAIActivity","analyzeMaterialPhoto","generate"].forEach(name=>{
+  const f=window[name];if(typeof f!=="function")return;
+  window[name]=async function(...a){
+    if(!authOn()&&genUsed()>=GEN_FREE){authOpen("gen",()=>window[name](...a));return}
+    genHit=false;const r=await f.apply(this,a);
+    if(genHit&&!authOn()){const n=genUsed()+1;try{localStorage.setItem("animGenCount",String(n))}catch(e){}
+      const reste=GEN_FREE-n;setTimeout(()=>toast(reste>0?`Il te reste ${reste} génération${reste>1?"s":""} offerte${reste>1?"s":""} sans compte.`:"C'était ta dernière génération offerte : crée ton compte gratuit pour continuer."),2600)}
+    return r;
+  };
+});
+
+/* À l'ouverture : vérifier la session et récupérer les données du compte */
+(async()=>{
+  let after="";try{after=sessionStorage.getItem("animAfterAuth")||"";sessionStorage.removeItem("animAfterAuth")}catch(e){}
+  if(after==="team"&&authOn())setTimeout(()=>openTeam(),400);
+  if(!authOn())return;
+  try{
+    const r=await fetch(AUTH_API+"/me?s="+encodeURIComponent(authSess()));
+    if(r.status===401)return authExpired();
+    if(!r.ok)return;
+    const d=await r.json(),p=d.profil||{};
+    const old=getProfile()||{};saveProfile({...old,prenom:p.prenom,nom:p.nom,mail:p.email,google:!!p.google});renderAccountProfile();
+    const reload=authMerge(d.donnees);authSaveNow();
+    if(reload&&!after){try{sessionStorage.setItem("animAfterAuth","sync")}catch(e){}location.reload()}
+  }catch(e){}
+})();
+renderAccountProfile();
+/* =========================================================
+   ✨ AMÉLIORATIONS VISUELLES
+   ========================================================= */
+/* ----- Fiche vierge : une case par élément, + pour ajouter ----- */
+function fvGrow(t){t.style.height="46px";t.style.height=Math.max(46,t.scrollHeight)+"px"}
+function fvListInit(){
+  document.querySelectorAll(".fv-list").forEach(box=>{
+    const ta=document.getElementById(box.dataset.for);if(!ta)return;
+    const num=box.classList.contains("fv-num");
+    const vals=()=>ta.value.split("\n");
+    const save=arr=>{ta.value=arr.join("\n")};
+    const draw=(focusIdx)=>{
+      let arr=vals();if(!arr.length)arr=[""];
+      box.innerHTML=arr.map((v,i)=>`<div class="fv-item">${num?`<span class="fv-n">${i+1}</span>`:""}<textarea rows="1" placeholder="${esc(box.dataset.ph||"")}" enterkeyhint="next" data-i="${i}">${esc(v)}</textarea>${num?`<span class="fv-move"><button type="button" data-up="${i}" aria-label="Monter" ${i?"":"disabled"}>▲</button><button type="button" data-down="${i}" aria-label="Descendre" ${i<arr.length-1?"":"disabled"}>▼</button></span>`:""}<button type="button" data-del="${i}" aria-label="Supprimer">✕</button></div>`).join("")+
+        `<button type="button" class="fv-add">+ Ajouter${num?" une étape":""}</button>`;
+      box.querySelectorAll("textarea").forEach(fvGrow);
+      if(focusIdx!=null){const x=box.querySelector(`textarea[data-i="${focusIdx}"]`);if(x)x.focus()}
+    };
+    box.addEventListener("input",e=>{const i=e.target.dataset.i;if(i==null)return;fvGrow(e.target);const a=vals();a[Number(i)]=e.target.value.replace(/\n/g," ");save(a)});
+    box.addEventListener("keydown",e=>{if(e.key!=="Enter"||e.target.dataset.i==null)return;e.preventDefault();const a=vals(),i=Number(e.target.dataset.i);a.splice(i+1,0,"");save(a);draw(i+1)});
+    box.addEventListener("click",e=>{
+      const b=e.target.closest("button");if(!b)return;const a=vals();
+      if(b.classList.contains("fv-add")){a.push("");save(a);draw(a.length-1);return}
+      if(b.dataset.del!=null){const i=Number(b.dataset.del);a.splice(i,1);save(a.length?a:[""]);draw();return}
+      if(b.dataset.up!=null&&!b.disabled){const i=Number(b.dataset.up);[a[i-1],a[i]]=[a[i],a[i-1]];save(a);draw(i-1);return}
+      if(b.dataset.down!=null){const i=Number(b.dataset.down);[a[i+1],a[i]]=[a[i],a[i+1]];save(a);draw(i+1);return}
+    });
+    box._draw=draw;draw();
+  });
+}
+fvListInit();
+/* Si une fiche est pré-remplie ou effacée ailleurs, les cases suivent */
+tmWrapAfter("openGeneratorMode",m=>{if(m==="fiche")document.querySelectorAll(".fv-list").forEach(b=>b._draw&&b._draw())});
+
+/* ----- Fiche d'activité sur une seule page A4 ----- */
+const OP_CSS=`.op{font-family:Arial,Helvetica,sans-serif;color:#1A1D15;font-size:var(--fs,11px);line-height:1.38;background:#fff}
+.op *{box-sizing:border-box}
+.op-brand{font-size:.78em;font-weight:700;color:#3F7A48;text-transform:uppercase;letter-spacing:.08em}
+.op h1{font-size:2em;margin:.15em 0 .35em;line-height:1.1}
+.op-head{border-bottom:2px solid #3F7A48;padding-bottom:.6em;margin-bottom:.85em}
+.op-meta{display:flex;flex-wrap:wrap;gap:.3em 1em;font-size:.95em}
+.op-meta b{color:#3F7A48;margin-right:.25em}
+.op-cols{display:grid;grid-template-columns:1fr 1.35fr;gap:.85em}
+.op-cols.single{grid-template-columns:1fr}
+.op-box{border:1px solid #D9DED2;border-radius:8px;padding:.55em .8em;margin-bottom:.85em;break-inside:avoid;page-break-inside:avoid}
+.op-box h2{font-size:1em;margin:0 0 .4em;color:#3F7A48;text-transform:uppercase;letter-spacing:.05em}
+.op-box ul,.op-box ol{margin:0;padding-left:1.35em}.op-box li{margin:.18em 0}.op-box p{margin:0;white-space:pre-line}
+.op-main{background:#F4F8F1;border-color:#C9DCC4}
+.op-warn{border-color:#EBC0BC;background:#FFF7F6}.op-warn h2{color:#A3312A}
+.op-row{display:grid;gap:.85em}.op-n1{grid-template-columns:1fr}.op-n2{grid-template-columns:1fr 1fr}.op-n3{grid-template-columns:1fr 1fr 1fr}
+.op-row>.op-box{margin-bottom:.85em}
+.op-foot{margin-top:.4em;font-size:.75em;color:#888;text-align:right}`;
+(()=>{const st=document.createElement("style");st.textContent=OP_CSS+`
+#opPrint{display:none}
+@media print{body.op-printing>*:not(#opPrint){display:none!important}body.op-printing #opPrint{display:block!important}}`;document.head.appendChild(st)})();
+function ficheOnePageHTML(s){
+  const L=a=>(Array.isArray(a)?a:String(a||"").split("\n")).map(x=>typeof x==="string"?x.trim():JSON.stringify(x)).filter(Boolean);
+  const list=(a,ol)=>{a=L(a);return a.length?`<${ol?"ol":"ul"}>${a.map(x=>`<li>${esc(x)}</li>`).join("")}</${ol?"ol":"ul"}>`:""};
+  const box=(t,c,cls="")=>c?`<section class="op-box ${cls}"><h2>${t}</h2>${c}</section>`:"";
+  const meta=[["Âge",s.age],["Enfants",s.nombre_enfants],["Durée",s.duree],["Préparation",s.temps_preparation],["Lieu",s.lieu],["Énergie",s.energie]].filter(x=>x[1]).map(([k,v])=>`<span><b>${k}</b>${esc(v)}</span>`).join("");
+  const top=[box("Objectifs",list(s.objectifs)),box("Matériel",list(s.materiel))].filter(Boolean);
+  const bottom=[box("Variantes",list(s.variantes)),box("Adaptations",list(s.adaptations)),box("Points de vigilance",list(s.points_vigilance),"op-warn")].filter(Boolean);
+  const cols=(top.length?`<div class="op-row op-n${top.length}">${top.join("")}</div>`:"")+
+    box("Mise en place",s.preparation?`<p>${esc(s.preparation)}</p>`:"")+
+    box("Déroulement",list(s.deroulement,true),"op-main");
+  return `<div class="op"><header class="op-head"><div class="op-brand">Fiche d'activité</div><h1>${esc(s.titre||"Activité")}</h1>${meta?`<div class="op-meta">${meta}</div>`:""}</header>
+    ${cols}${bottom.length?`<div class="op-row op-n${bottom.length}">${bottom.join("")}</div>`:""}
+    ${box("Posture de l'animateur",s.posture_animateur?`<p>${esc(s.posture_animateur)}</p>`:"")}
+    <div class="op-foot">Anim Compagnon</div></div>`;
+}
+/* Réduit la taille du texte jusqu'à ce que tout tienne dans la page */
+function opFit(op,maxH){let fs=12.5;op.style.setProperty("--fs",fs+"px");while(op.scrollHeight>maxH&&fs>6.5){fs-=.25;op.style.setProperty("--fs",fs+"px")}return fs}
+const OP_W=688,OP_H=1000; // A4 avec 14 mm de marges, en pixels
+window.printAIFiche=function(){
+  const s=window.currentAISheet;if(!s){toast("Aucune fiche à imprimer.");return}
+  let el=document.getElementById("opPrint");if(!el){el=document.createElement("div");el.id="opPrint";document.body.appendChild(el)}
+  el.innerHTML=ficheOnePageHTML(s);
+  const op=el.firstElementChild;
+  el.style.cssText=`display:block;position:fixed;left:-10000px;top:0;width:${OP_W}px`;opFit(op,OP_H);el.style.cssText=`width:${OP_W}px`;
+  document.body.classList.add("op-printing");
+  const end=()=>document.body.classList.remove("op-printing");
+  window.addEventListener("afterprint",end,{once:true});setTimeout(end,60000);
+  window.print();
+};
+window.downloadFichePDF=function(){
+  const s=window.currentAISheet;if(!s)return;
+  if(typeof html2pdf==="undefined"){toast("Le module PDF n'est pas chargé.");return}
+  const box=document.createElement("div");
+  box.style.cssText=`position:fixed;left:-10000px;top:0;width:${OP_W}px;background:#fff`;
+  box.innerHTML=ficheOnePageHTML(s);document.body.appendChild(box);
+  const op=box.firstElementChild;opFit(op,OP_H);box.style.height=OP_H+"px";box.style.overflow="hidden";
+  html2pdf().set({margin:14,filename:ficheFileName(s)+".pdf",html2canvas:{scale:2,width:OP_W,height:OP_H,windowWidth:OP_W},jsPDF:{unit:"mm",format:"a4",orientation:"portrait"},pagebreak:{mode:"avoid-all"}})
+    .from(box).save()
+    .then(()=>toast("Fiche PDF téléchargée (1 page)."))
+    .catch(()=>toast("Impossible de créer le PDF."))
+    .finally(()=>box.remove());
+};
+/* ----- Fiche Word (.docx) : même mise en page que le PDF, sur 1 page ----- */
+const ZIP_CRC=(()=>{const t=new Uint32Array(256);for(let n=0;n<256;n++){let c=n;for(let k=0;k<8;k++)c=c&1?0xEDB88320^(c>>>1):c>>>1;t[n]=c>>>0}return t})();
+function zipStore(files){ // files: [[nom, texte]] -> Blob .zip (sans compression)
+  const enc=new TextEncoder(),parts=[],central=[];let off=0;
+  const crc=b=>{let c=0xFFFFFFFF;for(let i=0;i<b.length;i++)c=ZIP_CRC[(c^b[i])&255]^(c>>>8);return (c^0xFFFFFFFF)>>>0};
+  const u16=v=>[v&255,(v>>>8)&255],u32=v=>[v&255,(v>>>8)&255,(v>>>16)&255,(v>>>24)&255];
+  files.forEach(([name,txt])=>{
+    const nb=enc.encode(name),data=enc.encode(txt),c=crc(data);
+    const head=[...u32(0x04034b50),...u16(20),...u16(0x0800),...u16(0),...u16(0),...u16(0x21),...u32(c),...u32(data.length),...u32(data.length),...u16(nb.length),...u16(0)];
+    parts.push(new Uint8Array(head),nb,data);
+    central.push(new Uint8Array([...u32(0x02014b50),...u16(20),...u16(20),...u16(0x0800),...u16(0),...u16(0),...u16(0x21),...u32(c),...u32(data.length),...u32(data.length),...u16(nb.length),...u16(0),...u16(0),...u16(0),...u16(0),...u32(0),...u32(off)]),nb);
+    off+=head.length+nb.length+data.length;
+  });
+  const csize=central.reduce((a,b)=>a+b.length,0);
+  const end=new Uint8Array([...u32(0x06054b50),...u16(0),...u16(0),...u16(files.length),...u16(files.length),...u32(csize),...u32(off),...u16(0)]);
+  return new Blob([...parts,...central,end],{type:"application/vnd.openxmlformats-officedocument.wordprocessingml.document"});
+}
+function ficheDocx(s){
+  const X=t=>String(t??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+  const L=a=>(Array.isArray(a)?a:String(a||"").split("\n")).map(x=>typeof x==="string"?x.trim():JSON.stringify(x)).filter(Boolean);
+  const G="3F7A48",TXT="1A1D15";
+  const W=11906,H=16838,M=794,CW=W-2*M; // A4, marges 14 mm (en twips)
+  const objectifs=L(s.objectifs),materiel=L(s.materiel),deroul=L(s.deroulement),variantes=L(s.variantes),adapt=L(s.adaptations),vigil=L(s.points_vigilance);
+  const prep=String(s.preparation||"").trim(),posture=String(s.posture_animateur||"").trim();
+  const bottom=[["Variantes",variantes,""],["Adaptations",adapt,""],["Points de vigilance",vigil,"warn"]].filter(x=>x[1].length);
+  const topB=[["Objectifs",objectifs],["Matériel",materiel]].filter(x=>x[1].length);
+  /* Estimation de la hauteur pour choisir la taille du texte */
+  const est=fs=>{
+    const lines=(items,widthTw,indent=280)=>items.reduce((n,t)=>n+Math.max(1,Math.ceil(t.length*fs*0.52/((widthTw-indent-200)/20))),0);
+    const lh=fs*1.32,head=fs*1.25+6;
+    const sec=(items,w,indent)=>items.length?head+lines(items,w,indent)*lh+8:0;
+    const tw=topB.length?CW/topB.length:CW;
+    const top=topB.length?Math.max(...topB.map(b=>sec(b[1],tw)))+16:0;
+    const mid=(prep?head+lines([prep],CW,0)*lh+20:0)+(deroul.length?sec(deroul,CW,360)+16:0);
+    const bw=bottom.length?CW/bottom.length:CW;
+    const bot=bottom.length?Math.max(...bottom.map(b=>sec(b[1],bw)))+16:0;
+    const post=posture?head+lines([posture],CW,0)*lh+20:0;
+    return fs*2.6+fs*1.6+30+top+mid+bot+post+fs;
+  };
+  const avail=(H-2*M)/20-30;let fs=11;while(fs>7&&est(fs)*1.0>avail*0.95)fs-=0.5; // 0,78 : calibré sur le rendu réel
+  const sz=Math.round(fs*2),szH=Math.round(fs*2*1.0),szT=Math.round(fs*2*2.1),szS=Math.round(fs*2*0.8);
+  const run=(t,o={})=>`<w:r><w:rPr><w:rFonts w:ascii="Arial" w:hAnsi="Arial" w:cs="Arial"/>${o.b?"<w:b/>":""}${o.caps?"<w:caps/>":""}<w:color w:val="${o.c||TXT}"/><w:sz w:val="${o.sz||sz}"/></w:rPr><w:t xml:space="preserve">${X(t)}</w:t></w:r>`;
+  const para=(runs,o={})=>`<w:p><w:pPr><w:spacing w:before="${o.before||0}" w:after="${o.after??40}" w:line="${o.line||264}" w:lineRule="auto"/>${o.ind?`<w:ind w:left="${o.ind}" w:hanging="${o.hang||o.ind}"/>`:""}${o.jc?`<w:jc w:val="${o.jc}"/>`:""}${o.bdr?`<w:pBdr><w:bottom w:val="single" w:sz="12" w:space="6" w:color="${G}"/></w:pBdr>`:""}</w:pPr>${runs}</w:p>`;
+  const h2=(t,c=G)=>para(run(t.toUpperCase(),{b:1,c,sz:szH}),{after:60,before:20});
+  const bullets=items=>items.map(t=>para(run("•\t")+run(t),{ind:280,after:30})).join("");
+  const numbers=items=>items.map((t,i)=>para(run((i+1)+".\t",{b:1,c:G})+run(t),{ind:360,after:40})).join("");
+  const text=t=>t.split("\n").map(l=>para(run(l),{after:30})).join("");
+  const cell=(w,content,fill,border="D9DED2")=>`<w:tc><w:tcPr><w:tcW w:w="${w}" w:type="dxa"/>${fill?`<w:shd w:val="clear" w:color="auto" w:fill="${fill}"/>`:""}<w:tcBorders><w:top w:val="single" w:sz="6" w:color="${border}"/><w:left w:val="single" w:sz="6" w:color="${border}"/><w:bottom w:val="single" w:sz="6" w:color="${border}"/><w:right w:val="single" w:sz="6" w:color="${border}"/></w:tcBorders></w:tcPr>${content||para("")}</w:tc>`;
+  const table=(cells,widths)=>`<w:tbl><w:tblPr><w:tblW w:w="${CW}" w:type="dxa"/><w:tblCellSpacing w:w="70" w:type="dxa"/><w:tblLayout w:type="fixed"/><w:tblCellMar><w:top w:w="90" w:type="dxa"/><w:left w:w="140" w:type="dxa"/><w:bottom w:w="70" w:type="dxa"/><w:right w:w="140" w:type="dxa"/></w:tblCellMar></w:tblPr><w:tblGrid>${widths.map(w=>`<w:gridCol w:w="${w}"/>`).join("")}</w:tblGrid><w:tr><w:trPr><w:cantSplit/></w:trPr>${cells.join("")}</w:tr></w:tbl>`+para("",{after:0,line:120});
+  const meta=[["Âge",s.age],["Enfants",s.nombre_enfants],["Durée",s.duree],["Préparation",s.temps_preparation],["Lieu",s.lieu],["Énergie",s.energie]].filter(x=>x[1]);
+  let body=para(run("Fiche d'activité",{b:1,caps:1,c:G,sz:szS}),{after:20});
+  body+=para(run(s.titre||"Activité",{b:1,sz:szT}),{after:80,line:240});
+  body+=para(meta.length?meta.map(([k,v],i)=>run((i?"   ·   ":"")+k+" ",{b:1,c:G})+run(v)).join(""):run(" "),{after:160,bdr:1});
+  if(topB.length){const tw=Math.floor(CW/topB.length);body+=table(topB.map(([t,items])=>cell(tw,h2(t)+bullets(items))),topB.map(()=>tw))}
+  if(prep)body+=table([cell(CW,h2("Mise en place")+text(prep))],[CW]);
+  if(deroul.length)body+=table([cell(CW,h2("Déroulement")+numbers(deroul),"F4F8F1","C9DCC4")],[CW]);
+  if(bottom.length){const bw=Math.floor(CW/bottom.length);body+=table(bottom.map(([t,items,k])=>k==="warn"?cell(bw,h2(t,"A3312A")+bullets(items),"FFF7F6","EBC0BC"):cell(bw,h2(t)+bullets(items))),bottom.map(()=>bw))}
+  if(posture)body+=table([cell(CW,h2("Posture de l'animateur")+text(posture))],[CW]);
+  body+=para(run("Anim Compagnon",{c:"888888",sz:szS}),{jc:"right",after:0});
+  const doc=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>${body}<w:sectPr><w:pgSz w:w="${W}" w:h="${H}"/><w:pgMar w:top="${M}" w:right="${M}" w:bottom="${M}" w:left="${M}" w:header="0" w:footer="0" w:gutter="0"/></w:sectPr></w:body></w:document>`;
+  const styles=`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Arial" w:hAnsi="Arial" w:cs="Arial" w:eastAsia="Arial"/><w:sz w:val="${sz}"/><w:lang w:val="fr-FR"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:spacing w:after="0" w:line="264" w:lineRule="auto"/></w:pPr></w:pPrDefault></w:docDefaults></w:styles>`;
+  return zipStore([
+    ["[Content_Types].xml",`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/><Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/></Types>`],
+    ["_rels/.rels",`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>`],
+    ["word/_rels/document.xml.rels",`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>`],
+    ["word/document.xml",doc],
+    ["word/styles.xml",styles]
+  ]);
+}
+window.downloadFicheWord=function(){
+  const s=window.currentAISheet;if(!s)return;
+  try{
+    const blob=ficheDocx(s),url=URL.createObjectURL(blob),a=document.createElement("a");
+    a.href=url;a.download=ficheFileName(s)+".docx";document.body.appendChild(a);a.click();a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),4000);
+    toast("Fiche Word téléchargée.");
+  }catch(e){toast("Impossible de créer le fichier Word.")}
+};
+
+/* ----- Images manquantes : on affiche un dégradé à la place d'un bloc noir ----- */
+(()=>{
+  const SEL=".tile,.type-card,.hero,.a-photo,.fav-card,.resource-img";
+  const cache={};
+  const check=el=>{
+    if(el.dataset.imgChk)return;el.dataset.imgChk="1";
+    const bg=getComputedStyle(el).backgroundImage||"",m=bg.match(/url\(["']?(.*?)["']?\)/);
+    if(!m){el.classList.add("no-img");return}
+    const u=m[1];
+    const done=ok=>{if(!ok)el.classList.add("no-img")};
+    if(u in cache){cache[u]===null?(cache[u+"#w"]=(cache[u+"#w"]||[]).concat(done)):done(cache[u]);return}
+    cache[u]=null;cache[u+"#w"]=[done];
+    const im=new Image();
+    im.onload=()=>{cache[u]=true;(cache[u+"#w"]||[]).forEach(f=>f(true))};
+    im.onerror=()=>{cache[u]=false;(cache[u+"#w"]||[]).forEach(f=>f(false))};
+    im.src=u;
+  };
+  const scan=root=>{(root.querySelectorAll?root:document).querySelectorAll(SEL).forEach(check);if(root.matches&&root.matches(SEL))check(root)};
+  new MutationObserver(ms=>ms.forEach(m=>m.addedNodes.forEach(n=>{if(n.nodeType===1)scan(n)}))).observe(document.body,{childList:true,subtree:true});
+  setTimeout(()=>scan(document),300);
+})();
+
+/* ----- Pages vides plus vivantes ----- */
+const EMPTY_ICO='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg>';
+function emptyCTA(title,text){
+  return `<div class="empty-cta"><span class="ec-ico">${EMPTY_ICO}</span><strong>${title}</strong><p>${text}</p><div class="row"><button class="btn secondary" onclick="go('activities')">Voir les activités</button><button class="btn primary" onclick="go('generator')">Créer une activité</button></div></div>`;
+}
+(()=>{
+  const fix=root=>{(root.querySelectorAll?root:document).querySelectorAll(".empty").forEach(e=>{
+    const t=e.textContent||"";
+    if(/Aucune fiche publiée pour le moment/.test(t))e.outerHTML=emptyCTA("Bientôt des fiches ici","Les fiches de cette rubrique arrivent. En attendant, trouve une activité ou crée-en une sur mesure.");
+    else if(/Aucune catégorie publiée/.test(t))e.outerHTML=emptyCTA("Bientôt du contenu","Les rubriques arrivent. En attendant, crée une activité sur mesure.");
+  })};
+  new MutationObserver(ms=>ms.forEach(m=>m.addedNodes.forEach(n=>{if(n.nodeType===1)fix(n.parentNode||n)}))).observe(document.body,{childList:true,subtree:true});
+  setTimeout(()=>fix(document),300);
+})();
+
+/* ----- Réglages de l'équipe : blocs repliables, libellés courts ----- */
+const fsOpen={};
+tmWrapAfter("fsRender",()=>{
+  const g=document.getElementById("fsGroups");if(!g)return;
+  g.querySelectorAll(".fs-seg button").forEach(b=>{b.textContent=b.textContent.replace("Tout le monde","Tous").replace("Oui, j'accepte chaque demande","Oui, je valide").replace("Non, le code suffit","Non, le code suffit")});
+  const cats=[...g.querySelectorAll(":scope>.fs-cat")];if(!cats.length)return;
+  cats.forEach((c,k)=>{
+    const name=c.textContent.trim(),body=document.createElement("div");body.className="fs-sec";
+    let n=c.nextSibling;while(n&&!(n.classList&&n.classList.contains("fs-cat"))){const nx=n.nextSibling;body.appendChild(n);n=nx}
+    const open=fsOpen[name]!==undefined?fsOpen[name]:k===0;
+    const h=document.createElement("button");h.type="button";h.className="fs-sec-h"+(open?" open":"");h.textContent=name;
+    body.hidden=!open;
+    h.onclick=()=>{fsOpen[name]=body.hidden;body.hidden=!body.hidden;h.classList.toggle("open",!body.hidden)};
+    c.replaceWith(h);h.after(body);
+  });
+});
+
+/* ----- Menu latéral : libellé Compte ----- */
+tmWrapAfter("openSideMenu",()=>{const l=document.getElementById("sideAccLabel");if(l)l.textContent=typeof authOn==="function"&&authOn()?"Mon compte":"Se connecter"});
 </script>
 </body>
 </html>
